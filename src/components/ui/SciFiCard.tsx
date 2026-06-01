@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, FONT_MONO } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 interface SciFiCardProps {
@@ -18,9 +18,9 @@ export default function SciFiCard({
 }: SciFiCardProps) {
   const glowStyle =
     glow === "cyan"
-      ? "0 0 20px rgba(0,212,255,0.12), 0 0 1px rgba(0,212,255,0.3)"
+      ? "0 0 20px rgba(167,139,250,0.14), 0 0 1px rgba(167,139,250,0.3)"
       : glow === "purple"
-      ? "0 0 20px rgba(168,85,247,0.12), 0 0 1px rgba(168,85,247,0.3)"
+      ? "0 0 20px rgba(129,140,248,0.14), 0 0 1px rgba(129,140,248,0.3)"
       : "none";
 
   return (
@@ -59,7 +59,7 @@ export default function SciFiCard({
         <div
           className="px-4 pt-3 pb-0"
           style={{
-            fontFamily: "var(--font-space-mono), monospace",
+            fontFamily: FONT_MONO,
             fontSize: "10px",
             letterSpacing: "0.12em",
             color: "var(--color-neon-cyan)",

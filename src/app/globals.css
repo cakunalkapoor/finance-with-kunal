@@ -1,34 +1,42 @@
 @import "tailwindcss";
 
 @theme {
-  /* Space palette */
-  --color-space-void: #02040d;
-  --color-space-black: #050810;
-  --color-space-dark: #080c18;
-  --color-space-surface: #0c1220;
-  --color-space-card: #0f1729;
-  --color-space-border: #1a2744;
-  --color-space-border-bright: #1e3460;
+  /* Light, professional, Gen-Z palette
+     ---------------------------------
+     Soft off-white page bg with a faint violet undertone.
+     Pure white cards. Violet/indigo accents (stay vibrant on white).
+     Emerald / rose for market data, slightly darker for white-bg contrast. */
 
-  /* Neon accents */
-  --color-neon-cyan: #00d4ff;
-  --color-neon-cyan-dim: #0090b0;
-  --color-neon-cyan-glow: rgba(0, 212, 255, 0.2);
-  --color-neon-purple: #a855f7;
-  --color-neon-purple-dim: #7c3aed;
-  --color-neon-blue: #3b82f6;
+  /* Surfaces */
+  --color-space-void: #f7f6fc;        /* page background */
+  --color-space-black: #f1eff8;       /* footer / deeper section */
+  --color-space-dark: #ecebf5;
+  --color-space-surface: #ffffff;
+  --color-space-card: #ffffff;        /* card bg */
+  --color-space-border: #e5e1f1;      /* soft violet-gray border */
+  --color-space-border-bright: #c8c0e5;
 
-  /* Semantic */
-  --color-market-up: #10d98e;
-  --color-market-up-dim: rgba(16, 217, 142, 0.15);
-  --color-market-down: #f43f5e;
-  --color-market-down-dim: rgba(244, 63, 94, 0.15);
-  --color-market-neutral: #f59e0b;
+  /* Primary accent: vivid violet */
+  --color-neon-cyan: #7c3aed;         /* violet-600 */
+  --color-neon-cyan-dim: #6d28d9;     /* violet-700 */
+  --color-neon-cyan-glow: rgba(124, 58, 237, 0.18);
 
-  /* Text */
-  --color-text-primary: #e2e8ff;
-  --color-text-secondary: #8a9cc8;
-  --color-text-muted: #4a5880;
+  /* Secondary accent: indigo */
+  --color-neon-purple: #4f46e5;       /* indigo-600 */
+  --color-neon-purple-dim: #4338ca;
+  --color-neon-blue: #2563eb;
+
+  /* Market semantic colors (darker shades — better readable on white) */
+  --color-market-up: #059669;         /* emerald-600 */
+  --color-market-up-dim: rgba(5, 150, 105, 0.10);
+  --color-market-down: #e11d48;       /* rose-600 */
+  --color-market-down-dim: rgba(225, 29, 72, 0.10);
+  --color-market-neutral: #d97706;    /* amber-600 */
+
+  /* Text — dark navy-violet on white */
+  --color-text-primary: #1e1b3a;
+  --color-text-secondary: #524b7a;
+  --color-text-muted: #9590b8;
 
   /* Fonts */
   --font-display: "Space Grotesk", system-ui, sans-serif;
@@ -36,7 +44,51 @@
 }
 
 :root {
+  color-scheme: light;
+  /* Theme-aware values that aren't plain Tailwind color tokens */
+  --color-nav-bg: rgba(247, 246, 252, 0.85);
+  --color-nav-bg-solid: rgba(247, 246, 252, 0.98);
+}
+
+/* ---- Dark theme ----
+   Toggling `.dark` on <html> re-declares the @theme color tokens with higher
+   specificity than :root, so every `var(--color-*)` (inline styles + Tailwind
+   utilities alike) cascades to the dark value. */
+html.dark {
   color-scheme: dark;
+
+  /* Surfaces — warm purple-black */
+  --color-space-void: #06040e;
+  --color-space-black: #0b0818;
+  --color-space-dark: #141029;
+  --color-space-surface: #17122b;
+  --color-space-card: #1a1531;
+  --color-space-border: #2c2648;
+  --color-space-border-bright: #3d3563;
+
+  /* Accents — lifted for contrast on dark */
+  --color-neon-cyan: #a78bfa;
+  --color-neon-cyan-dim: #8b5cf6;
+  --color-neon-cyan-glow: rgba(167, 139, 250, 0.25);
+  --color-neon-purple: #818cf8;
+  --color-neon-purple-dim: #6366f1;
+  --color-neon-blue: #60a5fa;
+
+  /* Market semantics — brighter shades read better on dark */
+  --color-market-up: #34d399;
+  --color-market-up-dim: rgba(52, 211, 153, 0.14);
+  --color-market-down: #fb7185;
+  --color-market-down-dim: rgba(251, 113, 133, 0.14);
+  --color-market-neutral: #fbbf24;
+
+  /* Text */
+  --color-text-primary: #f2eeff;
+  --color-text-secondary: #a79fd0;
+  --color-text-muted: #6f6796;
+
+  /* Nav surface */
+  --color-nav-bg: rgba(11, 8, 24, 0.85);
+  --color-nav-bg-solid: rgba(11, 8, 24, 0.98);
 }
 
 * {
@@ -56,75 +108,74 @@ body {
   overflow-x: hidden;
 }
 
+/* Smooth light/dark switch. SVG chart fill/stroke is intentionally excluded so
+   ECharts redraws don't animate their colors. */
+*,
+*::before,
+*::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-space-black);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-space-border-bright);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-neon-cyan-dim);
+  background: var(--color-neon-cyan);
 }
 
-/* Grid background overlay */
+/* Faint violet grid overlay — much subtler on light bg */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(124, 58, 237, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.04) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
-/* Glow effects */
+/* Shadow utilities — replace neon glows with soft elevated shadows */
 .glow-cyan {
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.25), 0 0 30px rgba(0, 212, 255, 0.08);
+  box-shadow:
+    0 1px 2px rgba(30, 27, 58, 0.04),
+    0 4px 12px rgba(124, 58, 237, 0.06),
+    0 0 0 1px rgba(124, 58, 237, 0.05);
 }
 .glow-cyan-sm {
-  box-shadow: 0 0 6px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.10);
 }
 .glow-purple {
-  box-shadow: 0 0 12px rgba(168, 85, 247, 0.25), 0 0 30px rgba(168, 85, 247, 0.08);
+  box-shadow:
+    0 1px 2px rgba(30, 27, 58, 0.04),
+    0 4px 12px rgba(79, 70, 229, 0.06),
+    0 0 0 1px rgba(79, 70, 229, 0.05);
 }
 .glow-green {
-  box-shadow: 0 0 8px rgba(16, 217, 142, 0.3);
+  box-shadow: 0 1px 3px rgba(5, 150, 105, 0.15);
 }
 .glow-red {
-  box-shadow: 0 0 8px rgba(244, 63, 94, 0.3);
+  box-shadow: 0 1px 3px rgba(225, 29, 72, 0.15);
 }
 
-/* Neon text */
+/* Accent text — no glow, just color */
 .text-neon-cyan {
   color: var(--color-neon-cyan);
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 .text-neon-purple {
   color: var(--color-neon-purple);
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
 }
 
-/* Sci-fi card border gradient */
+/* Card border accent */
 .border-glow {
   border: 1px solid var(--color-space-border);
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.04), transparent);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.02), transparent);
   position: relative;
-}
-.border-glow::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), transparent 60%);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: xor;
-  pointer-events: none;
 }
 
 /* Ticker animation */
@@ -148,19 +199,6 @@ body {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-/* Scan line animation */
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-/* Data number font */
-.font-data {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-}
-
 /* Chart container */
 .chart-container {
   background: var(--color-space-card);
@@ -175,12 +213,12 @@ body {
 .bg-up { background-color: var(--color-market-up-dim); }
 .bg-down { background-color: var(--color-market-down-dim); }
 
-/* Hover row effect */
+/* Hover row tint */
 tr:hover td {
-  background: rgba(0, 212, 255, 0.03);
+  background: rgba(124, 58, 237, 0.025);
 }
 
-/* Fade up animation */
+/* Fade up */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
@@ -189,9 +227,9 @@ tr:hover td {
   animation: fade-up 0.5s ease forwards;
 }
 
-/* Gradient text */
+/* Hero gradient text — violet → indigo → pink */
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #00d4ff, #7c3aed);
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #db2777 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

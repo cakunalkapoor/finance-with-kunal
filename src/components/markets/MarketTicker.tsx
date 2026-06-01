@@ -1,5 +1,5 @@
 import { EQUITY_INDICES, COMMODITIES } from "@/lib/mock-data";
-import { formatNumber, formatChange } from "@/lib/utils";
+import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
 
 export default function MarketTicker() {
   const items = [
@@ -37,15 +37,15 @@ export default function MarketTicker() {
             >
               <span
                 className="text-xs font-semibold"
-                style={{ color: "var(--color-text-secondary)", whiteSpace: "nowrap" }}
+                style={{ color: "#ffffff", whiteSpace: "nowrap" }}
               >
                 {item.label}
               </span>
               <span
                 className="text-xs font-bold"
                 style={{
-                  fontFamily: "var(--font-space-mono), monospace",
-                  color: "var(--color-text-primary)",
+                  fontFamily: FONT_MONO,
+                  color: "#ffffff",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -54,8 +54,8 @@ export default function MarketTicker() {
               <span
                 className="text-xs font-bold"
                 style={{
-                  fontFamily: "var(--font-space-mono), monospace",
-                  color: pos ? "#10d98e" : "#f43f5e",
+                  fontFamily: FONT_MONO,
+                  color: pos ? "#34d399" : "#fb7185",
                   whiteSpace: "nowrap",
                 }}
               >

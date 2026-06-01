@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import type { EconomicIndicator, TimeHorizon } from "@/types";
-import { getChangeColor } from "@/lib/utils";
+import { getChangeColor, FONT_MONO } from "@/lib/utils";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
@@ -14,7 +14,11 @@ function filterByHorizon(
   series: { date: string; value: number }[],
   horizon: TimeHorizon
 ): { date: string; value: number }[] {
-  const now = new Date(2026, 4, 30);
+  // Anchor the window to the most recent data point (not a frozen date) so the
+  // horizon tabs stay correct as new data is published.
+  const now = series.length
+    ? new Date(series[series.length - 1].date)
+    : new Date();
   const months: Record<TimeHorizon, number> = {
     "1W": 0.25,
     "1M": 1,
@@ -39,19 +43,20 @@ export default function EconomicChart({ indicator }: Props) {
   const filtered = filterByHorizon(indicator.timeSeries, horizon);
   const isUp = indicator.direction === "up";
   const goodColor = indicator.isPositiveGood
-    ? isUp ? "#10d98e" : "#f43f5e"
-    : isUp ? "#f43f5e" : "#10d98e";
+    ? isUp ? "#34d399" : "#fb7185"
+    : isUp ? "#fb7185" : "#34d399";
 
   const option: EChartsOption = {
     backgroundColor: "transparent",
     grid: { top: 12, bottom: 28, left: 48, right: 16 },
     tooltip: {
       trigger: "axis",
-      backgroundColor: "rgba(8,12,24,0.96)",
-      borderColor: "rgba(0,212,255,0.25)",
+      backgroundColor: "rgba(255,255,255,0.98)",
+      borderColor: "rgba(124,58,237,0.28)",
       borderWidth: 1,
+      extraCssText: "box-shadow: 0 8px 24px rgba(30,27,58,0.12); border-radius: 6px;",
       textStyle: {
-        color: "#e2e8ff",
+        color: "#1e1b3a",
         fontFamily: "Space Mono, monospace",
         fontSize: 11,
       },
@@ -60,7 +65,7 @@ export default function EconomicChart({ indicator }: Props) {
         const p = Array.isArray(params) ? params[0] : params;
         if (!p) return "";
         return `<div style="padding:2px 4px">
-          <div style="color:#8a9cc8;font-size:10px">${p.axisValue}</div>
+          <div style="color:#524b7a;font-size:10px">${p.axisValue}</div>
           <div style="font-weight:700;font-size:13px;color:${goodColor}">${p.value} ${indicator.unit}</div>
         </div>`;
       },
@@ -68,10 +73,10 @@ export default function EconomicChart({ indicator }: Props) {
     xAxis: {
       type: "category",
       data: filtered.map((p) => p.date),
-      axisLine: { lineStyle: { color: "rgba(26,39,68,0.8)" } },
+      axisLine: { lineStyle: { color: "rgba(229,225,241,1)" } },
       axisTick: { show: false },
       axisLabel: {
-        color: "#4a5880",
+        color: "#9590b8",
         fontFamily: "Space Mono, monospace",
         fontSize: 10,
         formatter: (val: string) => val.slice(0, 7),
@@ -80,9 +85,9 @@ export default function EconomicChart({ indicator }: Props) {
     },
     yAxis: {
       type: "value",
-      splitLine: { lineStyle: { color: "rgba(26,39,68,0.4)", type: "dashed" } },
+      splitLine: { lineStyle: { color: "rgba(229,225,241,0.7)", type: "dashed" } },
       axisLabel: {
-        color: "#4a5880",
+        color: "#9590b8",
         fontFamily: "Space Mono, monospace",
         fontSize: 10,
         formatter: (val: number) => `${val}`,
@@ -142,7 +147,7 @@ export default function EconomicChart({ indicator }: Props) {
           <div
             className="font-bold text-xl leading-none"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               color: goodColor,
             }}
           >
@@ -150,7 +155,7 @@ export default function EconomicChart({ indicator }: Props) {
           </div>
           <div
             className={`text-xs font-semibold ${getChangeColor(indicator.change, indicator.isPositiveGood)}`}
-            style={{ fontFamily: "var(--font-space-mono), monospace" }}
+            style={{ fontFamily: FONT_MONO }}
           >
             {indicator.change >= 0 ? "▲" : "▼"}{" "}
             {Math.abs(indicator.change).toFixed(2)}{" "}
@@ -167,10 +172,10 @@ export default function EconomicChart({ indicator }: Props) {
             onClick={() => setHorizon(h)}
             className="px-2 py-0.5 rounded text-xs font-semibold transition-all"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               color: horizon === h ? "var(--color-neon-cyan)" : "var(--color-text-muted)",
-              background: horizon === h ? "rgba(0,212,255,0.1)" : "transparent",
-              border: horizon === h ? "1px solid rgba(0,212,255,0.25)" : "1px solid transparent",
+              background: horizon === h ? "rgba(167,139,250,0.1)" : "transparent",
+              border: horizon === h ? "1px solid rgba(167,139,250,0.28)" : "1px solid transparent",
               letterSpacing: "0.06em",
             }}
           >
@@ -189,7 +194,7 @@ export default function EconomicChart({ indicator }: Props) {
         className="px-4 pb-3 text-xs leading-relaxed"
         style={{
           color: "var(--color-text-muted)",
-          borderTop: "1px solid rgba(26,39,68,0.5)",
+          borderTop: "1px solid var(--color-space-border)",
           paddingTop: "8px",
         }}
       >

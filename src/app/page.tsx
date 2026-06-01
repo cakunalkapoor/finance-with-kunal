@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, BarChart2, BookOpen, TrendingUp } from "lucide-react";
 import MarketTicker from "@/components/markets/MarketTicker";
-import { BLOG_POSTS, EQUITY_INDICES, MACRO_SNAPSHOT } from "@/lib/mock-data";
-import { formatNumber, formatChange } from "@/lib/utils";
+import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
+import { EXTERNAL_COMMENTARY, EQUITY_INDICES } from "@/lib/mock-data";
+import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
 
 function HeroSection() {
   return (
@@ -11,14 +12,14 @@ function HeroSection() {
       <div
         className="absolute top-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%)",
           filter: "blur(40px)",
         }}
       />
       <div
         className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(244,114,182,0.07) 0%, transparent 70%)",
           filter: "blur(40px)",
         }}
       />
@@ -27,18 +28,18 @@ function HeroSection() {
         {/* Pre-title */}
         <div className="flex items-center gap-2 mb-4">
           <div
-            className="w-1.5 h-1.5 rounded-full pulse-dot"
+            className="h-4 w-0.5 rounded"
             style={{ background: "var(--color-neon-cyan)" }}
           />
           <span
             className="text-xs font-bold tracking-widest uppercase"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               color: "var(--color-neon-cyan)",
               letterSpacing: "0.16em",
             }}
           >
-            Global Markets Intelligence
+            Finance with Kunal
           </span>
         </div>
 
@@ -47,18 +48,10 @@ function HeroSection() {
           className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 max-w-4xl"
           style={{ letterSpacing: "-0.02em" }}
         >
-          <span style={{ color: "var(--color-text-primary)" }}>Where Data Meets</span>
+          <span style={{ color: "var(--color-text-primary)" }}>Data. Insight. Action.</span>
           <br />
-          <span className="gradient-text-cyan">Market Perspective</span>
+          <span className="gradient-text-cyan">Beyond the ticker.</span>
         </h1>
-
-        <p
-          className="text-lg max-w-2xl mb-10 leading-relaxed"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          Real-time global equity markets, economic indicators, and independent commentary.
-          Built for investors who think globally.
-        </p>
 
         {/* CTAs */}
         <div className="flex flex-wrap gap-3">
@@ -66,8 +59,8 @@ function HeroSection() {
             href="/markets"
             className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-100"
             style={{
-              background: "linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,212,255,0.1))",
-              border: "1px solid rgba(0,212,255,0.4)",
+              background: "linear-gradient(135deg, rgba(167,139,250,0.18), rgba(167,139,250,0.08))",
+              border: "1px solid rgba(167,139,250,0.4)",
               color: "var(--color-neon-cyan)",
             }}
           >
@@ -79,20 +72,20 @@ function HeroSection() {
             href="/dashboard"
             className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-100"
             style={{
-              background: "rgba(168,85,247,0.1)",
-              border: "1px solid rgba(168,85,247,0.3)",
+              background: "rgba(129,140,248,0.1)",
+              border: "1px solid rgba(129,140,248,0.3)",
               color: "var(--color-neon-purple)",
             }}
           >
             <TrendingUp size={16} />
-            Economic Dashboard
+            Global Economy
             <ArrowRight size={14} />
           </Link>
           <Link
             href="/blog"
             className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-100"
             style={{
-              background: "rgba(255,255,255,0.04)",
+              background: "rgba(124,58,237,0.05)",
               border: "1px solid var(--color-space-border)",
               color: "var(--color-text-secondary)",
             }}
@@ -115,7 +108,7 @@ function MarketSnapshot() {
           <h2
             className="text-xs font-bold tracking-widest uppercase"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               color: "var(--color-text-muted)",
               letterSpacing: "0.14em",
             }}
@@ -148,9 +141,9 @@ function MarketSnapshot() {
                   <span
                     className="text-xs font-semibold px-1.5 py-0.5 rounded"
                     style={{
-                      fontFamily: "var(--font-space-mono), monospace",
-                      color: pos ? "#10d98e" : "#f43f5e",
-                      background: pos ? "rgba(16,217,142,0.12)" : "rgba(244,63,94,0.12)",
+                      fontFamily: FONT_MONO,
+                      color: pos ? "#34d399" : "#fb7185",
+                      background: pos ? "rgba(52,211,153,0.11)" : "rgba(251,113,133,0.11)",
                     }}
                   >
                     {formatChange(idx.dailyChange)}
@@ -159,7 +152,7 @@ function MarketSnapshot() {
                 <div
                   className="font-bold text-sm leading-none"
                   style={{
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                     color: "var(--color-text-primary)",
                   }}
                 >
@@ -175,7 +168,7 @@ function MarketSnapshot() {
                   className="text-xs"
                   style={{
                     color: "var(--color-text-muted)",
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                     fontSize: "10px",
                   }}
                 >
@@ -190,51 +183,37 @@ function MarketSnapshot() {
   );
 }
 
-function MacroBar() {
-  const items = [
-    { label: "US GDP", value: `${MACRO_SNAPSHOT.gdp.value}%`, trend: MACRO_SNAPSHOT.gdp.trend, positive: true },
-    { label: "China PMI", value: `${MACRO_SNAPSHOT.pmi.value}`, trend: MACRO_SNAPSHOT.pmi.trend, positive: true },
-    { label: "US CPI", value: `${MACRO_SNAPSHOT.inflation.value}%`, trend: MACRO_SNAPSHOT.inflation.trend, positive: false },
-    { label: "Brent Oil", value: `$${MACRO_SNAPSHOT.oil.value}`, trend: MACRO_SNAPSHOT.oil.trend, positive: false },
-  ];
+function EconomicSnapshot() {
   return (
-    <div
-      className="mx-4 sm:mx-6 lg:mx-8 mb-8 rounded-lg py-3 px-5 flex flex-wrap gap-x-8 gap-y-3"
-      style={{
-        background: "rgba(0,212,255,0.03)",
-        border: "1px solid rgba(0,212,255,0.1)",
-        maxWidth: "var(--max-w-screen-2xl)",
-      }}
-    >
-      {items.map(({ label, value, trend, positive }) => {
-        const good = positive ? trend === "up" : trend === "down";
-        const color = trend === "neutral" ? "#f59e0b" : good ? "#10d98e" : "#f43f5e";
-        const arrow = trend === "up" ? "▲" : trend === "down" ? "▼" : "◆";
-        return (
-          <div key={label} className="flex items-center gap-2">
-            <span className="text-xs font-semibold" style={{ color: "var(--color-text-muted)" }}>
-              {label}
-            </span>
-            <span
-              className="text-xs font-bold"
-              style={{
-                fontFamily: "var(--font-space-mono), monospace",
-                color: "var(--color-text-primary)",
-              }}
-            >
-              {value}
-            </span>
-            <span className="text-xs" style={{ color }}>
-              {arrow}
-            </span>
-          </div>
-        );
-      })}
-    </div>
+    <section className="py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-screen-2xl mx-auto">
+        <div className="flex items-center justify-between mb-4">
+          <h2
+            className="text-xs font-bold tracking-widest uppercase"
+            style={{
+              fontFamily: FONT_MONO,
+              color: "var(--color-text-muted)",
+              letterSpacing: "0.14em",
+            }}
+          >
+            Economic Snapshot
+          </h2>
+          <Link
+            href="/dashboard"
+            className="text-xs flex items-center gap-1 transition-colors"
+            style={{ color: "var(--color-neon-cyan)" }}
+          >
+            View all <ArrowRight size={12} />
+          </Link>
+        </div>
+
+        <MacroSnapshot showHeader={false} />
+      </div>
+    </section>
   );
 }
 
-function LatestPosts() {
+function LatestCommentary() {
   return (
     <section className="py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-screen-2xl mx-auto">
@@ -242,28 +221,23 @@ function LatestPosts() {
           <h2
             className="text-xs font-bold tracking-widest uppercase"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               color: "var(--color-text-muted)",
               letterSpacing: "0.14em",
             }}
           >
             Latest Commentary
           </h2>
-          <Link
-            href="/blog"
-            className="text-xs flex items-center gap-1"
-            style={{ color: "var(--color-neon-cyan)" }}
-          >
-            All posts <ArrowRight size={12} />
-          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {BLOG_POSTS.slice(0, 4).map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group rounded-xl p-5 flex flex-col gap-3 transition-all hover:border-opacity-80"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {EXTERNAL_COMMENTARY.map((item) => (
+            <a
+              key={item.id}
+              href={item.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-xl p-5 flex flex-col gap-3 transition-all hover:scale-[1.01]"
               style={{
                 background: "var(--color-space-card)",
                 border: "1px solid var(--color-space-border)",
@@ -273,49 +247,55 @@ function LatestPosts() {
                 <span
                   className="text-xs px-2 py-0.5 rounded font-semibold"
                   style={{
-                    background: "rgba(0,212,255,0.08)",
-                    border: "1px solid rgba(0,212,255,0.2)",
+                    background: "rgba(167,139,250,0.08)",
+                    border: "1px solid rgba(167,139,250,0.2)",
                     color: "var(--color-neon-cyan)",
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                     letterSpacing: "0.06em",
                   }}
                 >
-                  {post.category.toUpperCase()}
+                  {item.category.toUpperCase()}
                 </span>
                 <span
-                  className="text-xs"
+                  className="text-xs font-semibold"
                   style={{
                     color: "var(--color-text-muted)",
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                   }}
                 >
-                  {post.date} · {post.readTime}min
+                  {item.source}
                 </span>
               </div>
 
               <h3
-                className="font-bold text-sm leading-snug group-hover:text-neon-cyan transition-colors"
+                className="font-bold text-sm leading-snug"
                 style={{ color: "var(--color-text-primary)" }}
               >
-                {post.title}
+                {item.title}
               </h3>
 
               <p
-                className="text-xs leading-relaxed line-clamp-2"
+                className="text-xs leading-relaxed line-clamp-3 flex-1"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                {post.excerpt}
+                {item.excerpt}
               </p>
 
-              <div className="flex items-center gap-1 mt-auto">
+              <div className="flex items-center justify-between mt-auto pt-2" style={{ borderTop: "1px solid var(--color-space-border)" }}>
+                <span
+                  className="text-xs"
+                  style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}
+                >
+                  {item.date}
+                </span>
                 <span
                   className="text-xs flex items-center gap-1"
                   style={{ color: "var(--color-neon-cyan)" }}
                 >
-                  Read more <ArrowRight size={11} />
+                  Read source <ArrowRight size={11} />
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
@@ -328,9 +308,9 @@ export default function HomePage() {
     <>
       <MarketTicker />
       <HeroSection />
-      <MacroBar />
       <MarketSnapshot />
-      <LatestPosts />
+      <EconomicSnapshot />
+      <LatestCommentary />
     </>
   );
 }

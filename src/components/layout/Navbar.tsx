@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, FONT_MONO } from "@/lib/utils";
 import { Menu, X, TrendingUp } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
-  { href: "/dashboard", label: "Dashboard" },
+  { href: "/dashboard", label: "Economy" },
   { href: "/blog", label: "Blog" },
 ];
 
@@ -20,7 +21,7 @@ export default function Navbar() {
     <header
       className="sticky top-0 z-50 border-b"
       style={{
-        background: "rgba(5, 8, 16, 0.85)",
+        background: "var(--color-nav-bg)",
         backdropFilter: "blur(16px)",
         borderColor: "var(--color-space-border)",
       }}
@@ -30,7 +31,7 @@ export default function Navbar() {
         className="h-px w-full"
         style={{
           background:
-            "linear-gradient(90deg, transparent, var(--color-neon-cyan), var(--color-neon-purple), transparent)",
+            "linear-gradient(90deg, transparent, var(--color-neon-cyan), var(--color-neon-blue), var(--color-neon-purple), transparent)",
         }}
       />
 
@@ -40,8 +41,8 @@ export default function Navbar() {
           <div
             className="w-7 h-7 rounded flex items-center justify-center"
             style={{
-              background: "linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2))",
-              border: "1px solid rgba(0, 212, 255, 0.3)",
+              background: "linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(79, 70, 229, 0.2))",
+              border: "1px solid rgba(124, 58, 237, 0.3)",
             }}
           >
             <TrendingUp
@@ -52,7 +53,7 @@ export default function Navbar() {
           <span
             className="text-sm font-bold tracking-widest uppercase"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               letterSpacing: "0.12em",
             }}
           >
@@ -62,8 +63,10 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Right cluster: nav links · theme toggle · mobile menu button */}
+        <div className="flex items-center gap-2">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((link) => {
             const active = pathname?.startsWith(link.href);
             return (
@@ -78,8 +81,8 @@ export default function Navbar() {
                 )}
                 style={{
                   color: active ? "var(--color-neon-cyan)" : "var(--color-text-secondary)",
-                  background: active ? "rgba(0, 212, 255, 0.08)" : "transparent",
-                  border: active ? "1px solid rgba(0, 212, 255, 0.2)" : "1px solid transparent",
+                  background: active ? "rgba(124, 58, 237, 0.08)" : "transparent",
+                  border: active ? "1px solid rgba(124, 58, 237, 0.2)" : "1px solid transparent",
                   letterSpacing: "0.1em",
                 }}
               >
@@ -89,43 +92,33 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Live indicator */}
-        <div className="hidden md:flex items-center gap-2">
-          <div
-            className="w-1.5 h-1.5 rounded-full pulse-dot"
-            style={{ background: "var(--color-market-up)" }}
-          />
-          <span
-            className="text-xs font-bold tracking-widest"
+          {/* Theme toggle (always visible) */}
+          <ThemeToggle />
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden p-1.5 rounded"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
-              color: "var(--color-text-muted)",
-              letterSpacing: "0.1em",
+              color: "var(--color-text-secondary)",
+              border: "1px solid var(--color-space-border)",
             }}
           >
-            LIVE DATA
-          </span>
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
-
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden p-1.5 rounded"
-          onClick={() => setMenuOpen((v) => !v)}
-          style={{
-            color: "var(--color-text-secondary)",
-            border: "1px solid var(--color-space-border)",
-          }}
-        >
-          {menuOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
         <div
+          id="mobile-menu"
           className="md:hidden border-t px-4 py-3 flex flex-col gap-1"
           style={{
-            background: "rgba(5, 8, 16, 0.98)",
+            background: "var(--color-nav-bg-solid)",
             borderColor: "var(--color-space-border)",
           }}
         >
@@ -139,7 +132,7 @@ export default function Navbar() {
                 className="px-3 py-2 rounded text-xs font-semibold tracking-widest uppercase"
                 style={{
                   color: active ? "var(--color-neon-cyan)" : "var(--color-text-secondary)",
-                  background: active ? "rgba(0, 212, 255, 0.08)" : "transparent",
+                  background: active ? "rgba(124, 58, 237, 0.08)" : "transparent",
                   letterSpacing: "0.1em",
                 }}
               >

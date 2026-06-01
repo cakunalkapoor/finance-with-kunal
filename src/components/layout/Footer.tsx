@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TrendingUp } from "lucide-react";
+import { FONT_MONO } from "@/lib/utils";
 
 export default function Footer() {
   return (
@@ -16,8 +17,8 @@ export default function Footer() {
             <div
               className="w-6 h-6 rounded flex items-center justify-center"
               style={{
-                background: "rgba(0, 212, 255, 0.1)",
-                border: "1px solid rgba(0, 212, 255, 0.2)",
+                background: "rgba(124, 58, 237, 0.1)",
+                border: "1px solid rgba(124, 58, 237, 0.2)",
               }}
             >
               <TrendingUp size={12} style={{ color: "var(--color-neon-cyan)" }} />
@@ -25,7 +26,7 @@ export default function Footer() {
             <span
               className="text-xs font-bold tracking-widest"
               style={{
-                fontFamily: "var(--font-space-mono), monospace",
+                fontFamily: FONT_MONO,
                 color: "var(--color-text-muted)",
                 letterSpacing: "0.1em",
               }}
@@ -37,7 +38,7 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             {[
               { href: "/markets", label: "Markets" },
-              { href: "/dashboard", label: "Dashboard" },
+              { href: "/dashboard", label: "Economy" },
               { href: "/blog", label: "Blog" },
             ].map((link) => (
               <Link
@@ -47,7 +48,7 @@ export default function Footer() {
                 style={{
                   color: "var(--color-text-muted)",
                   letterSpacing: "0.08em",
-                  fontFamily: "var(--font-space-mono), monospace",
+                  fontFamily: FONT_MONO,
                 }}
               >
                 {link.label}
@@ -70,7 +71,7 @@ export default function Footer() {
             className="text-xs"
             style={{
               color: "var(--color-text-muted)",
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
             }}
           >
             Data: FRED · Alpha Vantage · Yahoo Finance

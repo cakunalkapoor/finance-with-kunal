@@ -8,7 +8,11 @@ export interface IndexQuote {
   monthChange: number;
   ytdChange: number;
   dailyChange: number;
-  sparkline: number[]; // 12-week price points (normalized)
+  high52w: number;
+  low52w: number;
+  sparkline: number[]; // 52 weekly price points (used for both YTD and 52W chart)
+  pe: number;          // Trailing 12-month P/E ratio
+  pe10yAvg: number;    // 10-year average trailing P/E (for valuation context)
 }
 
 export interface BondYield {
@@ -34,6 +38,29 @@ export interface Commodity {
   icon: string;
 }
 
+export interface CryptoAsset {
+  symbol: string;
+  name: string;
+  icon: string;
+  value: number;
+  dailyChange: number;
+  weekChange: number;
+  monthChange: number;
+  ytdChange: number;
+}
+
+export interface ForexRate {
+  symbol: string;
+  name: string;
+  pair: string;
+  icon: string;
+  value: number;
+  dailyChange: number;
+  weekChange: number;
+  monthChange: number;
+  ytdChange: number;
+}
+
 export interface HeatmapSector {
   name: string;
   value: number; // market cap weight
@@ -48,10 +75,18 @@ export interface HeatmapStock {
   change: number;
 }
 
+export interface HeatmapIndex {
+  id: string;
+  name: string;
+  flag: string;
+  description: string;
+  sectors: HeatmapSector[];
+}
+
 export interface EconomicIndicator {
   id: string;
   name: string;
-  category: "growth" | "employment" | "manufacturing" | "services" | "inflation" | "trade" | "energy" | "shipping";
+  category: "growth" | "employment" | "pmi" | "inflation" | "energy";
   country: string;
   flag: string;
   value: number;
@@ -69,8 +104,7 @@ export interface MacroSnapshot {
   gdp: { value: number; trend: "up" | "down" | "neutral" };
   pmi: { value: number; trend: "up" | "down" | "neutral" };
   inflation: { value: number; trend: "up" | "down" | "neutral" };
-  exports: { value: number; trend: "up" | "down" | "neutral" };
-  shipping: { value: number; trend: "up" | "down" | "neutral" };
+  jobs: { value: number; trend: "up" | "down" | "neutral" };
   oil: { value: number; trend: "up" | "down" | "neutral" };
 }
 
@@ -82,6 +116,16 @@ export interface BlogPost {
   category: string;
   readTime: number;
   tags: string[];
+}
+
+export interface ExternalCommentary {
+  id: string;
+  title: string;
+  excerpt: string;
+  source: string;
+  sourceUrl: string;
+  date: string;
+  category: string;
 }
 
 export type TimeHorizon = "1W" | "1M" | "3M" | "6M" | "1Y" | "3Y" | "5Y";

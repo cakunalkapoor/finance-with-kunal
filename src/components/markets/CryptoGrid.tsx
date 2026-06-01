@@ -1,25 +1,40 @@
-import { COMMODITIES } from "@/lib/mock-data";
-import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
+import { CRYPTO } from "@/lib/mock-data";
+import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 
-export default function CommoditiesGrid() {
+function formatPrice(value: number): string {
+  if (value >= 10000) return value.toLocaleString("en-US", { maximumFractionDigits: 0 });
+  if (value >= 100)   return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  if (value >= 1)     return value.toFixed(4);
+  return value.toFixed(4);
+}
+
+export default function CryptoGrid() {
   return (
     <SciFiCard>
-      <CardHeader title="Commodities" subtitle="Spot Prices" />
-      <div className="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-3 gap-3">
-        {COMMODITIES.map((c) => {
+      <CardHeader title="Crypto" subtitle="Spot Prices · USD" />
+      <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {CRYPTO.map((c) => {
           const pos = c.dailyChange >= 0;
           return (
             <div
               key={c.symbol}
-              className="rounded-lg p-3 flex flex-col gap-1 transition-all duration-200 hover:scale-[1.02]"
+              className="rounded-lg p-4 flex flex-col gap-1.5 transition-all duration-200 hover:scale-[1.02]"
               style={{
                 background: "rgba(124,58,237,0.025)",
                 border: "1px solid var(--color-space-border)",
               }}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xl">{c.icon}</span>
+                <span
+                  className="text-lg font-bold"
+                  style={{
+                    fontFamily: FONT_MONO,
+                    color: "var(--color-neon-cyan)",
+                  }}
+                >
+                  {c.icon}
+                </span>
                 <span
                   className={`text-xs px-1.5 py-0.5 rounded font-semibold ${getChangeColor(c.dailyChange)}`}
                   style={{
@@ -41,9 +56,7 @@ export default function CommoditiesGrid() {
                   letterSpacing: "-0.03em",
                 }}
               >
-                {c.value >= 1000
-                  ? `$${formatNumber(c.value, 0)}`
-                  : `$${formatNumber(c.value)}`}
+                ${formatPrice(c.value)}
               </div>
 
               <div
@@ -60,7 +73,7 @@ export default function CommoditiesGrid() {
                   fontFamily: FONT_MONO,
                 }}
               >
-                {c.unit}
+                {c.symbol}
               </div>
 
               <div

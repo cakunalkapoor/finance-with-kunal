@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { BOND_YIELDS } from "@/lib/mock-data";
-import { formatChange, getChangeColor } from "@/lib/utils";
+import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { EChartsOption } from "echarts";
 
@@ -24,7 +24,7 @@ function YieldTrendChart({ data, positive }: { data: number[]; positive: boolean
         symbol: "none",
         lineStyle: {
           width: 1.5,
-          color: positive ? "#10d98e" : "#f43f5e",
+          color: positive ? "#34d399" : "#fb7185",
         },
       },
     ],
@@ -46,7 +46,7 @@ export default function BondsTable() {
           <thead>
             <tr
               style={{
-                background: "rgba(0,212,255,0.04)",
+                background: "rgba(167,139,250,0.04)",
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
@@ -56,7 +56,7 @@ export default function BondsTable() {
                   className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase"
                   style={{
                     color: "var(--color-text-muted)",
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                     fontSize: "10px",
                     letterSpacing: "0.1em",
                   }}
@@ -73,7 +73,7 @@ export default function BondsTable() {
                 style={{
                   borderBottom:
                     i < BOND_YIELDS.length - 1
-                      ? "1px solid rgba(26,39,68,0.6)"
+                      ? "1px solid rgba(44,38,72,0.7)"
                       : "none",
                 }}
               >
@@ -87,7 +87,7 @@ export default function BondsTable() {
                       <div
                         style={{
                           color: "var(--color-text-muted)",
-                          fontFamily: "var(--font-space-mono), monospace",
+                          fontFamily: FONT_MONO,
                           fontSize: "10px",
                         }}
                       >
@@ -101,7 +101,7 @@ export default function BondsTable() {
                   <span
                     className="font-bold"
                     style={{
-                      fontFamily: "var(--font-space-mono), monospace",
+                      fontFamily: FONT_MONO,
                       color: "var(--color-neon-cyan)",
                       fontSize: "13px",
                     }}
@@ -114,7 +114,7 @@ export default function BondsTable() {
                   <td key={idx} className="px-4 py-3">
                     <span
                       className={getChangeColor(v, false)}
-                      style={{ fontFamily: "var(--font-space-mono), monospace" }}
+                      style={{ fontFamily: FONT_MONO }}
                     >
                       {v >= 0 ? "+" : ""}{v.toFixed(2)}%
                     </span>

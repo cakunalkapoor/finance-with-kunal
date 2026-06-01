@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Clock, Tag } from "lucide-react";
+import { FONT_MONO } from "@/lib/utils";
 import { BLOG_POSTS } from "@/lib/mock-data";
 import { notFound } from "next/navigation";
 
@@ -43,10 +44,10 @@ export default async function BlogPostPage({
         <span
           className="text-xs px-2.5 py-1 rounded font-bold tracking-wider"
           style={{
-            background: "rgba(0,212,255,0.1)",
-            border: "1px solid rgba(0,212,255,0.25)",
+            background: "rgba(124,58,237,0.1)",
+            border: "1px solid rgba(124,58,237,0.25)",
             color: "var(--color-neon-cyan)",
-            fontFamily: "var(--font-space-mono), monospace",
+            fontFamily: FONT_MONO,
           }}
         >
           {post.category.toUpperCase()}
@@ -55,7 +56,7 @@ export default async function BlogPostPage({
           className="text-xs flex items-center gap-1.5"
           style={{
             color: "var(--color-text-muted)",
-            fontFamily: "var(--font-space-mono), monospace",
+            fontFamily: FONT_MONO,
           }}
         >
           <Clock size={11} />
@@ -65,7 +66,7 @@ export default async function BlogPostPage({
           className="text-xs"
           style={{
             color: "var(--color-text-muted)",
-            fontFamily: "var(--font-space-mono), monospace",
+            fontFamily: FONT_MONO,
           }}
         >
           {post.date}
@@ -95,8 +96,8 @@ export default async function BlogPostPage({
       <div
         className="rounded-xl p-8 text-center"
         style={{
-          background: "rgba(0,212,255,0.03)",
-          border: "1px dashed rgba(0,212,255,0.15)",
+          background: "rgba(124,58,237,0.03)",
+          border: "1px dashed rgba(124,58,237,0.15)",
         }}
       >
         <p
@@ -115,7 +116,7 @@ export default async function BlogPostPage({
             style={{
               background: "var(--color-space-surface)",
               color: "var(--color-text-secondary)",
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
             }}
           >
             src/app/blog/[slug]/page.tsx

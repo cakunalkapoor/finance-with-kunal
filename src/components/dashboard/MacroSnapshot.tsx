@@ -1,5 +1,6 @@
 import { MACRO_SNAPSHOT } from "@/lib/mock-data";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { FONT_MONO } from "@/lib/utils";
 
 const METRICS = [
   {
@@ -11,10 +12,10 @@ const METRICS = [
   },
   {
     key: "pmi" as const,
-    label: "PMI",
+    label: "Global PMI",
     displayValue: `${MACRO_SNAPSHOT.pmi.value}`,
-    context: "China Mfg",
-    icon: "🏭",
+    context: "Composite",
+    icon: "🌐",
   },
   {
     key: "inflation" as const,
@@ -24,18 +25,11 @@ const METRICS = [
     icon: "💹",
   },
   {
-    key: "exports" as const,
-    label: "Exports",
-    displayValue: `+${MACRO_SNAPSHOT.exports.value}%`,
-    context: "China YoY",
-    icon: "🚢",
-  },
-  {
-    key: "shipping" as const,
-    label: "Shipping",
-    displayValue: MACRO_SNAPSHOT.shipping.value.toLocaleString(),
-    context: "Baltic Dry",
-    icon: "⚓",
+    key: "jobs" as const,
+    label: "Unemployment",
+    displayValue: `${MACRO_SNAPSHOT.jobs.value}%`,
+    context: "US Rate",
+    icon: "💼",
   },
   {
     key: "oil" as const,
@@ -48,50 +42,56 @@ const METRICS = [
 
 function TrendIcon({ trend }: { trend: "up" | "down" | "neutral" }) {
   if (trend === "up")
-    return <TrendingUp size={14} style={{ color: "#10d98e" }} />;
+    return <TrendingUp size={14} style={{ color: "#34d399" }} />;
   if (trend === "down")
-    return <TrendingDown size={14} style={{ color: "#f43f5e" }} />;
+    return <TrendingDown size={14} style={{ color: "#fb7185" }} />;
   return <Minus size={14} style={{ color: "#f59e0b" }} />;
 }
 
-export default function MacroSnapshot() {
+export default function MacroSnapshot({
+  showHeader = true,
+}: {
+  showHeader?: boolean;
+} = {}) {
   return (
     <div
       className="rounded-xl p-4 sm:p-6"
       style={{
-        background: "linear-gradient(135deg, rgba(0,212,255,0.04) 0%, rgba(168,85,247,0.04) 100%)",
+        background: "linear-gradient(135deg, rgba(167,139,250,0.05) 0%, rgba(129,140,248,0.03) 100%)",
         border: "1px solid var(--color-space-border)",
       }}
     >
-      <div className="flex items-center gap-3 mb-6">
-        <div
-          className="h-5 w-1 rounded"
-          style={{ background: "linear-gradient(to bottom, var(--color-neon-cyan), var(--color-neon-purple))" }}
-        />
-        <h2
-          className="text-sm font-bold tracking-widest uppercase"
-          style={{
-            color: "var(--color-neon-cyan)",
-            fontFamily: "var(--font-space-mono), monospace",
-            letterSpacing: "0.15em",
-          }}
-        >
-          Global Macro Snapshot
-        </h2>
-        <div
-          className="ml-auto text-xs px-2 py-0.5 rounded"
-          style={{
-            fontFamily: "var(--font-space-mono), monospace",
-            color: "var(--color-text-muted)",
-            border: "1px solid var(--color-space-border)",
-            letterSpacing: "0.08em",
-          }}
-        >
-          MAY 2026
+      {showHeader && (
+        <div className="flex items-center gap-3 mb-6">
+          <div
+            className="h-5 w-1 rounded"
+            style={{ background: "linear-gradient(to bottom, var(--color-neon-cyan), var(--color-neon-purple))" }}
+          />
+          <h2
+            className="text-sm font-bold tracking-widest uppercase"
+            style={{
+              color: "var(--color-neon-cyan)",
+              fontFamily: FONT_MONO,
+              letterSpacing: "0.15em",
+            }}
+          >
+            Global Macro Snapshot
+          </h2>
+          <div
+            className="ml-auto text-xs px-2 py-0.5 rounded"
+            style={{
+              fontFamily: FONT_MONO,
+              color: "var(--color-text-muted)",
+              border: "1px solid var(--color-space-border)",
+              letterSpacing: "0.08em",
+            }}
+          >
+            MAY 2026
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {METRICS.map(({ key, label, displayValue, context, icon }) => {
           const trend = MACRO_SNAPSHOT[key].trend;
           return (
@@ -99,7 +99,7 @@ export default function MacroSnapshot() {
               key={key}
               className="rounded-lg p-3 flex flex-col gap-2 transition-all duration-200 hover:border-opacity-100"
               style={{
-                background: "rgba(255,255,255,0.02)",
+                background: "rgba(124,58,237,0.025)",
                 border: "1px solid var(--color-space-border)",
               }}
             >
@@ -110,7 +110,7 @@ export default function MacroSnapshot() {
               <div
                 className="font-bold text-xl leading-none"
                 style={{
-                  fontFamily: "var(--font-space-mono), monospace",
+                  fontFamily: FONT_MONO,
                   color: "var(--color-text-primary)",
                   letterSpacing: "-0.03em",
                 }}
@@ -128,7 +128,7 @@ export default function MacroSnapshot() {
                   className="text-xs"
                   style={{
                     color: "var(--color-text-muted)",
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                   }}
                 >
                   {context}

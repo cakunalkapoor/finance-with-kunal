@@ -5,6 +5,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/** Mono font stack for tickers, numbers, and labels — single source for the
+ *  repeated inline `fontFamily`. Uses the self-hosted next/font variable. */
+export const FONT_MONO = "var(--font-space-mono), monospace";
+
 export function formatNumber(value: number, decimals = 2): string {
   return value.toLocaleString("en-US", {
     minimumFractionDigits: decimals,
@@ -31,7 +35,7 @@ export function formatChange(value: number, showSign = true): string {
 }
 
 export function getChangeColor(value: number, isPositiveGood = true): string {
-  if (value === 0) return "text-market-neutral";
+  if (value === 0) return "text-neutral";
   const positive = isPositiveGood ? value > 0 : value < 0;
   return positive ? "text-up" : "text-down";
 }
@@ -53,12 +57,16 @@ export function generateSparkline(
   weeks: number,
   volatility = 0.02
 ): number[] {
+  // Deterministic (seeded by index + baseValue) so SSR and client render
+  // identically. Never use Math.random() here — it causes hydration mismatches.
   const points: number[] = [];
   let current = baseValue;
+  const seed = Math.round(baseValue * 100);
   for (let i = 0; i < weeks; i++) {
-    const change = (Math.random() - 0.48) * volatility * current;
+    const rand = ((((i + seed) * 1103515245 + 12345) >>> 0) % 1000) / 1000;
+    const change = (rand - 0.48) * volatility * current;
     current += change;
-    points.push(current);
+    points.push(Math.round(current * 100) / 100);
   }
   return points;
 }

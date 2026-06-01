@@ -1,5 +1,6 @@
 import { ECONOMIC_INDICATORS } from "@/lib/mock-data";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
+import { FONT_MONO } from "@/lib/utils";
 
 function generateNote(ind: (typeof ECONOMIC_INDICATORS)[0]): string {
   const { name, value, previousValue, direction, unit, period, isPositiveGood } = ind;
@@ -42,10 +43,10 @@ export default function EconomicNotes() {
           <span
             className="text-xs px-2 py-0.5 rounded"
             style={{
-              fontFamily: "var(--font-space-mono), monospace",
+              fontFamily: FONT_MONO,
               color: "var(--color-neon-purple)",
-              border: "1px solid rgba(168,85,247,0.3)",
-              background: "rgba(168,85,247,0.08)",
+              border: "1px solid rgba(129,140,248,0.28)",
+              background: "rgba(129,140,248,0.08)",
               letterSpacing: "0.06em",
             }}
           >
@@ -56,12 +57,12 @@ export default function EconomicNotes() {
       <div className="p-4 space-y-2">
         {notes.map(({ id, flag, note, direction, isPositiveGood }) => {
           const positive = isPositiveGood ? direction === "up" : direction === "down";
-          const dotColor = positive ? "#10d98e" : direction === "neutral" ? "#f59e0b" : "#f43f5e";
+          const dotColor = positive ? "#34d399" : direction === "neutral" ? "#fbbf24" : "#fb7185";
           return (
             <div
               key={id}
               className="flex items-start gap-3 p-3 rounded-lg"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--color-space-border)" }}
+              style={{ background: "rgba(124,58,237,0.025)", border: "1px solid var(--color-space-border)" }}
             >
               <div
                 className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
@@ -78,7 +79,7 @@ export default function EconomicNotes() {
           className="text-xs pt-1"
           style={{
             color: "var(--color-text-muted)",
-            fontFamily: "var(--font-space-mono), monospace",
+            fontFamily: FONT_MONO,
             letterSpacing: "0.04em",
           }}
         >

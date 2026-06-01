@@ -2,23 +2,22 @@ import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
 import EconomicChart from "@/components/dashboard/EconomicChart";
 import EconomicNotes from "@/components/dashboard/EconomicNotes";
 import MarketTicker from "@/components/markets/MarketTicker";
+import PageHeader from "@/components/ui/PageHeader";
+import { FONT_MONO } from "@/lib/utils";
 import { ECONOMIC_INDICATORS } from "@/lib/mock-data";
 import type { EconomicIndicator } from "@/types";
 
 export const metadata = {
-  title: "Economic Dashboard — Finance with Kunal",
-  description: "Global economic indicators: GDP, PMI, inflation, trade, shipping, and energy.",
+  title: "Global Economy — Finance with Kunal",
+  description: "Global economic indicators: GDP, PMI, inflation, employment, and energy.",
 };
 
 const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: string }[] = [
+  { id: "pmi", label: "PMI", icon: "🌐" },
   { id: "growth", label: "Growth", icon: "📈" },
   { id: "employment", label: "Employment", icon: "👷" },
-  { id: "manufacturing", label: "Manufacturing", icon: "🏭" },
-  { id: "services", label: "Services", icon: "🏦" },
   { id: "inflation", label: "Inflation", icon: "💹" },
-  { id: "trade", label: "Global Trade", icon: "🌍" },
   { id: "energy", label: "Energy", icon: "⚡" },
-  { id: "shipping", label: "Shipping", icon: "🚢" },
 ];
 
 export default function DashboardPage() {
@@ -27,39 +26,16 @@ export default function DashboardPage() {
       <MarketTicker />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        {/* Header */}
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <div
-              className="h-4 w-0.5 rounded"
-              style={{ background: "var(--color-neon-purple)" }}
-            />
-            <span
-              className="text-xs font-bold tracking-widest uppercase"
-              style={{
-                fontFamily: "var(--font-space-mono), monospace",
-                color: "var(--color-neon-purple)",
-                letterSpacing: "0.14em",
-              }}
-            >
-              Economic Intelligence
-            </span>
-          </div>
-          <h1
-            className="text-2xl sm:text-3xl font-bold"
-            style={{ color: "var(--color-text-primary)", letterSpacing: "-0.02em" }}
-          >
-            Global Economic Dashboard
-          </h1>
-          <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
-            Key leading indicators tracking the pulse of the global economy
-          </p>
-        </div>
+        <PageHeader
+          label="Global Economy"
+          labelColor="var(--color-neon-purple)"
+          title="Global Economic Dashboard"
+          lastUpdated="May 30, 2026"
+          nextUpdate="Jun 6, 2026"
+        />
 
-        {/* Macro snapshot — top */}
         <MacroSnapshot />
 
-        {/* Indicators by category */}
         {CATEGORIES.map(({ id, label, icon }) => {
           const indicators = ECONOMIC_INDICATORS.filter((ind) => ind.category === id);
           if (indicators.length === 0) return null;
@@ -70,7 +46,7 @@ export default function DashboardPage() {
                 <h2
                   className="font-bold text-sm tracking-widest uppercase"
                   style={{
-                    fontFamily: "var(--font-space-mono), monospace",
+                    fontFamily: FONT_MONO,
                     color: "var(--color-text-secondary)",
                     letterSpacing: "0.12em",
                   }}
@@ -98,7 +74,6 @@ export default function DashboardPage() {
           );
         })}
 
-        {/* Auto-generated notes */}
         <EconomicNotes />
       </div>
     </>
