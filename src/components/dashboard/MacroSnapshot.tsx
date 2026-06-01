@@ -93,7 +93,7 @@ export default function MacroSnapshot({
               letterSpacing: "0.08em",
             }}
           >
-            MAY 2026
+            JUN 2026
           </div>
         </div>
       )}
