@@ -206,6 +206,23 @@ export const EQUITY_INDICES: IndexQuote[] = [
     pe10yAvg: 17.2,
     sparkline: [21002.71, 21790.29, 22049.9, 22045.74, 22580.08, 22547.5, 22751.03, 23113.28, 23373.73, 23542.52, 24003.77, 24370.02, 23625.44, 24519.9, 24100.3, 24855.18, 25629.64, 26247.37, 25982.91, 27301.92, 27647.87, 27532.26, 28233.35, 27651.41, 27903.56, 27426.36, 27554.53, 27795.71, 28400.73, 27525.17, 28371.98, 29349.81, 30360.55, 30810.58, 31746.08, 32536.27, 31801.27, 33605.71, 35095.09, 32110.42, 33342.51, 33543.88, 33112.59, 33229.82, 36296.12, 36958.8, 39616.63, 40769.29, 41898.32, 40891.82, 43644.4, 45337.91],
   },
+  {
+    // CBOE Volatility Index — market-implied 30-day S&P 500 vol ("fear gauge")
+    symbol: "^VIX",
+    name: "VIX",
+    region: "USA",
+    flag: "🇺🇸",
+    value: 0,
+    dailyChange: 0,
+    weekChange: 0,
+    monthChange: 0,
+    ytdChange: 0,
+    high52w: 0,
+    low52w: 0,
+    pe: 0,
+    pe10yAvg: 0,
+    sparkline: [],
+  },
 ];
 
 // BOND_YIELDS — sourced via fetch-bonds.mjs (Quandl → Yahoo Finance → ECB fallback)

@@ -47,6 +47,7 @@ INDICES = [
     ("tsx",    "^GSPTSE",   "S&P/TSX Composite",  "Canada",      "🇨🇦"),
     ("kospi",  "^KS11",     "KOSPI",              "South Korea", "🇰🇷"),
     ("twii",   "^TWII",     "TAIEX",              "Taiwan",      "🇹🇼"),
+    ("vix",    "^VIX",      "VIX",                "USA",         "🇺🇸"),
 ]
 
 # 10Y sovereign bond yields — Yahoo only carries some reliably
