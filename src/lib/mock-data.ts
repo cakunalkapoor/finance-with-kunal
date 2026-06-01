@@ -2386,6 +2386,60 @@ export const MACRO_SNAPSHOT: MacroSnapshot = {
   oil: { value: 96.98, trend: "down" },      // Yahoo Finance BZ=F  May 29
 };
 
+export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
+  weekRange: "May 26 – Jun 1, 2026",
+  lead: "A choppy holiday-shortened week saw US equities consolidate just shy of record highs while oil ripped back above $96 on Middle East supply jitters. Gold gave back gains after touching $4,500, the dollar steadied, and Bitcoin extended its slide as crypto inflows weakened.",
+  sections: [
+    {
+      id: "heatmap",
+      title: "Sector Heatmap",
+      icon: "🟦",
+      body: "Energy and Materials led the S&P 500 heatmap as crude rebounded above $96, while Consumer Discretionary lagged on cooling spending data. Mega-cap Tech traded mixed — AI names held firm, but semis pulled back after a record May run.",
+      link: { href: "/markets", label: "View heatmap" },
+    },
+    {
+      id: "movers",
+      title: "Top Gainers & Losers",
+      icon: "🔺",
+      body: "Asia led on the upside: KOSPI +3.55%, Nikkei 225 +2.53%, TAIEX +2.51% on AI/semis momentum. Losers clustered around emerging-market profit-taking: NIFTY 50 –1.42%, Shanghai Composite –0.73%, FTSE 100 –0.16%.",
+    },
+    {
+      id: "flow",
+      title: "Where Money Is Flowing",
+      icon: "💸",
+      body: "Defensive positioning showed up everywhere — gold and Treasuries saw net inflows even as equities held up, classic late-cycle behaviour. Sector rotation into Energy was the standout, while spot crypto ETFs saw heavy outflows.",
+    },
+    {
+      id: "indices",
+      title: "Indices Movement",
+      icon: "📊",
+      body: "S&P 500 finished +1.34% at 7,573.84, NASDAQ 100 +3.32% at 30,333 — both hovering near all-time highs. DAX flat at 25,105, FTSE 100 –0.16%, CAC 40 –0.07%. Asia mixed (KOSPI/Nikkei strong, NIFTY weak), S&P/TSX +0.73%.",
+      link: { href: "/markets", label: "All indices" },
+    },
+    {
+      id: "bonds",
+      title: "Bond Market",
+      icon: "📉",
+      body: "US 10Y settled at 4.45% with the curve modestly steepening. JGB 10Y at 2.52% — Japan's normalization story keeps pressing higher. UK Gilts at 4.82% (+12 bps on the month), Bunds quiet at 3.00%, India 10Y firm at 6.84%.",
+      link: { href: "/markets", label: "Sovereign yields" },
+    },
+    {
+      id: "commodities",
+      title: "Commodities",
+      icon: "🛢️",
+      body: "Brent +5.4% on the day to $96.98 as OPEC+ disciplined supply and Middle East supply concerns flared. Gold –1.74% to $4,481 after a record run last week. Copper firm at $6.49, signaling resilient industrial demand. Natural gas eased to $3.19.",
+      link: { href: "/markets", label: "Commodity board" },
+    },
+    {
+      id: "currencies",
+      title: "Currencies",
+      icon: "💱",
+      body: "DXY held the 99 handle. EUR/USD slipped to 1.16, GBP/USD to 1.34. The INR weakened to 95.16 on FX outflows tied to the NIFTY pullback. JPY drifted to 159.73 as the BoJ stayed cautious on the timing of further normalization.",
+      link: { href: "/markets", label: "FX board" },
+    },
+  ],
+};
+
 export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
   {
     id: "yahoo-gold-pullback-2026",

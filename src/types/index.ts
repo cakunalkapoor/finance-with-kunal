@@ -129,4 +129,18 @@ export interface ExternalCommentary {
   category: string;
 }
 
+export interface WeeklyCommentarySection {
+  id: string;
+  title: string;
+  icon: string;
+  body: string;
+  link?: { href: string; label: string };
+}
+
+export interface WeeklyCommentary {
+  weekRange: string;
+  lead: string;
+  sections: WeeklyCommentarySection[];
+}
+
 export type TimeHorizon = "1W" | "1M" | "3M" | "6M" | "1Y" | "3Y" | "5Y";
