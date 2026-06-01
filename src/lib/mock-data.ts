@@ -2274,7 +2274,8 @@ export const MACRO_SNAPSHOT: MacroSnapshot = {
   gdp: { value: 1.6, trend: "up" },          // FRED A191RL1Q225SBEA  Q1 2026
   pmi: { value: 52.6, trend: "up" },         // Manual (S&P Global Composite)
   inflation: { value: 3.95, trend: "up" },   // FRED CPIAUCSL  YoY  Apr 2026
-  jobs: { value: 4.3, trend: "neutral" },    // FRED UNRATE  Apr 2026
+  jobs: { value: 4.3, trend: "neutral" },     // FRED UNRATE  Apr 2026
+  claims: { value: 215, trend: "up" },        // FRED ICSA  Week of May 23, 2026
   oil: { value: 91.12, trend: "down" },      // Yahoo Finance BZ=F  May 29
 };
 

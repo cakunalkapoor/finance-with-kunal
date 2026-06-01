@@ -32,6 +32,13 @@ const METRICS = [
     icon: "💼",
   },
   {
+    key: "claims" as const,
+    label: "Initial Claims",
+    displayValue: `${MACRO_SNAPSHOT.claims.value}K`,
+    context: "US Weekly",
+    icon: "📋",
+  },
+  {
     key: "oil" as const,
     label: "Oil",
     displayValue: `$${MACRO_SNAPSHOT.oil.value}`,
@@ -91,7 +98,7 @@ export default function MacroSnapshot({
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {METRICS.map(({ key, label, displayValue, context, icon }) => {
           const trend = MACRO_SNAPSHOT[key].trend;
           return (

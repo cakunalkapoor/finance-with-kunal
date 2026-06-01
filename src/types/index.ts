@@ -105,6 +105,7 @@ export interface MacroSnapshot {
   pmi: { value: number; trend: "up" | "down" | "neutral" };
   inflation: { value: number; trend: "up" | "down" | "neutral" };
   jobs: { value: number; trend: "up" | "down" | "neutral" };
+  claims: { value: number; trend: "up" | "down" | "neutral" };
   oil: { value: number; trend: "up" | "down" | "neutral" };
 }
 
