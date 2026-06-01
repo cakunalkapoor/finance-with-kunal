@@ -2287,7 +2287,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
       "Gold hit a fresh all-time high above $4,500 per ounce this week as the US dollar slid to a three-year low and investors rotated into hard assets amid rising geopolitical uncertainty. Central bank buying — led by China and India — shows no signs of slowing.",
     source: "Yahoo Finance",
     sourceUrl: "https://finance.yahoo.com/commodities/",
-    date: "2026-05-30",
+    date: "2026-06-01",
     category: "Commodities",
   },
   {
@@ -2297,7 +2297,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
       "The S&P 500 climbed past 7,500 for the first time this month, driven by a rebound in mega-cap tech and a surprise surge in energy stocks as oil steadied above $90. Breadth improved, with advancing issues outpacing decliners by a 3-to-1 margin.",
     source: "CNBC",
     sourceUrl: "https://www.cnbc.com/markets/",
-    date: "2026-05-29",
+    date: "2026-06-01",
     category: "Equities",
   },
   {
@@ -2307,7 +2307,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
       "Brent crude fell nearly 3% on reports that OPEC+ members are debating an accelerated production increase at next month's meeting. Saudi Arabia is said to be willing to accept lower prices in exchange for reclaiming market share lost to US shale producers.",
     source: "AP News",
     sourceUrl: "https://apnews.com/hub/energy",
-    date: "2026-05-28",
+    date: "2026-05-31",
     category: "Energy",
   },
   {
@@ -2317,7 +2317,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
       "The Federal Reserve left its benchmark rate unchanged for the third consecutive meeting, but minutes released this week showed a growing majority expects one or two cuts before year-end if inflation continues its gradual descent toward the 2% target.",
     source: "AP News",
     sourceUrl: "https://apnews.com/hub/federal-reserve-system",
-    date: "2026-05-26",
+    date: "2026-05-31",
     category: "Monetary Policy",
   },
   {
@@ -2327,7 +2327,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
       "The NIFTY 50 has shed nearly 10% from its year-to-date peak, rattled by foreign outflows, a softening rupee, and profit-taking after a decade of outsized gains. Analysts are split on whether this is a healthy correction or the start of a more prolonged pullback.",
     source: "BBC Business",
     sourceUrl: "https://www.bbc.com/news/business",
-    date: "2026-05-23",
+    date: "2026-05-30",
     category: "Emerging Markets",
   },
   {
@@ -2337,7 +2337,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
       "Spot Bitcoin ETFs recorded over $2 billion in net inflows last week — the highest weekly total since launch — as institutional allocators returned following a period of consolidation. Analysts say the move signals renewed conviction in crypto as a portfolio diversifier.",
     source: "CoinDesk",
     sourceUrl: "https://www.coindesk.com/markets/",
-    date: "2026-05-21",
+    date: "2026-05-29",
     category: "Crypto",
   },
 ];
