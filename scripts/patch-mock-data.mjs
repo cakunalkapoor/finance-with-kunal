@@ -55,15 +55,21 @@ function patchBondByCountry(country, fields) {
   return patchObject(re, fields);
 }
 
-const stats = { equity: 0, commodity: 0, crypto: 0, forex: 0, bond: 0, macro: 0 };
+const stats = { equity: 0, vix: 0, commodity: 0, crypto: 0, forex: 0, bond: 0, macro: 0 };
 
-// EQUITY INDICES
+// EQUITY INDICES — base fields
 for (const idx of yahoo.indices || []) {
   if (patchBySymbol(idx.symbol, {
     value: idx.value, dailyChange: idx.dailyChange, weekChange: idx.weekChange,
     monthChange: idx.monthChange, ytdChange: idx.ytdChange,
     high52w: idx.high52w, low52w: idx.low52w, sparkline: idx.sparkline,
   })) stats.equity++;
+}
+
+// PER-MARKET VIX — attach `vix: <value>` to each matching equity entry.
+// yahoo.vol is a map { parentSymbol: vixValue, ... }
+for (const [parentSym, vixValue] of Object.entries(yahoo.vol || {})) {
+  if (patchBySymbol(parentSym, { vix: vixValue })) stats.vix++;
 }
 
 // COMMODITIES

@@ -47,7 +47,17 @@ INDICES = [
     ("tsx",    "^GSPTSE",   "S&P/TSX Composite",  "Canada",      "🇨🇦"),
     ("kospi",  "^KS11",     "KOSPI",              "South Korea", "🇰🇷"),
     ("twii",   "^TWII",     "TAIEX",              "Taiwan",      "🇹🇼"),
-    ("vix",    "^VIX",      "VIX",                "USA",         "🇺🇸"),
+]
+
+# Per-market volatility indices (where Yahoo publishes one). Maps equity symbol → vol symbol.
+# Each value is published as the implied 30-day volatility of the parent index.
+VOL = [
+    # (parent_equity_symbol, vol_symbol, label)
+    # Yahoo only reliably serves these three; other regional VIXes (VDAX, VSTOXX,
+    # VKOSPI, VFTSE, etc.) are commercial and not on Yahoo's free feed.
+    ("^GSPC",  "^VIX",      "VIX (S&P 500)"),
+    ("^NDX",   "^VXN",      "VXN (NASDAQ 100)"),
+    ("^NSEI",  "^INDIAVIX", "India VIX (NIFTY 50)"),
 ]
 
 # 10Y sovereign bond yields — Yahoo only carries some reliably
@@ -291,6 +301,22 @@ def main():
             **d,
         })
 
+    print()
+    vol_out = {}  # parent_symbol -> latest vol value
+    for parent_sym, vol_sym, label in VOL:
+        print(f"  {vol_sym:12} {label:30} ", end="", flush=True)
+        hist, err = fetch_one(vol_sym)
+        if err or hist is None:
+            print(f"✗ {err}")
+            continue
+        closes = hist["Close"].dropna()
+        if len(closes) == 0:
+            print("✗ no closes")
+            continue
+        last = float(closes.iloc[-1])
+        print(f"{last:>8.2f}")
+        vol_out[parent_sym] = round(last, 2)
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w") as f:
         json.dump({
@@ -301,9 +327,10 @@ def main():
             "commodities": commodities_out,
             "crypto":      crypto_out,
             "forex":      forex_out,
+            "vol":         vol_out,
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
-    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto")
+    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(vol_out)}/{len(VOL)} vol")
 
 
 if __name__ == "__main__":

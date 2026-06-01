@@ -101,6 +101,32 @@ function PECell({ pe, pe10yAvg }: { pe: number; pe10yAvg: number }) {
   );
 }
 
+// Per-market VIX cell — color-coded by absolute level:
+//   < 15 green (calm), 15–25 yellow (elevated), > 25 red (high fear).
+// Renders "—" if no vol index is published for the market.
+function VixCell({ value }: { value?: number }) {
+  if (value == null || value === 0) {
+    return (
+      <span style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>—</span>
+    );
+  }
+  const color = value < 15 ? "#34d399" : value < 25 ? "#f59e0b" : "#fb7185";
+  const bg =
+    value < 15
+      ? "rgba(52,211,153,0.11)"
+      : value < 25
+      ? "rgba(245,158,11,0.13)"
+      : "rgba(251,113,133,0.13)";
+  return (
+    <span
+      className="px-2 py-0.5 rounded text-xs font-semibold"
+      style={{ background: bg, color, fontFamily: FONT_MONO }}
+    >
+      {value.toFixed(2)}
+    </span>
+  );
+}
+
 // Mini horizontal range bar showing where current price sits in 52W range
 function RangeBar({ value, low, high }: { value: number; low: number; high: number }) {
   const pct = Math.round(((value - low) / (high - low)) * 100);
@@ -171,7 +197,7 @@ export default function EquityMarketsTable() {
 
   return (
     <SciFiCard glow="cyan" cornerAccent>
-      <CardHeader title="Global Equity Markets" subtitle="Top 10 Major Indices" />
+      <CardHeader title="Global Equity Markets" subtitle="11 Major Indices · with per-market VIX where available" />
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
@@ -186,6 +212,10 @@ export default function EquityMarketsTable() {
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>1W</th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>1M</th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>YTD</th>
+              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>
+                <div>VIX</div>
+                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>30d vol</div>
+              </th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>
                 <div>P/E RATIO</div>
                 <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>vs 10Y avg</div>
@@ -282,6 +312,11 @@ export default function EquityMarketsTable() {
                     >
                       {formatChange(idx.ytdChange)}
                     </span>
+                  </td>
+
+                  {/* VIX — only S&P 500, NASDAQ 100, NIFTY 50 have a Yahoo-served vol index */}
+                  <td className="px-4 py-3">
+                    <VixCell value={idx.vix} />
                   </td>
 
                   {/* P/E Ratio */}
