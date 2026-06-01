@@ -45,7 +45,7 @@ export default function BlogPage() {
           className="text-sm max-w-md leading-relaxed mb-2"
           style={{ color: "var(--color-text-secondary)" }}
         >
-          Weekly macro commentary, trade flow analysis, and market deep-dives are on their way.
+          Deeper Insights, Coming Soon
         </p>
 
         <p
