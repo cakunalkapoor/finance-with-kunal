@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BarChart2, BookOpen, TrendingUp } from "lucide-react";
+import { ArrowRight, BarChart2, BookOpen, CalendarCheck, CalendarClock, TrendingUp } from "lucide-react";
 import MarketTicker from "@/components/markets/MarketTicker";
 import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
 import { EXTERNAL_COMMENTARY, EQUITY_INDICES } from "@/lib/mock-data";
@@ -25,6 +25,58 @@ function HeroSection() {
       />
 
       <div className="max-w-screen-2xl mx-auto">
+        {/* Last / Next update row */}
+        <div className="flex flex-wrap items-center gap-4 mb-3">
+          <div className="flex items-center gap-1.5">
+            <CalendarCheck size={12} style={{ color: "var(--color-market-up)" }} />
+            <span
+              className="text-xs"
+              style={{
+                fontFamily: FONT_MONO,
+                color: "var(--color-text-muted)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              Last Updated
+            </span>
+            <span
+              className="text-xs font-semibold"
+              style={{
+                fontFamily: FONT_MONO,
+                color: "var(--color-text-secondary)",
+              }}
+            >
+              Jun 1, 2026
+            </span>
+          </div>
+          <div
+            className="w-px h-3 hidden sm:block"
+            style={{ background: "var(--color-space-border)" }}
+          />
+          <div className="flex items-center gap-1.5">
+            <CalendarClock size={12} style={{ color: "var(--color-neon-cyan)" }} />
+            <span
+              className="text-xs"
+              style={{
+                fontFamily: FONT_MONO,
+                color: "var(--color-text-muted)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              Next Update
+            </span>
+            <span
+              className="text-xs font-semibold"
+              style={{
+                fontFamily: FONT_MONO,
+                color: "var(--color-text-secondary)",
+              }}
+            >
+              Jun 8, 2026
+            </span>
+          </div>
+        </div>
+
         {/* Pre-title */}
         <div className="flex items-center gap-2 mb-4">
           <div
