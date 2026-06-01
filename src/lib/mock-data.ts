@@ -2398,12 +2398,6 @@ export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
       link: { href: "/markets", label: "View heatmap" },
     },
     {
-      id: "movers",
-      title: "Top Gainers & Losers",
-      icon: "🔺",
-      body: "Asia led on the upside: KOSPI +3.55%, Nikkei 225 +2.53%, TAIEX +2.51% on AI/semis momentum. Losers clustered around emerging-market profit-taking: NIFTY 50 –1.42%, Shanghai Composite –0.73%, FTSE 100 –0.16%.",
-    },
-    {
       id: "flow",
       title: "Where Money Is Flowing",
       icon: "💸",
