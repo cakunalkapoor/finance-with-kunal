@@ -58,6 +58,8 @@ const MACRO = [
   { key: "us_gdp_growth",   id: "A191RL1Q225SBEA", limit: 12, label: "US GDP Growth", unit: "% QoQ", positiveGood: true },
   // US CPI All Items (1982-84=100) — monthly. We compute YoY % change.
   { key: "us_cpi_index",    id: "CPIAUCSL", limit: 30, label: "US CPI Index", unit: "Index" },
+  // US PPI Final Demand (Nov 2009=100) — monthly. We compute YoY % change.
+  { key: "us_ppi_index",    id: "PPIFIS",   limit: 30, label: "US PPI Index", unit: "Index" },
 ];
 
 // ── HTTP helpers ───────────────────────────────────────────────────────────────
@@ -193,6 +195,9 @@ async function main() {
       if (m.key === "us_cpi_index") {
         derived = deriveCPI_YoY(obs);
         macro["us_cpi"] = { ...derived, unit: "% YoY", label: "US CPI Inflation" };
+      } else if (m.key === "us_ppi_index") {
+        derived = deriveCPI_YoY(obs);
+        macro["us_ppi"] = { ...derived, unit: "% YoY", label: "US PPI Inflation" };
       } else {
         derived = deriveMacro(obs, m.scale ?? 1);
         macro[m.key] = { ...derived, unit: m.unit, label: m.label };

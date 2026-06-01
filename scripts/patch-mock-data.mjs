@@ -17,6 +17,10 @@ let src = readFileSync(mockPath, "utf8");
 const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);
 
 // Patch fields inside the FIRST object that contains `marker` after `marker_anchor`.
+// Value semantics:
+//   - Array  → rendered as "[a, b, c]"
+//   - Number → rendered as "<n>"
+//   - String → passed through as-is (caller is responsible for quoting / formatting)
 function patchObject(anchorRegex, fields) {
   // anchorRegex must capture: $1 = body up to fields, $2 = closing }
   const match = src.match(anchorRegex);
@@ -25,8 +29,12 @@ function patchObject(anchorRegex, fields) {
   for (const [key, val] of Object.entries(fields)) {
     if (val == null) continue;
     const valStr = r(val);
-    // Match field assignment up to comma or newline. Handles arrays, signed nums.
-    const fieldRe = new RegExp(`(${key}:\\s*)(\\[[^\\]]*\\]|-?[\\d.]+)`, "m");
+    // Match field assignment. Handles: arrays (single or multi-line), numbers,
+    // and quoted strings. [\s\S] makes the array branch span newlines.
+    const fieldRe = new RegExp(
+      `(${key}:\\s*)(\\[[\\s\\S]*?\\]|"[^"]*"|[A-Za-z_$][\\w]*\\([^)]*\\)|-?[\\d.]+)`,
+      "m"
+    );
     body = body.replace(fieldRe, `$1${valStr}`);
   }
   src = src.replace(anchorRegex, body + match[2]);
@@ -108,6 +116,35 @@ if (patchMacro("jobs", m.us_unemployment?.value)) stats.macro++;
 if (patchMacro("claims", m.us_jobless?.value)) stats.macro++;
 const brent = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
 if (brent && patchMacro("oil", brent.value)) stats.macro++;
+
+// ECONOMIC_INDICATORS — patch individual indicator cards by id.
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function asOfToPeriod(asOf) {
+  if (!asOf) return null;
+  const [y, mo] = asOf.split("-");
+  return `${monthNames[Number(mo) - 1]} ${y}`;
+}
+function patchEconomicIndicator(id, macroRec) {
+  if (!macroRec || macroRec.value == null) return false;
+  const re = new RegExp(`(\\{[^{}]*id:\\s*"${id}"[^{}]*?)(\\n\\s*\\})`, "s");
+  const tsLine = `[\n      ${macroRec.timeSeries
+    .map((p) => `{ date: "${p.date}", value: ${p.value} }`)
+    .join(",\n      ")}\n    ]`;
+  const fields = {
+    value: macroRec.value,
+    previousValue: macroRec.previousValue,
+    change: macroRec.change,
+    direction: `"${macroRec.direction}"`,
+    period: `"${asOfToPeriod(macroRec.asOf)}"`,
+    timeSeries: tsLine,
+  };
+  return patchObject(re, fields);
+}
+if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
+if (patchEconomicIndicator("us-ppi", m.us_ppi)) stats.macro++;
+if (patchEconomicIndicator("us-jobless-claims", m.us_jobless)) stats.macro++;
+if (patchEconomicIndicator("us-unemployment", m.us_unemployment)) stats.macro++;
+if (patchEconomicIndicator("us-gdp", m.us_gdp_growth)) stats.macro++;
 
 writeFileSync(mockPath, src);
 console.log("patched mock-data.ts:", stats);
