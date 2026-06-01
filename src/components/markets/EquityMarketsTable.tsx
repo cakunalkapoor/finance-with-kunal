@@ -101,11 +101,11 @@ function PECell({ pe, pe10yAvg }: { pe: number; pe10yAvg: number }) {
   );
 }
 
-// Per-market VIX cell — color-coded by absolute level:
-//   < 15 green (calm), 15–25 yellow (elevated), > 25 red (high fear).
-// Renders "—" if no vol index is published for the market.
-function VixCell({ value }: { value?: number }) {
-  if (value == null || value === 0) {
+// Trailing 30-day annualized realized-volatility cell, color-coded by level:
+//   < 15 green (calm), 15–25 yellow (elevated), > 25 red (high vol).
+// Computed from each index's daily log-returns (see fetch-yahoo.py::derive).
+function VolCell({ value }: { value?: number }) {
+  if (value == null) {
     return (
       <span style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>—</span>
     );
@@ -122,7 +122,7 @@ function VixCell({ value }: { value?: number }) {
       className="px-2 py-0.5 rounded text-xs font-semibold"
       style={{ background: bg, color, fontFamily: FONT_MONO }}
     >
-      {value.toFixed(2)}
+      {value.toFixed(1)}%
     </span>
   );
 }
@@ -197,7 +197,7 @@ export default function EquityMarketsTable() {
 
   return (
     <SciFiCard glow="cyan" cornerAccent>
-      <CardHeader title="Global Equity Markets" subtitle="11 Major Indices · with per-market VIX where available" />
+      <CardHeader title="Global Equity Markets" subtitle="11 Major Indices · 30d realized volatility" />
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
@@ -213,8 +213,8 @@ export default function EquityMarketsTable() {
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>1M</th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>YTD</th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>
-                <div>VIX</div>
-                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>30d vol</div>
+                <div>VOL</div>
+                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>30d realized</div>
               </th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>
                 <div>P/E RATIO</div>
@@ -314,9 +314,9 @@ export default function EquityMarketsTable() {
                     </span>
                   </td>
 
-                  {/* VIX — only S&P 500, NASDAQ 100, NIFTY 50 have a Yahoo-served vol index */}
+                  {/* 30-day realized volatility, computed from daily log-returns */}
                   <td className="px-4 py-3">
-                    <VixCell value={idx.vix} />
+                    <VolCell value={idx.realizedVol} />
                   </td>
 
                   {/* P/E Ratio */}

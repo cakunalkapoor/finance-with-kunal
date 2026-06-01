@@ -49,16 +49,10 @@ INDICES = [
     ("twii",   "^TWII",     "TAIEX",              "Taiwan",      "🇹🇼"),
 ]
 
-# Per-market volatility indices (where Yahoo publishes one). Maps equity symbol → vol symbol.
-# Each value is published as the implied 30-day volatility of the parent index.
-VOL = [
-    # (parent_equity_symbol, vol_symbol, label)
-    # Yahoo only reliably serves these three; other regional VIXes (VDAX, VSTOXX,
-    # VKOSPI, VFTSE, etc.) are commercial and not on Yahoo's free feed.
-    ("^GSPC",  "^VIX",      "VIX (S&P 500)"),
-    ("^NDX",   "^VXN",      "VXN (NASDAQ 100)"),
-    ("^NSEI",  "^INDIAVIX", "India VIX (NIFTY 50)"),
-]
+# Realized volatility is computed per-index inside derive() from each index's
+# trailing 30-day daily closes. No separate VOL fetch list needed — free APIs
+# don't carry foreign implied-vol indices (VDAX, VSTOXX, VKOSPI, VFTSE are
+# commercial), so we use realized vol for consistency across all markets.
 
 # 10Y sovereign bond yields — Yahoo only carries some reliably
 BONDS = [
@@ -149,16 +143,28 @@ def derive(history, year=2026):
     high52w = float(closes.max())
     low52w  = float(closes.min())
 
+    # Trailing 30-day annualized REALIZED volatility, in percentage points.
+    # stddev of log-returns × √252 × 100  →  e.g. 15.5 means ~15.5%.
+    # Comparable in magnitude to VIX/IV but backward-looking instead of implied.
+    import numpy as np
+    realized_vol = None
+    if len(closes) >= 31:
+        last31 = closes.tail(31).values
+        log_returns = np.diff(np.log(last31))
+        rv = float(np.std(log_returns, ddof=1) * np.sqrt(252) * 100)
+        realized_vol = round(rv, 2)
+
     return {
-        "value":       round(float(last), 2),
-        "asOf":        closes_idx[-1].strftime("%Y-%m-%d"),
-        "dailyChange": pct(last, prev_close),
-        "weekChange":  pct(last, wk_ago),
-        "monthChange": pct(last, month_ago),
-        "ytdChange":   pct(last, ytd_anchor),
-        "high52w":     round(high52w, 2),
-        "low52w":      round(low52w, 2),
-        "sparkline":   downsample(closes, 52),
+        "value":        round(float(last), 2),
+        "asOf":         closes_idx[-1].strftime("%Y-%m-%d"),
+        "dailyChange":  pct(last, prev_close),
+        "weekChange":   pct(last, wk_ago),
+        "monthChange":  pct(last, month_ago),
+        "ytdChange":    pct(last, ytd_anchor),
+        "high52w":      round(high52w, 2),
+        "low52w":       round(low52w, 2),
+        "sparkline":    downsample(closes, 52),
+        "realizedVol":  realized_vol,
     }
 
 
@@ -301,22 +307,6 @@ def main():
             **d,
         })
 
-    print()
-    vol_out = {}  # parent_symbol -> latest vol value
-    for parent_sym, vol_sym, label in VOL:
-        print(f"  {vol_sym:12} {label:30} ", end="", flush=True)
-        hist, err = fetch_one(vol_sym)
-        if err or hist is None:
-            print(f"✗ {err}")
-            continue
-        closes = hist["Close"].dropna()
-        if len(closes) == 0:
-            print("✗ no closes")
-            continue
-        last = float(closes.iloc[-1])
-        print(f"{last:>8.2f}")
-        vol_out[parent_sym] = round(last, 2)
-
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w") as f:
         json.dump({
@@ -327,10 +317,9 @@ def main():
             "commodities": commodities_out,
             "crypto":      crypto_out,
             "forex":      forex_out,
-            "vol":         vol_out,
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
-    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(vol_out)}/{len(VOL)} vol")
+    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto")
 
 
 if __name__ == "__main__":

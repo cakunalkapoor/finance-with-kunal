@@ -13,7 +13,7 @@ export interface IndexQuote {
   sparkline: number[]; // 52 weekly price points (used for both YTD and 52W chart)
   pe: number;          // Trailing 12-month P/E ratio
   pe10yAvg: number;    // 10-year average trailing P/E (for valuation context)
-  vix?: number;        // Corresponding volatility-index value (e.g. ^VIX for S&P 500); undefined if no public vol index
+  realizedVol?: number; // Trailing 30-day annualized realized volatility, in percentage points (e.g. 15.5 = ~15.5%). Computed in fetch-yahoo.py from daily log-returns.
 }
 
 export interface BondYield {
