@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { EXTERNAL_COMMENTARY } from "@/lib/mock-data";
 import { FONT_MONO } from "@/lib/utils";
 
@@ -21,12 +20,9 @@ export default function TrendingHeadlines() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {EXTERNAL_COMMENTARY.map((item) => (
-            <a
+            <div
               key={item.id}
-              href={item.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-xl p-5 flex flex-col gap-3 transition-all hover:scale-[1.01]"
+              className="rounded-xl p-5 flex flex-col gap-3"
               style={{
                 background: "var(--color-space-card)",
                 border: "1px solid var(--color-space-border)",
@@ -80,14 +76,8 @@ export default function TrendingHeadlines() {
                 >
                   {item.date}
                 </span>
-                <span
-                  className="text-xs flex items-center gap-1"
-                  style={{ color: "var(--color-neon-cyan)" }}
-                >
-                  Read source <ArrowRight size={11} />
-                </span>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </div>
