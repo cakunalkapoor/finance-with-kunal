@@ -3,6 +3,7 @@ import ProfileHero from "@/components/about/ProfileHero";
 import ProfileStats from "@/components/about/ProfileStats";
 import CareerHighlights from "@/components/about/CareerHighlights";
 import CareerTimeline from "@/components/about/CareerTimeline";
+import Qualifications from "@/components/about/Qualifications";
 import SkillsGrid from "@/components/about/SkillsGrid";
 import { PROFILE_DATA } from "@/lib/mock-data";
 
@@ -28,10 +29,8 @@ export default function AboutPage() {
       <ProfileHero data={PROFILE_DATA} />
       <ProfileStats stats={PROFILE_DATA.stats} />
       <CareerHighlights highlights={PROFILE_DATA.highlights} />
-      <CareerTimeline
-        experience={PROFILE_DATA.experience}
-        education={PROFILE_DATA.education}
-      />
+      <CareerTimeline experience={PROFILE_DATA.experience} />
+      <Qualifications education={PROFILE_DATA.education} />
       <SkillsGrid categories={PROFILE_DATA.skills} />
     </div>
   );
