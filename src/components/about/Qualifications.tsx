@@ -48,9 +48,9 @@ export default function Qualifications({ education }: { education: EducationItem
                   <Icon size={17} style={{ color: accent }} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
                     <span
-                      className="text-xs px-2 py-0.5 rounded-full font-semibold"
+                      className="text-xs px-2 py-0.5 rounded-full font-semibold whitespace-nowrap"
                       style={{
                         fontFamily: FONT_MONO,
                         letterSpacing: "0.08em",
@@ -59,7 +59,7 @@ export default function Qualifications({ education }: { education: EducationItem
                         border: `1px solid ${accent}40`,
                       }}
                     >
-                      {cert ? "CERTIFICATION" : "EDUCATION"}
+                      {cert ? "PROFESSIONAL CERTIFICATION" : "EDUCATION"}
                     </span>
                     {flag && (
                       <span className="text-sm leading-none" aria-hidden="true">
