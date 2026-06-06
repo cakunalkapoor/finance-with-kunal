@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, ExternalLink } from "lucide-react";
+import { Mail, ExternalLink, Quote } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 import SciFiCard from "@/components/ui/SciFiCard";
 import type { ProfileData } from "@/types";
@@ -130,6 +130,26 @@ export default function ProfileHero({ data }: { data: ProfileData }) {
           </p>
         ))}
       </div>
+
+      {/* Highlighted quote */}
+      {data.quote && (
+        <blockquote
+          className="mt-6 rounded-lg p-5 sm:p-6 relative"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(124,58,237,0.10), rgba(79,70,229,0.05))",
+            borderLeft: "3px solid var(--color-neon-cyan)",
+          }}
+        >
+          <Quote size={18} style={{ color: "var(--color-neon-cyan)", opacity: 0.75 }} />
+          <p
+            className="mt-2 text-base sm:text-lg italic leading-relaxed"
+            style={{ color: "var(--color-text-primary)", letterSpacing: "-0.01em" }}
+          >
+            {data.quote}
+          </p>
+        </blockquote>
+      )}
     </SciFiCard>
   );
 }

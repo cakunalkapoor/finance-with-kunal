@@ -184,6 +184,7 @@ export interface ProfileData {
   location: string;
   photo?: string;
   summary: string[];
+  quote?: string;
   stats: ProfileStat[];
   highlights: ProfileHighlight[];
   experience: ExperienceItem[];

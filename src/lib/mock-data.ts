@@ -2558,10 +2558,14 @@ export const PROFILE_DATA: ProfileData = {
   location: "Vancouver, BC",
   photo: "/kunal.jpg",
   summary: [
-    "Kunal Kapoor is a Chartered Accountant (ICAI, India — equivalent to CPA Canada) with an MBA from University Canada West and over a decade of experience across financial risk, compliance, and advisory. He has worked across institutional lending, investment banking, public accounting, and fintech.",
-    "His career spans building credit risk frameworks for a C$1.5bn education loan portfolio at a Warburg Pincus–backed institution, conducting financial due diligence and DCF valuations for hospitality assets, and managing regulatory compliance and AML programs in Canada's financial services sector. He has presented risk analysis to shareholders and regulatory bodies including the Reserve Bank of India.",
-    "Finance with Kunal brings this professional foundation to a wider audience — a weekly view of global equity markets, macro indicators, and economic trends, written with the rigour of a practitioner and the clarity of a teacher.",
+    "Hi, I'm Kunal Kapoor, a Chartered Accountant, MBA from University Canada West, and M.Com graduate from University of Mumbai, with over a decade of experience spanning financial risk management, regulatory compliance, corporate finance, and financial advisory services.",
+    "Throughout my career, I have sought out complex and challenging opportunities that sit at the intersection of finance, strategy, and regulation. My professional journey includes developing credit risk frameworks for a C$1.5 billion education loan portfolio at a Warburg Pincus-backed institution, conducting financial due diligence and discounted cash flow (DCF) valuations for hospitality assets, and leading regulatory compliance and anti-money laundering (AML) programs within Canada's emerging fintech sector.",
+    "Over the years, I have presented strategic analyses and risk assessments to shareholders, senior management teams, and regulatory authorities, including the Reserve Bank of India, helping organizations navigate complex financial and regulatory environments with confidence.",
+    "This website is a personal initiative born from that professional foundation. Through weekly insights on global equity markets, macroeconomic developments, policy trends, and key economic indicators, I aim to provide readers with clear, data-driven perspectives that cut through the noise and help make sense of an increasingly complex financial world.",
+    "Whether you are an investor, finance professional, business leader, or simply someone interested in understanding the forces shaping global markets, I hope you find these insights valuable.",
   ],
+  quote:
+    "Finance is ultimately the study of incentives, risk, and human behavior. This platform is my attempt to connect those dots and share the insights that emerge along the way.",
   stats: [
     { value: "10+", label: "Years in Finance & Risk" },
     { value: "C$1.5bn", label: "Loan Portfolio Modelled" },
