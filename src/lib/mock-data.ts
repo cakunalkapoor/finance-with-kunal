@@ -2562,6 +2562,38 @@ export const PROFILE_DATA: ProfileData = {
     "His career spans building credit risk frameworks for a C$1.5bn education loan portfolio at a Warburg Pincus–backed institution, conducting financial due diligence and DCF valuations for hospitality assets, and managing regulatory compliance and AML programs in Canada's financial services sector. He has presented risk analysis to shareholders and regulatory bodies including the Reserve Bank of India.",
     "Finance with Kunal brings this professional foundation to a wider audience — a weekly view of global equity markets, macro indicators, and economic trends, written with the rigour of a practitioner and the clarity of a teacher.",
   ],
+  stats: [
+    { value: "10+", label: "Years in Finance & Risk" },
+    { value: "C$1.5bn", label: "Loan Portfolio Modelled" },
+    { value: "6", label: "Professional Roles" },
+    { value: "2", label: "Countries — Canada & India" },
+  ],
+  highlights: [
+    {
+      title: "Built a C$1.5bn ECL Model",
+      description:
+        "Designed and implemented an IFRS 9 / Basel III Expected Credit Loss model across the full asset book at a Warburg Pincus–backed lender.",
+      icon: "lineChart",
+    },
+    {
+      title: "Presented Risk to the RBI",
+      description:
+        "Delivered quarterly risk analysis to shareholders and managed statutory audits by the Reserve Bank of India, safeguarding the company's regulatory standing.",
+      icon: "landmark",
+    },
+    {
+      title: "Valued Hospitality Assets",
+      description:
+        "Led DCF valuations, due diligence, and asset management for operational hotels — including a valuation study supporting debt restructuring.",
+      icon: "calculator",
+    },
+    {
+      title: "Stood Up AML / KYC Compliance",
+      description:
+        "Built FINTRAC-aligned AML/KYC programs in Canada — Enhanced Due Diligence reviews, STR/LCTR filings, and automated reconciliation.",
+      icon: "shieldCheck",
+    },
+  ],
   experience: [
     {
       title: "Compliance & Reconciliation Analyst",

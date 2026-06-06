@@ -167,12 +167,25 @@ export interface SkillCategory {
   items: string[];
 }
 
+export interface ProfileStat {
+  value: string;
+  label: string;
+}
+
+export interface ProfileHighlight {
+  title: string;
+  description: string;
+  icon: string;
+}
+
 export interface ProfileData {
   name: string;
   tagline: string;
   location: string;
   photo?: string;
   summary: string[];
+  stats: ProfileStat[];
+  highlights: ProfileHighlight[];
   experience: ExperienceItem[];
   education: EducationItem[];
   skills: SkillCategory[];

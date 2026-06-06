@@ -13,6 +13,7 @@ interface TimelineEvent {
   orgNote?: string;
   location?: string;
   detail?: string;
+  flag?: string;
   highlights?: string[];
 }
 
@@ -26,6 +27,13 @@ function parseSortKey(str: string): number {
   if (m) return parseInt(m[2]) + (MONTH_MAP[m[1]] ?? 0) / 12;
   const y = str.match(/(\d{4})/);
   return y ? parseInt(y[1]) : 0;
+}
+
+// Derive a country flag from a location or institution string.
+function flagFor(s: string): string {
+  if (/canada|vancouver|\bbc\b|toronto/i.test(s)) return "🇨🇦";
+  if (/india|mumbai|delhi|bengaluru|bangalore/i.test(s)) return "🇮🇳";
+  return "";
 }
 
 const TYPE_CONFIG: Record<EventType, { label: string; dotColor: string; badgeBg: string; badgeColor: string }> = {
@@ -50,10 +58,14 @@ export default function CareerTimeline({
       org: e.company,
       orgNote: e.companyNote,
       location: e.location,
+      flag: flagFor(e.location),
       highlights: e.highlights,
     })),
     ...education.map((e): TimelineEvent => {
-      const isCert = e.institution === "Intuit" || e.degree === "QuickBooks ProAdvisor";
+      const isCert =
+        e.institution === "Intuit" ||
+        e.degree === "QuickBooks ProAdvisor" ||
+        /chartered accountant/i.test(e.degree);
       return {
         type: isCert ? "cert" : "education",
         sortKey: parseSortKey(e.year),
@@ -61,6 +73,7 @@ export default function CareerTimeline({
         title: e.degree,
         org: e.institution,
         detail: e.detail,
+        flag: flagFor(e.institution),
       };
     }),
   ].sort((a, b) => b.sortKey - a.sortKey);
@@ -87,7 +100,7 @@ export default function CareerTimeline({
           }}
         />
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {events.map((event, i) => {
             const cfg = TYPE_CONFIG[event.type];
             return (
@@ -121,6 +134,11 @@ export default function CareerTimeline({
                     >
                       {cfg.label.toUpperCase()}
                     </span>
+                    {event.flag && (
+                      <span className="text-sm leading-none" aria-hidden="true">
+                        {event.flag}
+                      </span>
+                    )}
                     <span
                       className="text-xs font-semibold"
                       style={{ fontFamily: FONT_MONO, color: "var(--color-text-muted)" }}

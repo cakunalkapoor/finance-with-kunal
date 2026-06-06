@@ -1,5 +1,7 @@
 import PageHeader from "@/components/ui/PageHeader";
 import ProfileHero from "@/components/about/ProfileHero";
+import ProfileStats from "@/components/about/ProfileStats";
+import CareerHighlights from "@/components/about/CareerHighlights";
 import CareerTimeline from "@/components/about/CareerTimeline";
 import SkillsGrid from "@/components/about/SkillsGrid";
 import { PROFILE_DATA } from "@/lib/mock-data";
@@ -24,6 +26,8 @@ export default function AboutPage() {
       </div>
 
       <ProfileHero data={PROFILE_DATA} />
+      <ProfileStats stats={PROFILE_DATA.stats} />
+      <CareerHighlights highlights={PROFILE_DATA.highlights} />
       <CareerTimeline
         experience={PROFILE_DATA.experience}
         education={PROFILE_DATA.education}
