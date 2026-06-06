@@ -145,3 +145,35 @@ export interface WeeklyCommentary {
 }
 
 export type TimeHorizon = "1W" | "1M" | "3M" | "6M" | "1Y" | "3Y" | "5Y";
+
+export interface ExperienceItem {
+  title: string;
+  company: string;
+  companyNote?: string;
+  period: string;
+  location: string;
+  highlights: string[];
+}
+
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  year: string;
+  detail?: string;
+}
+
+export interface SkillCategory {
+  category: string;
+  items: string[];
+}
+
+export interface ProfileData {
+  name: string;
+  tagline: string;
+  location: string;
+  summary: string[];
+  experience: ExperienceItem[];
+  education: EducationItem[];
+  skills: SkillCategory[];
+  links: { label: string; url: string; icon: string }[];
+}

@@ -9,6 +9,7 @@ import type {
   EconomicIndicator,
   MacroSnapshot,
   BlogPost,
+  ProfileData,
 } from "@/types";
 
 // Build a deterministic 52-point weekly sparkline
@@ -2550,3 +2551,165 @@ export const BLOG_POSTS: BlogPost[] = [
     tags: ["Shipping", "Inflation", "Supply Chain"],
   },
 ];
+
+export const PROFILE_DATA: ProfileData = {
+  name: "Kunal Kapoor",
+  tagline: "Finance & Risk Professional · CA · MBA",
+  location: "Vancouver, BC",
+  summary: [
+    "Kunal Kapoor is a Chartered Accountant (ICAI, India — equivalent to CPA Canada) with an MBA from University Canada West and over a decade of experience across financial risk, compliance, and advisory. He has worked across institutional lending, investment banking, public accounting, and fintech.",
+    "His career spans building credit risk frameworks for a C$1.5bn education loan portfolio at a Warburg Pincus–backed institution, conducting financial due diligence and DCF valuations for hospitality assets, and managing regulatory compliance and AML programs in Canada's financial services sector. He has presented risk analysis to shareholders and regulatory bodies including the Reserve Bank of India.",
+    "Finance with Kunal brings this professional foundation to a wider audience — a weekly view of global equity markets, macro indicators, and economic trends, written with the rigour of a practitioner and the clarity of a teacher.",
+  ],
+  experience: [
+    {
+      title: "Compliance & Reconciliation Analyst",
+      company: "ATM Token Financial Services Ltd.",
+      companyNote: "Digital payment solutions & money services",
+      period: "Jul 2025 – Present",
+      location: "Vancouver, BC",
+      highlights: [
+        "Supported implementation and ongoing enhancement of AML and KYC programs in accordance with FINTRAC requirements.",
+        "Conducted Enhanced Due Diligence (EDD) reviews, developed client risk profiles, and monitored accounts for suspicious or fraudulent activity.",
+        "Prepared and filed Suspicious Transaction Reports (STRs) and Large Cash Transaction Reports (LCTRs) with FINTRAC.",
+        "Automated reconciliation and reporting workflows using Excel macros, improving accuracy and turnaround time.",
+        "Generated daily, weekly, and monthly operational and financial reports to support management decision-making.",
+      ],
+    },
+    {
+      title: "Risk Analyst",
+      company: "Avanse Financial Services",
+      companyNote: "A Warburg Pincus portfolio company — education & personal lending",
+      period: "Dec 2021 – Sep 2023",
+      location: "Mumbai, India",
+      highlights: [
+        "Implemented an Expected Credit Loss (ECL) model covering C$1.5bn in total assets, aligned with IFRS 9 and Basel III.",
+        "Conducted in-depth credit risk assessments across loan products and updated credit policy based on industry-leading practices.",
+        "Evaluated risk in B2B partnerships, optimizing risk-return trade-offs, risk premiums, and collections efficiency.",
+        "Prepared and presented monthly and quarterly risk analysis reports to management, shareholders, and the Reserve Bank of India.",
+        "Performed semi-annual ICAAP and stress testing to assess impact of adverse economic scenarios on organizational financial health.",
+        "Developed an enterprise-wide risk scorecard for inherent risk self-assessment and control measurement.",
+      ],
+    },
+    {
+      title: "Junior Consultant",
+      company: "Mahajan and Aibara Advisers LLP",
+      companyNote: "Mid-size risk assurance & advisory firm",
+      period: "Sep 2018 – Nov 2021",
+      location: "Mumbai, India",
+      highlights: [
+        "Conducted market research, financial analysis, and due diligence for the hospitality sector — entry strategies, fundraising, and transaction structuring.",
+        "Performed hotel valuations using DCF methodology and explored alternative investments in co-living and student housing.",
+        "Led Asset Management assignments covering performance reviews, industry benchmarking, and budget analysis for operational hotel clients.",
+        "Conducted a hotel valuation study for debt restructuring, supporting strategic decision-making and investment optimization.",
+      ],
+    },
+    {
+      title: "Audit Lead (Contract)",
+      company: "Hare. K. Panda & Co.",
+      companyNote: "Public accounting firm",
+      period: "Jun 2018 – Dec 2020",
+      location: "India",
+      highlights: [
+        "Led statutory and internal audit engagements across corporate clients.",
+        "Managed audit planning, fieldwork, and reporting in compliance with applicable accounting standards.",
+      ],
+    },
+    {
+      title: "Investment Banking Analyst",
+      company: "IndusInd Bank",
+      period: "Jan 2016 – Jan 2017",
+      location: "India",
+      highlights: [
+        "Supported investment banking transactions including debt structuring, deal analysis, and client presentations.",
+        "Contributed to financial modelling and due diligence for corporate banking mandates.",
+      ],
+    },
+    {
+      title: "Article Trainee",
+      company: "Jain & Jain LLP",
+      companyNote: "Public accounting firm",
+      period: "Jan 2014 – Dec 2015",
+      location: "India",
+      highlights: [
+        "Completed statutory audit, tax, and accounting training as part of the ICAI Chartered Accountancy program.",
+      ],
+    },
+  ],
+  education: [
+    {
+      degree: "Master of Business Administration (MBA)",
+      institution: "University Canada West",
+      year: "Oct 2023 – Apr 2025",
+      detail: "Vancouver, BC",
+    },
+    {
+      degree: "Chartered Accountant",
+      institution: "Institute of Chartered Accountants of India (ICAI)",
+      year: "Conferred Feb 2021",
+      detail: "Equivalent to CPA Canada",
+    },
+    {
+      degree: "QuickBooks ProAdvisor",
+      institution: "Intuit",
+      year: "Jan 2025",
+    },
+  ],
+  skills: [
+    {
+      category: "Finance & Risk",
+      items: [
+        "Financial Modelling",
+        "Credit Risk",
+        "ECL / IFRS 9",
+        "Basel III / ICAAP",
+        "Portfolio Risk",
+        "Valuation (DCF)",
+        "Financial Due Diligence",
+        "Budgeting & Forecasting",
+        "Financial Reporting",
+        "IFRS / Accounting",
+      ],
+    },
+    {
+      category: "Compliance & Regulatory",
+      items: [
+        "AML / KYC",
+        "FINTRAC",
+        "STR / LCTR Filing",
+        "Enhanced Due Diligence",
+        "RBI Regulatory Audits",
+        "Risk Scorecards",
+        "Internal Controls",
+      ],
+    },
+    {
+      category: "Data & Analytics",
+      items: [
+        "Advanced Excel",
+        "Excel Macros / VBA",
+        "Python",
+        "SQL",
+        "Power BI",
+        "Tableau",
+        "QuickBooks",
+      ],
+    },
+    {
+      category: "Domains",
+      items: [
+        "Institutional Lending",
+        "Investment Banking",
+        "Real Estate Advisory",
+        "Fintech / Payments",
+        "Capital Markets",
+        "Macro Research",
+        "Public Accounting",
+      ],
+    },
+  ],
+  links: [
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/kunalkapoor", icon: "linkedin" },
+    { label: "Email", url: "mailto:kapoorkunal@outlook.com", icon: "mail" },
+  ],
+};
