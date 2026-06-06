@@ -2652,12 +2652,12 @@ export const PROFILE_DATA: ProfileData = {
     },
     {
       degree: "Master of Commerce (M.Com)",
-      institution: "University of Mumbai",
+      institution: "Mumbai University",
       year: "May 2017",
     },
     {
       degree: "Bachelor of Commerce (B.Com)",
-      institution: "University of Mumbai",
+      institution: "Mumbai University",
       year: "May 2015",
     },
   ],
