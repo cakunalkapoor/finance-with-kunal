@@ -2709,7 +2709,7 @@ export const PROFILE_DATA: ProfileData = {
     },
   ],
   links: [
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/kunalkapoor", icon: "linkedin" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/kunal-kapoor/", icon: "linkedin" },
     { label: "Email", url: "mailto:kapoorkunal@outlook.com", icon: "mail" },
   ],
 };
