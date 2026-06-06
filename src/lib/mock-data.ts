@@ -2568,9 +2568,9 @@ export const PROFILE_DATA: ProfileData = {
     "Finance is ultimately the study of incentives, risk, and human behavior. This platform is my attempt to connect those dots and share the insights that emerge along the way.",
   stats: [
     { value: "10+", label: "Years in Finance & Risk" },
-    { value: "C$1.5bn", label: "Loan Portfolio Modelled" },
-    { value: "6", label: "Professional Roles" },
-    { value: "2", label: "Countries — Canada & India" },
+    { value: "C$1.5Bn", label: "Loans Outstanding, Credit-Risk Modelled" },
+    { value: "C$400Mn+", label: "Hospitality Assets — Due Diligence, Valuation & Management" },
+    { value: "C$10Mn", label: "Home-Décor Brand PE Acquisition (Co-Advised)" },
   ],
   highlights: [
     {
