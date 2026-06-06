@@ -2620,12 +2620,12 @@ export const PROFILE_DATA: ProfileData = {
       period: "Dec 2021 – Sep 2023",
       location: "Mumbai, India",
       highlights: [
-        "Implemented an Expected Credit Loss (ECL) model covering C$1.5bn in total assets, aligned with IFRS 9 and Basel III.",
-        "Conducted in-depth credit risk assessments across loan products and updated credit policy based on industry-leading practices.",
-        "Evaluated risk in B2B partnerships, optimizing risk-return trade-offs, risk premiums, and collections efficiency.",
-        "Prepared and presented monthly and quarterly risk analysis reports to management, shareholders, and the Reserve Bank of India.",
-        "Performed semi-annual ICAAP and stress testing to assess impact of adverse economic scenarios on organizational financial health.",
-        "Developed an enterprise-wide risk scorecard for inherent risk self-assessment and control measurement.",
+        "Calculated monthly Expected Credit Loss (IFRS 9 provisioning) on a C$1.5 billion loan book, and forecast NPAs and ECL provisioning during the annual budgeting cycle.",
+        "Presented monthly risk findings to the management committee and quarterly risk reports to the Board of Directors, shareholders, and stakeholders — covering risk positions, threshold monitoring, and credit-policy recommendations.",
+        "Compiled monthly and quarterly submissions for the Reserve Bank of India, credit rating agencies, and government bodies, and liaised with auditors to resolve queries on time.",
+        "Performed semi-annual ICAAP and credit-risk stress testing under Basel III to assess the impact of adverse economic scenarios on the organization's financial health.",
+        "Optimized risk-return trade-offs across loan products by calibrating interest risk premiums, and led partner onboarding reviews and partnership risk analysis.",
+        "Built a framework for an enterprise-wide operational risk scorecard and monitored immigration policy and economic indicators across North America, Europe, and Australia to flag opportunities and threats for the overseas education-loan book.",
       ],
     },
     {
@@ -2635,10 +2635,12 @@ export const PROFILE_DATA: ProfileData = {
       period: "Sep 2018 – Nov 2021",
       location: "Mumbai, India",
       highlights: [
-        "Conducted market research, financial analysis, and due diligence for the hospitality sector — entry strategies, fundraising, and transaction structuring.",
-        "Performed hotel valuations using DCF methodology and explored alternative investments in co-living and student housing.",
-        "Led Asset Management assignments covering performance reviews, industry benchmarking, and budget analysis for operational hotel clients.",
-        "Conducted a hotel valuation study for debt restructuring, supporting strategic decision-making and investment optimization.",
+        "Performed market research, demand-supply analysis, industry benchmarking, and cost-revenue projections to assess financial viability and shape market-entry strategies for investors in the hospitality sector.",
+        "Built financial models and structured transactions for fundraising and new market entries, including investor pitches for debt funding.",
+        "Completed valuation assignments using EV/EBITDA multiples, discounted cash flow (DCF), and replacement-cost methods to determine enterprise value and purchase consideration.",
+        "Provided M&A due diligence and prepared information memorandums and pitch decks for buy- and sell-side mandates.",
+        "Led asset-management assignments for operational hotels — performance reviews, benchmarking, budget and risk analysis — and recommended improvement measures.",
+        "Ran a hotel valuation study for an asset reconstruction company supporting debt restructuring of a 5-star property in Southern India, and studied co-living / student housing as an alternative asset class for a major real estate developer.",
       ],
     },
     {
@@ -2655,11 +2657,13 @@ export const PROFILE_DATA: ProfileData = {
     {
       title: "Investment Banking Analyst",
       company: "IndusInd Bank",
+      companyNote: "Among the largest private banks in India",
       period: "Jan 2016 – Jan 2017",
       location: "India",
       highlights: [
-        "Supported investment banking transactions including debt structuring, deal analysis, and client presentations.",
-        "Contributed to financial modelling and due diligence for corporate banking mandates.",
+        "Prepared pitch books and information memorandums by analyzing financial statements, cash flows, valuation metrics, and industry dynamics.",
+        "Gathered and synthesized data on market trends, competitors, and macroeconomic conditions to support deal origination.",
+        "Part of the team that advised a global private equity firm on the C$10 million acquisition of an India-based home décor company.",
       ],
     },
     {
