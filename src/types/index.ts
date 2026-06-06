@@ -171,6 +171,7 @@ export interface ProfileData {
   name: string;
   tagline: string;
   location: string;
+  photo?: string;
   summary: string[];
   experience: ExperienceItem[];
   education: EducationItem[];

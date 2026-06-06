@@ -2556,6 +2556,7 @@ export const PROFILE_DATA: ProfileData = {
   name: "Kunal Kapoor",
   tagline: "Finance & Risk Professional · CA · MBA",
   location: "Vancouver, BC",
+  photo: "/kunal.jpg",
   summary: [
     "Kunal Kapoor is a Chartered Accountant (ICAI, India — equivalent to CPA Canada) with an MBA from University Canada West and over a decade of experience across financial risk, compliance, and advisory. He has worked across institutional lending, investment banking, public accounting, and fintech.",
     "His career spans building credit risk frameworks for a C$1.5bn education loan portfolio at a Warburg Pincus–backed institution, conducting financial due diligence and DCF valuations for hospitality assets, and managing regulatory compliance and AML programs in Canada's financial services sector. He has presented risk analysis to shareholders and regulatory bodies including the Reserve Bank of India.",
@@ -2650,9 +2651,14 @@ export const PROFILE_DATA: ProfileData = {
       detail: "Equivalent to CPA Canada",
     },
     {
-      degree: "QuickBooks ProAdvisor",
-      institution: "Intuit",
-      year: "Jan 2025",
+      degree: "Master of Commerce (M.Com)",
+      institution: "University of Mumbai",
+      year: "May 2017",
+    },
+    {
+      degree: "Bachelor of Commerce (B.Com)",
+      institution: "University of Mumbai",
+      year: "May 2015",
     },
   ],
   skills: [
@@ -2692,7 +2698,7 @@ export const PROFILE_DATA: ProfileData = {
         "SQL",
         "Power BI",
         "Tableau",
-        "QuickBooks",
+        "QuickBooks ProAdvisor",
       ],
     },
     {

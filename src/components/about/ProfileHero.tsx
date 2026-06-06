@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Mail, ExternalLink } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 import SciFiCard from "@/components/ui/SciFiCard";
@@ -11,21 +12,48 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number; style?: Reac
 };
 
 export default function ProfileHero({ data }: { data: ProfileData }) {
+  const [photoFailed, setPhotoFailed] = useState(false);
+  const initials = data.name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <SciFiCard glow="purple" className="p-6 sm:p-8 mb-8">
       <div className="flex flex-col sm:flex-row gap-6 items-start">
-        {/* Avatar */}
-        <div
-          className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl font-bold"
-          style={{
-            background: "linear-gradient(135deg, rgba(124,58,237,0.25), rgba(79,70,229,0.35))",
-            border: "1px solid rgba(124,58,237,0.4)",
-            color: "var(--color-neon-cyan)",
-            fontFamily: FONT_MONO,
-          }}
-        >
-          KK
-        </div>
+        {/* Avatar — photo with initials fallback */}
+        {data.photo && !photoFailed ? (
+          <img
+            src={data.photo}
+            alt={data.name}
+            ref={(el) => {
+              // Catches the case where the 404 fires before React hydrates,
+              // so onError never re-fires on the client.
+              if (el && el.complete && el.naturalWidth === 0) setPhotoFailed(true);
+            }}
+            onError={() => setPhotoFailed(true)}
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover flex-shrink-0"
+            style={{
+              border: "1px solid rgba(124,58,237,0.4)",
+              boxShadow: "0 0 20px rgba(124,58,237,0.15)",
+              objectPosition: "center 15%",
+            }}
+          />
+        ) : (
+          <div
+            className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl font-bold"
+            style={{
+              background: "linear-gradient(135deg, rgba(124,58,237,0.25), rgba(79,70,229,0.35))",
+              border: "1px solid rgba(124,58,237,0.4)",
+              color: "var(--color-neon-cyan)",
+              fontFamily: FONT_MONO,
+            }}
+          >
+            {initials}
+          </div>
+        )}
 
         {/* Name + tagline + location */}
         <div className="flex-1 min-w-0">
