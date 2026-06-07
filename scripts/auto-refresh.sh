@@ -74,6 +74,22 @@ npm run fetch:data >> "$LOG" 2>&1 \
   && log "  ✓ data done" \
   || log "  ✗ data failed / no fresh AV dumps to process"
 
+log "→ fetch:heatmap (S&P 500 / TSX / NIFTY constituents)..."
+npm run fetch:heatmap >> "$LOG" 2>&1 \
+  && log "  ✓ heatmap done" \
+  || log "  ✗ heatmap failed"
+
+# ── Patch fetched values into the tracked data file ─────────────────────────────
+log "→ patch site-data.ts (Yahoo + FRED → equities, bonds, macro, commodities, crypto, FX)..."
+node scripts/patch-site-data.mjs >> "$LOG" 2>&1 \
+  && log "  ✓ site-data patched" \
+  || log "  ✗ site-data patch failed"
+
+log "→ patch:heatmap (heatmap section)..."
+npm run patch:heatmap >> "$LOG" 2>&1 \
+  && log "  ✓ heatmap patched" \
+  || log "  ✗ heatmap patch failed"
+
 # ── Commit & push ──────────────────────────────────────────────────────────────
 if ! git diff --quiet src/lib/; then
   CHANGED=$(git diff --name-only src/lib/ | wc -l | tr -d ' ')

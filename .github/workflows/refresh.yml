@@ -68,6 +68,9 @@ jobs:
           npm run fetch:yahoo   || echo "::warning::yahoo fetch failed"
           npm run fetch:fred    || echo "::warning::fred fetch failed"
           npm run fetch:heatmap || echo "::warning::heatmap fetch failed"
+          # Patch live values (equities, bonds, macro, commodities, crypto, FX)
+          # from the Yahoo + FRED dumps into site-data.ts, then the heatmap.
+          node scripts/patch-site-data.mjs || echo "::warning::site-data patch failed"
           npm run patch:heatmap || echo "::warning::heatmap patch failed"
 
       - name: Commit refreshed data
