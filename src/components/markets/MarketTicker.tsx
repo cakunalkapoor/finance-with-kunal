@@ -1,4 +1,4 @@
-import { EQUITY_INDICES, COMMODITIES } from "@/lib/mock-data";
+import { EQUITY_INDICES, COMMODITIES } from "@/lib/site-data";
 import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
 
 export default function MarketTicker() {

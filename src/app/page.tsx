@@ -4,7 +4,7 @@ import MarketTicker from "@/components/markets/MarketTicker";
 import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
 import WeeklyCommentary from "@/components/home/WeeklyCommentary";
 import TrendingHeadlines from "@/components/home/TrendingHeadlines";
-import { EQUITY_INDICES } from "@/lib/mock-data";
+import { EQUITY_INDICES } from "@/lib/site-data";
 import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
 
 function HeroSection() {
@@ -48,7 +48,7 @@ function HeroSection() {
                 color: "var(--color-text-secondary)",
               }}
             >
-              Jun 1, 2026
+              Jun 7, 2026
             </span>
           </div>
           <div
@@ -74,7 +74,7 @@ function HeroSection() {
                 color: "var(--color-text-secondary)",
               }}
             >
-              Jun 8, 2026
+              Jun 14, 2026
             </span>
           </div>
         </div>

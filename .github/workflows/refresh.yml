@@ -1,7 +1,7 @@
 name: Weekly Data Refresh & Deploy
 
 # Runs the live-data fetch pipeline on a weekly schedule, commits the refreshed
-# JSON + mock-data.ts back to main, then builds and deploys to GitHub Pages.
+# JSON + site-data.ts back to main, then builds and deploys to GitHub Pages.
 #
 # Self-contained (fetch → commit → build → deploy) on purpose: a commit pushed
 # with the default GITHUB_TOKEN does NOT re-trigger other workflows, so we do the

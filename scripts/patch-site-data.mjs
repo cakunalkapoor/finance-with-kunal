@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Patches src/lib/mock-data.ts in-place with the latest values from
+// Patches src/lib/site-data.ts in-place with the latest values from
 // yahoo-data.json and fred-data.json. Matches entries by `symbol` (Yahoo) or
 // `country` (FRED bonds). Leaves PMI and other curated mock-only fields untouched.
 
@@ -9,10 +9,10 @@ import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
-const mockPath = resolve(root, "src/lib/mock-data.ts");
+const dataPath = resolve(root, "src/lib/site-data.ts");
 const yahoo = JSON.parse(readFileSync(resolve(root, "src/lib/yahoo-data.json"), "utf8"));
 const fred = JSON.parse(readFileSync(resolve(root, "src/lib/fred-data.json"), "utf8"));
-let src = readFileSync(mockPath, "utf8");
+let src = readFileSync(dataPath, "utf8");
 
 const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);
 
@@ -151,5 +151,5 @@ if (patchEconomicIndicator("us-jobless-claims", m.us_jobless)) stats.macro++;
 if (patchEconomicIndicator("us-unemployment", m.us_unemployment)) stats.macro++;
 if (patchEconomicIndicator("us-gdp", m.us_gdp_growth)) stats.macro++;
 
-writeFileSync(mockPath, src);
-console.log("patched mock-data.ts:", stats);
+writeFileSync(dataPath, src);
+console.log("patched site-data.ts:", stats);

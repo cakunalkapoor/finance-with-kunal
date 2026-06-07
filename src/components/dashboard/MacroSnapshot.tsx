@@ -1,4 +1,4 @@
-import { MACRO_SNAPSHOT } from "@/lib/mock-data";
+import { MACRO_SNAPSHOT } from "@/lib/site-data";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 

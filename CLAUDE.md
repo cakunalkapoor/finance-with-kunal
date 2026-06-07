@@ -53,7 +53,7 @@ src/
 │   │                           #   CommoditiesGrid, CryptoGrid, ForexGrid, MarketHeatmap
 │   └── dashboard/              # MacroSnapshot, EconomicChart, EconomicNotes
 ├── lib/
-│   ├── mock-data.ts            # ALL canned data (large — read with grep/offset, not whole-file)
+│   ├── site-data.ts            # ALL canned data (large — read with grep/offset, not whole-file)
 │   ├── ticker-names.ts         # ticker → company name (heatmap tooltips)
 │   └── utils.ts                # cn(), formatNumber, formatChange, getChangeColor, FONT_MONO
 └── types/index.ts              # IndexQuote, BondYield, Commodity, CryptoAsset, ForexRate, ...
@@ -61,7 +61,7 @@ src/
 
 ## Data (summary — full detail in `docs/DATA.md`)
 
-Live providers wired in (Yahoo, Alpha Vantage, FRED; Twelve Data + Finnhub are scaffolds); everything else is **deterministic mock**. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `mock-data.ts`. Datasets exported from `mock-data.ts`: `EQUITY_INDICES`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
+Live providers wired in (Yahoo, Alpha Vantage, FRED; Twelve Data + Finnhub are scaffolds); everything else is **deterministic mock**. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
 
 ## Running locally
 

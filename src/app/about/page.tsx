@@ -5,7 +5,7 @@ import CareerHighlights from "@/components/about/CareerHighlights";
 import CareerTimeline from "@/components/about/CareerTimeline";
 import Qualifications from "@/components/about/Qualifications";
 import SkillsGrid from "@/components/about/SkillsGrid";
-import { PROFILE_DATA } from "@/lib/mock-data";
+import { PROFILE_DATA } from "@/lib/site-data";
 
 export const metadata = {
   title: "About Me — Finance with Kunal",

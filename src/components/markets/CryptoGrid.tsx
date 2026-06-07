@@ -1,4 +1,4 @@
-import { CRYPTO } from "@/lib/mock-data";
+import { CRYPTO } from "@/lib/site-data";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 

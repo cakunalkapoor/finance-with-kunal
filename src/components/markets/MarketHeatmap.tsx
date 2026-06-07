@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { HEATMAP_INDICES } from "@/lib/mock-data";
+import { HEATMAP_INDICES } from "@/lib/site-data";
 import { getCompanyName } from "@/lib/ticker-names";
 import { FONT_MONO } from "@/lib/utils";
 

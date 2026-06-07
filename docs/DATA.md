@@ -10,7 +10,7 @@ Deep reference for data sources and component internals. The quick overview is i
 **Four live data providers wired in; remainder stays as deterministic mock.** All API keys live in
 `.env.local` (gitignored). Refresh any provider via `npm run fetch:<provider>`. Every fetcher writes
 its raw output to `src/lib/<provider>-data.json` (these dumps are gitignored — regenerable, consumed
-into `mock-data.ts`) and the values are then patched into `src/lib/mock-data.ts`.
+into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`.
 
 ### Live data providers
 
@@ -38,13 +38,13 @@ into `mock-data.ts`) and the values are then patched into `src/lib/mock-data.ts`
 ### What's still curated mock (no free API exists)
 
 - **PMI indicators** (US Composite, China Mfg, India Mfg, Taiwan Mfg, South Korea Mfg, India Services) — paywalled by S&P Global; updated manually each month
-- **Heatmap constituents** (~200 stocks across S&P 500 / TSX / NIFTY 50) — would burn through free-tier quotas; values are deterministic via `seededChange()` in mock-data
+- **Heatmap constituents** (~200 stocks across S&P 500 / TSX / NIFTY 50) — would burn through free-tier quotas; values are deterministic via `seededChange()` in site-data
 
 Numbers in the heatmap and remaining mock entries are **deterministic** (seeded RNG so SSR and CSR match) — avoids React hydration warnings.
 
 ---
 
-## Major datasets in `mock-data.ts`
+## Major datasets in `site-data.ts`
 
 | Export | What it powers |
 |--------|----------------|
@@ -123,7 +123,7 @@ corresponding company name here.
 - Static export build passes cleanly
 
 **Not yet built:**
-- Real API integration layer — `src/lib/api/` is empty (fetchers patch into `mock-data.ts` instead)
+- Real API integration layer — `src/lib/api/` is empty (fetchers patch into `site-data.ts` instead)
 - Blog post markdown/MDX content pipeline — current posts are just metadata in `BLOG_POSTS`
 - Custom domain (set `NEXT_PUBLIC_SITE_URL` for OG absolute URLs once chosen)
 - Search, RSS, newsletter signup

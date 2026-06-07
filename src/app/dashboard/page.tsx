@@ -4,7 +4,7 @@ import EconomicNotes from "@/components/dashboard/EconomicNotes";
 import MarketTicker from "@/components/markets/MarketTicker";
 import PageHeader from "@/components/ui/PageHeader";
 import { FONT_MONO } from "@/lib/utils";
-import { ECONOMIC_INDICATORS } from "@/lib/mock-data";
+import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import type { EconomicIndicator } from "@/types";
 
 export const metadata = {
@@ -30,8 +30,8 @@ export default function DashboardPage() {
           label="Global Economy"
           labelColor="var(--color-neon-purple)"
           title="Global Economic Dashboard"
-          lastUpdated="Jun 1, 2026"
-          nextUpdate="Jun 8, 2026"
+          lastUpdated="Jun 7, 2026"
+          nextUpdate="Jun 14, 2026"
         />
 
         <MacroSnapshot />

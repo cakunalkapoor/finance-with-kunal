@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { EQUITY_INDICES } from "@/lib/mock-data";
+import { EQUITY_INDICES } from "@/lib/site-data";
 import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { EChartsOption } from "echarts";

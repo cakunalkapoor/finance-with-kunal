@@ -1,4 +1,4 @@
-import { COMMODITIES } from "@/lib/mock-data";
+import { COMMODITIES } from "@/lib/site-data";
 import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 

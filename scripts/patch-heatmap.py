@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Patch src/lib/mock-data.ts with live heatmap weekly changes for ALL 10 indices.
+Patch src/lib/site-data.ts with live heatmap weekly changes for ALL 10 indices.
 
 Reads:  src/lib/heatmap-data.json (output of fetch-heatmap.py)
-Writes: replaces the heatmap section in mock-data.ts (SP500_SECTORS through
+Writes: replaces the heatmap section in site-data.ts (SP500_SECTORS through
         HEATMAP_INDICES export, inclusive).
 
 For each ticker:
@@ -20,7 +20,7 @@ from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parent.parent
 DATA = PROJECT / "src" / "lib" / "heatmap-data.json"
-MOCK = PROJECT / "src" / "lib" / "mock-data.ts"
+MOCK = PROJECT / "src" / "lib" / "site-data.ts"
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Index catalogues with (ticker, weight%) tuples
@@ -245,7 +245,7 @@ def build_sectors_ts(var_name, catalog, live_data):
     return "\n".join(lines)
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Splice into mock-data.ts
+# Splice into site-data.ts
 # ──────────────────────────────────────────────────────────────────────────────
 def main():
     data = json.loads(DATA.read_text())
@@ -299,7 +299,7 @@ export const HEATMAP_DATA: HeatmapSector[] = SP500_SECTORS;
     si = src.find(start_marker)
     ei_match = src.find(end_marker)
     if si == -1 or ei_match == -1:
-        raise RuntimeError("could not locate replacement markers in mock-data.ts")
+        raise RuntimeError("could not locate replacement markers in site-data.ts")
 
     # End at the end of the HEATMAP_DATA line (find next newline after it)
     end_line_end = src.find("\n", ei_match) + 1
@@ -317,7 +317,7 @@ export const HEATMAP_DATA: HeatmapSector[] = SP500_SECTORS;
 
     # Report counts
     counts = {k: sum(len(v) for v in idx.values()) for k, idx in live.items()}
-    print("✓ patched mock-data.ts")
+    print("✓ patched site-data.ts")
     for k, c in counts.items():
         print(f"  {k:10} {c:>3} tickers")
     print(f"  {'─'*20}")

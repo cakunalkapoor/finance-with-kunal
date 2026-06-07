@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, Clock, Tag } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
-import { BLOG_POSTS } from "@/lib/mock-data";
+import { BLOG_POSTS } from "@/lib/site-data";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {

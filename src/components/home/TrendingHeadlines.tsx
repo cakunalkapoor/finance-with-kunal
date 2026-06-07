@@ -1,4 +1,4 @@
-import { EXTERNAL_COMMENTARY } from "@/lib/mock-data";
+import { EXTERNAL_COMMENTARY } from "@/lib/site-data";
 import { FONT_MONO } from "@/lib/utils";
 
 export default function TrendingHeadlines() {

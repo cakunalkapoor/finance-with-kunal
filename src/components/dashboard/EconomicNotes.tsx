@@ -1,4 +1,4 @@
-import { ECONOMIC_INDICATORS } from "@/lib/mock-data";
+import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import { FONT_MONO } from "@/lib/utils";
 

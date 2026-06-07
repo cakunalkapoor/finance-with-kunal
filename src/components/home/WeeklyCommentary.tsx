@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { WEEKLY_COMMENTARY } from "@/lib/mock-data";
+import { WEEKLY_COMMENTARY } from "@/lib/site-data";
 import { FONT_MONO } from "@/lib/utils";
 
 export default function WeeklyCommentary() {

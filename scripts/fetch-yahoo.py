@@ -17,7 +17,7 @@ and derive everything from the close column:
   - high52w / low52w
   - sparkline      → 52 evenly-spaced points across the 1y window
 
-Output: src/lib/yahoo-data.json   (consumed via mock-data.ts patches)
+Output: src/lib/yahoo-data.json   (consumed via site-data.ts patches)
 
 Run:   /tmp/yf-venv/bin/python3 scripts/fetch-yahoo.py
 or:    npm run fetch:yahoo

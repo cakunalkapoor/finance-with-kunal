@@ -1,4 +1,4 @@
-import { FOREX_RATES } from "@/lib/mock-data";
+import { FOREX_RATES } from "@/lib/site-data";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 
