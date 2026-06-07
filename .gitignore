@@ -43,3 +43,6 @@ next-env.d.ts
 /src/lib/market-data.json
 /src/lib/twelvedata-data.json
 /src/lib/yahoo-data.json
+# auto-refresh logs and state
+/logs/
+/.last-refresh
