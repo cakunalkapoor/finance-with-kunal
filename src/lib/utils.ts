@@ -9,6 +9,17 @@ export function cn(...inputs: ClassValue[]) {
  *  repeated inline `fontFamily`. Uses the self-hosted next/font variable. */
 export const FONT_MONO = "var(--font-space-mono), monospace";
 
+/** Deploy base path (e.g. "/finance-with-kunal" on GitHub Pages, "" in dev).
+ *  Mirrors next.config's basePath. */
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/** Prefix a root-absolute public asset path with the deploy base path.
+ *  Needed for raw <img>/url() refs — Next only auto-prefixes Link & next/image,
+ *  not plain `src="/foo.jpg"`, which would 404 under a project subpath. */
+export function withBasePath(path: string): string {
+  return `${BASE_PATH}${path}`;
+}
+
 export function formatNumber(value: number, decimals = 2): string {
   return value.toLocaleString("en-US", {
     minimumFractionDigits: decimals,

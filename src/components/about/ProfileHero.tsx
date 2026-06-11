@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mail, ExternalLink, Quote } from "lucide-react";
-import { FONT_MONO } from "@/lib/utils";
+import { FONT_MONO, withBasePath } from "@/lib/utils";
 import SciFiCard from "@/components/ui/SciFiCard";
 import type { ProfileData } from "@/types";
 
@@ -26,7 +26,7 @@ export default function ProfileHero({ data }: { data: ProfileData }) {
         {/* Avatar — photo with initials fallback */}
         {data.photo && !photoFailed ? (
           <img
-            src={data.photo}
+            src={withBasePath(data.photo)}
             alt={data.name}
             ref={(el) => {
               // Catches the case where the 404 fires before React hydrates,
