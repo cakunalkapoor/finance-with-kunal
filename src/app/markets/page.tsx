@@ -22,7 +22,7 @@ export default function MarketsPage() {
           label="Market"
           labelColor="var(--color-neon-cyan)"
           title="Global Markets Dashboard"
-          lastUpdated="Jun 7, 2026"
+          lastUpdated="Jun 11, 2026"
           nextUpdate="Jun 14, 2026"
         />
 
