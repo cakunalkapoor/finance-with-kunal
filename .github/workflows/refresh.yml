@@ -17,9 +17,11 @@ name: Weekly Data Refresh & Deploy
 
 on:
   schedule:
-    # 10:30 UTC every Monday  ≈  06:30 EDT / 16:00 IST (Mon pre-market, prior week closed).
-    # GitHub cron is always UTC and does NOT adjust for daylight saving.
-    - cron: "30 10 * * 1"
+    # 16:30 UTC every Sunday  ≈  12:30 EDT / 22:00 IST. Acts as a backstop to the
+    # local Sunday-morning Claude scheduled task ("weekly-sunday-site-refresh"):
+    # if the Mac was off and the local refresh didn't run, this still lands the
+    # weekly data update on Sunday. GitHub cron is always UTC (no DST adjust).
+    - cron: "30 16 * * 0"
   workflow_dispatch: {}
 
 permissions:
