@@ -27,7 +27,12 @@ export default function ProfileStats({ stats }: { stats: ProfileStat[] }) {
           >
             <div
               className="text-2xl sm:text-3xl font-bold mb-1"
-              style={{ fontFamily: FONT_MONO, color: "var(--color-neon-cyan)", letterSpacing: "-0.01em" }}
+              style={{
+                fontFamily: FONT_MONO,
+                color: "var(--color-neon-cyan)",
+                letterSpacing: "-0.01em",
+                lineHeight: 1.45,
+              }}
             >
               {stat.value}
             </div>
