@@ -1,4 +1,14 @@
-import { LineChart, Landmark, Calculator, ShieldCheck, Award } from "lucide-react";
+import {
+  LineChart,
+  Landmark,
+  Calculator,
+  ShieldCheck,
+  Briefcase,
+  Scale,
+  Target,
+  Globe,
+  Award,
+} from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 import SciFiCard from "@/components/ui/SciFiCard";
 import type { ProfileHighlight } from "@/types";
@@ -11,6 +21,10 @@ const ICON_MAP: Record<
   landmark: Landmark,
   calculator: Calculator,
   shieldCheck: ShieldCheck,
+  briefcase: Briefcase,
+  scale: Scale,
+  target: Target,
+  globe: Globe,
 };
 
 export default function CareerHighlights({ highlights }: { highlights: ProfileHighlight[] }) {

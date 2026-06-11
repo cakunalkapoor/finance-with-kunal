@@ -2574,28 +2574,52 @@ export const PROFILE_DATA: ProfileData = {
   ],
   highlights: [
     {
-      title: "Built a C$1.5bn ECL Model",
+      title: "Built a C$1.5Bn ECL Model",
       description:
-        "Designed and implemented an IFRS 9 / Basel III Expected Credit Loss model across the full asset book at a Warburg Pincus–backed lender.",
+        "Designed and implemented an IFRS 9 / Basel III Expected Credit Loss model across the full C$1.5 billion asset book at a Warburg Pincus–backed lender.",
       icon: "lineChart",
     },
     {
-      title: "Presented Risk to the RBI",
+      title: "Reported Risk to the Board & RBI",
       description:
-        "Delivered quarterly risk analysis to shareholders and managed statutory audits by the Reserve Bank of India, safeguarding the company's regulatory standing.",
+        "Delivered monthly risk findings to the management committee and quarterly reports to the Board, shareholders, and the Reserve Bank of India, while managing statutory audits.",
       icon: "landmark",
     },
     {
-      title: "Valued Hospitality Assets",
+      title: "Co-Advised a C$10M PE Acquisition",
       description:
-        "Led DCF valuations, due diligence, and asset management for operational hotels — including a valuation study supporting debt restructuring.",
+        "Part of the IndusInd Bank team that advised a global private equity firm on the C$10 million acquisition of an India-based home-décor company — from pitch books to due diligence.",
+      icon: "briefcase",
+    },
+    {
+      title: "Valued & Managed Hospitality Assets",
+      description:
+        "Led DCF, EV/EBITDA, and replacement-cost valuations, due diligence, and asset management for operational hotels — including a study supporting debt restructuring of a 5-star property.",
       icon: "calculator",
+    },
+    {
+      title: "Stress-Tested Capital Under Basel III",
+      description:
+        "Ran semi-annual ICAAP and credit-risk stress testing to gauge the impact of adverse macroeconomic scenarios on the firm's capital adequacy and financial health.",
+      icon: "scale",
+    },
+    {
+      title: "Built an Enterprise Risk Scorecard",
+      description:
+        "Developed a framework for an enterprise-wide operational risk scorecard, with risk-mitigation and business-continuity strategies spanning every function.",
+      icon: "target",
     },
     {
       title: "Stood Up AML / KYC Compliance",
       description:
         "Built FINTRAC-aligned AML/KYC programs in Canada — Enhanced Due Diligence reviews, STR/LCTR filings, and automated reconciliation.",
       icon: "shieldCheck",
+    },
+    {
+      title: "Tracked Global Macro & Policy Signals",
+      description:
+        "Monitored immigration policy and economic indicators across North America, Europe, and Australia to flag emerging opportunities and threats for the overseas education-loan book.",
+      icon: "globe",
     },
   ],
   experience: [
