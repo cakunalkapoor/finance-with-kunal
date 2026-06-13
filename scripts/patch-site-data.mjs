@@ -129,27 +129,85 @@ function asOfToPeriod(asOf) {
   const [y, mo] = asOf.split("-");
   return `${monthNames[Number(mo) - 1]} ${y}`;
 }
-function patchEconomicIndicator(id, macroRec) {
-  if (!macroRec || macroRec.value == null) return false;
-  const re = new RegExp(`(\\{[^{}]*id:\\s*"${id}"[^{}]*?)(\\n\\s*\\})`, "s");
-  const tsLine = `[\n      ${macroRec.timeSeries
+function asOfToFullDate(asOf) {
+  if (!asOf) return null;
+  const [y, mo, d] = asOf.split("-");
+  return `${monthNames[Number(mo) - 1]} ${Number(d)}, ${y}`;
+}
+function tsLiteral(series) {
+  return `[\n      ${series
     .map((p) => `{ date: "${p.date}", value: ${p.value} }`)
     .join(",\n      ")}\n    ]`;
-  const fields = {
+}
+// Build a weekly history (date,value) from a 52-pt Yahoo sparkline ending at asOf.
+function weeklyTsFromSparkline(sparkline, asOf) {
+  const end = new Date(`${asOf}T00:00:00Z`);
+  const pts = (sparkline || []).map((v, i, arr) => {
+    const d = new Date(end);
+    d.setUTCDate(d.getUTCDate() - (arr.length - 1 - i) * 7);
+    return { date: d.toISOString().slice(0, 10), value: v };
+  });
+  return tsLiteral(pts);
+}
+// Patch one ECONOMIC_INDICATORS card. Brace-safe: the indicator object contains a
+// nested `timeSeries` array (or a genTimeSeries(...) call), so we split the match
+// into [scalar-field head][`timeSeries:`][value] rather than using a [^{}] anchor
+// (the old anchor silently failed to match, leaving every card stale).
+function patchIndicatorObject(id, fields, tsLit) {
+  const re = new RegExp(
+    `(\\{[^{}]*id:\\s*"${id}"[\\s\\S]*?)(timeSeries:\\s*)(\\[[\\s\\S]*?\\]|genTimeSeries\\([^)]*\\))`
+  );
+  const match = src.match(re);
+  if (!match) return false;
+  let head = match[1];
+  for (const [key, val] of Object.entries(fields)) {
+    if (val == null) continue;
+    const fieldRe = new RegExp(`(${key}:\\s*)("[^"]*"|-?[\\d.]+)`);
+    // Function replacement so `$`-sequences in field values aren't treated as backrefs.
+    head = head.replace(fieldRe, (_m, p1) => p1 + r(val));
+  }
+  // Function replacement is REQUIRED here: `head` contains description prose that can
+  // include "$3"/"$5" etc., which a string replacement would expand as capture-group
+  // backreferences (e.g. "$3.19" -> injects group 3). A function returns text verbatim.
+  const replacement = head + match[2] + (tsLit != null ? tsLit : match[3]);
+  src = src.replace(re, () => replacement);
+  return true;
+}
+// FRED-backed cards (monthly/quarterly history straight from the dump).
+function patchEconomicIndicator(id, macroRec) {
+  if (!macroRec || macroRec.value == null) return false;
+  return patchIndicatorObject(id, {
     value: macroRec.value,
     previousValue: macroRec.previousValue,
     change: macroRec.change,
     direction: `"${macroRec.direction}"`,
     period: `"${asOfToPeriod(macroRec.asOf)}"`,
-    timeSeries: tsLine,
-  };
-  return patchObject(re, fields);
+  }, tsLiteral(macroRec.timeSeries));
+}
+// Yahoo-backed energy cards (Brent, NatGas): live weekly value + sparkline history.
+// NOTE: these cards' `description` prose is NOT patched here — the weekly task
+// rewrites it to match the new direction/value.
+function patchCommodityIndicator(id, rec) {
+  if (!rec || rec.value == null) return false;
+  const wk = Number(rec.weekChange ?? 0);
+  const prev = +(rec.value / (1 + wk / 100)).toFixed(2);
+  return patchIndicatorObject(id, {
+    value: rec.value,
+    previousValue: prev,
+    change: +wk.toFixed(2),
+    direction: `"${wk >= 0 ? "up" : "down"}"`,
+    period: `"${asOfToFullDate(rec.asOf)}"`,
+  }, weeklyTsFromSparkline(rec.sparkline, rec.asOf));
 }
 if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
 if (patchEconomicIndicator("us-ppi", m.us_ppi)) stats.macro++;
 if (patchEconomicIndicator("us-jobless-claims", m.us_jobless)) stats.macro++;
 if (patchEconomicIndicator("us-unemployment", m.us_unemployment)) stats.macro++;
 if (patchEconomicIndicator("us-gdp", m.us_gdp_growth)) stats.macro++;
+const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
+const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F");
+if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;
+if (patchCommodityIndicator("natural-gas", natgasCommodity)) stats.macro++;
 
 writeFileSync(dataPath, src);
 console.log("patched site-data.ts:", stats);
