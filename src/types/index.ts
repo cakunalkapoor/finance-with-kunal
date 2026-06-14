@@ -87,7 +87,7 @@ export interface HeatmapIndex {
 export interface EconomicIndicator {
   id: string;
   name: string;
-  category: "growth" | "employment" | "pmi" | "inflation" | "energy";
+  category: "growth" | "employment" | "pmi" | "inflation" | "energy" | "rates" | "trade" | "fiscal";
   country: string;
   flag: string;
   value: number;

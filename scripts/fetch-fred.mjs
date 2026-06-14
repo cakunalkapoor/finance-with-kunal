@@ -60,6 +60,27 @@ const MACRO = [
   { key: "us_cpi_index",    id: "CPIAUCSL", limit: 30, label: "US CPI Index", unit: "Index" },
   // US PPI Final Demand (Nov 2009=100) — monthly. We compute YoY % change.
   { key: "us_ppi_index",    id: "PPIFIS",   limit: 30, label: "US PPI Index", unit: "Index" },
+
+  // ── US & Canada dashboard series (added for the US & Canada page) ────────────
+  // US Nonfarm Payrolls — monthly LEVEL in thousands. We emit month-over-month change.
+  { key: "us_payrolls",     id: "PAYEMS",   limit: 25, label: "US Nonfarm Payrolls", unit: "K MoM", positiveGood: true, momChange: true },
+  // US Effective Fed Funds Rate — monthly %
+  { key: "us_fed_funds",    id: "FEDFUNDS", limit: 24, label: "US Fed Funds Rate", unit: "%", positiveGood: false },
+  // US Trade Balance (goods + services) — monthly $M. Scale to $B.
+  { key: "us_trade",        id: "BOPGSTB",  limit: 24, label: "US Trade Balance", unit: "USD B", positiveGood: true, scale: 0.001 },
+  // US Federal Government current tax receipts — quarterly, $B (annualised).
+  { key: "us_tax",          id: "W006RC1Q027SBEA", limit: 12, label: "US Federal Tax Receipts", unit: "USD B", positiveGood: true },
+
+  // Canada Unemployment Rate — monthly %
+  { key: "ca_unemployment", id: "LRUNTTTTCAM156S", limit: 24, label: "Canada Unemployment", unit: "%", positiveGood: false },
+  // Canada Real GDP — already a quarterly QoQ growth %; pass through.
+  { key: "ca_gdp_growth",   id: "NAEXKP01CAQ657S", limit: 12, label: "Canada GDP Growth", unit: "% QoQ", positiveGood: true },
+  // Canada Employment Rate — monthly %
+  { key: "ca_employment",   id: "LREM64TTCAM156S", limit: 24, label: "Canada Employment Rate", unit: "%", positiveGood: true },
+  // Canada Net Trade (goods, national currency) — monthly. Scale to $B.
+  { key: "ca_trade",        id: "XTNTVA01CAM664N", limit: 24, label: "Canada Trade Balance", unit: "CAD B", positiveGood: true, scale: 1e-9 },
+  // NOTE: Canada CPI + policy rate come from Bank of Canada Valet (FRED's CA CPI/
+  // policy-rate series lag badly). See scripts/fetch-boc.mjs.
 ];
 
 // ── HTTP helpers ───────────────────────────────────────────────────────────────
@@ -149,6 +170,25 @@ function deriveMacro(obs, scale = 1) {
   };
 }
 
+function deriveMoMChange(obs, scale = 1) {
+  // For LEVEL series (e.g. payrolls) we chart the month-over-month CHANGE.
+  if (obs.length < 2) return null;
+  const out = [];
+  for (let i = 1; i < obs.length; i++) {
+    out.push({ date: obs[i].date.slice(0, 7), value: round2((obs[i].value - obs[i - 1].value) * scale) });
+  }
+  const last = out[out.length - 1];
+  const prev = out[out.length - 2];
+  return {
+    value: last.value,
+    previousValue: prev?.value ?? null,
+    change: prev ? round2(last.value - prev.value) : 0,
+    direction: prev ? (last.value > prev.value ? "up" : last.value < prev.value ? "down" : "neutral") : "neutral",
+    asOf: obs[obs.length - 1].date,
+    timeSeries: out,
+  };
+}
+
 function deriveCPI_YoY(obs) {
   // CPIAUCSL is an index level. Compute YoY % change from last 13 months.
   if (obs.length < 13) return null;
@@ -198,6 +238,9 @@ async function main() {
       } else if (m.key === "us_ppi_index") {
         derived = deriveCPI_YoY(obs);
         macro["us_ppi"] = { ...derived, unit: "% YoY", label: "US PPI Inflation" };
+      } else if (m.momChange) {
+        derived = deriveMoMChange(obs, m.scale ?? 1);
+        macro[m.key] = { ...derived, unit: m.unit, label: m.label };
       } else {
         derived = deriveMacro(obs, m.scale ?? 1);
         macro[m.key] = { ...derived, unit: m.unit, label: m.label };

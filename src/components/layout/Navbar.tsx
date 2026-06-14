@@ -10,6 +10,7 @@ import ThemeToggle from "./ThemeToggle";
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
   { href: "/dashboard", label: "Economy" },
+  { href: "/us-canada", label: "US & Canada" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About Me" },
 ];

@@ -12,6 +12,7 @@
     "fetch:yahoo:setup": "python3 -m venv .venv && ./.venv/bin/pip install yfinance pandas",
     "fetch:bonds": "node scripts/fetch-bonds.mjs",
     "fetch:fred": "node scripts/fetch-fred.mjs",
+    "fetch:boc": "node scripts/fetch-boc.mjs",
     "fetch:twelvedata": "node scripts/fetch-twelvedata.mjs",
     "fetch:finnhub": "node scripts/fetch-finnhub.mjs",
     "fetch:heatmap": "./.venv/bin/python3 scripts/fetch-heatmap.py",

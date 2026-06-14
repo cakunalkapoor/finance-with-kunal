@@ -23,8 +23,14 @@ function generateNote(ind: (typeof ECONOMIC_INDICATORS)[0]): string {
   return `${name} held steady at ${value} ${unit} in ${period}.`;
 }
 
-export default function EconomicNotes() {
-  const notes = ECONOMIC_INDICATORS.map((ind) => ({
+export default function EconomicNotes({
+  filter,
+  subtitle = "Auto-generated macro notes · May 2026",
+}: {
+  filter?: (ind: (typeof ECONOMIC_INDICATORS)[0]) => boolean;
+  subtitle?: string;
+} = {}) {
+  const notes = ECONOMIC_INDICATORS.filter(filter ?? (() => true)).map((ind) => ({
     id: ind.id,
     name: ind.name,
     flag: ind.flag,
@@ -38,7 +44,7 @@ export default function EconomicNotes() {
     <SciFiCard glow="purple">
       <CardHeader
         title="Economic Commentary"
-        subtitle="Auto-generated macro notes · May 2026"
+        subtitle={subtitle}
         action={
           <span
             className="text-xs px-2 py-0.5 rounded"

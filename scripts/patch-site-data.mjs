@@ -12,6 +12,9 @@ const root = resolve(here, "..");
 const dataPath = resolve(root, "src/lib/site-data.ts");
 const yahoo = JSON.parse(readFileSync(resolve(root, "src/lib/yahoo-data.json"), "utf8"));
 const fred = JSON.parse(readFileSync(resolve(root, "src/lib/fred-data.json"), "utf8"));
+// boc-data.json is optional (Bank of Canada Valet); tolerate its absence.
+let boc = { macro: {} };
+try { boc = JSON.parse(readFileSync(resolve(root, "src/lib/boc-data.json"), "utf8")); } catch { /* not fetched */ }
 let src = readFileSync(dataPath, "utf8");
 
 const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);
@@ -199,11 +202,48 @@ function patchCommodityIndicator(id, rec) {
     period: `"${asOfToFullDate(rec.asOf)}"`,
   }, weeklyTsFromSparkline(rec.sparkline, rec.asOf));
 }
+// 10Y yield cards source the bonds dump (value + 12-pt trend, no dates). Build a
+// dated monthly series ending at the bond's asOf month so the chart has an x-axis.
+function patchBondIndicator(id, bond) {
+  if (!bond || bond.value == null || !Array.isArray(bond.trend)) return false;
+  const [y, mo] = bond.asOf.split("-").map(Number);
+  const series = bond.trend.map((v, i) => {
+    const d = new Date(Date.UTC(y, mo - 1 - (bond.trend.length - 1 - i), 1));
+    return { date: d.toISOString().slice(0, 7), value: v };
+  });
+  const last = bond.trend[bond.trend.length - 1];
+  const prev = bond.trend[bond.trend.length - 2] ?? last;
+  const change = +(last - prev).toFixed(2);
+  return patchIndicatorObject(id, {
+    value: bond.value,
+    previousValue: prev,
+    change,
+    direction: `"${change > 0 ? "up" : change < 0 ? "down" : "neutral"}"`,
+    period: `"${asOfToPeriod(bond.asOf)}"`,
+  }, tsLiteral(series));
+}
+
 if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
 if (patchEconomicIndicator("us-ppi", m.us_ppi)) stats.macro++;
 if (patchEconomicIndicator("us-jobless-claims", m.us_jobless)) stats.macro++;
 if (patchEconomicIndicator("us-unemployment", m.us_unemployment)) stats.macro++;
 if (patchEconomicIndicator("us-gdp", m.us_gdp_growth)) stats.macro++;
+// US & Canada dashboard — FRED-backed cards
+if (patchEconomicIndicator("us-payrolls", m.us_payrolls)) stats.macro++;
+if (patchEconomicIndicator("us-fed-funds", m.us_fed_funds)) stats.macro++;
+if (patchEconomicIndicator("us-trade-balance", m.us_trade)) stats.macro++;
+if (patchEconomicIndicator("us-tax-receipts", m.us_tax)) stats.macro++;
+if (patchEconomicIndicator("ca-unemployment", m.ca_unemployment)) stats.macro++;
+if (patchEconomicIndicator("ca-gdp", m.ca_gdp_growth)) stats.macro++;
+if (patchEconomicIndicator("ca-employment", m.ca_employment)) stats.macro++;
+if (patchEconomicIndicator("ca-trade-balance", m.ca_trade)) stats.macro++;
+// US & Canada dashboard — 10Y yields from the bonds dump
+if (patchBondIndicator("us-10y", (fred.bonds || {}).us10y)) stats.macro++;
+if (patchBondIndicator("ca-10y", (fred.bonds || {}).ca10y)) stats.macro++;
+// US & Canada dashboard — Bank of Canada Valet cards
+const cm = boc.macro || {};
+if (patchEconomicIndicator("ca-policy-rate", cm.ca_policy_rate)) stats.macro++;
+if (patchEconomicIndicator("ca-cpi", cm.ca_cpi)) stats.macro++;
 const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
 const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F");
 if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;
