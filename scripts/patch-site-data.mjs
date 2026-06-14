@@ -12,9 +12,12 @@ const root = resolve(here, "..");
 const dataPath = resolve(root, "src/lib/site-data.ts");
 const yahoo = JSON.parse(readFileSync(resolve(root, "src/lib/yahoo-data.json"), "utf8"));
 const fred = JSON.parse(readFileSync(resolve(root, "src/lib/fred-data.json"), "utf8"));
-// boc-data.json is optional (Bank of Canada Valet); tolerate its absence.
+// boc-data.json (Bank of Canada Valet) and statcan-data.json (StatCan WDS) are
+// optional; tolerate their absence so the patch still runs from yahoo + fred.
 let boc = { macro: {} };
 try { boc = JSON.parse(readFileSync(resolve(root, "src/lib/boc-data.json"), "utf8")); } catch { /* not fetched */ }
+let statcan = { macro: {} };
+try { statcan = JSON.parse(readFileSync(resolve(root, "src/lib/statcan-data.json"), "utf8")); } catch { /* not fetched */ }
 let src = readFileSync(dataPath, "utf8");
 
 const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);
@@ -244,6 +247,10 @@ if (patchBondIndicator("ca-10y", (fred.bonds || {}).ca10y)) stats.macro++;
 const cm = boc.macro || {};
 if (patchEconomicIndicator("ca-policy-rate", cm.ca_policy_rate)) stats.macro++;
 if (patchEconomicIndicator("ca-cpi", cm.ca_cpi)) stats.macro++;
+// US & Canada dashboard — Statistics Canada WDS cards
+const sc = statcan.macro || {};
+if (patchEconomicIndicator("ca-job-losses", sc.ca_ei_beneficiaries)) stats.macro++;
+if (patchEconomicIndicator("ca-tax-receipts", sc.ca_govt_revenue)) stats.macro++;
 const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
 const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F");
 if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;
