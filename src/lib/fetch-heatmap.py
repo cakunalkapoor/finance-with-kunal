@@ -36,7 +36,7 @@ from pathlib import Path
 import yfinance as yf
 import pandas as pd
 
-PROJECT = Path(__file__).resolve().parent.parent
+PROJECT = Path(__file__).resolve().parent.parent.parent
 OUT = PROJECT / "src" / "lib" / "heatmap-data.json"
 
 # ──────────────────────────────────────────────────────────────────────────────

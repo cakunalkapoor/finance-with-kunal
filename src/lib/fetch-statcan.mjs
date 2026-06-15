@@ -19,7 +19,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT = path.resolve(__dirname, "..");
+const PROJECT = path.resolve(__dirname, "..", "..");
 const OUT = path.join(PROJECT, "src", "lib", "statcan-data.json");
 
 const round1 = (n) => (n == null || !Number.isFinite(n) ? null : Math.round(n * 10) / 10);

@@ -22,7 +22,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT = path.resolve(__dirname, "..");
+const PROJECT = path.resolve(__dirname, "..", "..");
 const OUT = path.join(PROJECT, "src", "lib", "market-data.json");
 
 const RAW_DIR = "/Users/kunalkapoor/.claude/projects/-Users-kunalkapoor-Downloads-Job-Search/e08b6cce-f34c-4ada-89f7-1ae85b65ac89/tool-results";

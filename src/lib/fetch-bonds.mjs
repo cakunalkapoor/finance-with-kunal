@@ -18,7 +18,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT   = path.resolve(__dirname, "..");
+const PROJECT   = path.resolve(__dirname, "..", "..");
 const OUT       = path.join(PROJECT, "src", "lib", "bonds-data.json");
 
 const env        = fs.readFileSync(path.join(PROJECT, ".env.local"), "utf-8");

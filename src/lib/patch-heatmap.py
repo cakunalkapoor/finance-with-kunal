@@ -18,7 +18,7 @@ Sector aggregates:
 import json
 from pathlib import Path
 
-PROJECT = Path(__file__).resolve().parent.parent
+PROJECT = Path(__file__).resolve().parent.parent.parent
 DATA = PROJECT / "src" / "lib" / "heatmap-data.json"
 MOCK = PROJECT / "src" / "lib" / "site-data.ts"
 

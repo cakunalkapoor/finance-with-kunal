@@ -24,11 +24,11 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 ### Fetcher scripts
 
-- `scripts/fetch-yahoo.py` — uses `./.venv/bin/python3` (venv created by `npm run fetch:yahoo:setup`). Returns 1-year daily history per index, computes daily/1W/1M/YTD changes + 52W range + 52-pt sparkline. Output: `src/lib/yahoo-data.json`.
-- `scripts/process-alpha-vantage.mjs` — reads previously-saved Alpha Vantage tool-call JSON dumps (one per commodity + treasury), computes derived values. Output: `src/lib/market-data.json`.
-- `scripts/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, hits FRED for 7 bonds + 5 US macro series (DGS10, IRLTLT01<CC>M156N, INDIRLTLT01STM, UNRATE, ICSA, GDPC1, A191RL1Q225SBEA, CPIAUCSL). Output: `src/lib/fred-data.json`.
-- `scripts/fetch-twelvedata.mjs` — scaffold demo: batch-quotes 8 US ETFs (SPY/QQQ/IWM/EFA/EEM/TLT/GLD/USO). Exported helpers: `td(endpoint, params)`. Output: `src/lib/twelvedata-data.json`.
-- `scripts/fetch-finnhub.mjs` — scaffold demo: fetches Magnificent 7 quotes + profiles + this-week US economic calendar. Exported helpers: `quote/profile/earningsHistory/economicCalendar/ipoCalendar/companyNews`. Output: `src/lib/finnhub-data.json`.
+- `src/lib/fetch-yahoo.py` — uses `./.venv/bin/python3` (venv created by `npm run fetch:yahoo:setup`). Returns 1-year daily history per index, computes daily/1W/1M/YTD changes + 52W range + 52-pt sparkline. Output: `src/lib/yahoo-data.json`.
+- `src/lib/process-alpha-vantage.mjs` — reads previously-saved Alpha Vantage tool-call JSON dumps (one per commodity + treasury), computes derived values. Output: `src/lib/market-data.json`.
+- `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, hits FRED for 7 bonds + 5 US macro series (DGS10, IRLTLT01<CC>M156N, INDIRLTLT01STM, UNRATE, ICSA, GDPC1, A191RL1Q225SBEA, CPIAUCSL). Output: `src/lib/fred-data.json`.
+- `src/lib/fetch-twelvedata.mjs` — scaffold demo: batch-quotes 8 US ETFs (SPY/QQQ/IWM/EFA/EEM/TLT/GLD/USO). Exported helpers: `td(endpoint, params)`. Output: `src/lib/twelvedata-data.json`.
+- `src/lib/fetch-finnhub.mjs` — scaffold demo: fetches Magnificent 7 quotes + profiles + this-week US economic calendar. Exported helpers: `quote/profile/earningsHistory/economicCalendar/ipoCalendar/companyNews`. Output: `src/lib/finnhub-data.json`.
 
 ### What each future provider is good at
 

@@ -20,7 +20,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT_FILE = path.resolve(__dirname, "..", "src", "lib", "market-data.json");
+const OUT_FILE = path.resolve(__dirname, "..", "..", "src", "lib", "market-data.json");
 
 const INDICES = [
   { key: "sp500",  symbol: "^GSPC",     name: "S&P 500",            region: "USA",         flag: "🇺🇸" },

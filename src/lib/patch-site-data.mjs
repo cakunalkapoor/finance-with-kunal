@@ -8,7 +8,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const root = resolve(here, "..");
+const root = resolve(here, "..", "..");
 const dataPath = resolve(root, "src/lib/site-data.ts");
 const yahoo = JSON.parse(readFileSync(resolve(root, "src/lib/yahoo-data.json"), "utf8"));
 const fred = JSON.parse(readFileSync(resolve(root, "src/lib/fred-data.json"), "utf8"));

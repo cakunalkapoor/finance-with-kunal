@@ -32,7 +32,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT = path.resolve(__dirname, "..");
+const PROJECT = path.resolve(__dirname, "..", "..");
 const OUT = path.join(PROJECT, "src", "lib", "finnhub-data.json");
 
 function loadEnv() {
