@@ -48,7 +48,7 @@ function HeroSection() {
                 color: "var(--color-text-secondary)",
               }}
             >
-              Jun 13, 2026
+              Jun 21, 2026
             </span>
           </div>
           <div
@@ -74,7 +74,7 @@ function HeroSection() {
                 color: "var(--color-text-secondary)",
               }}
             >
-              Jun 21, 2026
+              Jun 28, 2026
             </span>
           </div>
         </div>
