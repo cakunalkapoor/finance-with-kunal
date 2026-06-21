@@ -240,6 +240,7 @@ if (patchEconomicIndicator("ca-unemployment", m.ca_unemployment)) stats.macro++;
 if (patchEconomicIndicator("ca-gdp", m.ca_gdp_growth)) stats.macro++;
 if (patchEconomicIndicator("ca-employment", m.ca_employment)) stats.macro++;
 if (patchEconomicIndicator("ca-trade-balance", m.ca_trade)) stats.macro++;
+if (patchEconomicIndicator("us-retail-sales", m.us_retail)) stats.macro++;
 // US & Canada dashboard — 10Y yields from the bonds dump
 if (patchBondIndicator("us-10y", (fred.bonds || {}).us10y)) stats.macro++;
 if (patchBondIndicator("ca-10y", (fred.bonds || {}).ca10y)) stats.macro++;
@@ -251,6 +252,7 @@ if (patchEconomicIndicator("ca-cpi", cm.ca_cpi)) stats.macro++;
 const sc = statcan.macro || {};
 if (patchEconomicIndicator("ca-job-losses", sc.ca_ei_beneficiaries)) stats.macro++;
 if (patchEconomicIndicator("ca-tax-receipts", sc.ca_govt_revenue)) stats.macro++;
+if (patchEconomicIndicator("ca-retail-sales", sc.ca_retail)) stats.macro++;
 const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
 const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F");
 if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;

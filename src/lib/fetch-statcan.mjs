@@ -26,8 +26,10 @@ const round1 = (n) => (n == null || !Number.isFinite(n) ? null : Math.round(n * 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const SERIES = [
-  { key: "ca_ei_beneficiaries", vector: 64549350, latestN: 24, unit: "K",     scale: 0.001, round: "whole", label: "Canada EI Beneficiaries" },
-  { key: "ca_govt_revenue",     vector: 62425572, latestN: 13, unit: "CAD B", scale: 0.001, round: "one",   label: "Canada Govt Revenues" },
+  { key: "ca_ei_beneficiaries", vector: 64549350,   latestN: 24, unit: "K",     scale: 0.001, round: "whole", label: "Canada EI Beneficiaries" },
+  { key: "ca_govt_revenue",     vector: 62425572,   latestN: 13, unit: "CAD B", scale: 0.001, round: "one",   label: "Canada Govt Revenues" },
+  // Total retail trade sales, Canada, seasonally adjusted (table 20-10-0056). LEVEL → YoY %.
+  { key: "ca_retail",           vector: 1446859483, latestN: 30, unit: "% YoY", yoy: true,                    label: "Canada Retail Sales" },
 ];
 
 async function fetchVector(vectorId, latestN) {
@@ -72,6 +74,16 @@ function buildRecord(series, { scale = 1, round = "one" } = {}) {
   };
 }
 
+// For LEVEL series we report the year-over-year % change (e.g. retail sales).
+function deriveYoY(obs) {
+  if (obs.length < 13) return null;
+  const yoy = [];
+  for (let i = 12; i < obs.length; i++) {
+    yoy.push({ date: obs[i].date, value: round1((obs[i].value / obs[i - 12].value - 1) * 100) });
+  }
+  return buildRecord(yoy);
+}
+
 async function main() {
   console.log("Fetching from Statistics Canada WDS...\n");
   const macro = {};
@@ -79,7 +91,7 @@ async function main() {
     process.stdout.write(`  v${String(s.vector).padEnd(10)} ${s.label.padEnd(24)} `);
     try {
       const obs = await fetchVector(s.vector, s.latestN);
-      const d = buildRecord(obs, { scale: s.scale, round: s.round });
+      const d = s.yoy ? deriveYoY(obs) : buildRecord(obs, { scale: s.scale, round: s.round });
       macro[s.key] = { ...d, unit: s.unit, label: s.label };
       console.log(`${String(d?.value ?? "—").padStart(8)}  asOf ${d?.asOf}`);
     } catch (e) {

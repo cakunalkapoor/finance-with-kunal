@@ -27,7 +27,7 @@ const US_CANADA_ONLY = new Set([
   "us-mfg-pmi", "us-services-pmi",
   "ca-gdp", "ca-cpi", "ca-unemployment", "ca-employment", "ca-job-losses",
   "ca-policy-rate", "ca-10y", "ca-trade-balance", "ca-tax-receipts",
-  "ca-mfg-pmi", "ca-services-pmi",
+  "ca-mfg-pmi", "ca-services-pmi", "us-retail-sales", "ca-retail-sales",
 ]);
 
 export default function DashboardPage() {

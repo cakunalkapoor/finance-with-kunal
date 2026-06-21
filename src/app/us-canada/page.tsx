@@ -18,6 +18,7 @@ const NA_COUNTRIES = new Set(["United States", "Canada"]);
 const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: string }[] = [
   { id: "growth", label: "Growth", icon: "📈" },
   { id: "inflation", label: "Inflation", icon: "💹" },
+  { id: "consumption", label: "Consumption", icon: "🛒" },
   { id: "employment", label: "Employment", icon: "👷" },
   { id: "rates", label: "Rates & Yields", icon: "🏦" },
   { id: "trade", label: "Trade", icon: "🚢" },

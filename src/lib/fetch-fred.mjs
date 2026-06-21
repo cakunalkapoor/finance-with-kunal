@@ -70,6 +70,8 @@ const MACRO = [
   { key: "us_trade",        id: "BOPGSTB",  limit: 24, label: "US Trade Balance", unit: "USD B", positiveGood: true, scale: 0.001 },
   // US Federal Government current tax receipts — quarterly, $B (annualised).
   { key: "us_tax",          id: "W006RC1Q027SBEA", limit: 12, label: "US Federal Tax Receipts", unit: "USD B", positiveGood: true },
+  // US Advance Retail Sales (Retail + Food Services) — monthly $M LEVEL. YoY % computed.
+  { key: "us_retail",       id: "RSAFS",    limit: 40, label: "US Retail Sales", unit: "% YoY", positiveGood: true, yoy: true },
 
   // Canada Unemployment Rate — monthly %
   { key: "ca_unemployment", id: "LRUNTTTTCAM156S", limit: 24, label: "Canada Unemployment", unit: "%", positiveGood: false },
@@ -238,6 +240,9 @@ async function main() {
       } else if (m.key === "us_ppi_index") {
         derived = deriveCPI_YoY(obs);
         macro["us_ppi"] = { ...derived, unit: "% YoY", label: "US PPI Inflation" };
+      } else if (m.yoy) {
+        derived = deriveCPI_YoY(obs);
+        macro[m.key] = { ...derived, unit: m.unit, label: m.label };
       } else if (m.momChange) {
         derived = deriveMoMChange(obs, m.scale ?? 1);
         macro[m.key] = { ...derived, unit: m.unit, label: m.label };
