@@ -3381,12 +3381,6 @@ export const PROFILE_DATA: ProfileData = {
       icon: "lineChart",
     },
     {
-      title: "Reported Risk to the Board & RBI",
-      description:
-        "Delivered monthly risk findings to the management committee and quarterly reports to the Board, shareholders, and the Reserve Bank of India, while managing statutory audits.",
-      icon: "landmark",
-    },
-    {
       title: "Co-Advised a C$10M PE Acquisition",
       description:
         "Part of the IndusInd Bank team that advised a global private equity firm on the C$10 million acquisition of an India-based home-décor company — from pitch books to due diligence.",
@@ -3409,18 +3403,6 @@ export const PROFILE_DATA: ProfileData = {
       description:
         "Developed a framework for an enterprise-wide operational risk scorecard, with risk-mitigation and business-continuity strategies spanning every function.",
       icon: "target",
-    },
-    {
-      title: "Stood Up AML / KYC Compliance",
-      description:
-        "Built FINTRAC-aligned AML/KYC programs in Canada — Enhanced Due Diligence reviews, STR/LCTR filings, and automated reconciliation.",
-      icon: "shieldCheck",
-    },
-    {
-      title: "Tracked Global Macro & Policy Signals",
-      description:
-        "Monitored immigration policy and economic indicators across North America, Europe, and Australia to flag emerging opportunities and threats for the overseas education-loan book.",
-      icon: "globe",
     },
   ],
   experience: [
