@@ -7,6 +7,7 @@ import {
   Scale,
   Target,
   Globe,
+  Coins,
   Award,
 } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
@@ -25,6 +26,7 @@ const ICON_MAP: Record<
   scale: Scale,
   target: Target,
   globe: Globe,
+  coins: Coins,
 };
 
 export default function CareerHighlights({ highlights }: { highlights: ProfileHighlight[] }) {

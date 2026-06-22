@@ -3404,6 +3404,12 @@ export const PROFILE_DATA: ProfileData = {
         "Developed a framework for an enterprise-wide operational risk scorecard, with risk-mitigation and business-continuity strategies spanning every function.",
       icon: "target",
     },
+    {
+      title: "Building Stablecoin Cross-Border Payments",
+      description:
+        "Part of a fintech team developing a payments solution that uses stablecoins and cryptocurrency to enable fast, smooth, and secure cross-border transfers at a fraction of the cost.",
+      icon: "coins",
+    },
   ],
   experience: [
     {
