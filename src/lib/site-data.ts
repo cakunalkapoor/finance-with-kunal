@@ -281,15 +281,15 @@ export const BOND_YIELDS: BondYield[] = [
     trend: [1.42, 1.55, 1.6, 1.65, 1.66, 1.81, 2.06, 2.24, 2.11, 2.35, 2.52, 2.65],
   },
   {
-    // Quandl RBI — stale until VPN fetch
+    // Quandl RBI — manual update Jun 19, 2026 (live fetch needs VPN)
     country: "India",
     flag: "🇮🇳",
     maturity: "10Y",
-    yield: 7.02,
-    dailyMove: -0.03,
-    oneMonthMove: -0.03,
-    oneYearMove: 0.75,
-    trend: [6.31, 6.35, 6.52, 6.59, 6.48, 6.54, 6.63, 6.73, 6.77, 6.84, 7.05, 7.02],
+    yield: 6.85,
+    dailyMove: 0.01,
+    oneMonthMove: -0.25,
+    oneYearMove: 0.47,
+    trend: [6.31, 6.35, 6.52, 6.59, 6.48, 6.54, 6.63, 6.73, 6.77, 6.84, 7.05, 6.85],
   },
   {
     // Quandl OECD — stale until VPN fetch
