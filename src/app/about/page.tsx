@@ -1,6 +1,5 @@
 import PageHeader from "@/components/ui/PageHeader";
 import ProfileHero from "@/components/about/ProfileHero";
-import ProfileStats from "@/components/about/ProfileStats";
 import CareerHighlights from "@/components/about/CareerHighlights";
 import Qualifications from "@/components/about/Qualifications";
 import SkillsGrid from "@/components/about/SkillsGrid";
@@ -26,7 +25,6 @@ export default function AboutPage() {
       </div>
 
       <ProfileHero data={PROFILE_DATA} />
-      <ProfileStats stats={PROFILE_DATA.stats} />
       <CareerHighlights highlights={PROFILE_DATA.highlights} />
       <Qualifications education={PROFILE_DATA.education} />
       <SkillsGrid categories={PROFILE_DATA.skills} />
