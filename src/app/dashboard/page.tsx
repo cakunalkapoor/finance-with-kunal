@@ -40,8 +40,8 @@ export default function DashboardPage() {
           label="Global Economy"
           labelColor="var(--color-neon-purple)"
           title="Global Economic Dashboard"
-          lastUpdated="Jun 21, 2026"
-          nextUpdate="Jun 28, 2026"
+          lastUpdated="Jun 28, 2026"
+          nextUpdate="Jul 5, 2026"
         />
 
         <MacroSnapshot />
