@@ -5,8 +5,9 @@
  * No API key required. Docs: https://www.statcan.gc.ca/en/developers/wds
  *
  * Series are pinned by permanent StatCan vector IDs:
- *   - 64549350  EI beneficiaries, regular benefits, Canada, both sexes 15+,
- *               seasonally adjusted (table 14-10-0011). Persons → thousands.
+ *   - 2062811   Employment level, Canada, both sexes 15+, seasonally adjusted
+ *               (table 14-10-0287). Thousands of persons → month-over-month
+ *               change in K ("jobs added"), Canada's analog to US nonfarm payrolls.
  *   - 62425572  Federal general government revenue, Canada, seasonally adjusted
  *               at annual rates (table 36-10-0477). $millions → $billions.
  *
@@ -26,7 +27,8 @@ const round1 = (n) => (n == null || !Number.isFinite(n) ? null : Math.round(n * 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const SERIES = [
-  { key: "ca_ei_beneficiaries", vector: 64549350,   latestN: 24, unit: "K",     scale: 0.001, round: "whole", label: "Canada EI Beneficiaries" },
+  // Employment LEVEL (K persons) → month-over-month change in K ("jobs added").
+  { key: "ca_jobs_added",       vector: 2062811,    latestN: 25, unit: "K MoM", diff: true,                   label: "Canada Jobs Added" },
   { key: "ca_govt_revenue",     vector: 62425572,   latestN: 13, unit: "CAD B", scale: 0.001, round: "one",   label: "Canada Govt Revenues" },
   // Total retail trade sales, Canada, seasonally adjusted (table 20-10-0056). LEVEL → YoY %.
   { key: "ca_retail",           vector: 1446859483, latestN: 30, unit: "% YoY", yoy: true,                    label: "Canada Retail Sales" },
@@ -74,6 +76,17 @@ function buildRecord(series, { scale = 1, round = "one" } = {}) {
   };
 }
 
+// For LEVEL series we can report the month-over-month change (e.g. employment
+// level → "jobs added", in K). Rounded to whole thousands.
+function deriveDiff(obs) {
+  if (obs.length < 2) return null;
+  const diff = [];
+  for (let i = 1; i < obs.length; i++) {
+    diff.push({ date: obs[i].date, value: Math.round(obs[i].value - obs[i - 1].value) });
+  }
+  return buildRecord(diff);
+}
+
 // For LEVEL series we report the year-over-year % change (e.g. retail sales).
 function deriveYoY(obs) {
   if (obs.length < 13) return null;
@@ -91,7 +104,7 @@ async function main() {
     process.stdout.write(`  v${String(s.vector).padEnd(10)} ${s.label.padEnd(24)} `);
     try {
       const obs = await fetchVector(s.vector, s.latestN);
-      const d = s.yoy ? deriveYoY(obs) : buildRecord(obs, { scale: s.scale, round: s.round });
+      const d = s.diff ? deriveDiff(obs) : s.yoy ? deriveYoY(obs) : buildRecord(obs, { scale: s.scale, round: s.round });
       macro[s.key] = { ...d, unit: s.unit, label: s.label };
       console.log(`${String(d?.value ?? "—").padStart(8)}  asOf ${d?.asOf}`);
     } catch (e) {
