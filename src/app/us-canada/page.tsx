@@ -41,8 +41,8 @@ export default function USCanadaPage() {
           label="US & Canada"
           labelColor="var(--color-neon-purple)"
           title="US & Canada Economic Dashboard"
-          lastUpdated="Jul 5, 2026"
-          nextUpdate="Jul 12, 2026"
+          lastUpdated="Jul 12, 2026"
+          nextUpdate="Jul 19, 2026"
         />
 
         {CATEGORIES.map(({ id, label, icon }) => {

@@ -6,7 +6,7 @@ Yahoo Finance has no official MCP connector and rate-limits anonymous direct
 HTTP traffic. The yfinance library handles the session-cookie + crumb auth
 flow and retry/backoff that Yahoo requires, so we offload the work to it.
 
-For each instrument we fetch ~1y of daily history (interval='1d', period='1y')
+For each instrument we fetch ~5y of daily history (interval='1d', period='5y')
 and derive everything from the close column:
 
   - value          → latest close
@@ -14,8 +14,8 @@ and derive everything from the close column:
   - weekChange     → latest vs ~5 trading days back
   - monthChange    → latest vs ~21 trading days back
   - ytdChange      → latest vs first 2026 close
-  - high52w / low52w
-  - sparkline      → 52 evenly-spaced points across the 1y window
+  - high52w / low52w → over the trailing 1y (252 trading days) only
+  - sparkline      → 156 evenly-spaced points across the trailing ~3y window
 
 Output: src/lib/yahoo-data.json   (consumed via site-data.ts patches)
 
@@ -140,8 +140,11 @@ def derive(history, year=2026):
             ytd_anchor = val
             break
 
-    high52w = float(closes.max())
-    low52w  = float(closes.min())
+    # 52-week high/low use only the trailing 1y (252 trading days), even though
+    # we now hold ~5y of closes for the multi-year sparkline.
+    closes_1y = closes.tail(252)
+    high52w = float(closes_1y.max())
+    low52w  = float(closes_1y.min())
 
     # Trailing 30-day annualized REALIZED volatility, in percentage points.
     # stddev of log-returns × √252 × 100  →  e.g. 15.5 means ~15.5%.
@@ -163,7 +166,8 @@ def derive(history, year=2026):
         "ytdChange":    pct(last, ytd_anchor),
         "high52w":      round(high52w, 2),
         "low52w":       round(low52w, 2),
-        "sparkline":    downsample(closes, 52),
+        # ~3y weekly sparkline: 156 points across the trailing 756 trading days.
+        "sparkline":    downsample(closes.tail(756), 156),
         "realizedVol":  realized_vol,
     }
 
@@ -186,10 +190,10 @@ def derive_bond(history):
     month_move  = abs_move(21)
     year_move   = abs_move(252)
 
-    # 12-month trend: one value per calendar month (last close of each month)
+    # 36-month trend: one value per calendar month (last close of each month)
     df = closes.to_frame("yield")
     df["ym"] = closes.index.to_period("M")
-    monthly = df.groupby("ym")["yield"].last().tail(12)
+    monthly = df.groupby("ym")["yield"].last().tail(36)
     trend = [round(float(v), 3) for v in monthly]
 
     return {
@@ -207,7 +211,7 @@ def fetch_one(symbol, retries=3):
     for attempt in range(retries):
         try:
             t = yf.Ticker(symbol)
-            hist = t.history(period="1y", interval="1d", auto_adjust=False)
+            hist = t.history(period="5y", interval="1d", auto_adjust=False)
             if len(hist) == 0:
                 raise RuntimeError("empty history")
             return hist, None

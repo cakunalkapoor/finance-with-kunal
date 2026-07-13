@@ -9,10 +9,12 @@ import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
-type ChartView = "YTD" | "52W";
+type ChartView = "YTD" | "52W" | "3Y";
 
-// YTD ≈ last 22 weeks of the 52-point array
-const YTD_WEEKS = 22;
+// The sparkline array is ~156 weekly points spanning the trailing ~3 years.
+// YTD ≈ last 28 weeks (Jan → now); 52W = last 52 weeks; 3Y = the full array.
+const YTD_WEEKS = 28;
+const WEEKS_52 = 52;
 
 function SparklineChart({
   data,
@@ -21,7 +23,8 @@ function SparklineChart({
   data: number[];
   view: ChartView;
 }) {
-  const slice = view === "YTD" ? data.slice(-YTD_WEEKS) : data;
+  const slice =
+    view === "YTD" ? data.slice(-YTD_WEEKS) : view === "52W" ? data.slice(-WEEKS_52) : data;
   const min = Math.min(...slice);
   const max = Math.max(...slice);
   // Color follows the trend of the *visible* window, so it stays correct when
@@ -225,7 +228,7 @@ export default function EquityMarketsTable() {
               {/* Chart column with YTD / 52W toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {(["YTD", "52W"] as ChartView[]).map((v) => (
+                  {(["YTD", "52W", "3Y"] as ChartView[]).map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
