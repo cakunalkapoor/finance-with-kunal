@@ -249,6 +249,7 @@ if (patchEconomicIndicator("ca-cpi", cm.ca_cpi)) stats.macro++;
 const sc = statcan.macro || {};
 if (patchEconomicIndicator("ca-unemployment", sc.ca_unemployment)) stats.macro++;
 if (patchEconomicIndicator("ca-trade-balance", sc.ca_trade)) stats.macro++;
+if (patchEconomicIndicator("ca-payrolls", sc.ca_jobs_added)) stats.macro++;
 if (patchEconomicIndicator("ca-tax-receipts", sc.ca_govt_revenue)) stats.macro++;
 if (patchEconomicIndicator("ca-retail-sales", sc.ca_retail)) stats.macro++;
 const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");

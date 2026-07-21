@@ -5,6 +5,8 @@
  * No API key required. Docs: https://www.statcan.gc.ca/en/developers/wds
  *
  * Series are pinned by permanent StatCan vector IDs:
+ *   - 2062811   LFS employment level, both sexes 15+, SA (table 14-10-0287) →
+ *               month-over-month change in K ("jobs added").
  *   - 2062815   LFS unemployment rate, both sexes 15+, SA, Canada (table 14-10-0287).
  *   - 87008984  Merchandise trade balance, BoP basis, all countries, SA (table 12-10-0011).
  *   - 62425572  Federal general government revenue, Canada, seasonally adjusted
@@ -32,6 +34,9 @@ const SERIES = [
   // Merchandise trade balance, balance-of-payments basis, all countries, seasonally
   // adjusted (table 12-10-0011). $millions → $billions. StatCan direct.
   { key: "ca_trade",            vector: 87008984,   latestN: 37, unit: "CAD B", scale: 0.001, round: "one", keep: 36, label: "Canada Trade Balance" },
+  // Employment LEVEL (K persons) → month-over-month change in K ("jobs added").
+  // latestN = keep + 1 (need one extra level to derive the first diff).
+  { key: "ca_jobs_added",       vector: 2062811,    latestN: 37, unit: "K MoM", diff: true, keep: 36,        label: "Canada Jobs Added" },
   { key: "ca_govt_revenue",     vector: 62425572,   latestN: 13, unit: "CAD B", scale: 0.001, round: "one",   label: "Canada Govt Revenues" },
   // Total retail trade sales, Canada, seasonally adjusted (table 20-10-0056). LEVEL → YoY %.
   // latestN = keep + 12 (YoY needs 12 extra months of raw levels).
@@ -80,6 +85,17 @@ function buildRecord(series, { scale = 1, round = "one", keep = 24 } = {}) {
   };
 }
 
+// For LEVEL series we can report the month-over-month change (e.g. employment
+// level → "jobs added", in K). Rounded to whole thousands.
+function deriveDiff(obs, keep = 24) {
+  if (obs.length < 2) return null;
+  const diff = [];
+  for (let i = 1; i < obs.length; i++) {
+    diff.push({ date: obs[i].date, value: Math.round(obs[i].value - obs[i - 1].value) });
+  }
+  return buildRecord(diff, { keep });
+}
+
 // For LEVEL series we report the year-over-year % change (e.g. retail sales).
 function deriveYoY(obs, keep = 24) {
   if (obs.length < 13) return null;
@@ -97,7 +113,7 @@ async function main() {
     process.stdout.write(`  v${String(s.vector).padEnd(10)} ${s.label.padEnd(24)} `);
     try {
       const obs = await fetchVector(s.vector, s.latestN);
-      const d = s.yoy ? deriveYoY(obs, s.keep) : buildRecord(obs, { scale: s.scale, round: s.round, keep: s.keep });
+      const d = s.diff ? deriveDiff(obs, s.keep) : s.yoy ? deriveYoY(obs, s.keep) : buildRecord(obs, { scale: s.scale, round: s.round, keep: s.keep });
       macro[s.key] = { ...d, unit: s.unit, label: s.label };
       console.log(`${String(d?.value ?? "—").padStart(8)}  asOf ${d?.asOf}`);
     } catch (e) {

@@ -25,7 +25,7 @@ const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: stri
 const US_CANADA_ONLY = new Set([
   "us-payrolls", "us-fed-funds", "us-10y", "us-trade-balance", "us-tax-receipts",
   "us-mfg-pmi", "us-services-pmi",
-  "ca-gdp", "ca-cpi", "ca-unemployment", "ca-employment", "ca-job-losses",
+  "ca-gdp", "ca-cpi", "ca-unemployment", "ca-payrolls",
   "ca-policy-rate", "ca-10y", "ca-trade-balance", "ca-tax-receipts",
   "ca-mfg-pmi", "ca-services-pmi", "us-retail-sales", "ca-retail-sales",
 ]);
@@ -40,8 +40,8 @@ export default function DashboardPage() {
           label="Global Economy"
           labelColor="var(--color-neon-purple)"
           title="Global Economic Dashboard"
-          lastUpdated="Jul 12, 2026"
-          nextUpdate="Jul 19, 2026"
+          lastUpdated="Jul 20, 2026"
+          nextUpdate="Jul 26, 2026"
         />
 
         <MacroSnapshot />
@@ -86,7 +86,7 @@ export default function DashboardPage() {
           );
         })}
 
-        <EconomicNotes />
+        <EconomicNotes filter={(ind) => !US_CANADA_ONLY.has(ind.id)} />
       </div>
     </>
   );
