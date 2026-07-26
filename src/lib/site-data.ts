@@ -3692,48 +3692,48 @@ export const MACRO_SNAPSHOT: MacroSnapshot = {
 };
 
 export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
-  weekRange: "Jun 2 – Jun 7, 2026",
-  lead: "A decisive risk-off week dragged global equities back from record territory, led by a sharp tech selloff that knocked the NASDAQ down nearly 5% on Friday. The dollar caught a bid, crypto extended its rout, and gold slipped despite the defensive tone — leaving firm crude as the lone bright spot.",
+  weekRange: "Jul 20 – Jul 24, 2026",
+  lead: "An oil shock set the tone. Brent briefly cleared $100 for the first time since 2022 after tankers were reportedly struck off Saudi Arabia, closing the week up 9.9% and dragging equities lower as the war premium rebuilt. The dollar caught a haven bid, yields pushed higher, and money rotated hard out of high-beta names into energy and defensives.",
   sections: [
     {
       id: "heatmap",
       title: "Sector Heatmap",
       icon: "🟦",
-      body: "Red blanketed the S&P 500 heatmap as Technology led the decline — semis and mega-cap AI names bore the brunt of Friday's –4.8% NASDAQ drop. Energy was the rare green pocket as crude held firm, while defensives like Utilities and Staples outperformed on a relative basis.",
+      body: "A sharply split S&P 500 heatmap. Energy led at roughly +5.0% on average as crude surged, with Utilities (+3.3%) and Industrials (+2.5%) close behind — MU +16.1%, LMT +10.7% and CEG +9.5% topped the board. The damage sat in Communication (–6.6%) and Consumer Discretionary (–6.2%), where TSLA –18.3%, ISRG –17.5% and both Alphabet lines near –10% weighed heavily. Technology finished only modestly lower at –1.2% as strength in semis offset mega-cap losses.",
       link: { href: "/markets", label: "View heatmap" },
     },
     {
       id: "flow",
       title: "Where Money Is Flowing",
       icon: "💸",
-      body: "Classic risk-off rotation — the dollar firmed (DXY +1.2% to 100.07) while money fled high-beta Tech and crypto. Notably, even gold couldn't hold up, and Treasuries drew only modest demand with yields near 4.5% — pointing to broad de-risking rather than a clean flight to safety.",
+      body: "A commodity-led rotation rather than a clean risk-off. The dollar firmed (DXY +0.69% to 101.43) and money moved into energy, utilities and defence while leaving high-multiple growth — the Magnificent Seven shed close to $800 billion mid-week on AI-spending doubts. Crypto saw no haven demand either, with bitcoin –2.8% and further spot-ETF outflows. Treasuries sold off rather than rallied, yields rising alongside the oil-driven inflation impulse.",
     },
     {
       id: "indices",
       title: "Indices Movement",
       icon: "📊",
-      body: "S&P 500 –2.59% to 7,383.74 and NASDAQ 100 –4.53% to 28,958 led losses, though both keep solid YTD gains (+7.7% / +14.9%). Europe softer — DAX –1.38%, FTSE 100 –0.40%, CAC 40 +0.43%. Asia mixed: Nikkei +0.39%, TAIEX +0.76%, KOSPI –0.30% (still +89% YTD), NIFTY –0.77%. S&P/TSX –1.02%.",
+      body: "S&P 500 –1.67% to 7,408.30 and NASDAQ 100 –1.97% to 28,454.81, both holding solid YTD gains (+8.0% / +12.9%). Europe was mixed — FTSE 100 the lone gainer at +0.63% to 10,639.20, DAX –0.61%, CAC 40 –0.94%. Asia bore the brunt: Nikkei –3.39% to 66,422.60, KOSPI –2.57% (still +64.7% YTD), TAIEX –1.70%, NIFTY –0.84%, Shanghai –0.15%. S&P/TSX held up best among majors at –0.42% to 35,192.70.",
       link: { href: "/markets", label: "All indices" },
     },
     {
       id: "bonds",
       title: "Bond Market",
       icon: "📉",
-      body: "US 10Y held around 4.47% — the equity selloff failed to spark a major bid for duration. JGB 10Y at 2.52% as Japan's normalization grinds on. UK Gilts at 4.82%, Bunds steady at 3.00%, India 10Y firm at 6.84%.",
+      body: "Duration found no safety this week. The US 10Y pushed up to 4.71% as the oil spike revived inflation concerns ahead of the Fed decision, while Canada's 10Y sat at 3.65% with the BoC on hold at 2.25%. UK Gilts remain the high-yielder at 4.80%, Bunds at 2.97%, JGB 10Y at 2.67% as Japan's normalization grinds on, and India 10Y firm at 7.02%.",
       link: { href: "/markets", label: "Sovereign yields" },
     },
     {
       id: "commodities",
       title: "Commodities",
       icon: "🛢️",
-      body: "Crude was the week's bright spot — Brent +1.1% to $93.09 and WTI +3.6% to $90.54, though both slipped Friday. Gold fell –4.3% to $4,365 and silver –8.6% to $69 as the dollar firmed. Copper eased to $6.28, natural gas to $3.23.",
+      body: "Crude dominated — Brent +9.9% to $96.78 and WTI +8.3% to $89.31, now up roughly 31% and 27% on the month. Precious metals joined the move as an inflation hedge: gold +1.5% to $4,070.80 and silver +5.1% to $58.91. Copper firmed to $6.36 (+2.2%) and soybeans gained 4.1%. Natural gas was the outlier, easing to $2.89 and down 10.3% over the month.",
       link: { href: "/markets", label: "Commodity board" },
     },
     {
       id: "currencies",
       title: "Currencies",
       icon: "💱",
-      body: "The dollar firmed across the board — DXY +1.2% to 100.07. EUR/USD slipped to 1.15 (–1.1%), GBP/USD to 1.33. USD/JPY pushed to 160.29 as the BoJ stayed patient on further normalization. The rupee held near 94.95 despite the NIFTY's soft patch.",
+      body: "The dollar posted its best week in a month — DXY +0.69% to 101.43 on haven flows and a firmer rate path. EUR/USD eased to 1.14 (–0.61%) and GBP/USD to 1.33 (–0.94%). The yen took the energy hit hardest, USD/JPY climbing to 163.70 as Japan imports the bulk of its crude. USD/CAD at 1.41 despite firm oil, and the rupee softened to 96.55.",
       link: { href: "/markets", label: "FX board" },
     },
   ],
