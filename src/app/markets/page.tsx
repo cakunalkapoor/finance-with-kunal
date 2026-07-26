@@ -22,8 +22,8 @@ export default function MarketsPage() {
           label="Market"
           labelColor="var(--color-neon-cyan)"
           title="Global Markets Dashboard"
-          lastUpdated="Jul 20, 2026"
-          nextUpdate="Jul 26, 2026"
+          lastUpdated="Jul 26, 2026"
+          nextUpdate="Aug 2, 2026"
         />
 
         <MarketHeatmap />
