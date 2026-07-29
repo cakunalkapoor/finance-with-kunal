@@ -9,7 +9,8 @@ import { FONT_MONO } from "@/lib/utils";
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
 // Softer emerald greens — easier on the eye
-function getHeatColor(change: number): string {
+function getHeatColor(change: number | null): string {
+  if (change == null) return "#64748b";
   if (change > 3)   return "#065f46"; // emerald-900
   if (change > 1.5) return "#059669"; // emerald-600
   if (change > 0.5) return "#10b981"; // emerald-500
@@ -20,7 +21,8 @@ function getHeatColor(change: number): string {
   return "#991b1b";                    // red-800
 }
 
-function getBorderColor(change: number): string {
+function getBorderColor(change: number | null): string {
+  if (change == null) return "rgba(148, 163, 184, 0.35)";
   if (change > 0) return "rgba(52, 211, 153, 0.28)";  // emerald
   return "rgba(251, 113, 133, 0.28)";                  // rose
 }
@@ -37,7 +39,7 @@ export default function MarketHeatmap() {
     if (fonts?.ready) {
       fonts.ready.then(() => setFontReady(true));
     } else {
-      setFontReady(true);
+      queueMicrotask(() => setFontReady(true));
     }
   }, []);
 
@@ -63,7 +65,9 @@ export default function MarketHeatmap() {
       value: stock.value,
       label: {
         show: true,
-        formatter: `{b}\n${stock.change >= 0 ? "+" : ""}${stock.change.toFixed(2)}%`,
+        formatter: stock.change == null
+          ? "{b}\nN/A"
+          : `{b}\n${stock.change >= 0 ? "+" : ""}${stock.change.toFixed(2)}%`,
       },
       itemStyle: {
         color: getHeatColor(stock.change),
@@ -95,7 +99,7 @@ export default function MarketHeatmap() {
         );
         const stock = sector?.children?.find((c) => c.ticker === params.name);
         const change = stock ? stock.change : (sector?.change ?? 0);
-        const sign = change >= 0 ? "+" : "";
+        const sign = change != null && change >= 0 ? "+" : "";
         const val = typeof params.value === "number" ? params.value.toFixed(1) : params.value;
         // For stock tiles, show ticker + company name. For sector tiles, just the name.
         const companyName = stock ? getCompanyName(params.name) : null;
@@ -106,7 +110,7 @@ export default function MarketHeatmap() {
         return `<div style="padding:4px 2px;min-width:160px">
             ${headerHtml}
             <div style="display:flex;align-items:baseline;gap:6px">
-              <span style="color:${change >= 0 ? "#059669" : "#e11d48"};font-size:15px;font-weight:700">${sign}${change.toFixed(2)}%</span>
+              <span style="color:${change == null ? "#64748b" : change >= 0 ? "#059669" : "#e11d48"};font-size:15px;font-weight:700">${change == null ? "N/A" : `${sign}${change.toFixed(2)}%`}</span>
               <span style="color:#9590b8;font-size:10px;font-weight:600;letter-spacing:0.04em">1W</span>
             </div>
             <div style="color:#9590b8;font-size:10px;margin-top:2px">Index weight: ${val}%</div>
@@ -166,6 +170,10 @@ export default function MarketHeatmap() {
   };
 
   const stockCount = sectors.reduce((s, sec) => s + (sec.children?.length ?? 0), 0);
+  const availableCount = sectors.reduce(
+    (sum, sector) => sum + (sector.children?.filter((stock) => stock.change != null).length ?? 0),
+    0,
+  );
 
   return (
     <SciFiCard glow="cyan" cornerAccent>
@@ -181,6 +189,10 @@ export default function MarketHeatmap() {
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm" style={{ background: "#ef4444" }} />
               <span style={{ color: "var(--color-text-muted)" }}>Negative</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-sm" style={{ background: "#64748b" }} />
+              <span style={{ color: "var(--color-text-muted)" }}>Unavailable</span>
             </div>
           </div>
         }
@@ -217,7 +229,7 @@ export default function MarketHeatmap() {
             fontFamily: FONT_MONO,
           }}
         >
-          {stockCount} constituents · {sectors.length} sectors
+          {availableCount}/{stockCount} quotes available · {sectors.length} sectors
         </span>
       </div>
 

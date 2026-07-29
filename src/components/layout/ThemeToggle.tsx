@@ -14,10 +14,17 @@ export default function ThemeToggle() {
 
   // Read the theme the pre-paint script already applied, after hydration.
   useEffect(() => {
-    setMounted(true);
-    setTheme(
-      document.documentElement.classList.contains("dark") ? "dark" : "light",
-    );
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (cancelled) return;
+      setMounted(true);
+      setTheme(
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      );
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   function toggle() {

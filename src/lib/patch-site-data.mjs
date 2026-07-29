@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-// Patches src/lib/site-data.ts in-place with the latest values from
-// yahoo-data.json and fred-data.json. Matches entries by `symbol` (Yahoo) or
-// `country` (FRED bonds). Leaves PMI and other curated mock-only fields untouched.
+// Patches src/lib/site-data.ts in-place with the latest values from Yahoo, FRED,
+// Bank of Canada, and Statistics Canada dumps. Leaves manual PMI fields untouched.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -19,6 +18,23 @@ try { boc = JSON.parse(readFileSync(resolve(root, "src/lib/boc-data.json"), "utf
 let statcan = { macro: {} };
 try { statcan = JSON.parse(readFileSync(resolve(root, "src/lib/statcan-data.json"), "utf8")); } catch { /* not fetched */ }
 let src = readFileSync(dataPath, "utf8");
+
+const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt]
+  .map((value) => Date.parse(value))
+  .filter(Number.isFinite);
+if (fetchedTimes.length) {
+  const latest = new Date(Math.max(...fetchedTimes));
+  const label = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(latest);
+  src = src.replace(
+    /export const DATA_UPDATED_AT = "[^"]+";/,
+    `export const DATA_UPDATED_AT = "${label}";`,
+  );
+}
 
 const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);
 
@@ -180,15 +196,27 @@ function patchIndicatorObject(id, fields, tsLit) {
   return true;
 }
 // FRED-backed cards (monthly/quarterly history straight from the dump).
-function patchEconomicIndicator(id, macroRec) {
+function patchEconomicIndicator(id, macroRec, { weekly = false } = {}) {
   if (!macroRec || macroRec.value == null) return false;
+  let timeSeries = macroRec.timeSeries;
+  // Older FRED dumps collapsed weekly ICSA dates to YYYY-MM. Reconstruct the
+  // weekly observation dates from the authoritative final asOf date so chart
+  // keys remain unique. New dumps already retain the full FRED date.
+  if (weekly && Array.isArray(timeSeries) && timeSeries.some((point) => point.date.length < 10)) {
+    const end = new Date(`${macroRec.asOf}T00:00:00Z`);
+    timeSeries = timeSeries.map((point, index, all) => {
+      const date = new Date(end);
+      date.setUTCDate(date.getUTCDate() - (all.length - 1 - index) * 7);
+      return { ...point, date: date.toISOString().slice(0, 10) };
+    });
+  }
   return patchIndicatorObject(id, {
     value: macroRec.value,
     previousValue: macroRec.previousValue,
     change: macroRec.change,
     direction: `"${macroRec.direction}"`,
     period: `"${asOfToPeriod(macroRec.asOf)}"`,
-  }, tsLiteral(macroRec.timeSeries));
+  }, tsLiteral(timeSeries));
 }
 // Yahoo-backed energy cards (Brent, NatGas): live weekly value + sparkline history.
 // NOTE: these cards' `description` prose is NOT patched here — the weekly task
@@ -228,7 +256,7 @@ function patchBondIndicator(id, bond) {
 
 if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
 if (patchEconomicIndicator("us-ppi", m.us_ppi)) stats.macro++;
-if (patchEconomicIndicator("us-jobless-claims", m.us_jobless)) stats.macro++;
+if (patchEconomicIndicator("us-jobless-claims", m.us_jobless, { weekly: true })) stats.macro++;
 if (patchEconomicIndicator("us-unemployment", m.us_unemployment)) stats.macro++;
 if (patchEconomicIndicator("us-gdp", m.us_gdp_growth)) stats.macro++;
 // US & Canada dashboard — FRED-backed cards
