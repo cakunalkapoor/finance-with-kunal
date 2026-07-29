@@ -86,7 +86,7 @@ export default function USCanadaPage() {
 
         <EconomicNotes
           filter={(ind) => NA_COUNTRIES.has(ind.country)}
-          subtitle="Auto-generated US & Canada macro notes · Jun 2026"
+          subtitle="Auto-generated US & Canada macro notes · Jul 2026"
         />
       </div>
     </>

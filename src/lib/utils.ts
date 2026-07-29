@@ -27,6 +27,21 @@ export function formatNumber(value: number, decimals = 2): string {
   });
 }
 
+/** Preserve the published precision of economic indicators in cards and notes.
+ * PMI diffusion indices are conventionally reported to one decimal place. */
+export function formatEconomicValue(
+  value: number,
+  category?: string,
+  unit?: string
+): string {
+  if (category === "pmi" || unit === "Index") return value.toFixed(1);
+  if (unit === "K") return formatNumber(value, 0);
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function formatLargeNumber(value: number): string {
   if (Math.abs(value) >= 1_000_000_000_000) {
     return `${(value / 1_000_000_000_000).toFixed(2)}T`;

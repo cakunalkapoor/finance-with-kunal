@@ -1991,7 +1991,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Jan 2026",
-    description: "US economy reaccelerating in Q1 2026 after a soft Q4. Real GDP grew at a 1.6% annualised pace, well above the negative print earlier in 2025.",
+    description: "US real GDP grew at a 2.1% annualised pace in Q1 2026, accelerating from 0.5% in Q4 2025. Source: BEA via FRED (A191RL1Q225SBEA).",
     timeSeries: [
       { date: "2023-04", value: 2.5 },
       { date: "2023-07", value: 4.7 },
@@ -2064,7 +2064,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: false,
     period: "Jul 2026",
-    description: "Initial claims edged up slightly but remain near multi-month lows, consistent with a labour market that has cooled without breaking.",
+    description: "US initial jobless claims fell to 187K in the week ended July 18 from 209K in the prior week, remaining near multi-month lows. Source: US Department of Labor via FRED (ICSA).",
     timeSeries: [
       { date: "2023-07-29", value: 238 },
       { date: "2023-08-05", value: 258 },
@@ -2490,11 +2490,11 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     value: 87.19,
     unit: "USD/bbl",
     previousValue: 91.01,
-    change: -4.2,
+    change: -3.82,
     direction: "down",
     isPositiveGood: false,
     period: "Jul 28, 2026",
-    description: "Brent crude extended its surge to $96.78/bbl, up another 9.9% on the week and roughly 31% over the past month, briefly topping $100 for the first time since 2022 after reports that tankers were struck off Saudi Arabia. The US-Iran conflict shows no sign of easing — Washington has now run 13 straight days of strikes and threatened a \"massive attack,\" while Houthi forces targeted two Saudi tankers — though prices pulled back off the $100+ peak on late-week reports that Pakistan and China were pushing to revive US-Iran talks.",
+    description: "Brent crude was $87.19/bbl on July 28, down from the prior observation of $91.01 as prices continued to retreat from the previous week's geopolitical spike. Source: Yahoo Finance (BZ=F).",
     timeSeries: [
       { date: "2023-08-08", value: 84.24 },
       { date: "2023-08-15", value: 85.14 },
@@ -2662,12 +2662,12 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     flag: "🔥",
     value: 2.75,
     unit: "USD/MMBtu",
-    previousValue: 2.86,
-    change: -3.94,
+    previousValue: 2.87,
+    change: -0.12,
     direction: "down",
     isPositiveGood: false,
     period: "Jul 28, 2026",
-    description: "Henry Hub natural gas eased to $2.89/MMBtu, down 0.8% on the week and about 10% over the past month. Unlike crude, US gas remains largely insulated from Middle East supply risk — strong domestic production and comfortable storage kept prices near the low end of the 2026 range, well below the late-2025 highs near $5.",
+    description: "Henry Hub natural gas eased to $2.75/MMBtu on July 28 from the prior observation of $2.87. Strong domestic production and comfortable storage kept prices near the low end of the 2026 range. Source: Yahoo Finance (NG=F).",
     timeSeries: [
       { date: "2023-08-08", value: 2.49 },
       { date: "2023-08-15", value: 2.57 },
@@ -3015,7 +3015,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "neutral",
     isPositiveGood: false,
     period: "Jun 2026",
-    description: "The effective federal funds rate eased to 3.63% as the Fed continued its gradual cutting cycle. Source: Federal Reserve via FRED (FEDFUNDS).",
+    description: "The effective federal funds rate held at 3.63% in June, unchanged from May. Source: Federal Reserve via FRED (FEDFUNDS).",
     timeSeries: [
       { date: "2023-07", value: 5.12 },
       { date: "2023-08", value: 5.33 },
@@ -3069,7 +3069,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: false,
     period: "Jul 2026",
-    description: "The US 10-year Treasury yield sits at 4.45%, reflecting the market's view on growth, inflation and Fed policy. Source: FRED (DGS10).",
+    description: "The US 10-year Treasury yield rose to 4.69% in July from 4.50% in June, reflecting firmer inflation and policy-rate expectations. Source: FRED (DGS10).",
     timeSeries: [
       { date: "2023-08", value: 3.81 },
       { date: "2023-09", value: 4.28 },
@@ -3177,7 +3177,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: false,
     period: "Jul 2026",
-    description: "Government of Canada 10-year benchmark yield at 3.52%, well below US equivalents. Source: Bank of Canada (GoC 10Y benchmark, daily).",
+    description: "The Government of Canada 10-year benchmark yield rose to 3.60% in July from 3.38% in June. Source: Bank of Canada (GoC 10Y benchmark, daily).",
     timeSeries: [
       { date: "2023-08", value: 3.56 },
       { date: "2023-09", value: 4.03 },
@@ -3229,11 +3229,11 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     value: -77.59,
     unit: "USD B",
     previousValue: -54.57,
-    change: -23.01,
+    change: -23.02,
     direction: "down",
     isPositiveGood: true,
     period: "May 2026",
-    description: "The US goods-and-services trade deficit narrowed slightly to $55.9B in April; a smaller deficit is a modest tailwind to GDP. Source: BEA via FRED (BOPGSTB).",
+    description: "The US goods-and-services trade deficit widened to $77.59B in May from $54.57B in April, increasing the near-term drag from net exports. Source: BEA via FRED (BOPGSTB).",
     timeSeries: [
       { date: "2023-06", value: -62.4 },
       { date: "2023-07", value: -62.05 },
@@ -3408,7 +3408,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Jan 2026",
-    description: "Canada's real GDP grew 0.4% in Q1, rebounding from a soft Q4 contraction. Source: OECD via FRED (NAEXKP01CAQ657S).",
+    description: "Canada's real GDP declined 0.04% quarter over quarter in Q1 2026, a smaller contraction than the 0.25% decline in Q4 2025. Source: OECD via FRED (NAEXKP01CAQ657S).",
     timeSeries: [
       { date: "2023-04", value: 0.16 },
       { date: "2023-07", value: 0.05 },
@@ -3440,7 +3440,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: false,
     period: "Jun 2026",
-    description: "Canada's headline CPI accelerated to 2.82% YoY in April, back above the Bank of Canada's 2% target midpoint. Computed from the BoC total CPI index (V41690973).",
+    description: "Canada's headline CPI inflation slowed to 2.80% YoY in June from 3.23% in May. Computed from the Bank of Canada total CPI index (V41690973).",
     timeSeries: [
       { date: "2023-07", value: 3.27 },
       { date: "2023-08", value: 4 },
@@ -3496,7 +3496,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: true,
     period: "Jun 2026",
-    description: "US retail & food-services sales rose 6.9% YoY in May, a strong print pointing to resilient consumer demand. Source: US Census Bureau via FRED (RSAFS).",
+    description: "US retail and food-services sales rose 6.72% YoY in June, easing from 7.33% in May while remaining strong. Source: US Census Bureau via FRED (RSAFS).",
     timeSeries: [
       { date: "2023-07", value: 2.86 },
       { date: "2023-08", value: 3.19 },
@@ -3551,7 +3551,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "May 2026",
-    description: "Canadian retail sales grew 3.7% YoY in April, a steady pace of consumer spending. Source: Statistics Canada (table 20-10-0056, seasonally adjusted).",
+    description: "Canadian retail sales grew 5.9% YoY in May, accelerating from 3.6% in April. Source: Statistics Canada (table 20-10-0056, seasonally adjusted).",
     timeSeries: [
       { date: "2023-06", value: -1.2 },
       { date: "2023-07", value: 1.6 },
@@ -3681,7 +3681,7 @@ export const MACRO_SNAPSHOT: MacroSnapshot = {
   inflation: { value: 3.73, trend: "down" }, // FRED CPIAUCSL  YoY  Jun 2026 (4.27 → 3.73)
   jobs: { value: 4.2, trend: "down" },        // FRED UNRATE  Jun 2026 (4.3 → 4.2)
   claims: { value: 187, trend: "down" },      // FRED ICSA  Jul 18 2026 (209 → 187)
-  oil: { value: 87.19, trend: "up" },        // Yahoo Finance BZ=F  Jul 24 2026 (+9.85% wk)
+  oil: { value: 87.19, trend: "down" },      // Yahoo Finance BZ=F  Jul 28 2026 (91.01 → 87.19)
 };
 
 export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
