@@ -175,7 +175,7 @@ SSE = {
     "Energy": [("601857",2.5),("600028",2.0),("601088",1.5)],
     "Consumer Staples": [("600519",5.0),("603288",1.0),("600276",1.5),("600887",1.5),("600438",1.0),("600600",0.5)],
     "Insurance": [("601318",3.5),("601628",2.0),("601336",0.8),("601319",1.0)],
-    "Industrials": [("601668",1.5),("601800",1.0),("601766",1.5),("600009",0.8)],
+    "Industrials": [("601668",1.5),("601800",1.0),("601766",1.5),("601989",0.5),("600009",0.8)],
     "Materials": [("600585",1.0),("600547",0.5),("603799",0.5),("600188",0.5)],
     "Tech": [("601138",2.0),("600703",0.8),("603501",0.8)],
     "Real Estate": [("600048",0.8),("601155",0.5)],
@@ -218,21 +218,32 @@ KOSPI = {
 def build_sectors_ts(var_name, catalog, live_data):
     """Generate `const VAR_SECTORS: HeatmapSector[] = [...];` block."""
     lines = [f"const {var_name}_SECTORS: HeatmapSector[] = ["]
+    # Fetch and display sector labels can evolve independently. Match quotes by
+    # ticker across the index so a classification difference never creates a
+    # false missing value.
+    index_live_by_ticker = {
+        row["ticker"]: row
+        for rows in live_data.values()
+        for row in rows
+    }
     for sector, tickers in catalog.items():
-        live_sector = live_data.get(sector, [])
-        live_by_ticker = {x["ticker"]: x for x in live_sector}
         children_ts = []
         total_w = 0.0
         weighted = 0.0
+        available_w = 0.0
         for ticker, weight in tickers:
-            live = live_by_ticker.get(ticker, {})
-            wk = float(live.get("weekChange", 0.0))
+            live = index_live_by_ticker.get(ticker, {})
+            raw_change = live.get("weekChange")
+            wk = float(raw_change) if raw_change is not None and live.get("asOf") else None
+            change_literal = "null" if wk is None else str(wk)
             children_ts.append(
-                f'      {{ name: "{ticker}", ticker: "{ticker}", value: {weight}, change: {wk} }}'
+                f'      {{ name: "{ticker}", ticker: "{ticker}", value: {weight}, change: {change_literal} }}'
             )
             total_w += weight
-            weighted += wk * weight
-        sector_change = round(weighted / total_w, 2) if total_w > 0 else 0.0
+            if wk is not None:
+                weighted += wk * weight
+                available_w += weight
+        sector_change = round(weighted / available_w, 2) if available_w > 0 else 0.0
         lines.append("  {")
         lines.append(f'    name: "{sector}",')
         lines.append(f"    value: {round(total_w, 2)},")
@@ -285,9 +296,9 @@ export const HEATMAP_DATA: HeatmapSector[] = SP500_SECTORS;
     header = """// ─────────────────────────────────────────────────────────────────────────────
 // HEATMAP CONSTITUENTS — LIVE WEEKLY % CHANGE from Yahoo Finance (yfinance)
 //
-// 10 indices, ~530 constituents total. Each ticker carries:
+// 11 indices, ~570 constituents total. Each ticker carries:
 //   - value:  curated index weight (% of index market cap)
-//   - change: WEEKLY change % (last close vs ~5 trading days ago)
+//   - change: WEEKLY change % (last close vs ~5 trading days ago), or null when unavailable
 //
 // Refresh: npm run fetch:heatmap && npm run patch:heatmap
 // ─────────────────────────────────────────────────────────────────────────────
@@ -316,12 +327,17 @@ export const HEATMAP_DATA: HeatmapSector[] = SP500_SECTORS;
     MOCK.write_text(out)
 
     # Report counts
-    counts = {k: sum(len(v) for v in idx.values()) for k, idx in live.items()}
+    catalogs = {
+        "sp500": SP500, "ndx": NDX, "tsx": TSX, "ftse": FTSE, "dax": DAX,
+        "cac": CAC, "nifty50": NIFTY50, "nikkei": NIKKEI, "sse": SSE,
+        "kospi": KOSPI, "twse": TWSE,
+    }
+    counts = {k: sum(len(v) for v in idx.values()) for k, idx in catalogs.items()}
     print("✓ patched site-data.ts")
     for k, c in counts.items():
         print(f"  {k:10} {c:>3} tickers")
     print(f"  {'─'*20}")
-    print(f"  Total: {sum(counts.values())} constituents across 10 indices")
+    print(f"  Total: {sum(counts.values())} constituents across {len(counts)} indices")
 
 if __name__ == "__main__":
     main()

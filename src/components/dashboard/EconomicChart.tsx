@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import type { EconomicIndicator, TimeHorizon } from "@/types";
-import { getChangeColor, FONT_MONO } from "@/lib/utils";
+import { formatEconomicValue, getChangeColor, FONT_MONO } from "@/lib/utils";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
@@ -45,6 +45,8 @@ export default function EconomicChart({ indicator }: Props) {
   const goodColor = indicator.isPositiveGood
     ? isUp ? "#34d399" : "#fb7185"
     : isUp ? "#fb7185" : "#34d399";
+  const displayValue = (value: number) =>
+    formatEconomicValue(value, indicator.category, indicator.unit);
 
   const option: EChartsOption = {
     backgroundColor: "transparent",
@@ -66,7 +68,7 @@ export default function EconomicChart({ indicator }: Props) {
         if (!p) return "";
         return `<div style="padding:2px 4px">
           <div style="color:#524b7a;font-size:10px">${p.axisValue}</div>
-          <div style="font-weight:700;font-size:13px;color:${goodColor}">${p.value} ${indicator.unit}</div>
+          <div style="font-weight:700;font-size:13px;color:${goodColor}">${displayValue(Number(p.value))} ${indicator.unit}</div>
         </div>`;
       },
     },
@@ -151,15 +153,15 @@ export default function EconomicChart({ indicator }: Props) {
               color: goodColor,
             }}
           >
-            {indicator.value} <span className="text-xs font-normal" style={{ color: "var(--color-text-muted)" }}>{indicator.unit}</span>
+            {displayValue(indicator.value)} <span className="text-xs font-normal" style={{ color: "var(--color-text-muted)" }}>{indicator.unit}</span>
           </div>
           <div
             className={`text-xs font-semibold ${getChangeColor(indicator.change, indicator.isPositiveGood)}`}
             style={{ fontFamily: FONT_MONO }}
           >
             {indicator.change >= 0 ? "▲" : "▼"}{" "}
-            {Math.abs(indicator.change).toFixed(2)}{" "}
-            vs prev {indicator.previousValue} {indicator.unit}
+            {displayValue(Math.abs(indicator.change))}{" "}
+            vs prev {displayValue(indicator.previousValue)} {indicator.unit}
           </div>
         </div>
       </div>

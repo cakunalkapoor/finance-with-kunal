@@ -155,7 +155,7 @@ function deriveBondDaily(obs) {
   };
 }
 
-function deriveMacro(obs, scale = 1) {
+function deriveMacro(obs, scale = 1, preserveFullDate = false) {
   if (obs.length === 0) return null;
   const last = obs[obs.length - 1];
   const prev = obs[obs.length - 2];
@@ -165,7 +165,10 @@ function deriveMacro(obs, scale = 1) {
     change: prev ? round2((last.value - prev.value) * scale) : 0,
     direction: prev ? (last.value > prev.value ? "up" : last.value < prev.value ? "down" : "neutral") : "neutral",
     asOf: last.date,
-    timeSeries: obs.map((o) => ({ date: o.date.slice(0, 7), value: round2(o.value * scale) })),
+    timeSeries: obs.map((o) => ({
+      date: preserveFullDate ? o.date : o.date.slice(0, 7),
+      value: round2(o.value * scale),
+    })),
   };
 }
 
@@ -244,7 +247,7 @@ async function main() {
         derived = deriveMoMChange(obs, m.scale ?? 1);
         macro[m.key] = { ...derived, unit: m.unit, label: m.label };
       } else {
-        derived = deriveMacro(obs, m.scale ?? 1);
+        derived = deriveMacro(obs, m.scale ?? 1, m.key === "us_jobless");
         macro[m.key] = { ...derived, unit: m.unit, label: m.label };
       }
       console.log(`${String(derived?.value ?? "—").padStart(10)}  asOf ${derived?.asOf}`);

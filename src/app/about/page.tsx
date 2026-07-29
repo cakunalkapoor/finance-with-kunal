@@ -1,4 +1,4 @@
-import PageHeader from "@/components/ui/PageHeader";
+import BriefingHero from "@/components/ui/BriefingHero";
 import ProfileHero from "@/components/about/ProfileHero";
 import CareerHighlights from "@/components/about/CareerHighlights";
 import Qualifications from "@/components/about/Qualifications";
@@ -15,12 +15,18 @@ export default function AboutPage() {
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <PageHeader
-          label="Profile"
-          labelColor="var(--color-neon-cyan)"
-          title="About Me"
+        <BriefingHero
+          eyebrow="About Kunal"
+          title="Finance, risk, and decisions—connected."
+          description="A Chartered Accountant and MBA bringing more than a decade of financial risk, compliance, and advisory experience to practical market and economic analysis."
+          accent="violet"
           lastUpdated="—"
           nextUpdate="—"
+          stats={[
+            { label: "Experience", value: "10+", detail: "Years across markets" },
+            { label: "Perspective", value: "2", detail: "Canada and India" },
+            { label: "Approach", value: "1", detail: "Evidence first" },
+          ]}
         />
       </div>
 

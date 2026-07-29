@@ -1,7 +1,7 @@
 import EconomicChart from "@/components/dashboard/EconomicChart";
 import EconomicNotes from "@/components/dashboard/EconomicNotes";
 import MarketTicker from "@/components/markets/MarketTicker";
-import PageHeader from "@/components/ui/PageHeader";
+import BriefingHero from "@/components/ui/BriefingHero";
 import { FONT_MONO } from "@/lib/utils";
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import type { EconomicIndicator } from "@/types";
@@ -37,12 +37,16 @@ export default function USCanadaPage() {
       <MarketTicker />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        <PageHeader
-          label="US & Canada"
-          labelColor="var(--color-neon-purple)"
-          title="US & Canada Economic Dashboard"
-          lastUpdated="Jul 27, 2026"
-          nextUpdate="Aug 2, 2026"
+        <BriefingHero
+          eyebrow="North America"
+          title="Two economies. One comparative view."
+          description="Compare the United States and Canada across growth, prices, jobs, rates, trade, fiscal flows, consumption, and business activity—with consistent charts and country-first ordering."
+          accent="emerald"
+          stats={[
+            { label: "Economies", value: "2", detail: "US and Canada" },
+            { label: "Lenses", value: "8", detail: "Economic themes" },
+            { label: "Layout", value: "1:1", detail: "Side-by-side read" },
+          ]}
         />
 
         {CATEGORIES.map(({ id, label, icon }) => {
@@ -82,7 +86,7 @@ export default function USCanadaPage() {
 
         <EconomicNotes
           filter={(ind) => NA_COUNTRIES.has(ind.country)}
-          subtitle="Auto-generated US & Canada macro notes · Jun 2026"
+          subtitle="Auto-generated US & Canada macro notes · Jul 2026"
         />
       </div>
     </>

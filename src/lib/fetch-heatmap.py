@@ -66,7 +66,7 @@ NDX = {
                    "KLAC","MRVL","NXPI","MCHP","FTNT","CDNS","SNPS","CRWD","PANW","ASML",
                    "PYPL","TEAM","DDOG","WDAY","ADSK","ANSS"],
     "Communication": ["GOOG","CMCSA","TMUS","CHTR","ROKU"],
-    "Consumer Disc.": ["BKNG","MAR","ABNB","MELI","ROST","ORLY","LULU","EBAY","ROST"],
+    "Consumer Disc.": ["BKNG","MAR","ABNB","MELI","ROST","ORLY","LULU","EBAY"],
     "Healthcare": ["AMGN","GILD","REGN","VRTX","ISRG","IDXX","ILMN","DXCM","MRNA","ZTS"],
     "Consumer Staples": ["COST","PEP","MNST","KDP","KHC","MDLZ"],
     "Industrials": ["HON","ADP","PAYX","CSX","PCAR","ODFL","FAST","CTAS"],
@@ -113,10 +113,10 @@ DAX = {
     "Technology": ["SAP","IFX","SHL"],
     "Industrials": ["SIE","AIR","MTX","RHM","HEI","CON","HNR1"],
     "Consumer Disc.": ["MBG","BMW","VOW3","P911","ADS","ZAL"],
-    "Financials": ["ALV","MUV2","DBK","HNR1"],
+    "Financials": ["ALV","MUV2","DBK"],
     "Consumer Staples": ["BEI","HEN3","SY1"],
     "Healthcare": ["BAYN","FRE","FME","MRK","QGEN","SRT3","BNR"],
-    "Materials": ["BAS","HEN3","EVK","1COV","SDF"],
+    "Materials": ["BAS","EVK","1COV","SDF"],
     "Telecom": ["DTE"],
     "Utilities": ["RWE","EOAN","ENR"],
     "Real Estate": ["VNA"],
@@ -133,7 +133,7 @@ CAC = {
     "Industrials": ["AIR","SAF","SU","DG","ML","VIE","STMPA","HO","LR","SGO"],
     "Healthcare": ["SAN"],
     "Financials": ["BNP","CS","GLE","ACA","AMUN"],
-    "Technology": ["CAP","DSY","STMPA","ATO","PUB","WLN"],
+    "Technology": ["CAP","DSY","ATO","PUB","WLN"],
     "Auto": ["STLAP","RNO"],
     "Materials": ["AI"],   # Air Liquide
     "Real Estate": ["URW"],
@@ -166,7 +166,7 @@ NIKKEI = {
     "Technology": ["8035","6857","6758","6861","6981","6098","6594","7974","6701","4063","6273","4519"],
     # Tokyo Electron, Advantest, Sony, Keyence, Murata, Recruit, Nidec, Nintendo, NEC, Shin-Etsu, SMC, Chugai
     "Financials": ["8306","8316","8411","8766","8591","8053"],         # MUFG, SMFG, Mizuho, Tokio Marine, ORIX, Sumitomo Corp
-    "Industrials": ["6367","7011","6326","6981","6503","7741","6645","7751"],
+    "Industrials": ["6367","7011","6326","6503","7741","6645","7751"],
     # Daikin, Mitsubishi Heavy, Kubota, Murata, Mitsubishi Elec, Hoya, Omron, Canon
     "Healthcare": ["4502","4543"],                                     # Takeda, Terumo
     "Telecom": ["9984","9433","9432"],                                 # SoftBank, KDDI, NTT
@@ -222,7 +222,7 @@ KOSPI = {
     # POSCO, LG Chem, Samsung SDI, POSCO Future M, Korea Zinc
     "Internet": ["035720","035420"],                                    # Kakao, NAVER
     "Telecom": ["017670","030200"],                                     # SK Telecom, KT
-    "Energy": ["096770","034220"],                                      # SK Innovation, LG Display (dup OK)
+    "Energy": ["096770"],                                                # SK Innovation
     "Consumer": ["066570","003550","000810","097950"],                  # LG Electronics, LG Corp, Samsung F&M, CJ CheilJedang
 }
 
@@ -305,9 +305,9 @@ def process_index(name, sectors_dict, map_fn):
             fail_count += 1
             result.setdefault(sector, []).append({
                 "ticker": ticker, "yahoo": yahoo_sym,
-                "weekChange": 0.0, "price": None, "asOf": None,
+                "weekChange": None, "price": None, "asOf": None,
             })
-    print(f"  {name}: {ok_count} ✓ · {fail_count} ✗  (failed → 0% default)")
+    print(f"  {name}: {ok_count} ✓ · {fail_count} ✗  (failed → unavailable)")
     return result
 
 # ──────────────────────────────────────────────────────────────────────────────

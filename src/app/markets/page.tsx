@@ -5,7 +5,7 @@ import CommoditiesGrid from "@/components/markets/CommoditiesGrid";
 import CryptoGrid from "@/components/markets/CryptoGrid";
 import ForexGrid from "@/components/markets/ForexGrid";
 import MarketHeatmap from "@/components/markets/MarketHeatmap";
-import PageHeader from "@/components/ui/PageHeader";
+import BriefingHero from "@/components/ui/BriefingHero";
 
 export const metadata = {
   title: "Markets — Finance with Kunal",
@@ -18,12 +18,16 @@ export default function MarketsPage() {
       <MarketTicker />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        <PageHeader
-          label="Market"
-          labelColor="var(--color-neon-cyan)"
-          title="Global Markets Dashboard"
-          lastUpdated="Jul 27, 2026"
-          nextUpdate="Aug 2, 2026"
+        <BriefingHero
+          eyebrow="Markets briefing"
+          title="See the market before chasing the move."
+          description="A cross-asset view of equities, rates, commodities, currencies, crypto, and sector leadership—organized to surface direction, breadth, and risk appetite quickly."
+          accent="violet"
+          stats={[
+            { label: "Coverage", value: "6", detail: "Cross-asset views" },
+            { label: "Cadence", value: "7D", detail: "Weekly refresh" },
+            { label: "Focus", value: "360°", detail: "Global context" },
+          ]}
         />
 
         <MarketHeatmap />

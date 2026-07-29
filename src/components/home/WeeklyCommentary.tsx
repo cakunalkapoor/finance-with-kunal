@@ -10,17 +10,11 @@ export default function WeeklyCommentary() {
     <section className="py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-screen-2xl mx-auto">
         {/* Header */}
-        <div className="flex flex-wrap items-baseline justify-between gap-2 mb-4">
-          <h2
-            className="text-xs font-bold tracking-widest uppercase"
-            style={{
-              fontFamily: FONT_MONO,
-              color: "var(--color-text-muted)",
-              letterSpacing: "0.14em",
-            }}
-          >
-            Latest Commentary
-          </h2>
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-[10px] font-bold uppercase" style={{ color: "var(--color-neon-cyan)", fontFamily: FONT_MONO, letterSpacing: "0.14em" }}>Weekly commentary</p>
+            <h2 className="mt-2 text-xl font-bold sm:text-2xl" style={{ color: "var(--color-text-primary)", letterSpacing: "-0.03em" }}>What moved—and what mattered</h2>
+          </div>
           <span
             className="text-xs"
             style={{
@@ -55,7 +49,7 @@ export default function WeeklyCommentary() {
           {sections.map((s) => (
             <div
               key={s.id}
-              className="rounded-xl p-5 flex flex-col gap-3"
+              className="rounded-xl p-5 flex flex-col gap-3 transition-transform hover:-translate-y-0.5"
               style={{
                 background: "var(--color-space-card)",
                 border: "1px solid var(--color-space-border)",
