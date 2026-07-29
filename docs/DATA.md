@@ -7,7 +7,7 @@ Deep reference for data sources and component internals. The quick overview is i
 
 ## Data architecture
 
-**Four live data providers wired in; remainder stays as deterministic mock.** All API keys live in
+**Four active upstream services are wired in, plus two provider scaffolds.** All API keys live in
 `.env.local` (gitignored). Refresh any provider via `npm run fetch:<provider>`. Every fetcher writes
 its raw output to `src/lib/<provider>-data.json` (these dumps are gitignored — regenerable, consumed
 into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`.
@@ -16,9 +16,10 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 | Provider | Tier | Coverage in this app | Refresh cmd | Key in .env.local |
 |---|---|---|---|---|
-| **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 10 equity indices, 4 crypto, 6 FX pairs + US 10Y w/ 1y daily history | `npm run fetch:yahoo` | — |
-| **Alpha Vantage** (MCP connector) | Free 25/day | 5 commodities (Brent/WTI/NatGas/Copper/Gold) + US 10Y | `npm run fetch:data` | — (MCP-mediated) |
-| **FRED** (St. Louis Fed) | Free, unlimited | 6 sovereign 10Y bonds (US/CA/DE/IN/JP/KR) + US GDP/CPI/Unemployment/Initial Claims | `npm run fetch:fred` | `FRED_API_KEY` |
+| **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 11 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 564 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
+| **FRED** (St. Louis Fed) | Free | US macro data and six non-Canadian sovereign 10Y series | `npm run fetch:fred` | `FRED_API_KEY` |
+| **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y yield | `npm run fetch:boc` | — |
+| **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, and government revenue | `npm run fetch:statcan` | — |
 | **Twelve Data** | Free 800/day, 8/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:twelvedata` | `TWELVEDATA_API_KEY` |
 | **Finnhub** | Free 60/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:finnhub` | `FINNHUB_API_KEY` |
 
@@ -26,7 +27,9 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 - `src/lib/fetch-yahoo.py` — uses `./.venv/bin/python3` (venv created by `npm run fetch:yahoo:setup`). Returns 1-year daily history per index, computes daily/1W/1M/YTD changes + 52W range + 52-pt sparkline. Output: `src/lib/yahoo-data.json`.
 - `src/lib/process-alpha-vantage.mjs` — reads previously-saved Alpha Vantage tool-call JSON dumps (one per commodity + treasury), computes derived values. Output: `src/lib/market-data.json`.
-- `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, hits FRED for 7 bonds + 5 US macro series (DGS10, IRLTLT01<CC>M156N, INDIRLTLT01STM, UNRATE, ICSA, GDPC1, A191RL1Q225SBEA, CPIAUCSL). Output: `src/lib/fred-data.json`.
+- `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, fetches US macro series and foreign 10Y yields, and preserves full dates for weekly claims. Output: `src/lib/fred-data.json`.
+- `src/lib/fetch-boc.mjs` — fetches Canadian policy, CPI, and 10Y yield data from the Bank of Canada Valet API. Output: `src/lib/boc-data.json`.
+- `src/lib/fetch-statcan.mjs` — fetches Canadian macro series from Statistics Canada. Output: `src/lib/statcan-data.json`.
 - `src/lib/fetch-twelvedata.mjs` — scaffold demo: batch-quotes 8 US ETFs (SPY/QQQ/IWM/EFA/EEM/TLT/GLD/USO). Exported helpers: `td(endpoint, params)`. Output: `src/lib/twelvedata-data.json`.
 - `src/lib/fetch-finnhub.mjs` — scaffold demo: fetches Magnificent 7 quotes + profiles + this-week US economic calendar. Exported helpers: `quote/profile/earningsHistory/economicCalendar/ipoCalendar/companyNews`. Output: `src/lib/finnhub-data.json`.
 
@@ -35,12 +38,13 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 - **Twelve Data** → backup for Yahoo (international indices, forex, crypto); intraday data. Note: **does NOT have sovereign bonds or PMI**.
 - **Finnhub** → company fundamentals (market cap, P/E, EPS), earnings history + transcripts, economic calendar with impact ratings, IPO calendar, insider transactions, company news with sentiment. **Best use case here: power blog-post research and a "this week" macro events widget.**
 
-### What's still curated mock (no free API exists)
+### What's still manually curated
 
-- **PMI indicators** (US Composite, China Mfg, India Mfg, Taiwan Mfg, South Korea Mfg, India Services) — paywalled by S&P Global; updated manually each month
-- **Heatmap constituents** (~200 stocks across S&P 500 / TSX / NIFTY 50) — would burn through free-tier quotas; values are deterministic via `seededChange()` in site-data
+- **PMI indicators** — licensed S&P Global series are updated manually each month.
+- **China and India GDP cards** — updated from official NBS and MoSPI releases until dedicated adapters are added.
 
-Numbers in the heatmap and remaining mock entries are **deterministic** (seeded RNG so SSR and CSR match) — avoids React hydration warnings.
+Heatmap weekly changes are live Yahoo observations. Missing quotes are stored as `null`, rendered as
+`N/A`, and excluded from sector-return calculations; they must never default to a neutral 0% change.
 
 ---
 
@@ -48,14 +52,14 @@ Numbers in the heatmap and remaining mock entries are **deterministic** (seeded 
 
 | Export | What it powers |
 |--------|----------------|
-| `EQUITY_INDICES` | The 10 equity indices on /markets — S&P 500, NASDAQ 100, Shanghai, Nikkei, NIFTY 50, DAX, FTSE, CAC, TSX, KOSPI. Each has `value`, `dailyChange`, `weekChange`, `monthChange`, `ytdChange`, `high52w`, `low52w`, and a 52-point weekly `sparkline` array |
+| `EQUITY_INDICES` | The 11 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
 | `BOND_YIELDS` | 10Y govt bonds for US, DE, GB, CA, JP, IN, KR, AU, ZA with daily/1M/1Y moves and a 12-point trend |
 | `COMMODITIES` | Brent, WTI, Gold, Silver, Copper, Aluminum, Iron Ore, Soybeans, Natural Gas (9 total) |
 | `CRYPTO` | Bitcoin, Ethereum, Solana, BNB spot prices (typed `CryptoAsset[]`, not `Commodity[]`) |
 | `FOREX_RATES` | US Dollar Index + EUR / GBP / JPY / CAD / INR vs USD |
-| `HEATMAP_INDICES` | Three heatmap variants — S&P 500 (101 constituents, 11 sectors), S&P/TSX (56 constituents, 9 sectors), NIFTY 50 (all 50 constituents, 9 sectors). Built via `buildSector([ticker, weight])` helper. |
+| `HEATMAP_INDICES` | 11 regional heatmaps with 564 unique constituent rows and explicit missing-quote handling |
 | `ECONOMIC_INDICATORS` | All economic-dashboard cards. Categories: `pmi`, `growth`, `employment`, `inflation`, `energy` |
-| `MACRO_SNAPSHOT` | The 5 hero tiles on /dashboard top (also reused on the homepage): GDP, Global PMI, Inflation, Jobs, Oil |
+| `MACRO_SNAPSHOT` | The 6 hero tiles on /dashboard top (also reused on the homepage) |
 | `EXTERNAL_COMMENTARY` | 6 curated external headlines on the homepage, linking to Reuters/Bloomberg/FT/WSJ/Economist/MarketWatch |
 | `BLOG_POSTS` | Sample posts (unused — blog is Coming Soon) |
 
@@ -81,11 +85,11 @@ corresponding company name here.
 ## Key component behavior
 
 ### `MarketHeatmap.tsx`
-- 3-tab switcher (S&P 500 / TSX / NIFTY 50) — driven by `useState`
+- 11-index switcher — driven by `useState`
 - ECharts treemap, **SVG renderer** (NOT canvas — canvas dropped text labels when the custom font wasn't ready at first paint). A `fontReady` state + `key={`${activeId}-${fontReady}`}` forces a clean remount once `document.fonts.ready` resolves.
 - Treemap pinned to all 4 edges (`left/top/right/bottom: 0`), `visibleMin: 400` to skip unreadable micro-tiles
 - Height fixed at 640px, label font 10px Space Mono
-- Hover tooltip: ticker + **company name** + % change + sector weight (for stocks); sector name + change for parent tiles
+- Hover tooltip: ticker + **company name** + % change + sector weight (for stocks); missing quotes show `N/A`
 
 ### `EquityMarketsTable.tsx`
 - 7 columns: Index · Last · 1W · 1M · YTD · **52W Range** · **Chart (YTD/52W toggle)**
@@ -104,7 +108,7 @@ corresponding company name here.
 
 ### `PageHeader.tsx`
 - All three top-level pages use this. Pass `label`, `labelColor`, `title`, `lastUpdated`, `nextUpdate`.
-- `Last Updated` / `Next Update` are currently hardcoded per-page in `page.tsx`. Update those strings when you publish new data.
+- The homepage data-refresh label comes from `DATA_UPDATED_AT`, which `patch-site-data.mjs` updates from provider fetch timestamps.
 
 ---
 
@@ -114,7 +118,7 @@ corresponding company name here.
 - Full visual design system (light violet palette, sci-fi cards, gradient hero)
 - All three top-level pages with their datasets, charts, and tables
 - Homepage Market Snapshot + Economic Snapshot sections
-- Three-index market heatmap with company-name tooltips
+- Eleven-index market heatmap with company-name tooltips and quote-coverage status
 - 52W range column and YTD/52W chart toggle in the equity table
 - Global PMI section + regional PMIs (China, India, Taiwan, South Korea) in the Economy dashboard
 - Blog page set to Coming Soon; individual post routes still exist but are not linked
@@ -128,4 +132,4 @@ corresponding company name here.
 - Custom domain (set `NEXT_PUBLIC_SITE_URL` for OG absolute URLs once chosen)
 - Search, RSS, newsletter signup
 - Mobile polish on the heatmap (treemap labels get tight on narrow screens)
-- Data refresh automation
+- Repository-hosted data refresh automation and freshness alerts

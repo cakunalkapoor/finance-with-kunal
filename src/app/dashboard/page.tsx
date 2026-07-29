@@ -2,7 +2,7 @@ import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
 import EconomicChart from "@/components/dashboard/EconomicChart";
 import EconomicNotes from "@/components/dashboard/EconomicNotes";
 import MarketTicker from "@/components/markets/MarketTicker";
-import PageHeader from "@/components/ui/PageHeader";
+import BriefingHero from "@/components/ui/BriefingHero";
 import { FONT_MONO } from "@/lib/utils";
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import type { EconomicIndicator } from "@/types";
@@ -36,12 +36,16 @@ export default function DashboardPage() {
       <MarketTicker />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        <PageHeader
-          label="Global Economy"
-          labelColor="var(--color-neon-purple)"
-          title="Global Economic Dashboard"
-          lastUpdated="Jul 26, 2026"
-          nextUpdate="Aug 2, 2026"
+        <BriefingHero
+          eyebrow="Global economy"
+          title="The macro story, organized."
+          description="Growth, inflation, employment, business activity, and energy indicators in one evidence-led view—so you can separate the current signal from the prevailing narrative."
+          accent="indigo"
+          stats={[
+            { label: "Pillars", value: "5", detail: "Macro categories" },
+            { label: "Format", value: "2–3Y", detail: "Historical context" },
+            { label: "Read", value: "Fast", detail: "Notes included" },
+          ]}
         />
 
         <MacroSnapshot />
