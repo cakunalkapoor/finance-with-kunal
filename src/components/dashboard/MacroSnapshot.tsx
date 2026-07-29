@@ -7,42 +7,42 @@ const METRICS = [
     key: "gdp" as const,
     label: "GDP",
     displayValue: `${MACRO_SNAPSHOT.gdp.value}%`,
-    context: "US QoQ",
+    context: "US QoQ · Q1 2026",
     icon: "📈",
   },
   {
     key: "pmi" as const,
     label: "Global PMI",
-    displayValue: `${MACRO_SNAPSHOT.pmi.value}`,
-    context: "Composite",
+    displayValue: MACRO_SNAPSHOT.pmi.value.toFixed(1),
+    context: "Composite · Jun 2026",
     icon: "🌐",
   },
   {
     key: "inflation" as const,
     label: "Inflation",
     displayValue: `${MACRO_SNAPSHOT.inflation.value}%`,
-    context: "US CPI YoY",
+    context: "US CPI YoY · Jun 2026",
     icon: "💹",
   },
   {
     key: "jobs" as const,
     label: "Unemployment",
     displayValue: `${MACRO_SNAPSHOT.jobs.value}%`,
-    context: "US Rate",
+    context: "US Rate · Jun 2026",
     icon: "💼",
   },
   {
     key: "claims" as const,
     label: "Initial Claims",
     displayValue: `${MACRO_SNAPSHOT.claims.value}K`,
-    context: "US Weekly",
+    context: "US Weekly · Jul 18",
     icon: "📋",
   },
   {
     key: "oil" as const,
     label: "Oil",
     displayValue: `$${MACRO_SNAPSHOT.oil.value}`,
-    context: "Brent $/bbl",
+    context: "Brent $/bbl · Jul 28",
     icon: "🛢️",
   },
 ];
@@ -93,7 +93,7 @@ export default function MacroSnapshot({
               letterSpacing: "0.08em",
             }}
           >
-            JUN 2026
+            LATEST AVAILABLE
           </div>
         </div>
       )}

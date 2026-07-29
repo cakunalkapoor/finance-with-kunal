@@ -1,31 +1,31 @@
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
-import { FONT_MONO } from "@/lib/utils";
+import { formatEconomicValue, FONT_MONO } from "@/lib/utils";
 
 function generateNote(ind: (typeof ECONOMIC_INDICATORS)[0]): string {
   const { name, value, previousValue, direction, unit, period, isPositiveGood } = ind;
-  const delta = Math.abs(value - previousValue).toFixed(2);
-  const positive = isPositiveGood ? direction === "up" : direction === "down";
+  const display = (number: number) => formatEconomicValue(number, ind.category, unit);
+  const delta = display(Math.abs(value - previousValue));
 
   if (direction === "up") {
     if (isPositiveGood) {
-      return `${name} rose to ${value} ${unit} in ${period}, up from ${previousValue} — signalling continued expansion.`;
+      return `${name} rose to ${display(value)} ${unit} in ${period}, up from ${display(previousValue)} — signalling continued expansion.`;
     } else {
-      return `${name} climbed to ${value} ${unit} in ${period}, up ${delta} from ${previousValue} — a headwind to watch.`;
+      return `${name} climbed to ${display(value)} ${unit} in ${period}, up ${delta} from ${display(previousValue)} — a headwind to watch.`;
     }
   } else if (direction === "down") {
     if (!isPositiveGood) {
-      return `${name} declined to ${value} ${unit} in ${period}, easing from ${previousValue} — a positive macro development.`;
+      return `${name} declined to ${display(value)} ${unit} in ${period}, easing from ${display(previousValue)} — a positive macro development.`;
     } else {
-      return `${name} softened to ${value} ${unit} in ${period}, retreating from ${previousValue} — momentum warranted monitoring.`;
+      return `${name} softened to ${display(value)} ${unit} in ${period}, retreating from ${display(previousValue)} — momentum warranted monitoring.`;
     }
   }
-  return `${name} held steady at ${value} ${unit} in ${period}.`;
+  return `${name} held steady at ${display(value)} ${unit} in ${period}.`;
 }
 
 export default function EconomicNotes({
   filter,
-  subtitle = "Auto-generated macro notes · May 2026",
+  subtitle = "Auto-generated macro notes · Jul 2026",
 }: {
   filter?: (ind: (typeof ECONOMIC_INDICATORS)[0]) => boolean;
   subtitle?: string;
