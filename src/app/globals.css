@@ -1,42 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  /* Light, professional, Gen-Z palette
-     ---------------------------------
-     Soft off-white page bg with a faint violet undertone.
-     Pure white cards. Violet/indigo accents (stay vibrant on white).
-     Emerald / rose for market data, slightly darker for white-bg contrast. */
+  /* Warm editorial palette: paper, ink, and signal green. */
+  --color-space-void: #f2f1eb;
+  --color-space-black: #e9e8e0;
+  --color-space-dark: #dfded4;
+  --color-space-surface: #faf9f4;
+  --color-space-card: #faf9f4;
+  --color-space-border: #d8d7cd;
+  --color-space-border-bright: #a8aa9d;
 
-  /* Surfaces */
-  --color-space-void: #f7f6fc;        /* page background */
-  --color-space-black: #f1eff8;       /* footer / deeper section */
-  --color-space-dark: #ecebf5;
-  --color-space-surface: #ffffff;
-  --color-space-card: #ffffff;        /* card bg */
-  --color-space-border: #e5e1f1;      /* soft violet-gray border */
-  --color-space-border-bright: #c8c0e5;
+  --color-neon-cyan: #37683f;
+  --color-neon-cyan-dim: #285230;
+  --color-neon-cyan-glow: rgba(55, 104, 63, 0.16);
 
-  /* Primary accent: vivid violet */
-  --color-neon-cyan: #7c3aed;         /* violet-600 */
-  --color-neon-cyan-dim: #6d28d9;     /* violet-700 */
-  --color-neon-cyan-glow: rgba(124, 58, 237, 0.18);
+  --color-neon-purple: #916c1e;
+  --color-neon-purple-dim: #765713;
+  --color-neon-blue: #25656b;
 
-  /* Secondary accent: indigo */
-  --color-neon-purple: #4f46e5;       /* indigo-600 */
-  --color-neon-purple-dim: #4338ca;
-  --color-neon-blue: #2563eb;
+  --color-market-up: #147d4f;
+  --color-market-up-dim: rgba(20, 125, 79, 0.10);
+  --color-market-down: #c43d4d;
+  --color-market-down-dim: rgba(196, 61, 77, 0.10);
+  --color-market-neutral: #a66a13;
 
-  /* Market semantic colors (darker shades — better readable on white) */
-  --color-market-up: #059669;         /* emerald-600 */
-  --color-market-up-dim: rgba(5, 150, 105, 0.10);
-  --color-market-down: #e11d48;       /* rose-600 */
-  --color-market-down-dim: rgba(225, 29, 72, 0.10);
-  --color-market-neutral: #d97706;    /* amber-600 */
-
-  /* Text — dark navy-violet on white */
-  --color-text-primary: #1e1b3a;
-  --color-text-secondary: #524b7a;
-  --color-text-muted: #9590b8;
+  --color-text-primary: #171914;
+  --color-text-secondary: #55594e;
+  --color-text-muted: #878b7f;
 
   /* Fonts */
   --font-display: "Space Grotesk", system-ui, sans-serif;
@@ -45,9 +35,11 @@
 
 :root {
   color-scheme: light;
-  /* Theme-aware values that aren't plain Tailwind color tokens */
-  --color-nav-bg: rgba(247, 246, 252, 0.85);
-  --color-nav-bg-solid: rgba(247, 246, 252, 0.98);
+  --color-nav-bg: rgba(242, 241, 235, 0.88);
+  --color-nav-bg-solid: rgba(242, 241, 235, 0.98);
+  --color-signal: #b9f227;
+  --color-signal-ink: #172008;
+  --color-wash: rgba(55, 104, 63, 0.06);
 }
 
 /* ---- Dark theme ----
@@ -57,38 +49,36 @@
 html.dark {
   color-scheme: dark;
 
-  /* Surfaces — warm purple-black */
-  --color-space-void: #06040e;
-  --color-space-black: #0b0818;
-  --color-space-dark: #141029;
-  --color-space-surface: #17122b;
-  --color-space-card: #1a1531;
-  --color-space-border: #2c2648;
-  --color-space-border-bright: #3d3563;
+  --color-space-void: #0b0d09;
+  --color-space-black: #080a07;
+  --color-space-dark: #10140e;
+  --color-space-surface: #131710;
+  --color-space-card: #151a12;
+  --color-space-border: #2b3126;
+  --color-space-border-bright: #454d3d;
 
-  /* Accents — lifted for contrast on dark */
-  --color-neon-cyan: #a78bfa;
-  --color-neon-cyan-dim: #8b5cf6;
-  --color-neon-cyan-glow: rgba(167, 139, 250, 0.25);
-  --color-neon-purple: #818cf8;
-  --color-neon-purple-dim: #6366f1;
-  --color-neon-blue: #60a5fa;
+  --color-neon-cyan: #b9f227;
+  --color-neon-cyan-dim: #97cf0f;
+  --color-neon-cyan-glow: rgba(185, 242, 39, 0.22);
+  --color-neon-purple: #edc76d;
+  --color-neon-purple-dim: #d7ad48;
+  --color-neon-blue: #69c5c8;
 
-  /* Market semantics — brighter shades read better on dark */
-  --color-market-up: #34d399;
-  --color-market-up-dim: rgba(52, 211, 153, 0.14);
-  --color-market-down: #fb7185;
-  --color-market-down-dim: rgba(251, 113, 133, 0.14);
-  --color-market-neutral: #fbbf24;
+  --color-market-up: #72d6a1;
+  --color-market-up-dim: rgba(114, 214, 161, 0.13);
+  --color-market-down: #ff7a89;
+  --color-market-down-dim: rgba(255, 122, 137, 0.13);
+  --color-market-neutral: #f4c76a;
 
-  /* Text */
-  --color-text-primary: #f2eeff;
-  --color-text-secondary: #a79fd0;
-  --color-text-muted: #6f6796;
+  --color-text-primary: #f3f4ec;
+  --color-text-secondary: #aeb4a5;
+  --color-text-muted: #747b6d;
 
-  /* Nav surface */
-  --color-nav-bg: rgba(11, 8, 24, 0.85);
-  --color-nav-bg-solid: rgba(11, 8, 24, 0.98);
+  --color-nav-bg: rgba(11, 13, 9, 0.88);
+  --color-nav-bg-solid: rgba(11, 13, 9, 0.98);
+  --color-signal: #b9f227;
+  --color-signal-ink: #172008;
+  --color-wash: rgba(185, 242, 39, 0.045);
 }
 
 * {
@@ -106,6 +96,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  min-width: 320px;
 }
 
 /* Smooth light/dark switch. SVG chart fill/stroke is intentionally excluded so
@@ -132,12 +123,12 @@ body {
   background: var(--color-neon-cyan);
 }
 
-/* Faint violet grid overlay — much subtler on light bg */
+/* Quiet publication grid, used as a structural texture rather than decoration. */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(124, 58, 237, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 58, 237, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(color-mix(in srgb, var(--color-space-border) 25%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-space-border) 25%, transparent) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
 /* Shadow utilities — replace neon glows with soft elevated shadows */
@@ -229,8 +220,64 @@ tr:hover td {
 
 /* Hero gradient text — violet → indigo → pink */
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #db2777 100%);
+  background: linear-gradient(115deg, var(--color-neon-cyan) 0%, var(--color-neon-blue) 55%, var(--color-neon-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Shared editorial primitives used by the refreshed landing page. */
+.section-shell {
+  width: min(100% - 2rem, 1440px);
+  margin-inline: auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--color-neon-cyan);
+}
+
+.signal-button {
+  background: var(--color-signal);
+  color: var(--color-signal-ink);
+  box-shadow: 0 8px 24px rgba(73, 100, 8, 0.16);
+}
+
+.editorial-card {
+  background: color-mix(in srgb, var(--color-space-card) 94%, transparent);
+  border: 1px solid var(--color-space-border);
+}
+
+.editorial-card:hover {
+  border-color: var(--color-space-border-bright);
+  transform: translateY(-2px);
+}
+
+@media (min-width: 640px) {
+  .section-shell {
+    width: min(100% - 3rem, 1440px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
