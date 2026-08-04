@@ -1,5 +1,15 @@
 import { MACRO_SNAPSHOT } from "@/lib/site-data";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import {
+  Activity,
+  BadgeDollarSign,
+  BriefcaseBusiness,
+  ClipboardList,
+  Droplets,
+  Factory,
+  TrendingDown,
+  TrendingUp,
+  Minus,
+} from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 
 const METRICS = [
@@ -8,51 +18,51 @@ const METRICS = [
     label: "GDP",
     displayValue: `${MACRO_SNAPSHOT.gdp.value}%`,
     context: "US QoQ",
-    icon: "📈",
+    icon: Activity,
   },
   {
     key: "pmi" as const,
     label: "Global PMI",
     displayValue: `${MACRO_SNAPSHOT.pmi.value}`,
     context: "Composite",
-    icon: "🌐",
+    icon: Factory,
   },
   {
     key: "inflation" as const,
     label: "Inflation",
     displayValue: `${MACRO_SNAPSHOT.inflation.value}%`,
     context: "US CPI YoY",
-    icon: "💹",
+    icon: BadgeDollarSign,
   },
   {
     key: "jobs" as const,
     label: "Unemployment",
     displayValue: `${MACRO_SNAPSHOT.jobs.value}%`,
     context: "US Rate",
-    icon: "💼",
+    icon: BriefcaseBusiness,
   },
   {
     key: "claims" as const,
     label: "Initial Claims",
     displayValue: `${MACRO_SNAPSHOT.claims.value}K`,
     context: "US Weekly",
-    icon: "📋",
+    icon: ClipboardList,
   },
   {
     key: "oil" as const,
     label: "Oil",
     displayValue: `$${MACRO_SNAPSHOT.oil.value}`,
     context: "Brent $/bbl",
-    icon: "🛢️",
+    icon: Droplets,
   },
 ];
 
 function TrendIcon({ trend }: { trend: "up" | "down" | "neutral" }) {
   if (trend === "up")
-    return <TrendingUp size={14} style={{ color: "#34d399" }} />;
+    return <TrendingUp size={14} style={{ color: "var(--color-market-up)" }} />;
   if (trend === "down")
-    return <TrendingDown size={14} style={{ color: "#fb7185" }} />;
-  return <Minus size={14} style={{ color: "#f59e0b" }} />;
+    return <TrendingDown size={14} style={{ color: "var(--color-market-down)" }} />;
+  return <Minus size={14} style={{ color: "var(--color-market-neutral)" }} />;
 }
 
 export default function MacroSnapshot({
@@ -61,19 +71,10 @@ export default function MacroSnapshot({
   showHeader?: boolean;
 } = {}) {
   return (
-    <div
-      className="rounded-xl p-4 sm:p-6"
-      style={{
-        background: "linear-gradient(135deg, rgba(167,139,250,0.05) 0%, rgba(129,140,248,0.03) 100%)",
-        border: "1px solid var(--color-space-border)",
-      }}
-    >
+    <div>
       {showHeader && (
         <div className="flex items-center gap-3 mb-6">
-          <div
-            className="h-5 w-1 rounded"
-            style={{ background: "linear-gradient(to bottom, var(--color-neon-cyan), var(--color-neon-purple))" }}
-          />
+          <div className="h-px w-7" style={{ background: "var(--color-neon-cyan)" }} />
           <h2
             className="text-sm font-bold tracking-widest uppercase"
             style={{
@@ -98,28 +99,28 @@ export default function MacroSnapshot({
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        {METRICS.map(({ key, label, displayValue, context, icon }) => {
+      <div className="grid grid-cols-2 border-l border-t sm:grid-cols-3 lg:grid-cols-6" style={{ borderColor: "var(--color-space-border)" }}>
+        {METRICS.map(({ key, label, displayValue, context, icon: Icon }) => {
           const trend = MACRO_SNAPSHOT[key].trend;
           return (
             <div
               key={key}
-              className="rounded-lg p-3 flex flex-col gap-2 transition-all duration-200 hover:border-opacity-100"
+              className="group flex min-h-40 flex-col justify-between border-b border-r p-4 transition-colors sm:p-5"
               style={{
-                background: "rgba(124,58,237,0.025)",
-                border: "1px solid var(--color-space-border)",
+                background: "var(--color-space-card)",
+                borderColor: "var(--color-space-border)",
               }}
             >
               <div className="flex items-center justify-between">
-                <span className="text-lg">{icon}</span>
+                <Icon size={17} style={{ color: "var(--color-neon-cyan)" }} />
                 <TrendIcon trend={trend} />
               </div>
               <div
-                className="font-bold text-xl leading-none"
+                className="text-2xl font-bold leading-none sm:text-3xl"
                 style={{
                   fontFamily: FONT_MONO,
                   color: "var(--color-text-primary)",
-                  letterSpacing: "-0.03em",
+                  letterSpacing: "-0.06em",
                 }}
               >
                 {displayValue}

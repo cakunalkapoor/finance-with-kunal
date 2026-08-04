@@ -31,15 +31,24 @@ export default function MarketHeatmap() {
   const [activeId, setActiveId] = useState(HEATMAP_INDICES[0].id);
   // Force a repaint once web fonts finish loading — canvas labels can render
   // blank if the custom font isn't ready at first paint.
-  const [fontReady, setFontReady] = useState(false);
-  useEffect(() => {
+  const [fontReady, setFontReady] = useState(() => {
+    if (typeof document === "undefined") return false;
     const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
-    if (fonts?.ready) {
-      fonts.ready.then(() => setFontReady(true));
-    } else {
-      setFontReady(true);
-    }
-  }, []);
+    return !fonts || fonts.status === "loaded";
+  });
+  useEffect(() => {
+    if (fontReady) return;
+    const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+    if (!fonts?.ready) return;
+
+    let cancelled = false;
+    fonts.ready.then(() => {
+      if (!cancelled) setFontReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [fontReady]);
 
   const activeIndex =
     HEATMAP_INDICES.find((i) => i.id === activeId) ?? HEATMAP_INDICES[0];

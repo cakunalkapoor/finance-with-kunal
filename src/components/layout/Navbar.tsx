@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn, FONT_MONO } from "@/lib/utils";
-import { Menu, X, TrendingUp } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
@@ -28,40 +28,27 @@ export default function Navbar() {
         borderColor: "var(--color-space-border)",
       }}
     >
-      {/* Top accent line */}
-      <div
-        className="h-px w-full"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, var(--color-neon-cyan), var(--color-neon-blue), var(--color-neon-purple), transparent)",
-        }}
-      />
-
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <div className="section-shell flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="group flex items-center gap-3">
           <div
-            className="w-7 h-7 rounded flex items-center justify-center"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-[9px] font-bold tracking-tight"
             style={{
-              background: "linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(79, 70, 229, 0.2))",
-              border: "1px solid rgba(124, 58, 237, 0.3)",
+              background: "var(--color-signal)",
+              color: "var(--color-signal-ink)",
+              fontFamily: FONT_MONO,
             }}
           >
-            <TrendingUp
-              size={14}
-              style={{ color: "var(--color-neon-cyan)" }}
-            />
+            FWK
           </div>
           <span
-            className="text-sm font-bold tracking-widest uppercase"
+            className="text-sm font-bold"
             style={{
-              fontFamily: FONT_MONO,
-              letterSpacing: "0.12em",
+              letterSpacing: "-0.02em",
+              color: "var(--color-text-primary)",
             }}
           >
-            <span style={{ color: "var(--color-neon-cyan)" }}>Finance</span>
-            <span style={{ color: "var(--color-text-secondary)" }}> with </span>
-            <span style={{ color: "var(--color-text-primary)" }}>Kunal</span>
+            Finance <span style={{ color: "var(--color-text-muted)", fontWeight: 500 }}>with</span> Kunal
           </span>
         </Link>
 
@@ -76,15 +63,15 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-4 py-1.5 rounded text-xs font-semibold tracking-widest uppercase transition-all duration-200",
+                  "relative px-3 py-2 text-[11px] font-bold tracking-[0.11em] uppercase transition-all duration-200",
                   active
                     ? "text-neon-cyan"
                     : "hover:text-space-text-primary"
                 )}
                 style={{
                   color: active ? "var(--color-neon-cyan)" : "var(--color-text-secondary)",
-                  background: active ? "rgba(124, 58, 237, 0.08)" : "transparent",
-                  border: active ? "1px solid rgba(124, 58, 237, 0.2)" : "1px solid transparent",
+                  background: "transparent",
+                  borderBottom: active ? "1px solid var(--color-neon-cyan)" : "1px solid transparent",
                   letterSpacing: "0.1em",
                 }}
               >
@@ -99,7 +86,7 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden p-1.5 rounded"
+            className="rounded-full p-2 md:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}

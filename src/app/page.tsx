@@ -1,153 +1,160 @@
 import Link from "next/link";
-import { ArrowRight, BarChart2, BookOpen, CalendarCheck, CalendarClock, TrendingUp } from "lucide-react";
+import {
+  Activity,
+  ArrowDownRight,
+  ArrowRight,
+  ArrowUpRight,
+  BarChart2,
+  BookOpen,
+  Clock3,
+  Globe2,
+  Radar,
+} from "lucide-react";
 import MarketTicker from "@/components/markets/MarketTicker";
 import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
 import WeeklyCommentary from "@/components/home/WeeklyCommentary";
 import TrendingHeadlines from "@/components/home/TrendingHeadlines";
-import { EQUITY_INDICES } from "@/lib/site-data";
+import { EQUITY_INDICES, WEEKLY_COMMENTARY } from "@/lib/site-data";
 import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
 
+const QUICK_LINKS = [
+  {
+    href: "/markets",
+    label: "Markets",
+    description: "Equities, rates, FX and commodities",
+    icon: BarChart2,
+  },
+  {
+    href: "/dashboard",
+    label: "Economy",
+    description: "The macro picture in one view",
+    icon: Globe2,
+  },
+  {
+    href: "/blog",
+    label: "Journal",
+    description: "Ideas that outlive the news cycle",
+    icon: BookOpen,
+  },
+];
+
 function HeroSection() {
+  const pulse = EQUITY_INDICES.slice(0, 4);
+
   return (
-    <section className="relative pt-16 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background glow blobs */}
+    <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--color-space-border)" }}>
       <div
-        className="absolute top-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div
-        className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(244,114,182,0.07) 0%, transparent 70%)",
-          filter: "blur(40px)",
+          background:
+            "radial-gradient(circle at 76% 24%, var(--color-wash), transparent 28%), linear-gradient(90deg, transparent 0%, transparent 66%, var(--color-wash) 66%, transparent 100%)",
         }}
       />
 
-      <div className="max-w-screen-2xl mx-auto">
-        {/* Last / Next update row */}
-        <div className="flex flex-wrap items-center gap-4 mb-3">
-          <div className="flex items-center gap-1.5">
-            <CalendarCheck size={12} style={{ color: "var(--color-market-up)" }} />
+      <div className="section-shell relative grid min-h-[620px] lg:grid-cols-[1.45fr_0.55fr]">
+        <div className="flex flex-col justify-between py-14 pr-0 sm:py-20 lg:border-r lg:pr-14" style={{ borderColor: "var(--color-space-border)" }}>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <span className="eyebrow">Independent market intelligence</span>
             <span
-              className="text-xs"
-              style={{
-                fontFamily: FONT_MONO,
-                color: "var(--color-text-muted)",
-                letterSpacing: "0.06em",
-              }}
+              className="inline-flex items-center gap-2 text-[11px]"
+              style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}
             >
-              Last Updated
-            </span>
-            <span
-              className="text-xs font-semibold"
-              style={{
-                fontFamily: FONT_MONO,
-                color: "var(--color-text-secondary)",
-              }}
-            >
-              Jul 27, 2026
+              <span className="h-1.5 w-1.5 rounded-full pulse-dot" style={{ background: "var(--color-neon-cyan)" }} />
+              WEEK OF {WEEKLY_COMMENTARY.weekRange.toUpperCase()}
             </span>
           </div>
-          <div
-            className="w-px h-3 hidden sm:block"
-            style={{ background: "var(--color-space-border)" }}
-          />
-          <div className="flex items-center gap-1.5">
-            <CalendarClock size={12} style={{ color: "var(--color-neon-cyan)" }} />
-            <span
-              className="text-xs"
-              style={{
-                fontFamily: FONT_MONO,
-                color: "var(--color-text-muted)",
-                letterSpacing: "0.06em",
-              }}
+
+          <div className="max-w-5xl py-14 sm:py-20">
+            <h1
+              className="max-w-5xl text-[clamp(3.25rem,8vw,7.8rem)] font-semibold leading-[0.88]"
+              style={{ color: "var(--color-text-primary)", letterSpacing: "-0.065em" }}
             >
-              Next Update
-            </span>
-            <span
-              className="text-xs font-semibold"
-              style={{
-                fontFamily: FONT_MONO,
-                color: "var(--color-text-secondary)",
-              }}
-            >
-              Aug 2, 2026
-            </span>
+              See the market.
+              <br />
+              <span style={{ color: "var(--color-neon-cyan)" }}>Read the signal.</span>
+            </h1>
+
+            <div className="mt-10 flex max-w-3xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+              <p className="max-w-xl text-base leading-7 sm:text-lg" style={{ color: "var(--color-text-secondary)" }}>
+                A clear, global view of markets and the economy—built for people who want the context behind the move, not just another price feed.
+              </p>
+
+              <Link
+                href="/markets"
+                className="signal-button inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-transform hover:scale-[1.02]"
+              >
+                Open dashboard <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid gap-px border sm:grid-cols-3" style={{ background: "var(--color-space-border)", borderColor: "var(--color-space-border)" }}>
+            {QUICK_LINKS.map(({ href, label, description, icon: Icon }) => (
+              <Link
+                href={href}
+                key={href}
+                className="group flex items-start gap-3 p-4 sm:p-5"
+                style={{ background: "var(--color-space-void)" }}
+              >
+                <Icon size={17} style={{ color: "var(--color-neon-cyan)" }} />
+                <span className="min-w-0">
+                  <span className="flex items-center gap-2 text-sm font-bold" style={{ color: "var(--color-text-primary)" }}>
+                    {label} <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
+                  <span className="mt-1 block text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>
+                    {description}
+                  </span>
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Pre-title */}
-        <div className="flex items-center gap-2 mb-4">
-          <div
-            className="h-4 w-0.5 rounded"
-            style={{ background: "var(--color-neon-cyan)" }}
-          />
-          <span
-            className="text-xs font-bold tracking-widest uppercase"
-            style={{
-              fontFamily: FONT_MONO,
-              color: "var(--color-neon-cyan)",
-              letterSpacing: "0.16em",
-            }}
-          >
-            Finance with Kunal
-          </span>
-        </div>
+        <aside className="flex flex-col justify-center py-10 lg:pl-10">
+          <div className="mb-5 flex items-center justify-between">
+            <span className="eyebrow">Market pulse</span>
+            <Activity size={16} style={{ color: "var(--color-neon-cyan)" }} />
+          </div>
 
-        {/* Main headline */}
-        <h1
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 max-w-4xl"
-          style={{ letterSpacing: "-0.02em" }}
-        >
-          <span style={{ color: "var(--color-text-primary)" }}>Data. Insight. Action.</span>
-          <br />
-          <span className="gradient-text-cyan">Beyond the ticker.</span>
-        </h1>
+          <div className="border-y" style={{ borderColor: "var(--color-space-border)" }}>
+            {pulse.map((item, index) => {
+              const positive = item.dailyChange >= 0;
+              return (
+                <div
+                  key={item.symbol}
+                  className="grid grid-cols-[1fr_auto] gap-4 py-5"
+                  style={{ borderBottom: index === pulse.length - 1 ? "none" : "1px solid var(--color-space-border)" }}
+                >
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span aria-hidden="true">{item.flag}</span>
+                      <span className="text-sm font-bold" style={{ color: "var(--color-text-primary)" }}>{item.name}</span>
+                    </div>
+                    <span className="mt-1 block text-[10px] tracking-[0.12em]" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
+                      {item.symbol}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-bold" style={{ color: "var(--color-text-primary)", fontFamily: FONT_MONO }}>
+                      {formatNumber(item.value, item.value > 10000 ? 0 : 2)}
+                    </div>
+                    <div
+                      className="mt-1 inline-flex items-center gap-0.5 text-xs font-bold"
+                      style={{ color: positive ? "var(--color-market-up)" : "var(--color-market-down)", fontFamily: FONT_MONO }}
+                    >
+                      {positive ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+                      {formatChange(item.dailyChange)}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
-        {/* CTAs */}
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/markets"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-100"
-            style={{
-              background: "linear-gradient(135deg, rgba(167,139,250,0.18), rgba(167,139,250,0.08))",
-              border: "1px solid rgba(167,139,250,0.4)",
-              color: "var(--color-neon-cyan)",
-            }}
-          >
-            <BarChart2 size={16} />
-            Markets Dashboard
-            <ArrowRight size={14} />
+          <Link href="/markets" className="mt-5 inline-flex items-center justify-between text-xs font-bold" style={{ color: "var(--color-text-secondary)" }}>
+            Full cross-asset board <ArrowRight size={14} style={{ color: "var(--color-neon-cyan)" }} />
           </Link>
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-100"
-            style={{
-              background: "rgba(129,140,248,0.1)",
-              border: "1px solid rgba(129,140,248,0.3)",
-              color: "var(--color-neon-purple)",
-            }}
-          >
-            <TrendingUp size={16} />
-            Global Economy
-            <ArrowRight size={14} />
-          </Link>
-          <Link
-            href="/blog"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02] active:scale-100"
-            style={{
-              background: "rgba(124,58,237,0.05)",
-              border: "1px solid var(--color-space-border)",
-              color: "var(--color-text-secondary)",
-            }}
-          >
-            <BookOpen size={16} />
-            Read Blog
-          </Link>
-        </div>
+        </aside>
       </div>
     </section>
   );
@@ -155,79 +162,45 @@ function HeroSection() {
 
 function MarketSnapshot() {
   const top6 = EQUITY_INDICES.slice(0, 6);
+
   return (
-    <section className="py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-screen-2xl mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h2
-            className="text-xs font-bold tracking-widest uppercase"
-            style={{
-              fontFamily: FONT_MONO,
-              color: "var(--color-text-muted)",
-              letterSpacing: "0.14em",
-            }}
-          >
-            Market Snapshot
-          </h2>
-          <Link
-            href="/markets"
-            className="text-xs flex items-center gap-1 transition-colors"
-            style={{ color: "var(--color-neon-cyan)" }}
-          >
-            View all <ArrowRight size={12} />
+    <section className="py-16 sm:py-24">
+      <div className="section-shell">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="eyebrow">Today at a glance</span>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl" style={{ color: "var(--color-text-primary)", letterSpacing: "-0.04em" }}>
+              Global market snapshot
+            </h2>
+          </div>
+          <Link href="/markets" className="inline-flex items-center gap-2 text-sm font-bold" style={{ color: "var(--color-neon-cyan)" }}>
+            Explore all markets <ArrowRight size={15} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {top6.map((idx) => {
-            const pos = idx.dailyChange >= 0;
+        <div className="grid grid-cols-2 border-l border-t sm:grid-cols-3 lg:grid-cols-6" style={{ borderColor: "var(--color-space-border)" }}>
+          {top6.map((item) => {
+            const positive = item.dailyChange >= 0;
             return (
-              <div
-                key={idx.symbol}
-                className="rounded-lg p-3 flex flex-col gap-1 transition-all hover:scale-[1.02]"
-                style={{
-                  background: "var(--color-space-card)",
-                  border: "1px solid var(--color-space-border)",
-                }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">{idx.flag}</span>
+              <div key={item.symbol} className="group border-b border-r p-4 sm:p-5" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
+                <div className="mb-8 flex items-center justify-between">
+                  <span aria-hidden="true">{item.flag}</span>
                   <span
-                    className="text-xs font-semibold px-1.5 py-0.5 rounded"
+                    className="rounded-full px-2 py-1 text-[10px] font-bold"
                     style={{
+                      color: positive ? "var(--color-market-up)" : "var(--color-market-down)",
+                      background: positive ? "var(--color-market-up-dim)" : "var(--color-market-down-dim)",
                       fontFamily: FONT_MONO,
-                      color: pos ? "#34d399" : "#fb7185",
-                      background: pos ? "rgba(52,211,153,0.11)" : "rgba(251,113,133,0.11)",
                     }}
                   >
-                    {formatChange(idx.dailyChange)}
+                    {formatChange(item.dailyChange)}
                   </span>
                 </div>
-                <div
-                  className="font-bold text-sm leading-none"
-                  style={{
-                    fontFamily: FONT_MONO,
-                    color: "var(--color-text-primary)",
-                  }}
-                >
-                  {formatNumber(idx.value, idx.value > 10000 ? 0 : 2)}
+                <div className="text-lg font-bold" style={{ color: "var(--color-text-primary)", fontFamily: FONT_MONO, letterSpacing: "-0.04em" }}>
+                  {formatNumber(item.value, item.value > 10000 ? 0 : 2)}
                 </div>
-                <div
-                  className="text-xs font-medium"
-                  style={{ color: "var(--color-text-secondary)" }}
-                >
-                  {idx.name}
-                </div>
-                <div
-                  className="text-xs"
-                  style={{
-                    color: "var(--color-text-muted)",
-                    fontFamily: FONT_MONO,
-                    fontSize: "10px",
-                  }}
-                >
-                  YTD {formatChange(idx.ytdChange)}
-                </div>
+                <div className="mt-2 text-xs font-bold" style={{ color: "var(--color-text-secondary)" }}>{item.name}</div>
+                <div className="mt-1 text-[10px]" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>YTD {formatChange(item.ytdChange)}</div>
               </div>
             );
           })}
@@ -239,28 +212,24 @@ function MarketSnapshot() {
 
 function EconomicSnapshot() {
   return (
-    <section className="py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-screen-2xl mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h2
-            className="text-xs font-bold tracking-widest uppercase"
-            style={{
-              fontFamily: FONT_MONO,
-              color: "var(--color-text-muted)",
-              letterSpacing: "0.14em",
-            }}
-          >
-            Economic Snapshot
-          </h2>
-          <Link
-            href="/dashboard"
-            className="text-xs flex items-center gap-1 transition-colors"
-            style={{ color: "var(--color-neon-cyan)" }}
-          >
-            View all <ArrowRight size={12} />
-          </Link>
+    <section className="border-y py-16 sm:py-24" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-black)" }}>
+      <div className="section-shell">
+        <div className="mb-8 grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <span className="eyebrow">The macro frame</span>
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl" style={{ color: "var(--color-text-primary)", letterSpacing: "-0.04em" }}>
+              Six numbers shaping the conversation.
+            </h2>
+          </div>
+          <div className="flex flex-col gap-4 lg:items-end">
+            <p className="max-w-2xl text-sm leading-6 lg:text-right" style={{ color: "var(--color-text-secondary)" }}>
+              Growth, inflation, labour and energy—condensed into the signals that matter for policy and portfolios.
+            </p>
+            <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm font-bold" style={{ color: "var(--color-neon-cyan)" }}>
+              Open the economy dashboard <ArrowRight size={15} />
+            </Link>
+          </div>
         </div>
-
         <MacroSnapshot showHeader={false} />
       </div>
     </section>
@@ -276,6 +245,27 @@ export default function HomePage() {
       <EconomicSnapshot />
       <WeeklyCommentary />
       <TrendingHeadlines />
+      <section className="py-16 sm:py-24">
+        <div className="section-shell">
+          <div className="relative overflow-hidden rounded-3xl p-8 sm:p-12 lg:flex lg:items-center lg:justify-between" style={{ background: "var(--color-neon-cyan)" }}>
+            <Radar className="absolute -right-8 -top-8 h-40 w-40 opacity-10 sm:h-56 sm:w-56" style={{ color: "var(--color-space-void)" }} />
+            <div className="relative max-w-3xl">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em]" style={{ color: "var(--color-space-void)", fontFamily: FONT_MONO }}>
+                <Clock3 size={14} /> Updated weekly
+              </div>
+              <h2 className="mt-4 text-3xl font-semibold sm:text-5xl" style={{ color: "var(--color-space-void)", letterSpacing: "-0.05em" }}>
+                Less noise. Better questions.
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-6" style={{ color: "var(--color-space-void)", opacity: 0.78 }}>
+                Follow the weekly brief for a grounded read on global markets, policy and the flows connecting them.
+              </p>
+            </div>
+            <Link href="/about" className="relative mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold lg:mt-0" style={{ background: "var(--color-space-void)", color: "var(--color-text-primary)" }}>
+              Meet Kunal <ArrowRight size={15} />
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

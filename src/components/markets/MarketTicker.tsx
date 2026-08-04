@@ -20,9 +20,9 @@ export default function MarketTicker() {
 
   return (
     <div
-      className="border-y overflow-hidden py-1.5"
+      className="overflow-hidden border-b py-2"
       style={{
-        background: "rgba(5,8,16,0.9)",
+        background: "var(--color-space-black)",
         borderColor: "var(--color-space-border)",
       }}
     >
@@ -32,12 +32,12 @@ export default function MarketTicker() {
           return (
             <div
               key={i}
-              className="flex items-center gap-2 px-4 flex-shrink-0 border-r"
+                className="flex flex-shrink-0 items-center gap-2 border-r px-5"
               style={{ borderColor: "var(--color-space-border)" }}
             >
               <span
                 className="text-xs font-semibold"
-                style={{ color: "#ffffff", whiteSpace: "nowrap" }}
+                  style={{ color: "var(--color-text-secondary)", whiteSpace: "nowrap" }}
               >
                 {item.label}
               </span>
@@ -45,7 +45,7 @@ export default function MarketTicker() {
                 className="text-xs font-bold"
                 style={{
                   fontFamily: FONT_MONO,
-                  color: "#ffffff",
+                  color: "var(--color-text-primary)",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -55,7 +55,7 @@ export default function MarketTicker() {
                 className="text-xs font-bold"
                 style={{
                   fontFamily: FONT_MONO,
-                  color: pos ? "#34d399" : "#fb7185",
+                  color: pos ? "var(--color-market-up)" : "var(--color-market-down)",
                   whiteSpace: "nowrap",
                 }}
               >

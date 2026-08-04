@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, TrendingUp } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 
 function LinkedInIcon({ size = 12 }: { size?: number }) {
@@ -20,34 +20,40 @@ function LinkedInIcon({ size = 12 }: { size?: number }) {
 export default function Footer() {
   return (
     <footer
-      className="border-t mt-16"
+      className="border-t"
       style={{
         background: "var(--color-space-black)",
         borderColor: "var(--color-space-border)",
       }}
     >
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
+      <div className="section-shell py-10 sm:py-14">
+        <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-start">
+          <div className="max-w-sm">
+            <div className="flex items-center gap-3">
             <div
-              className="w-6 h-6 rounded flex items-center justify-center"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[9px] font-bold"
               style={{
-                background: "rgba(124, 58, 237, 0.1)",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
+                background: "var(--color-signal)",
+                color: "var(--color-signal-ink)",
+                fontFamily: FONT_MONO,
               }}
             >
-              <TrendingUp size={12} style={{ color: "var(--color-neon-cyan)" }} />
+              FWK
             </div>
             <span
               className="text-xs font-bold tracking-widest"
               style={{
                 fontFamily: FONT_MONO,
-                color: "var(--color-text-muted)",
+                color: "var(--color-text-primary)",
                 letterSpacing: "0.1em",
               }}
             >
               FINANCE WITH KUNAL
             </span>
+            </div>
+            <p className="mt-4 text-sm leading-6" style={{ color: "var(--color-text-muted)" }}>
+              Global markets and economic context for people who prefer signal over spectacle.
+            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -102,12 +108,13 @@ export default function Footer() {
             >
               <LinkedInIcon size={12} />
               LinkedIn
+              <ArrowUpRight size={11} />
             </a>
           </div>
         </div>
 
         <div
-          className="mt-6 pt-6 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+          className="mt-10 flex flex-col items-start justify-between gap-3 border-t pt-6 sm:flex-row sm:items-center"
           style={{ borderColor: "var(--color-space-border)" }}
         >
           <p
