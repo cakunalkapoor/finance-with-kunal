@@ -92,7 +92,7 @@ export default async function BlogPostPage({
         {post.excerpt}
       </p>
 
-      {/* Placeholder content */}
+      {/* Article body is still being written — reader-facing placeholder */}
       <div
         className="rounded-xl p-8 text-center"
         style={{
@@ -107,21 +107,18 @@ export default async function BlogPostPage({
           Full article coming soon
         </p>
         <p
-          className="text-xs"
+          className="text-xs leading-relaxed"
           style={{ color: "var(--color-text-muted)" }}
         >
-          Add your blog content in{" "}
-          <code
-            className="px-1.5 py-0.5 rounded text-xs"
-            style={{
-              background: "var(--color-space-surface)",
-              color: "var(--color-text-secondary)",
-              fontFamily: FONT_MONO,
-            }}
-          >
-            src/app/blog/[slug]/page.tsx
-          </code>{" "}
-          or integrate an MDX/CMS solution.
+          The full write-up is in progress. In the meantime, the{" "}
+          <Link href="/markets" style={{ color: "var(--color-neon-cyan)" }}>
+            markets
+          </Link>{" "}
+          and{" "}
+          <Link href="/dashboard" style={{ color: "var(--color-neon-cyan)" }}>
+            economy
+          </Link>{" "}
+          dashboards cover the data behind this piece.
         </p>
       </div>
 

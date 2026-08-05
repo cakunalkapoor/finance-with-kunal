@@ -135,7 +135,6 @@ function buildMonthlyDerived(prices, year = 2026) {
   const last = sorted[sorted.length - 1];
   const prev = sorted[sorted.length - 2];
   const monthAgo = prev;                                       // 1 month back
-  const year3Ago = sorted[sorted.length - 4] ?? prev;          // ~3 month back
   const ytd = sorted.find((p) => p.date.startsWith(String(year)));
   const window = sorted.slice(-12);
   const mm = maxMin(window.map((p) => p.v));

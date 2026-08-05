@@ -112,7 +112,6 @@ async function fredFetch(seriesId, limit) {
 
 // ── Derivations ────────────────────────────────────────────────────────────────
 const round2 = (n) => (n == null || !Number.isFinite(n) ? null : Math.round(n * 100) / 100);
-const pct = (a, b) => (b == null || b === 0 || a == null ? 0 : round2((a - b) / b * 100));
 
 function deriveBond(obs) {
   if (obs.length === 0) return null;

@@ -276,17 +276,17 @@ def main():
     blocks.append(build_sectors_ts("TWSE",    TWSE,    live["twse"]))
 
     heatmap_indices = """export const HEATMAP_INDICES: HeatmapIndex[] = [
-  { id: "sp500",   name: "S&P 500",            flag: "🇺🇸", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: SP500_SECTORS },
-  { id: "ndx",     name: "NASDAQ 100",         flag: "🇺🇸", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: NDX_SECTORS },
-  { id: "tsx",     name: "S&P/TSX",            flag: "🇨🇦", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: TSX_SECTORS },
-  { id: "ftse",    name: "FTSE 100",           flag: "🇬🇧", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: FTSE_SECTORS },
-  { id: "dax",     name: "DAX",                flag: "🇩🇪", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: DAX_SECTORS },
-  { id: "cac",     name: "CAC 40",             flag: "🇫🇷", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: CAC_SECTORS },
-  { id: "nifty50", name: "NIFTY 50",           flag: "🇮🇳", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: NIFTY50_SECTORS },
-  { id: "nikkei",  name: "Nikkei 225",         flag: "🇯🇵", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: NIKKEI_SECTORS },
-  { id: "sse",     name: "Shanghai Composite", flag: "🇨🇳", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: SSE_SECTORS },
-  { id: "kospi",   name: "KOSPI",              flag: "🇰🇷", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: KOSPI_SECTORS },
-  { id: "twse",    name: "TAIEX",              flag: "🇹🇼", description: "1-week % change · tile size = market-cap weight · live via Yahoo Finance", sectors: TWSE_SECTORS },
+  { id: "sp500",   name: "S&P 500",            flag: "🇺🇸", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: SP500_SECTORS },
+  { id: "ndx",     name: "NASDAQ 100",         flag: "🇺🇸", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: NDX_SECTORS },
+  { id: "tsx",     name: "S&P/TSX",            flag: "🇨🇦", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: TSX_SECTORS },
+  { id: "ftse",    name: "FTSE 100",           flag: "🇬🇧", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: FTSE_SECTORS },
+  { id: "dax",     name: "DAX",                flag: "🇩🇪", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: DAX_SECTORS },
+  { id: "cac",     name: "CAC 40",             flag: "🇫🇷", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: CAC_SECTORS },
+  { id: "nifty50", name: "NIFTY 50",           flag: "🇮🇳", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: NIFTY50_SECTORS },
+  { id: "nikkei",  name: "Nikkei 225",         flag: "🇯🇵", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: NIKKEI_SECTORS },
+  { id: "sse",     name: "Shanghai Composite", flag: "🇨🇳", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: SSE_SECTORS },
+  { id: "kospi",   name: "KOSPI",              flag: "🇰🇷", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: KOSPI_SECTORS },
+  { id: "twse",    name: "TAIEX",              flag: "🇹🇼", description: "1-week % change · tile size = market-cap weight · source: Yahoo Finance", sectors: TWSE_SECTORS },
 ];
 
 // Back-compat default export (S&P 500)

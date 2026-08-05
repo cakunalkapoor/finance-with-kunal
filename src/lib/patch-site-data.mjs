@@ -23,17 +23,50 @@ const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fe
   .map((value) => Date.parse(value))
   .filter(Number.isFinite);
 if (fetchedTimes.length) {
+  // Site cadence is anchored to Kunal's local week, so format in site time
+  // rather than UTC — a Sunday-evening PT refresh is otherwise labelled Monday.
+  const SITE_TZ = "America/Vancouver";
+  const fmt = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: SITE_TZ,
+  });
   const latest = new Date(Math.max(...fetchedTimes));
-  const label = new Intl.DateTimeFormat("en-US", {
+
+  // Next briefing is the following Sunday in site time (never today, so the
+  // header can't advertise a date that has already passed).
+  const siteParts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: SITE_TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "short",
+  }).formatToParts(latest);
+  const part = (t) => siteParts.find((p) => p.type === t).value;
+  const siteMidnightUTC = Date.parse(`${part("year")}-${part("month")}-${part("day")}T00:00:00Z`);
+  const dowIndex = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(part("weekday"));
+  const daysUntilSunday = dowIndex === 0 ? 7 : 7 - dowIndex;
+  const nextSunday = new Date(siteMidnightUTC + daysUntilSunday * 86400000);
+
+  // nextSunday is a synthetic calendar date anchored at UTC midnight, so it
+  // must be formatted in UTC — formatting it in site time would shift it back a day.
+  const utcFmt = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
     timeZone: "UTC",
-  }).format(latest);
-  src = src.replace(
-    /export const DATA_UPDATED_AT = "[^"]+";/,
-    `export const DATA_UPDATED_AT = "${label}";`,
-  );
+  });
+
+  src = src
+    .replace(
+      /export const DATA_UPDATED_AT = "[^"]+";/,
+      `export const DATA_UPDATED_AT = "${fmt.format(latest)}";`,
+    )
+    .replace(
+      /export const NEXT_BRIEFING_AT = "[^"]+";/,
+      `export const NEXT_BRIEFING_AT = "${utcFmt.format(nextSunday)}";`,
+    );
 }
 
 const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);

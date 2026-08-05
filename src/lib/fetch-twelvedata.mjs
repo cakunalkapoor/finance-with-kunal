@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-unused-vars --
+   `sleep` and `timeSeries` are deliberate scaffold helpers kept for when this
+   provider is wired up; they are unused until then. */
 /**
  * Twelve Data fetcher — SCAFFOLD for future use.
  *

@@ -30,9 +30,19 @@ Nav labels and route slugs differ on purpose (`/dashboard` shows as "Economy"). 
 
 ## Design tokens (`globals.css` `@theme`)
 
-Light theme. Surfaces: page `#f7f6fc`, card `#ffffff`, border `#e5e1f1`. Accents: violet `#7c3aed` (`--color-neon-cyan` — name kept for back-compat), indigo `#4f46e5` (`--color-neon-purple`). Market up `#059669` / down `#e11d48` / neutral `#d97706`. Text `#1e1b3a` / `#524b7a` / `#9590b8`. ECharts series use brighter hexes (`#34d399` up / `#fb7185` down) since charts can't read CSS vars.
+Warm editorial palette — paper, ink, and signal green. **Two themes**: light is the `@theme` default, dark is applied by adding `.dark` to `<html>` (an inline script in the root layout sets it before paint; `ThemeToggle` flips it and persists to localStorage). Both must be styled.
 
-Reusable UI: `SciFiCard` (glowing card wrapper + `CardHeader`) and `PageHeader` (label + title + Last/Next Update; dates are hardcoded per page in `page.tsx`).
+| Token | Light | Dark |
+|---|---|---|
+| `--color-space-void` (page) | `#f2f1eb` | `#0b0d09` |
+| `--color-space-card` | `#faf9f4` | `#151a12` |
+| `--color-space-border` | `#d8d7cd` | `#2b3126` |
+| `--color-neon-cyan` (primary accent) | `#37683f` | `#b9f227` |
+| `--color-neon-purple` (secondary) | `#916c1e` | `#edc76d` |
+
+The `--color-neon-*` names are kept for back-compat and no longer describe the actual hues. Market up/down/neutral also differ per theme. ECharts configs can't read CSS vars — use hex equivalents there.
+
+Reusable UI: `BriefingHero` (page hero + Last/Next Update + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections. `PageHeader` is the older, simpler variant. **Update dates are not hardcoded per page** — they come from `DATA_UPDATED_AT` / `NEXT_BRIEFING_AT` in `site-data.ts`, which `patch-site-data.mjs` maintains automatically (site-local time; next briefing = following Sunday).
 
 ## File map
 

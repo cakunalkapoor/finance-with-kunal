@@ -206,7 +206,7 @@ async function main() {
           found = true;
           break;
         }
-      } catch (e) { /* try next */ }
+      } catch { /* try next */ }
       await new Promise(r => setTimeout(r, 300));
     }
     if (!found) process.stdout.write("✗ no source returned data\n");

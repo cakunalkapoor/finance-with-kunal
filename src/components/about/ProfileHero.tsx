@@ -23,8 +23,12 @@ export default function ProfileHero({ data }: { data: ProfileData }) {
   return (
     <SciFiCard glow="purple" className="p-6 sm:p-8 mb-8">
       <div className="flex flex-col sm:flex-row gap-6 items-start">
-        {/* Avatar — photo with initials fallback */}
+        {/* Avatar — photo with initials fallback.
+            Plain <img> on purpose: the static export sets images.unoptimized,
+            so next/image adds no optimization here, and this needs the
+            onError/ref fallback to swap in initials when the photo 404s. */}
         {data.photo && !photoFailed ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={withBasePath(data.photo)}
             alt={data.name}
