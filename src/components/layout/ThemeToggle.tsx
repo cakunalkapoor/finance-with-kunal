@@ -1,23 +1,7 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import { Sun, Moon } from "lucide-react";
-
-type Theme = "light" | "dark";
-
-function subscribeToTheme(callback: () => void) {
-  const observer = new MutationObserver(callback);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-  return () => observer.disconnect();
-}
-
-function getThemeSnapshot(): Theme {
-  return document.documentElement.classList.contains("dark") ? "dark" : "light";
-}
-
-function getServerThemeSnapshot(): Theme {
-  return "light";
-}
+import { useTheme } from "@/lib/use-theme";
 
 /**
  * Light/dark theme toggle. The actual theme class (`dark`) is applied to
@@ -25,11 +9,7 @@ function getServerThemeSnapshot(): Theme {
  * this button just flips that class and persists the choice to localStorage.
  */
 export default function ThemeToggle() {
-  const theme = useSyncExternalStore(
-    subscribeToTheme,
-    getThemeSnapshot,
-    getServerThemeSnapshot,
-  );
+  const theme = useTheme();
 
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";
