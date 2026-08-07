@@ -10,7 +10,8 @@ import ThemeToggle from "./ThemeToggle";
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
   { href: "/dashboard", label: "Economy" },
-  { href: "/us-canada", label: "US & Canada" },
+  { href: "/us-economy", label: "US" },
+  { href: "/canada-economy", label: "Canada" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About Me" },
 ];
@@ -30,7 +31,7 @@ export default function Navbar() {
     >
       <div className="section-shell flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-3">
+        <Link href="/" className="group flex items-center" aria-label="Finance with Kunal — home">
           <div
             className="flex h-8 w-8 items-center justify-center rounded-full text-[9px] font-bold tracking-tight"
             style={{
@@ -41,15 +42,6 @@ export default function Navbar() {
           >
             FWK
           </div>
-          <span
-            className="text-sm font-bold"
-            style={{
-              letterSpacing: "-0.02em",
-              color: "var(--color-text-primary)",
-            }}
-          >
-            Finance <span style={{ color: "var(--color-text-muted)", fontWeight: 500 }}>with</span> Kunal
-          </span>
         </Link>
 
         {/* Right cluster: nav links · theme toggle · mobile menu button */}

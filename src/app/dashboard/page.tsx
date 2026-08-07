@@ -20,8 +20,8 @@ const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: stri
   { id: "energy", label: "Energy", icon: "⚡" },
 ];
 
-// These indicators are dedicated to the /us-canada page; keep the global Economy
-// dashboard focused on its original curated (US + Asia) set.
+// These indicators are dedicated to the /us-economy and /canada-economy pages;
+// keep the global Economy dashboard focused on its original curated (US + Asia) set.
 const US_CANADA_ONLY = new Set([
   "us-payrolls", "us-fed-funds", "us-10y", "us-trade-balance", "us-tax-receipts",
   "us-mfg-pmi", "us-services-pmi",

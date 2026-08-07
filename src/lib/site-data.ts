@@ -3722,48 +3722,9 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
   },
 ];
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    slug: "fed-pivot-2026",
-    title: "The Fed's Calculated Pause: What Rate Markets Are Pricing In",
-    excerpt:
-      "With CPI trending toward target and the labour market showing resilience, the Fed finds itself in a rare moment of patience. Here's what the yield curve is telling us about the path ahead.",
-    date: "2026-05-28",
-    category: "Monetary Policy",
-    readTime: 7,
-    tags: ["Federal Reserve", "Interest Rates", "Inflation"],
-  },
-  {
-    slug: "china-exports-acceleration",
-    title: "China's Export Engine Reignites — But Who's Buying?",
-    excerpt:
-      "April's export data beat consensus by a wide margin. The surprise isn't the volume — it's the destination. Emerging markets are absorbing what the West once did.",
-    date: "2026-05-24",
-    category: "Global Trade",
-    readTime: 5,
-    tags: ["China", "Exports", "Emerging Markets"],
-  },
-  {
-    slug: "india-services-record",
-    title: "India's Services PMI at Near-Record: The Decade-Long Thesis Playing Out",
-    excerpt:
-      "India's services PMI hit 58.8 in April — near the highest reading in a decade. This isn't a blip. It's the structural shift that patient investors have been waiting for.",
-    date: "2026-05-20",
-    category: "Emerging Markets",
-    readTime: 6,
-    tags: ["India", "PMI", "Services"],
-  },
-  {
-    slug: "shipping-rates-normalization",
-    title: "The Great Container Rate Unwind: What It Means for Inflation",
-    excerpt:
-      "After two years of elevated freight rates, the Drewry WCI is normalizing. This is the disinflationary tailwind that nobody in the CPI models is giving enough credit to.",
-    date: "2026-05-15",
-    category: "Shipping & Trade",
-    readTime: 4,
-    tags: ["Shipping", "Inflation", "Supply Chain"],
-  },
-];
+// Placeholder posts removed — the Blog page shows a "coming soon" state while
+// this array is empty, and starts listing normally as soon as a real post lands.
+export const BLOG_POSTS: BlogPost[] = [];
 
 export const PROFILE_DATA: ProfileData = {
   name: "Kunal Kapoor",
