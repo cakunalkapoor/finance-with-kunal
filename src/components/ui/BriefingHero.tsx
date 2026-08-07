@@ -15,7 +15,8 @@ interface BriefingHeroProps {
   lastUpdated?: string;
   nextUpdate?: string;
   accent?: "violet" | "indigo" | "emerald";
-  stats: BriefingStat[];
+  /** Omit to render the hero without the stat tiles. */
+  stats?: BriefingStat[];
 }
 
 const ACCENTS = {
@@ -46,9 +47,11 @@ export default function BriefingHero({
   lastUpdated = DATA_UPDATED_AT,
   nextUpdate = NEXT_BRIEFING_AT,
   accent = "violet",
-  stats,
+  stats = [],
 }: BriefingHeroProps) {
   const palette = ACCENTS[accent];
+  // With no tiles there is no second column, so the copy should span the full width.
+  const hasStats = stats.length > 0;
 
   return (
     <section
@@ -67,7 +70,11 @@ export default function BriefingHero({
         }}
       />
 
-      <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.7fr)] lg:items-end">
+      <div
+        className={`relative grid gap-8 ${
+          hasStats ? "lg:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.7fr)] lg:items-end" : ""
+        }`}
+      >
         <div>
           <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span
@@ -118,34 +125,36 @@ export default function BriefingHero({
           )}
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:gap-3">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="min-w-0 rounded-xl p-3 sm:p-4"
-              style={{
-                background: "color-mix(in srgb, var(--color-space-card) 86%, transparent)",
-                border: "1px solid var(--color-space-border)",
-              }}
-            >
-              <p
-                className="truncate text-[10px] font-bold uppercase"
-                style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO, letterSpacing: "0.1em" }}
+        {hasStats && (
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
+            {stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="min-w-0 rounded-xl p-3 sm:p-4"
+                style={{
+                  background: "color-mix(in srgb, var(--color-space-card) 86%, transparent)",
+                  border: "1px solid var(--color-space-border)",
+                }}
               >
-                {stat.label}
-              </p>
-              <p
-                className="mt-2 text-lg font-bold sm:text-xl"
-                style={{ color: palette.color, fontFamily: FONT_MONO, letterSpacing: "-0.03em" }}
-              >
-                {stat.value}
-              </p>
-              <p className="mt-1 text-[10px] leading-4" style={{ color: "var(--color-text-muted)" }}>
-                {stat.detail}
-              </p>
-            </div>
-          ))}
-        </div>
+                <p
+                  className="truncate text-[10px] font-bold uppercase"
+                  style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO, letterSpacing: "0.1em" }}
+                >
+                  {stat.label}
+                </p>
+                <p
+                  className="mt-2 text-lg font-bold sm:text-xl"
+                  style={{ color: palette.color, fontFamily: FONT_MONO, letterSpacing: "-0.03em" }}
+                >
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-[10px] leading-4" style={{ color: "var(--color-text-muted)" }}>
+                  {stat.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -22,11 +22,6 @@ export default function AboutPage() {
           accent="violet"
           lastUpdated="—"
           nextUpdate="—"
-          stats={[
-            { label: "Experience", value: "10+", detail: "Years across markets" },
-            { label: "Perspective", value: "2", detail: "Canada and India" },
-            { label: "Approach", value: "1", detail: "Evidence first" },
-          ]}
         />
       </div>
 
