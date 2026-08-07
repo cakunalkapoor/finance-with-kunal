@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
+import Logo from "./Logo";
 
 function LinkedInIcon({ size = 12 }: { size?: number }) {
   return (
@@ -30,16 +31,7 @@ export default function Footer() {
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-start">
           <div className="max-w-sm">
             <div className="flex items-center gap-3">
-            <div
-              className="flex h-8 w-8 items-center justify-center rounded-full text-[9px] font-bold"
-              style={{
-                background: "var(--color-signal)",
-                color: "var(--color-signal-ink)",
-                fontFamily: FONT_MONO,
-              }}
-            >
-              FWK
-            </div>
+            <Logo />
             <span
               className="text-xs font-bold tracking-widest"
               style={{

@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { cn, FONT_MONO } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import Logo from "./Logo";
 
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
@@ -32,16 +33,7 @@ export default function Navbar() {
       <div className="section-shell flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/" className="group flex items-center" aria-label="Finance with Kunal — home">
-          <div
-            className="flex h-8 w-8 items-center justify-center rounded-full text-[9px] font-bold tracking-tight"
-            style={{
-              background: "var(--color-signal)",
-              color: "var(--color-signal-ink)",
-              fontFamily: FONT_MONO,
-            }}
-          >
-            FWK
-          </div>
+          <Logo />
         </Link>
 
         {/* Right cluster: nav links · theme toggle · mobile menu button */}
