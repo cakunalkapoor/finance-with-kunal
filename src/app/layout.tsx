@@ -28,8 +28,7 @@ const spaceMono = localFont({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kunalkapoor.github.io/finance-with-kunal";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kunalkapoor.fyi";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
