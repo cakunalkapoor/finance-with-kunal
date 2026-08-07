@@ -11,8 +11,7 @@ export default function Logo({ size = 32 }: { size?: number }) {
       width={size}
       height={size}
       viewBox="0 0 100 100"
-      role="img"
-      aria-label="Finance with Kunal"
+      aria-hidden="true"
       style={{ display: "block", flexShrink: 0 }}
     >
       <circle

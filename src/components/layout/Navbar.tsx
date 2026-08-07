@@ -32,8 +32,17 @@ export default function Navbar() {
     >
       <div className="section-shell flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="group flex items-center" aria-label="Finance with Kunal — home">
+        <Link href="/" className="group flex items-center gap-3">
           <Logo />
+          <span
+            className="text-sm font-bold"
+            style={{
+              letterSpacing: "-0.02em",
+              color: "var(--color-text-primary)",
+            }}
+          >
+            Finance <span style={{ color: "var(--color-text-muted)", fontWeight: 500 }}>with</span> Kunal
+          </span>
         </Link>
 
         {/* Right cluster: nav links · theme toggle · mobile menu button */}
