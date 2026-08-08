@@ -20,7 +20,7 @@ export default function MarketTicker() {
 
   return (
     <div
-      className="overflow-hidden border-b py-2"
+      className="ticker-mask overflow-hidden border-b py-2"
       style={{
         background: "var(--color-space-black)",
         borderColor: "var(--color-space-border)",

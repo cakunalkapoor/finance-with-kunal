@@ -16,16 +16,18 @@ export default function SciFiCard({
   label,
   cornerAccent = false,
 }: SciFiCardProps) {
+  // Left undefined (rather than "none") for the default case so the hover
+  // shadow in `.card-surface` isn't outranked by an inline style.
   const glowStyle =
     glow === "cyan"
       ? "0 0 20px rgba(167,139,250,0.14), 0 0 1px rgba(167,139,250,0.3)"
       : glow === "purple"
       ? "0 0 20px rgba(129,140,248,0.14), 0 0 1px rgba(129,140,248,0.3)"
-      : "none";
+      : undefined;
 
   return (
     <div
-      className={cn("relative rounded-lg overflow-hidden", className)}
+      className={cn("card-surface relative rounded-lg overflow-hidden", className)}
       style={{
         background: "var(--color-space-card)",
         border: "1px solid var(--color-space-border)",

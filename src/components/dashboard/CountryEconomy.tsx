@@ -4,6 +4,7 @@ import EconomicChart from "@/components/dashboard/EconomicChart";
 import EconomicNotes from "@/components/dashboard/EconomicNotes";
 import MarketTicker from "@/components/markets/MarketTicker";
 import BriefingHero from "@/components/ui/BriefingHero";
+import Reveal from "@/components/ui/Reveal";
 import { FONT_MONO } from "@/lib/utils";
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import type { EconomicIndicator } from "@/types";
@@ -87,7 +88,7 @@ export default function CountryEconomy({
           const inCategory = indicators.filter((ind) => ind.category === id);
           return (
             <section key={id}>
-              <div className="flex items-center gap-3 mb-4">
+              <Reveal className="flex items-center gap-3 mb-4">
                 <span className="text-lg">{icon}</span>
                 <h2
                   className="font-bold text-sm tracking-widest uppercase"
@@ -100,25 +101,29 @@ export default function CountryEconomy({
                   {label}
                 </h2>
                 <div className="flex-1 h-px" style={{ background: "var(--color-space-border)" }} />
-              </div>
+              </Reveal>
 
               <div
                 className={`grid gap-4 ${
                   inCategory.length === 1 ? "grid-cols-1 max-w-xl" : "grid-cols-1 lg:grid-cols-2"
                 }`}
               >
-                {inCategory.map((ind) => (
-                  <EconomicChart key={ind.id} indicator={ind} />
+                {inCategory.map((ind, index) => (
+                  <Reveal key={ind.id} delay={(index % 2) * 100}>
+                    <EconomicChart indicator={ind} />
+                  </Reveal>
                 ))}
               </div>
             </section>
           );
         })}
 
-        <EconomicNotes
-          filter={onPage}
-          subtitle={`Auto-generated ${eyebrow} macro notes · Jul 2026`}
-        />
+        <Reveal>
+          <EconomicNotes
+            filter={onPage}
+            subtitle={`Auto-generated ${eyebrow} macro notes · Jul 2026`}
+          />
+        </Reveal>
       </div>
     </>
   );

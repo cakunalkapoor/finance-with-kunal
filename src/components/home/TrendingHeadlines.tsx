@@ -1,4 +1,5 @@
 import { ArrowUpRight, Newspaper } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
 import { EXTERNAL_COMMENTARY } from "@/lib/site-data";
 import { FONT_MONO } from "@/lib/utils";
 
@@ -6,7 +7,7 @@ export default function TrendingHeadlines() {
   return (
     <section className="border-y py-16 sm:py-24" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-black)" }}>
       <div className="section-shell">
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <Reveal className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="eyebrow">Reading the tape</span>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl" style={{ color: "var(--color-text-primary)", letterSpacing: "-0.04em" }}>
@@ -16,16 +17,18 @@ export default function TrendingHeadlines() {
           <div className="flex items-center gap-2 text-xs" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
             <Newspaper size={15} /> Curated from leading sources
           </div>
-        </div>
+        </Reveal>
 
         <div className="divide-y border-y" style={{ borderColor: "var(--color-space-border)" }}>
           {EXTERNAL_COMMENTARY.slice(0, 5).map((item, index) => (
-            <a
+            <Reveal
+              as="a"
               key={item.id}
+              delay={index * 70}
               href={item.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group grid gap-4 py-6 sm:grid-cols-[3rem_0.65fr_1.35fr_auto] sm:items-start sm:gap-6"
+              className="group grid gap-4 py-6 transition-[padding] duration-300 hover:pl-2 sm:grid-cols-[3rem_0.65fr_1.35fr_auto] sm:items-start sm:gap-6"
               style={{ borderColor: "var(--color-space-border)" }}
             >
               <span className="text-[10px] font-bold" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>0{index + 1}</span>
@@ -46,7 +49,7 @@ export default function TrendingHeadlines() {
                 </p>
               </div>
               <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: "var(--color-neon-cyan)" }} />
-            </a>
+            </Reveal>
           ))}
         </div>
       </div>

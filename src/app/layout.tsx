@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollProgress from "@/components/layout/ScrollProgress";
 
 const spaceGrotesk = localFont({
   src: "./fonts/space-grotesk-latin.woff2",
@@ -67,13 +68,17 @@ export default function RootLayout({
         className="grid-bg min-h-screen flex flex-col"
         style={{ fontFamily: "var(--font-space-grotesk), system-ui, sans-serif" }}
       >
-        {/* Apply the saved/system theme before paint to avoid a flash of the wrong theme. */}
+        {/* Runs before paint: applies the saved/system theme (no flash of the
+            wrong theme) and marks the document as script-enabled. The `js`
+            class gates the scroll-reveal hidden state in globals.css, so a
+            no-JS visitor or crawler still gets fully visible content. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();",
+              "(function(){var e=document.documentElement;e.classList.add('js');try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)e.classList.add('dark');}catch(x){}})();",
           }}
         />
+        <ScrollProgress />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

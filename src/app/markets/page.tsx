@@ -6,6 +6,7 @@ import CryptoGrid from "@/components/markets/CryptoGrid";
 import ForexGrid from "@/components/markets/ForexGrid";
 import MarketHeatmap from "@/components/markets/MarketHeatmap";
 import BriefingHero from "@/components/ui/BriefingHero";
+import Reveal from "@/components/ui/Reveal";
 
 export const metadata = {
   title: "Markets — Finance with Kunal",
@@ -30,17 +31,29 @@ export default function MarketsPage() {
           ]}
         />
 
-        <MarketHeatmap />
-        <EquityMarketsTable />
+        <Reveal>
+          <MarketHeatmap />
+        </Reveal>
+        <Reveal>
+          <EquityMarketsTable />
+        </Reveal>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-          <BondsTable />
-          <CommoditiesGrid />
+          <Reveal>
+            <BondsTable />
+          </Reveal>
+          <Reveal delay={100}>
+            <CommoditiesGrid />
+          </Reveal>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-          <ForexGrid />
-          <CryptoGrid />
+          <Reveal>
+            <ForexGrid />
+          </Reveal>
+          <Reveal delay={100}>
+            <CryptoGrid />
+          </Reveal>
         </div>
       </div>
     </>

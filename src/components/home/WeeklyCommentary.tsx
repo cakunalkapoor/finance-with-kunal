@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Quote } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
 import { WEEKLY_COMMENTARY } from "@/lib/site-data";
 import { FONT_MONO } from "@/lib/utils";
 
@@ -10,7 +11,7 @@ export default function WeeklyCommentary() {
     <section className="py-16 sm:py-24">
       <div className="section-shell">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          <Reveal variant="right" className="lg:sticky lg:top-24 lg:self-start">
             <span className="eyebrow">Kunal&apos;s weekly read</span>
             <h2
               className="mt-4 text-4xl font-semibold leading-[0.98] sm:text-6xl"
@@ -29,11 +30,17 @@ export default function WeeklyCommentary() {
                 {lead}
               </p>
             </div>
-          </div>
+          </Reveal>
 
           <div className="grid gap-px border sm:grid-cols-2" style={{ background: "var(--color-space-border)", borderColor: "var(--color-space-border)" }}>
             {sections.map((section, index) => (
-              <article key={section.id} className="group flex min-h-72 flex-col p-6 sm:p-7" style={{ background: "var(--color-space-card)" }}>
+              <Reveal
+                as="article"
+                key={section.id}
+                delay={index * 80}
+                className="group hover-accent relative flex min-h-72 flex-col p-6 sm:p-7"
+                style={{ background: "var(--color-space-card)" }}
+              >
                 <div className="flex items-start justify-between gap-3">
                   <span className="text-[10px] font-bold tracking-[0.14em]" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
                     0{index + 1}
@@ -51,7 +58,7 @@ export default function WeeklyCommentary() {
                     {section.link.label} <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
                   </Link>
                 )}
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>

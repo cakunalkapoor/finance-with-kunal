@@ -37,7 +37,11 @@ export default function ThemeToggle() {
         background: "transparent",
       }}
     >
-      {isDark ? <Sun size={16} /> : <Moon size={16} />}
+      {isDark ? (
+        <Sun size={16} className="animate-icon-swap" />
+      ) : (
+        <Moon size={16} className="animate-icon-swap" />
+      )}
     </button>
   );
 }

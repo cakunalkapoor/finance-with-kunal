@@ -3,6 +3,7 @@ import EconomicChart from "@/components/dashboard/EconomicChart";
 import EconomicNotes from "@/components/dashboard/EconomicNotes";
 import MarketTicker from "@/components/markets/MarketTicker";
 import BriefingHero from "@/components/ui/BriefingHero";
+import Reveal from "@/components/ui/Reveal";
 import { FONT_MONO } from "@/lib/utils";
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import type { EconomicIndicator } from "@/types";
@@ -48,7 +49,9 @@ export default function DashboardPage() {
           ]}
         />
 
-        <MacroSnapshot />
+        <Reveal>
+          <MacroSnapshot />
+        </Reveal>
 
         {CATEGORIES.map(({ id, label, icon }) => {
           const indicators = ECONOMIC_INDICATORS.filter(
@@ -57,7 +60,7 @@ export default function DashboardPage() {
           if (indicators.length === 0) return null;
           return (
             <section key={id}>
-              <div className="flex items-center gap-3 mb-4">
+              <Reveal className="flex items-center gap-3 mb-4">
                 <span className="text-lg">{icon}</span>
                 <h2
                   className="font-bold text-sm tracking-widest uppercase"
@@ -73,7 +76,7 @@ export default function DashboardPage() {
                   className="flex-1 h-px"
                   style={{ background: "var(--color-space-border)" }}
                 />
-              </div>
+              </Reveal>
 
               <div
                 className={`grid gap-4 ${
@@ -82,15 +85,19 @@ export default function DashboardPage() {
                     : "grid-cols-1 lg:grid-cols-2"
                 }`}
               >
-                {indicators.map((ind) => (
-                  <EconomicChart key={ind.id} indicator={ind} />
+                {indicators.map((ind, index) => (
+                  <Reveal key={ind.id} delay={(index % 2) * 100}>
+                    <EconomicChart indicator={ind} />
+                  </Reveal>
                 ))}
               </div>
             </section>
           );
         })}
 
-        <EconomicNotes filter={(ind) => !US_CANADA_ONLY.has(ind.id)} />
+        <Reveal>
+          <EconomicNotes filter={(ind) => !US_CANADA_ONLY.has(ind.id)} />
+        </Reveal>
       </div>
     </>
   );

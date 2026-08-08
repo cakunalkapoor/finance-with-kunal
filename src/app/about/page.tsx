@@ -1,4 +1,5 @@
 import BriefingHero from "@/components/ui/BriefingHero";
+import Reveal from "@/components/ui/Reveal";
 import ProfileHero from "@/components/about/ProfileHero";
 import CareerHighlights from "@/components/about/CareerHighlights";
 import Qualifications from "@/components/about/Qualifications";
@@ -25,10 +26,18 @@ export default function AboutPage() {
         />
       </div>
 
-      <ProfileHero data={PROFILE_DATA} />
-      <CareerHighlights highlights={PROFILE_DATA.highlights} />
-      <Qualifications education={PROFILE_DATA.education} />
-      <SkillsGrid categories={PROFILE_DATA.skills} />
+      <Reveal>
+        <ProfileHero data={PROFILE_DATA} />
+      </Reveal>
+      <Reveal>
+        <CareerHighlights highlights={PROFILE_DATA.highlights} />
+      </Reveal>
+      <Reveal>
+        <Qualifications education={PROFILE_DATA.education} />
+      </Reveal>
+      <Reveal>
+        <SkillsGrid categories={PROFILE_DATA.skills} />
+      </Reveal>
     </div>
   );
 }

@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { useState, type CSSProperties } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
@@ -55,18 +54,9 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={cn(
-                  "relative px-3 py-2 text-[11px] font-bold tracking-[0.11em] uppercase transition-all duration-200",
-                  active
-                    ? "text-neon-cyan"
-                    : "hover:text-space-text-primary"
-                )}
-                style={{
-                  color: active ? "var(--color-neon-cyan)" : "var(--color-text-secondary)",
-                  background: "transparent",
-                  borderBottom: active ? "1px solid var(--color-neon-cyan)" : "1px solid transparent",
-                  letterSpacing: "0.1em",
-                }}
+                data-active={active ? "true" : "false"}
+                className="nav-link relative px-3 py-2 pb-3 text-[11px] font-bold uppercase"
+                style={{ letterSpacing: "0.1em" }}
               >
                 {link.label}
               </Link>
@@ -89,7 +79,11 @@ export default function Navbar() {
               border: "1px solid var(--color-space-border)",
             }}
           >
-            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+            {menuOpen ? (
+              <X size={18} className="animate-icon-swap" />
+            ) : (
+              <Menu size={18} className="animate-icon-swap" />
+            )}
           </button>
         </div>
       </div>
@@ -98,13 +92,13 @@ export default function Navbar() {
       {menuOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden border-t px-4 py-3 flex flex-col gap-1"
+          className="animate-menu-drop md:hidden border-t px-4 py-3 flex flex-col gap-1"
           style={{
             background: "var(--color-nav-bg-solid)",
             borderColor: "var(--color-space-border)",
           }}
         >
-          {NAV_LINKS.map((link) => {
+          {NAV_LINKS.map((link, index) => {
             const active = pathname?.startsWith(link.href);
             return (
               <Link
@@ -114,9 +108,10 @@ export default function Navbar() {
                 className="px-3 py-2 rounded text-xs font-semibold tracking-widest uppercase"
                 style={{
                   color: active ? "var(--color-neon-cyan)" : "var(--color-text-secondary)",
-                  background: active ? "rgba(124, 58, 237, 0.08)" : "transparent",
+                  background: active ? "var(--color-wash)" : "transparent",
                   letterSpacing: "0.1em",
-                }}
+                  "--item-index": index,
+                } as CSSProperties}
               >
                 {link.label}
               </Link>

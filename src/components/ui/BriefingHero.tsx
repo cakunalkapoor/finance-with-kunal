@@ -1,6 +1,10 @@
+import type { CSSProperties } from "react";
 import { Activity, CalendarCheck, CalendarClock } from "lucide-react";
 import { DATA_UPDATED_AT, NEXT_BRIEFING_AT } from "@/lib/site-data";
 import { FONT_MONO } from "@/lib/utils";
+
+/** Entrance stagger for the hero cluster, in render order. */
+const enter = (delay: number) => ({ "--enter-delay": `${delay}ms` }) as CSSProperties;
 
 interface BriefingStat {
   label: string;
@@ -76,7 +80,7 @@ export default function BriefingHero({
         }`}
       >
         <div>
-          <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="animate-enter mb-5 flex flex-wrap items-center gap-x-4 gap-y-2">
             <span
               className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase"
               style={{
@@ -99,20 +103,20 @@ export default function BriefingHero({
           </div>
 
           <h1
-            className="max-w-3xl text-3xl font-bold leading-[1.06] sm:text-4xl lg:text-5xl"
-            style={{ color: "var(--color-text-primary)", letterSpacing: "-0.045em" }}
+            className="animate-enter max-w-3xl text-3xl font-bold leading-[1.06] sm:text-4xl lg:text-5xl"
+            style={{ color: "var(--color-text-primary)", letterSpacing: "-0.045em", ...enter(80) }}
           >
             {title}
           </h1>
           <p
-            className="mt-4 max-w-2xl text-sm leading-7 sm:text-base"
-            style={{ color: "var(--color-text-secondary)" }}
+            className="animate-enter mt-4 max-w-2xl text-sm leading-7 sm:text-base"
+            style={{ color: "var(--color-text-secondary)", ...enter(160) }}
           >
             {description}
           </p>
 
           {lastUpdated !== "—" && (
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
+            <div className="animate-enter mt-6 flex flex-wrap items-center gap-x-5 gap-y-2" style={enter(240)}>
               <span className="flex items-center gap-2 text-xs" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
                 <CalendarCheck size={13} style={{ color: "var(--color-market-up)" }} />
                 Updated <strong style={{ color: "var(--color-text-secondary)" }}>{lastUpdated}</strong>
@@ -127,30 +131,34 @@ export default function BriefingHero({
 
         {hasStats && (
           <div className="grid grid-cols-3 gap-2 sm:gap-3">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="min-w-0 rounded-xl p-3 sm:p-4"
-                style={{
-                  background: "color-mix(in srgb, var(--color-space-card) 86%, transparent)",
-                  border: "1px solid var(--color-space-border)",
-                }}
-              >
-                <p
-                  className="truncate text-[10px] font-bold uppercase"
-                  style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO, letterSpacing: "0.1em" }}
+            {/* The entrance animation and the hover lift both drive `transform`,
+                and a filled animation beats a transition — so they need
+                separate elements to coexist. */}
+            {stats.map((stat, index) => (
+              <div key={stat.label} className="animate-enter min-w-0" style={enter(300 + index * 80)}>
+                <div
+                  className="hover-lift h-full min-w-0 rounded-xl p-3 sm:p-4"
+                  style={{
+                    background: "color-mix(in srgb, var(--color-space-card) 86%, transparent)",
+                    border: "1px solid var(--color-space-border)",
+                  }}
                 >
-                  {stat.label}
-                </p>
-                <p
-                  className="mt-2 text-lg font-bold sm:text-xl"
-                  style={{ color: palette.color, fontFamily: FONT_MONO, letterSpacing: "-0.03em" }}
-                >
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-[10px] leading-4" style={{ color: "var(--color-text-muted)" }}>
-                  {stat.detail}
-                </p>
+                  <p
+                    className="truncate text-[10px] font-bold uppercase"
+                    style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO, letterSpacing: "0.1em" }}
+                  >
+                    {stat.label}
+                  </p>
+                  <p
+                    className="mt-2 text-lg font-bold sm:text-xl"
+                    style={{ color: palette.color, fontFamily: FONT_MONO, letterSpacing: "-0.03em" }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-[10px] leading-4" style={{ color: "var(--color-text-muted)" }}>
+                    {stat.detail}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

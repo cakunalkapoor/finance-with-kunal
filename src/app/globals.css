@@ -35,6 +35,18 @@
 
 :root {
   color-scheme: light;
+
+  /* ---- Motion system ----
+     One set of easings/durations so every animation on the site feels like it
+     came from the same hand. `--ease-exit` is the editorial standard: fast
+     start, long settle. Reserve `--ease-spring` for small elements only. */
+  --ease-exit: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur-base: 300ms;
+  --dur-slow: 640ms;
+
   --color-nav-bg: rgba(242, 241, 235, 0.88);
   --color-nav-bg-solid: rgba(242, 241, 235, 0.98);
   --color-signal: #b9f227;
@@ -205,8 +217,11 @@ body {
 .bg-down { background-color: var(--color-market-down-dim); }
 
 /* Hover row tint */
-tr:hover td {
-  background: rgba(124, 58, 237, 0.025);
+tbody tr {
+  transition: background-color var(--dur-fast) ease;
+}
+tbody tr:hover td {
+  background: var(--color-wash);
 }
 
 /* Fade up */
@@ -255,16 +270,32 @@ tr:hover td {
   background: var(--color-signal);
   color: var(--color-signal-ink);
   box-shadow: 0 8px 24px rgba(73, 100, 8, 0.16);
+  transition: transform var(--dur-base) var(--ease-exit),
+    box-shadow var(--dur-base) var(--ease-exit);
+}
+
+.signal-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(73, 100, 8, 0.26);
+}
+
+.signal-button:active {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
 }
 
 .editorial-card {
   background: color-mix(in srgb, var(--color-space-card) 94%, transparent);
   border: 1px solid var(--color-space-border);
+  transition: transform var(--dur-base) var(--ease-exit),
+    border-color var(--dur-base) ease,
+    box-shadow var(--dur-base) var(--ease-exit);
 }
 
 .editorial-card:hover {
   border-color: var(--color-space-border-bright);
   transform: translateY(-2px);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--color-text-primary) 8%, transparent);
 }
 
 @media (min-width: 640px) {
@@ -273,11 +304,488 @@ tr:hover td {
   }
 }
 
+/* =========================================================================
+   Motion layer
+   Scroll reveals, hover micro-interactions and page-entrance transitions.
+   Everything below degrades to "no animation, content visible":
+     - without JS the `js` class is never set, so nothing is hidden
+     - with prefers-reduced-motion the block at the end of this file wins
+   ========================================================================= */
+
+/* ---- Scroll reveal ----
+   `Reveal` marks elements with data-reveal and swaps in .is-revealed once the
+   IntersectionObserver fires. The hidden state is scoped to html.js so
+   no-JS/crawler renders keep every element visible and indexable. */
+html.js [data-reveal] {
+  opacity: 0;
+  transition:
+    opacity var(--dur-slow) var(--ease-exit),
+    transform var(--dur-slow) var(--ease-exit);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal="up"] { transform: translateY(22px); }
+html.js [data-reveal="down"] { transform: translateY(-18px); }
+html.js [data-reveal="left"] { transform: translateX(28px); }
+html.js [data-reveal="right"] { transform: translateX(-28px); }
+html.js [data-reveal="scale"] { transform: scale(0.965); }
+html.js [data-reveal="fade"] { transform: none; }
+
+/* Trigger-only: stays visible and just carries `.is-revealed` for descendants
+   to hang their own transitions off. */
+html.js [data-reveal="none"] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* ---- Hover micro-interactions ---- */
+
+/* Lift a card or tile on hover. Pair with a border/background of its own. */
+.hover-lift {
+  transition:
+    transform var(--dur-base) var(--ease-exit),
+    box-shadow var(--dur-base) var(--ease-exit),
+    border-color var(--dur-base) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--color-text-primary) 9%, transparent);
+}
+
+/* A quiet accent bar that wipes in along the top edge of a tile. */
+.hover-accent {
+  position: relative;
+}
+
+.hover-accent::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--color-neon-cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-exit);
+  pointer-events: none;
+}
+
+.hover-accent:hover::after {
+  transform: scaleX(1);
+}
+
+/* Large section cards. These are big enough that lifting them reads as
+   wobble, so hover only brightens the border and deepens the shadow. */
+.card-surface {
+  transition:
+    border-color var(--dur-base) ease,
+    box-shadow var(--dur-base) var(--ease-exit);
+}
+
+.card-surface:hover {
+  border-color: var(--color-space-border-bright) !important;
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--color-text-primary) 7%, transparent);
+}
+
+/* Arrow nudge for "read more" style links. */
+.hover-nudge svg {
+  transition: transform var(--dur-base) var(--ease-exit);
+}
+
+.hover-nudge:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---- Nav link underline ----
+   Wipes in on hover and stays put when the route is active, so the active
+   state reads as the finished version of the hover state. */
+.nav-link {
+  color: var(--color-text-secondary);
+  transition: color var(--dur-fast) ease;
+}
+
+.nav-link:hover {
+  color: var(--color-text-primary);
+}
+
+.nav-link[data-active="true"] {
+  color: var(--color-neon-cyan);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.35rem;
+  height: 1px;
+  background: var(--color-neon-cyan);
+  transform: scaleX(0);
+  transition: transform var(--dur-base) var(--ease-exit);
+}
+
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ---- Mobile menu drop ---- */
+@keyframes menu-drop {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-menu-drop {
+  animation: menu-drop var(--dur-base) var(--ease-exit) forwards;
+}
+
+.animate-menu-drop > * {
+  opacity: 0;
+  animation: menu-drop var(--dur-base) var(--ease-exit) forwards;
+  animation-delay: calc(var(--item-index, 0) * 40ms + 60ms);
+}
+
+/* ---- Page entrance ----
+   Runs once per page load on the hero cluster, ahead of any scroll reveal. */
+@keyframes enter-up {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-enter {
+  opacity: 0;
+  animation: enter-up var(--dur-slow) var(--ease-exit) forwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/* ---- Headline line mask ----
+   Each line of the hero headline rises from behind a hard edge instead of the
+   whole block fading up.
+
+   The mask needs vertical padding: `leading-[0.88]` makes the line box shorter
+   than the type, so ascenders and the descender on "signal" sit outside it and
+   would clip against a flush `overflow: hidden`. Negative margins cancel the
+   padding so the leading is unchanged. The travel is `100% + pad` — the inner
+   span's own height plus the bottom padding — which is exactly far enough to
+   start out of sight however large the clamped font resolves.
+
+   Flex, not block: adjacent negative margins on block siblings *collapse* to
+   the single most-negative one rather than summing, which left exactly one
+   pad's worth of extra leading between the lines. Flex items don't collapse
+   margins, so the padding cancels precisely. */
+.line-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.line-mask {
+  --mask-pad: 0.26em;
+  display: block;
+  overflow: hidden;
+  padding-block: var(--mask-pad);
+  margin-block: calc(var(--mask-pad) * -1);
+}
+
+.line-mask > span {
+  display: block;
+}
+
+html.js .line-mask > span {
+  transform: translateY(calc(100% + var(--mask-pad)));
+  animation: line-rise var(--dur-slow) var(--ease-exit) forwards;
+  animation-delay: var(--line-delay, 0ms);
+}
+
+@keyframes line-rise {
+  to { transform: translateY(0); }
+}
+
+/* ---- Ruled grid ----
+   The market snapshot draws its own frame: hairlines wipe out from their
+   origin, then the tile contents arrive behind them.
+
+   The rules live on dedicated child spans rather than the tile's own
+   pseudo-elements, which `.hover-accent` already claims. They're positioned
+   *inside* each cell rather than being real borders, so nothing reflows when
+   they animate. Everything keys off `.is-revealed` with transitions rather
+   than animations — a CSS animation would start at mount and be long finished
+   by the time a below-the-fold grid scrolled into view. */
+.rule-grid {
+  position: relative;
+}
+
+.rule-frame,
+.rule-cell-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rule-frame::before,
+.rule-frame::after,
+.rule-cell-lines::before,
+.rule-cell-lines::after {
+  content: "";
+  position: absolute;
+  background: var(--color-space-border);
+}
+
+/* Frame: the grid's outer top and left edges. */
+.rule-frame::before { top: 0; left: 0; right: 0; height: 1px; }
+.rule-frame::after { top: 0; bottom: 0; left: 0; width: 1px; }
+
+/* Cell: the right and bottom edge of each tile. Together with the frame these
+   close the grid exactly as the old border-l/border-t + border-r/border-b did. */
+.rule-cell-lines::before { top: 0; bottom: 0; right: 0; width: 1px; }
+.rule-cell-lines::after { left: 0; right: 0; bottom: 0; height: 1px; }
+
+.rule-cell {
+  position: relative;
+  /* The transform transition is what the FLIP re-rank rides home on. The rest
+     restates the global colour transition, which naming `transition` here
+     would otherwise drop. */
+  transition:
+    transform var(--dur-slow) var(--ease-exit),
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.2s ease;
+}
+
+/* Positioned so it paints above `.pointer-spotlight`, which is absolute and
+   would otherwise wash over the text. */
+.rule-cell-body {
+  position: relative;
+}
+
+/* ---- Horizon control ----
+   Segmented switch over the horizons already stored on every quote. The
+   indicator is one element sliding across fixed-width cells rather than a
+   per-button background, so the movement reads as a single object. */
+.horizon-control {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 3px;
+  border: 1px solid var(--color-space-border);
+  border-radius: 999px;
+  background: var(--color-space-card);
+}
+
+.horizon-indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 4);
+  border-radius: 999px;
+  background: var(--color-neon-cyan);
+  transform: translateX(calc(var(--active, 0) * 100%));
+  transition: transform var(--dur-base) var(--ease-exit);
+}
+
+.horizon-option {
+  position: relative;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--dur-fast) ease;
+}
+
+.horizon-option:hover {
+  color: var(--color-text-primary);
+}
+
+/* Sits on the indicator, so it takes the page colour in both themes. */
+.horizon-option[aria-pressed="true"],
+.horizon-option[aria-pressed="true"]:hover {
+  color: var(--color-space-void);
+}
+
+/* ---- Value swap ----
+   Figures re-mount when the horizon changes so they cross-fade instead of
+   snapping to an unrelated number in place. */
+@keyframes value-swap {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-value-swap {
+  animation: value-swap var(--dur-base) var(--ease-exit);
+}
+
+/* ---- Pointer spotlight ----
+   A soft wash tracking the cursor. Any positioned container opts in with
+   `.spotlight-host` plus a <PointerSpotlight /> child; tune per host with
+   `--spotlight-tint` and `--spotlight-size`. Fine pointers only — there is no
+   cursor to follow on touch, and the gradient would just be dead weight. */
+.pointer-spotlight {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pointer-spotlight {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-base) ease;
+    background: radial-gradient(
+      var(--spotlight-size, 220px) circle at var(--mx, 50%) var(--my, 50%),
+      var(--spotlight-tint, var(--color-neon-cyan-glow)),
+      transparent 72%
+    );
+  }
+
+  .spotlight-host:hover > .pointer-spotlight {
+    opacity: 1;
+  }
+}
+
+/* Collapsed start states are scoped to html.js: without JS `.is-revealed`
+   never lands, and the grid must still render complete. */
+html.js .rule-frame::before,
+html.js .rule-cell-lines::after {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+html.js .rule-frame::after,
+html.js .rule-cell-lines::before {
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+html.js .rule-frame::before,
+html.js .rule-frame::after {
+  transition: transform var(--dur-slow) var(--ease-exit);
+}
+
+html.js .rule-cell-lines::before,
+html.js .rule-cell-lines::after {
+  transition: transform var(--dur-base) var(--ease-exit);
+  transition-delay: var(--rule-delay, 0ms);
+}
+
+html.js .rule-grid.is-revealed .rule-frame::before,
+html.js .rule-grid.is-revealed .rule-frame::after,
+html.js .rule-grid.is-revealed .rule-cell-lines::before,
+html.js .rule-grid.is-revealed .rule-cell-lines::after {
+  transform: none;
+}
+
+/* Contents follow once the frame around them is down. */
+html.js .rule-cell-body {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-base) var(--ease-exit),
+    transform var(--dur-base) var(--ease-exit);
+  transition-delay: calc(var(--rule-delay, 0ms) + 220ms);
+}
+
+html.js .rule-grid.is-revealed .rule-cell-body {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Ticker edge fade ----
+   Masks the hard cut at both ends so items dissolve instead of clipping. */
+.ticker-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+/* ---- Scroll progress bar ---- */
+.scroll-progress {
+  transform-origin: left;
+  transform: scaleX(var(--progress, 0));
+  background: linear-gradient(90deg, var(--color-neon-cyan), var(--color-neon-purple));
+}
+
+/* ---- Theme toggle icon swap ---- */
+@keyframes icon-swap {
+  from { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+  to { opacity: 1; transform: rotate(0) scale(1); }
+}
+
+.animate-icon-swap {
+  animation: icon-swap 380ms var(--ease-spring);
+}
+
+/* ---- Focus visibility ----
+   Keyboard users get the same accent the hover states use.
+
+   Deliberately no `border-radius` here: this rule is unlayered, so it would
+   outrank Tailwind's `rounded-*` utilities (which live in @layer utilities)
+   and square off every pill button and rounded card while focused. Browsers
+   already draw the outline following the element's own radius. */
+:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Animations don't run when printing, so anything whose visible state depends
+   on one would come out blank on paper or in a PDF. Force the end state. */
+@media print {
+  html.js [data-reveal],
+  .animate-enter,
+  .animate-menu-drop > *,
+  html.js .line-mask > span,
+  html.js .rule-cell-body,
+  html.js .rule-frame::before,
+  html.js .rule-frame::after,
+  html.js .rule-cell-lines::before,
+  html.js .rule-cell-lines::after {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .scroll-progress { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Land every reveal/entrance in its final state rather than racing there.
+     The delays aren't reset by the duration override above, so the staggered
+     effects need their end state stated outright. */
+  html.js [data-reveal],
+  .animate-enter,
+  .animate-menu-drop > *,
+  html.js .line-mask > span,
+  html.js .rule-cell-body,
+  html.js .rule-frame::before,
+  html.js .rule-frame::after,
+  html.js .rule-cell-lines::before,
+  html.js .rule-cell-lines::after {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .ticker-track {
+    animation: none;
+  }
+  /* A wash chasing the cursor is exactly the kind of incidental movement this
+     preference is asking us to drop. */
+  .pointer-spotlight {
+    display: none !important;
   }
 }
