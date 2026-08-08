@@ -80,6 +80,13 @@ npm run dev -- --port 3001     # dev server at http://localhost:3001
 npm run build                  # static export to out/ — run before pushing
 ```
 
+**`dev` pins `--webpack` on purpose — don't drop it.** Turbopack (the Next 16
+default) leaks ~400–500 MB per page request in dev on this project and dies with
+`Ineffective mark-compacts near heap limit` after roughly ten minutes: measured
+1.6 GB at 10s → 4.3 GB at 60s → OOM at ~12 GB, with no edits or rebuilds in
+between. The same six requests under `--webpack` sit flat at ~750 MB. `next
+build` still uses Turbopack and is unaffected.
+
 ## Conventions & lessons learned
 
 - **SVG renderer for every ECharts chart** (`opts={{ renderer: "svg" }}`) — canvas + web font = invisible labels on first paint.
