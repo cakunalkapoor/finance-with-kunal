@@ -1,7 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { ArrowUpRight } from "lucide-react";
 import { BOND_YIELDS } from "@/lib/site-data";
+import { INVESTING_BOND_URL } from "@/lib/external-links";
 import { getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { EChartsOption } from "echarts";
@@ -39,7 +41,7 @@ export default function BondsTable() {
     <SciFiCard>
       <CardHeader
         title="Government Bond Yields"
-        subtitle="10-Year Benchmark Rates"
+        subtitle="10-Year Benchmark Rates · click a country for the full yield curve on Investing.com"
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
@@ -81,9 +83,21 @@ export default function BondsTable() {
                   <div className="flex items-center gap-2">
                     <span className="text-base">{bond.flag}</span>
                     <div>
-                      <div style={{ color: "var(--color-text-primary)", fontWeight: 600 }}>
-                        {bond.country}
-                      </div>
+                      <a
+                        href={INVESTING_BOND_URL[bond.country]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`${bond.country} ${bond.maturity} bond yield on Investing.com`}
+                        className="group inline-flex items-center gap-1 font-semibold text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-neon-cyan)]"
+                      >
+                        <span className="underline-offset-2 group-hover:underline">{bond.country}</span>
+                        <ArrowUpRight
+                          size={11}
+                          strokeWidth={2.5}
+                          className="opacity-35 transition-opacity group-hover:opacity-100"
+                          aria-hidden
+                        />
+                      </a>
                       <div
                         style={{
                           color: "var(--color-text-muted)",

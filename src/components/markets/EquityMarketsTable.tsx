@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { ArrowUpRight } from "lucide-react";
 import { EQUITY_INDICES } from "@/lib/site-data";
+import { INVESTING_INDEX_URL } from "@/lib/external-links";
 import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { EChartsOption } from "echarts";
@@ -200,7 +202,10 @@ export default function EquityMarketsTable() {
 
   return (
     <SciFiCard glow="cyan" cornerAccent>
-      <CardHeader title="Global Equity Markets" subtitle="11 Major Indices · 30d realized volatility" />
+      <CardHeader
+        title="Global Equity Markets"
+        subtitle="11 Major Indices · 30d realized volatility · click an index for full detail on Investing.com"
+      />
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
@@ -265,14 +270,26 @@ export default function EquityMarketsTable() {
                       : "none",
                   }}
                 >
-                  {/* Name */}
+                  {/* Name — opens the index page on Investing.com */}
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <span className="text-base">{idx.flag}</span>
                       <div>
-                        <div className="font-semibold" style={{ color: "var(--color-text-primary)" }}>
-                          {idx.name}
-                        </div>
+                        <a
+                          href={INVESTING_INDEX_URL[idx.symbol]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={`${idx.name} on Investing.com`}
+                          className="group inline-flex items-center gap-1 font-semibold text-[var(--color-text-primary)] transition-colors hover:text-[var(--color-neon-cyan)]"
+                        >
+                          <span className="underline-offset-2 group-hover:underline">{idx.name}</span>
+                          <ArrowUpRight
+                            size={11}
+                            strokeWidth={2.5}
+                            className="opacity-35 transition-opacity group-hover:opacity-100"
+                            aria-hidden
+                          />
+                        </a>
                         <div style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO, fontSize: "10px" }}>
                           {idx.region}
                         </div>

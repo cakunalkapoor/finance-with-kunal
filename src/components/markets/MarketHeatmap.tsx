@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { HEATMAP_INDICES } from "@/lib/site-data";
+import { yahooQuoteUrl } from "@/lib/external-links";
 import { getCompanyName } from "@/lib/ticker-names";
 import { FONT_MONO } from "@/lib/utils";
 
@@ -83,9 +84,20 @@ export default function MarketHeatmap() {
         borderColor: getBorderColor(stock.change),
         borderWidth: 1,
         gapWidth: 2,
+        cursor: "pointer",
       },
     })),
   }));
+
+  // Constituent tiles open the ticker on Yahoo Finance. treePathInfo is
+  // [root, sector, stock], so only a length-3 path is a clickable stock tile —
+  // sector tiles fall through and do nothing.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleTileClick = (params: any) => {
+    if (!Array.isArray(params?.treePathInfo) || params.treePathInfo.length < 3) return;
+    const url = yahooQuoteUrl(activeId, params.name);
+    if (url) window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const option: any = {
@@ -123,6 +135,7 @@ export default function MarketHeatmap() {
               <span style="color:#9590b8;font-size:10px;font-weight:600;letter-spacing:0.04em">1W</span>
             </div>
             <div style="color:#9590b8;font-size:10px;margin-top:2px">Index weight: ${val}%</div>
+            ${stock ? `<div style="color:#7c3aed;font-size:10px;margin-top:4px;font-weight:600">Click to open on Yahoo Finance ↗</div>` : ""}
           </div>`;
       },
     },
@@ -188,7 +201,7 @@ export default function MarketHeatmap() {
     <SciFiCard glow="cyan" cornerAccent>
       <CardHeader
         title="Market Heatmap"
-        subtitle={activeIndex.description}
+        subtitle={`${activeIndex.description} · click any tile for the full quote`}
         action={
           <div className="flex items-center gap-3 text-xs" style={{ fontFamily: FONT_MONO }}>
             <div className="flex items-center gap-1.5">
@@ -248,6 +261,7 @@ export default function MarketHeatmap() {
           option={option}
           style={{ height: 580 }}
           opts={{ renderer: "svg" }}
+          onEvents={{ click: handleTileClick }}
           notMerge
         />
       </div>
