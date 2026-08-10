@@ -388,9 +388,12 @@ if (patchEconomicIndicator("us-trade-balance", m.us_trade)) stats.macro++;
 if (patchEconomicIndicator("us-tax-receipts", m.us_tax)) stats.macro++;
 if (patchEconomicIndicator("ca-gdp", m.ca_gdp_growth)) stats.macro++;
 if (patchEconomicIndicator("us-retail-sales", m.us_retail)) stats.macro++;
-// US & Canada dashboard — 10Y yields from the bonds dump
-if (patchBondIndicator("us-10y", (fred.bonds || {}).us10y)) stats.macro++;
-if (patchBondIndicator("ca-10y", (boc.bonds || {}).ca10y)) stats.macro++;
+// US & Canada dashboard — 10Y yields. Feed these from the SAME merged candidate
+// the markets table uses, not the raw fred/boc dumps: those are one input to the
+// merge, so reading them directly put 4.69 (FRED, Aug 6) on /us-canada while the
+// markets table showed 4.66 (Yahoo, Aug 7) for the identical instrument.
+if (patchBondIndicator("us-10y", bondCandidates["United States"])) stats.macro++;
+if (patchBondIndicator("ca-10y", bondCandidates["Canada"])) stats.macro++;
 // US & Canada dashboard — Bank of Canada Valet cards
 const cm = boc.macro || {};
 if (patchEconomicIndicator("ca-policy-rate", cm.ca_policy_rate)) stats.macro++;
