@@ -19,6 +19,11 @@ let statcan = { macro: {} };
 try { statcan = JSON.parse(readFileSync(resolve(root, "src/lib/statcan-data.json"), "utf8")); } catch { /* not fetched */ }
 let bondsDump = { bonds: {} };
 try { bondsDump = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-data.json"), "utf8")); } catch { /* not fetched */ }
+// Committed, not a fetch cache — see the _README inside the file.
+let bondsManual = { bonds: {} };
+try { bondsManual = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-manual.json"), "utf8")); } catch { /* absent */ }
+
+const round3 = (n) => Math.round(n * 1000) / 1000;
 let src = readFileSync(dataPath, "utf8");
 
 const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt, bondsDump.fetchedAt]
@@ -161,6 +166,10 @@ for (const fx of yahoo.forex || []) {
 // ECB value sat unused in bonds-data.json, and Australia and South Africa were
 // never patched at all because FRED carries no series for them.
 const bondCandidates = {};
+// FRED's monthly series is the only one guaranteed to span 12+ months. Keep it
+// aside so a daily source with a short window (SARB holds well under a year)
+// can still render a full 12-point sparkline.
+const monthlyTrend = {};
 function considerBond(b, fallbackCadence) {
   // fred/boc dumps use `value`; bonds-data.json uses `yield`.
   const value = b.yield ?? b.value;
@@ -182,9 +191,50 @@ function considerBond(b, fallbackCadence) {
     trend: b.trend,
   };
 }
-for (const b of Object.values(fred.bonds || {}))  considerBond(b, "monthly");
+for (const b of Object.values(fred.bonds || {})) {
+  if (b?.country && Array.isArray(b.trend)) monthlyTrend[b.country] = b.trend;
+  considerBond(b, "monthly");
+}
 for (const b of Object.values(boc.bonds || {}))   considerBond(b, "daily");
 for (const b of Object.values(bondsDump.bonds || {})) considerBond(b, "daily");
+
+// Read-and-verify overlay (src/lib/bonds-manual.json) — the UK, India, South
+// Korea and Australia have no free machine-readable daily feed, so those values
+// are read from published pages during the refresh and cross-checked against a
+// second provider. Only the headline value is taken by hand; the 12-point
+// sparkline stays on the FRED monthly series and the 1M/1Y moves are recomputed
+// against it, so no history has to be transcribed.
+for (const m of Object.values(bondsManual.bonds || {})) {
+  const base = bondCandidates[m.country];
+  if (!base || m.value == null || !m.asOf) continue;
+  if (base.asOf >= m.asOf) continue;             // an automated feed is fresher — keep it
+  const monthly = Array.isArray(base.trend) ? base.trend : [];
+  // Append the fresh reading as the newest monthly point so the sparkline ends
+  // at the value actually shown, and measure 1M/1Y against that same series.
+  const trend = monthly.length ? [...monthly.slice(1), m.value] : undefined;
+  bondCandidates[m.country] = {
+    ...base,
+    value: m.value,
+    asOf: m.asOf,
+    source: m.source || base.source,
+    cadence: "daily",
+    trend,
+    dailyMove: base.dailyMove,
+    oneMonthMove: monthly.length ? round3(m.value - monthly[monthly.length - 1]) : base.oneMonthMove,
+    oneYearMove:  monthly.length ? round3(m.value - monthly[0])                  : base.oneYearMove,
+  };
+}
+
+// Top up any sparkline shorter than 12 points with the older monthly history,
+// so a daily feed with a short window doesn't render a stub chart.
+for (const b of Object.values(bondCandidates)) {
+  const have = Array.isArray(b.trend) ? b.trend : [];
+  const monthly = monthlyTrend[b.country] ?? [];
+  if (have.length < 12 && monthly.length) {
+    const need = 12 - have.length;
+    b.trend = [...monthly.slice(Math.max(0, monthly.length - need)), ...have].slice(-12);
+  }
+}
 
 for (const b of Object.values(bondCandidates)) {
   if (patchBondByCountry(b.country, {

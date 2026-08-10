@@ -1,0 +1,49 @@
+{
+  "_README": [
+    "Read-and-verify tier for sovereign 10Y yields. UNLIKE the other *-data.json",
+    "dumps this file is COMMITTED, not gitignored: no script can regenerate it.",
+    "It is written by Claude during the weekly refresh for the countries that have",
+    "no free machine-readable daily feed (see fetch-bonds.mjs header for why).",
+    "",
+    "Each entry needs a `source` actually read this run and a `crossCheck` from a",
+    "DIFFERENT provider. validate-bonds.mjs rejects the run if the two disagree by",
+    "more than 25bp, if asOf is stale, or if a value is implausible. Never copy a",
+    "value forward without re-reading it -- a stale number here is worse than the",
+    "monthly FRED fallback, because this tier overrides it and claims to be daily.",
+    "",
+    "Only the headline `value` comes from here. The 12-point sparkline stays on the",
+    "FRED monthly series, and 1M/1Y moves are recomputed against it in",
+    "patch-site-data.mjs, so no history has to be transcribed by hand."
+  ],
+  "readAt": "2026-08-09",
+  "bonds": {
+    "uk10y": {
+      "country": "United Kingdom",
+      "value": 4.924,
+      "asOf": "2026-08-07",
+      "source": "Investing.com UK 10Y",
+      "crossCheck": { "source": "Trading Economics UK 10Y", "value": 4.91 }
+    },
+    "in10y": {
+      "country": "India",
+      "value": 6.766,
+      "asOf": "2026-08-07",
+      "source": "Investing.com India 10Y",
+      "crossCheck": { "source": "Trading Economics India 10Y", "value": 6.78 }
+    },
+    "kr10y": {
+      "country": "South Korea",
+      "value": 4.198,
+      "asOf": "2026-08-07",
+      "source": "Investing.com South Korea 10Y",
+      "crossCheck": { "source": "Trading Economics South Korea 10Y", "value": 4.2 }
+    },
+    "au10y": {
+      "country": "Australia",
+      "value": 4.977,
+      "asOf": "2026-08-07",
+      "source": "Investing.com Australia 10Y",
+      "crossCheck": { "source": "Trading Economics Australia 10Y", "value": 4.98 }
+    }
+  }
+}

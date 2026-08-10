@@ -101,6 +101,27 @@ async function mofCsv(url) {
   return rows.length ? rows : null;
 }
 
+// ── South African Reserve Bank — daily closing yield on the R209 (6.25% 2036) ──
+// SARB's public WebIndicators API needs no key. R209 is the closest liquid line
+// to a 10Y point; its closing yield tracks the quoted SA 10Y benchmark to ~5bp.
+// (CMJD004A "10 years and longer" is an average across the long end and sits
+// ~13bp higher, so it is a worse proxy for a 10Y card.)
+async function sarbSouthAfrica10Y() {
+  // The bare endpoint returns only ~25 observations (about one month), which is
+  // not enough to build a 12-point monthly sparkline. The dated variant returns
+  // the full window it holds.
+  const today = new Date().toISOString().slice(0, 10);
+  const url = `https://custom.resbank.co.za/SarbWebApi/WebIndicators/Shared/GetTimeseriesObservations/MMRD709A/2023-01-01/${today}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+  if (!res.ok) return null;
+  const json = await res.json();
+  const rows = (Array.isArray(json) ? json : [])
+    .map(o => ({ date: String(o.Period ?? "").slice(0, 10), value: Number(o.Value) }))
+    .filter(r => /^\d{4}-\d{2}-\d{2}$/.test(r.date) && Number.isFinite(r.value))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  return rows.length ? rows : null;
+}
+
 // ── Bank of Canada Valet — daily GoC benchmark 10Y ───────────────────────────
 async function bocCanada10Y() {
   const url = "https://www.bankofcanada.ca/valet/observations/BD.CDN.10YR.DQ.YLD/json?recent=400";
@@ -239,24 +260,49 @@ const COUNTRIES = [
     sources: [{ label: "FRED IRLTLT01AUM156N", fn: () => fred("IRLTLT01AUM156N") }],
   },
   {
-    key: "za10y", country: "South Africa", flag: "🇿🇦", cadence: "monthly",
-    sources: [{ label: "FRED IRLTLT01ZAM156N", fn: () => fred("IRLTLT01ZAM156N") }],
+    key: "za10y", country: "South Africa", flag: "🇿🇦", cadence: "daily",
+    sources: [
+      { label: "SARB R209 closing yield",    fn: () => sarbSouthAfrica10Y() },
+      { label: "FRED IRLTLT01ZAM156N",       fn: () => fred("IRLTLT01ZAM156N") },
+    ],
+    // SARB's API caps at ~163 observations (~8 months), which is only 9 monthly
+    // points. FRED carries no ZA series in fred-data.json, so there is nothing
+    // downstream to pad from — backfill the older months here instead.
+    trendFallback: () => fred("IRLTLT01ZAM156N"),
   },
 ];
+
+// Fill a short sparkline with older monthly points from a fallback series.
+async function padTrend(bond, fallbackFn) {
+  if (!fallbackFn || bond.trend.length >= 12) return bond;
+  try {
+    const rows = await fallbackFn();
+    if (!rows?.length) return bond;
+    const byMonth = {};
+    for (const r of rows) {
+      const ym = r.date.slice(0, 7);
+      if (!byMonth[ym]) byMonth[ym] = r.value;
+    }
+    const older = Object.values(byMonth).slice(0, 24).reverse();
+    const need = 12 - bond.trend.length;
+    bond.trend = [...older.slice(Math.max(0, older.length - need)), ...bond.trend].slice(-12);
+  } catch { /* keep the short trend */ }
+  return bond;
+}
 
 async function main() {
   console.log("Fetching sovereign 10Y bond yields (Yahoo · BoC · ECB · MoF · FRED)...\n");
   const bonds = {};
   const failed = [];
 
-  for (const { key, country, flag, sources, cadence } of COUNTRIES) {
+  for (const { key, country, flag, sources, cadence, trendFallback } of COUNTRIES) {
     process.stdout.write(`  ${country.padEnd(18)} `);
     let found = false;
     for (const { label, fn } of sources) {
       try {
         const rows = await fn();
         if (rows?.length) {
-          const bond = buildBond(rows, country, flag, label, cadence);
+          const bond = await padTrend(buildBond(rows, country, flag, label, cadence), trendFallback);
           bonds[key] = bond;
           process.stdout.write(`✓ ${cadence.padEnd(7)} [${label}]  ${bond.yield.toFixed(3)}%  (${bond.asOf})\n`);
           found = true;
