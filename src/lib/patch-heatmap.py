@@ -87,21 +87,24 @@ TSX = {
     "Real Estate": [("CAR.UN",0.6),("REI.UN",0.5)],
 }
 
+# FTSE 100 — full current constituent list (LSEG membership as at 2026-06-19).
+# Weights are each name's share of the combined market cap of the 100, computed
+# from Yahoo marketCap and normalised to GBP, NOT hand-tuned. FTSE's own weights
+# are free-float adjusted; float runs 92-96% across these names so relative
+# ordering is unaffected, but treat these as approximate — they set tile area only.
+# Must stay in sync with the ticker list in fetch-heatmap.py.
 FTSE = {
-    "Energy": [("SHEL",8.0),("BP",4.0)],
-    "Pharma": [("AZN",7.5),("GSK",4.0)],
-    "Materials": [("RIO",3.5),("BHP",3.0),("AAL",1.5),("GLEN",2.5),("ANTO",0.8),("CRH",2.5)],
-    "Financials": [("HSBA",6.0),("LLOY",2.5),("BARC",2.0),("NWG",1.8),("STAN",1.5),
-                   ("PRU",2.0),("LSE",2.0),("LGEN",1.0),("AV.",1.2),("III",1.0)],
-    "Consumer Staples": [("ULVR",5.0),("DGE",3.0),("BATS",3.0),("IMB",1.2),("RKT",1.5),
-                         ("TSCO",2.0),("ABF",1.0),("CPG",1.8)],
-    "Industrials": [("BA.",2.5),("RR.",2.5),("EXPN",2.0),("FERG",2.2),("IHG",1.5),("MNG",0.6)],
-    "Telecom": [("VOD",1.8),("BT.A",1.0)],
-    "Utilities": [("NG.",2.5),("SVT",0.8),("UU.",0.7)],
-    "Consumer Disc.": [("NXT",1.2),("JD.",0.8),("WMH",0.5)],
-    "Real Estate": [("LAND",0.5),("BLND",0.5),("SGRO",0.7)],
-    "Technology": [("SGE",1.0),("AVST",0.4)],
-    "Healthcare": [("SN.",0.6),("HIK",0.5)],
+    "Energy": [("SHEL",6.49),("BP",2.86)],
+    "Materials": [("RIO",4.39),("GLEN",2.34),("AAL",1.54),("ANTO",1.41),("FRES",0.76),("EDV",0.35),("MTLN",0.22),("CRDA",0.16)],
+    "Industrials": [("RR.",4.53),("BA.",2.33),("EXPN",0.92),("IAG",0.7),("DPLM",0.37),("BNZL",0.33),("ITRK",0.32),("RTO",0.32),("SMIN",0.29),("IMI",0.27),("WEIR",0.25),("MRO",0.22),("BAB",0.21),("SPX",0.2),("DCC",0.2),("HWDN",0.16)],
+    "Consumer Disc.": [("NXT",0.64),("IHG",0.62),("GAW",0.22),("KGF",0.19),("JD.",0.16),("BTRW",0.16),("BRBY",0.15),("WTB",0.15),("PSN",0.13),("ENT",0.12)],
+    "Consumer Staples": [("ULVR",3.6),("BATS",3.41),("CPG",1.45),("DGE",1.43),("CCEP",1.26),("RKT",1.21),("TSCO",1.06),("IMB",0.76),("CCH",0.65),("ABF",0.53),("MKS",0.3),("SBRY",0.28)],
+    "Healthcare": [("AZN",6.61),("GSK",2.81),("HLN",1.17),("SN.",0.33),("CTEC",0.16)],
+    "Financials": [("HSBA",9.39),("BARC",2.49),("LLOY",2.4),("NWG",2.03),("STAN",1.74),("LSEG",1.55),("III",1.03),("PRU",0.93),("AV.",0.76),("LGEN",0.62),("SMT",0.54),("ADM",0.42),("SDLF",0.34),("SDR",0.33),("MNG",0.31),("BEZ",0.28),("PCT",0.26),("PSH",0.25),("FCIT",0.23),("STJ",0.21),("ICG",0.21),("HSX",0.21),("BGEO",0.19),("ALW",0.18),("ABDN",0.16),("IGG",0.16),("INVP",0.15)],
+    "Technology": [("HLMA",0.51),("SGE",0.34),("CCC",0.18)],
+    "Communication": [("REL",1.64),("VOD",1.0),("BT.A",0.7),("AAF",0.43),("INF",0.4),("PSON",0.26),("AUTO",0.15)],
+    "Utilities": [("NG.",2.16),("SSE",1.03),("UU.",0.38),("SVT",0.34),("CNA",0.25)],
+    "Real Estate": [("SGRO",0.47),("LAND",0.19),("BLND",0.16),("LMP",0.16),("BBOX",0.16)],
 }
 
 DAX = {

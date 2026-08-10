@@ -89,21 +89,22 @@ TSX = {
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# FTSE 100 — top UK constituents
+# FTSE 100 — full current constituent list (LSEG membership as at 2026-06-19),
 # ──────────────────────────────────────────────────────────────────────────────
+# on the same 11 GICS-style sectors as the S&P 500 / NASDAQ 100 heatmaps.
+# Must stay in sync with the weighted catalogue in patch-heatmap.py.
 FTSE = {
     "Energy": ["SHEL","BP"],
-    "Pharma": ["AZN","GSK"],
-    "Materials": ["RIO","BHP","AAL","GLEN","ANTO","CRH"],
-    "Financials": ["HSBA","LLOY","BARC","NWG","STAN","PRU","LSE","LGEN","AV.","III"],
-    "Consumer Staples": ["ULVR","DGE","BATS","IMB","RKT","TSCO","ABF","CPG"],
-    "Industrials": ["BA.","RR.","EXPN","FERG","IHG","MNG"],
-    "Telecom": ["VOD","BT.A"],
-    "Utilities": ["NG.","SVT","UU."],
-    "Consumer Disc.": ["NXT","JD.","WMH"],
-    "Real Estate": ["LAND","BLND","SGRO"],
-    "Technology": ["SGE","AVST"],
-    "Healthcare": ["SN.","HIK"],
+    "Materials": ["RIO","GLEN","AAL","ANTO","FRES","EDV","MTLN","CRDA"],
+    "Industrials": ["RR.","BA.","EXPN","IAG","DPLM","BNZL","ITRK","RTO","SMIN","IMI","WEIR","MRO","BAB","SPX","DCC","HWDN"],
+    "Consumer Disc.": ["NXT","IHG","GAW","KGF","JD.","BTRW","BRBY","WTB","PSN","ENT"],
+    "Consumer Staples": ["ULVR","BATS","CPG","DGE","CCEP","RKT","TSCO","IMB","CCH","ABF","MKS","SBRY"],
+    "Healthcare": ["AZN","GSK","HLN","SN.","CTEC"],
+    "Financials": ["HSBA","BARC","LLOY","NWG","STAN","LSEG","III","PRU","AV.","LGEN","SMT","ADM","SDLF","SDR","MNG","BEZ","PCT","PSH","FCIT","STJ","ICG","HSX","BGEO","ALW","ABDN","IGG","INVP"],
+    "Technology": ["HLMA","SGE","CCC"],
+    "Communication": ["REL","VOD","BT.A","AAF","INF","PSON","AUTO"],
+    "Utilities": ["NG.","SSE","UU.","SVT","CNA"],
+    "Real Estate": ["SGRO","LAND","BLND","LMP","BBOX"],
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -243,7 +244,6 @@ def yahoo_tsx(t):
 
 FTSE_OVERRIDES = {
     "BT.A": "BT-A.L",   # redundant with the rule below; kept as a regression guard
-    "LSE":  "LSEG.L",   # London Stock Exchange Group trades as LSEG, not LSE
 }
 def yahoo_ftse(t):
     if t in FTSE_OVERRIDES: return FTSE_OVERRIDES[t]
