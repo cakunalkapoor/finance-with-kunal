@@ -17,9 +17,11 @@ let boc = { macro: {} };
 try { boc = JSON.parse(readFileSync(resolve(root, "src/lib/boc-data.json"), "utf8")); } catch { /* not fetched */ }
 let statcan = { macro: {} };
 try { statcan = JSON.parse(readFileSync(resolve(root, "src/lib/statcan-data.json"), "utf8")); } catch { /* not fetched */ }
+let bondsDump = { bonds: {} };
+try { bondsDump = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-data.json"), "utf8")); } catch { /* not fetched */ }
 let src = readFileSync(dataPath, "utf8");
 
-const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt]
+const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt, bondsDump.fetchedAt]
   .map((value) => Date.parse(value))
   .filter(Number.isFinite);
 if (fetchedTimes.length) {
@@ -150,14 +152,51 @@ for (const fx of yahoo.forex || []) {
   })) stats.forex++;
 }
 
-// BONDS — FRED bonds dump + Bank of Canada 10Y (ca10y), keyed by us10y, ca10y, etc.
-for (const [, b] of Object.entries({ ...(fred.bonds || {}), ...(boc.bonds || {}) })) {
+// BONDS — three dumps can carry the same country, at very different vintages:
+//   bonds-data.json  purpose-built, daily where a free feed exists (US/CA/DE/JP)
+//   fred-data.json   OECD monthly, lags 1-3 months
+//   boc-data.json    Bank of Canada, daily
+// Take the FRESHEST observation per country. Previously this loop read only
+// fred+boc, so Germany was pinned to a ~2-month-old OECD print while the daily
+// ECB value sat unused in bonds-data.json, and Australia and South Africa were
+// never patched at all because FRED carries no series for them.
+const bondCandidates = {};
+function considerBond(b, fallbackCadence) {
+  // fred/boc dumps use `value`; bonds-data.json uses `yield`.
+  const value = b.yield ?? b.value;
+  if (!b?.country || value == null || !b.asOf) return;
+  const prev = bondCandidates[b.country];
+  // ISO dates compare lexically. Strict `>` so that on an equal vintage the
+  // LAST dump considered wins — bonds-data.json is applied last and is the only
+  // one carrying `source`/`cadence` labels for the UI.
+  if (prev && prev.asOf > b.asOf) return;
+  bondCandidates[b.country] = {
+    country: b.country,
+    value,
+    asOf: b.asOf,
+    source: b.source || "unknown",
+    cadence: b.cadence || fallbackCadence,
+    dailyMove: b.dailyMove,
+    oneMonthMove: b.oneMonthMove,
+    oneYearMove: b.oneYearMove,
+    trend: b.trend,
+  };
+}
+for (const b of Object.values(fred.bonds || {}))  considerBond(b, "monthly");
+for (const b of Object.values(boc.bonds || {}))   considerBond(b, "daily");
+for (const b of Object.values(bondsDump.bonds || {})) considerBond(b, "daily");
+
+for (const b of Object.values(bondCandidates)) {
   if (patchBondByCountry(b.country, {
     yield: b.value,
     dailyMove: b.dailyMove,
     oneMonthMove: b.oneMonthMove,
     oneYearMove: b.oneYearMove,
     trend: b.trend,
+    // patchObject passes strings through verbatim — quote them here.
+    asOf: `"${b.asOf}"`,
+    source: `"${b.source}"`,
+    cadence: `"${b.cadence}"`,
   })) stats.bond++;
 }
 

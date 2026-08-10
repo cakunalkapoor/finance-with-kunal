@@ -25,6 +25,15 @@ export interface BondYield {
   oneMonthMove: number;
   oneYearMove: number;
   trend: number[]; // 12-month normalized
+  /** Observation date of `yield` (YYYY-MM-DD). Surfaced in the UI: the UK, India
+   *  and South Korea have no free daily feed and sit on a monthly OECD series,
+   *  so a reader needs to see how old a number is. Kept current by
+   *  patch-site-data.mjs from the freshest available dump. */
+  asOf: string;
+  /** Provider label, e.g. "Japan MoF JGB 10Y". */
+  source: string;
+  /** "daily" where a live feed exists, "monthly" for the OECD fallback. */
+  cadence: "daily" | "monthly";
 }
 
 export interface Commodity {

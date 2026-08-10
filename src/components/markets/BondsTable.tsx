@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
-import { BOND_YIELDS } from "@/lib/site-data";
+import { BOND_YIELDS, DATA_UPDATED_AT } from "@/lib/site-data";
 import { INVESTING_BOND_URL } from "@/lib/external-links";
 import { getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
@@ -36,12 +36,36 @@ function YieldTrendChart({ data, positive }: { data: number[]; positive: boolean
   );
 }
 
+// The UK, India and South Korea have no free daily yield feed and sit on FRED's
+// monthly OECD series, which can lag by 1-3 months. Rather than let a stale
+// number pass as current, every row shows the observation date, and anything
+// older than a normal monthly publication cycle is called out.
+const STALE_AFTER_DAYS = 45;
+const REFRESHED_AT = new Date(DATA_UPDATED_AT).getTime();
+
+function asOfAgeDays(asOf: string): number {
+  const t = Date.parse(`${asOf}T00:00:00Z`);
+  if (!Number.isFinite(t) || !Number.isFinite(REFRESHED_AT)) return 0;
+  return Math.max(0, Math.round((REFRESHED_AT - t) / 86_400_000));
+}
+
+function formatAsOf(asOf: string): string {
+  const [y, m, d] = asOf.split("-").map(Number);
+  if (!y || !m || !d) return asOf;
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 export default function BondsTable() {
   return (
     <SciFiCard>
       <CardHeader
         title="Government Bond Yields"
-        subtitle="10-Year Benchmark Rates · click a country for the full yield curve on Investing.com"
+        subtitle="10-Year Benchmark Rates · each row shows its observation date; ⚠ marks a monthly series still awaiting its next print · click a country for the full curve on Investing.com"
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
@@ -122,6 +146,23 @@ export default function BondsTable() {
                   >
                     {bond.yield.toFixed(2)}%
                   </span>
+                  {(() => {
+                    const age = asOfAgeDays(bond.asOf);
+                    const stale = age > STALE_AFTER_DAYS;
+                    return (
+                      <div
+                        title={`${bond.source} · ${bond.cadence} series · observed ${formatAsOf(bond.asOf)}`}
+                        style={{
+                          color: stale ? "#d97706" : "var(--color-text-muted)",
+                          fontFamily: FONT_MONO,
+                          fontSize: "10px",
+                          marginTop: "2px",
+                        }}
+                      >
+                        {stale ? "⚠ " : ""}{formatAsOf(bond.asOf)}
+                      </div>
+                    );
+                  })()}
                 </td>
 
                 {[bond.dailyMove, bond.oneMonthMove, bond.oneYearMove].map((v, idx) => (
