@@ -241,10 +241,19 @@ def yahoo_tsx(t):
     if t in TSX_OVERRIDES: return TSX_OVERRIDES[t]
     return t.replace(".", "-") + ".TO"
 
-FTSE_OVERRIDES = {"BT.A": "BT-A.L"}
+FTSE_OVERRIDES = {
+    "BT.A": "BT-A.L",   # redundant with the rule below; kept as a regression guard
+    "LSE":  "LSEG.L",   # London Stock Exchange Group trades as LSEG, not LSE
+}
 def yahoo_ftse(t):
     if t in FTSE_OVERRIDES: return FTSE_OVERRIDES[t]
-    return t.replace(".", "-") + ".L"
+    # Two kinds of dot on the LSE, handled differently by Yahoo:
+    #   TRAILING dot = ordinary-line marker — Yahoo DROPS it:  BA. -> BA.L
+    #   INTERIOR dot = share class          — Yahoo dashes it: BT.A -> BT-A.L
+    # Dashing both (the old `t.replace(".", "-")`) produced BA-.L, AV-.L and so
+    # on, which Yahoo does not carry, leaving seven FTSE tiles permanently
+    # priceless. Strip the trailing marker first, then dash any interior dot.
+    return t.rstrip(".").replace(".", "-") + ".L"
 
 def yahoo_de(t):  return t + ".DE"
 def yahoo_pa(t):  return t + ".PA"
