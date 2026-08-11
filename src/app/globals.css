@@ -187,7 +187,7 @@ body {
   100% { transform: translateX(-50%); }
 }
 .ticker-track {
-  animation: ticker-slide 60s linear infinite;
+  animation: ticker-slide 35s linear infinite;
 }
 .ticker-track:hover {
   animation-play-state: paused;
