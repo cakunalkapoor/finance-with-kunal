@@ -1,9 +1,9 @@
 import MarketTicker from "@/components/markets/MarketTicker";
 import EquityMarketsTable from "@/components/markets/EquityMarketsTable";
 import BondsTable from "@/components/markets/BondsTable";
-import CommoditiesGrid from "@/components/markets/CommoditiesGrid";
-import CryptoGrid from "@/components/markets/CryptoGrid";
-import ForexGrid from "@/components/markets/ForexGrid";
+import CommoditiesTable from "@/components/markets/CommoditiesTable";
+import CryptoTable from "@/components/markets/CryptoTable";
+import ForexTable from "@/components/markets/ForexTable";
 import ETFTable from "@/components/markets/ETFTable";
 import MarketHeatmap from "@/components/markets/MarketHeatmap";
 import BriefingHero from "@/components/ui/BriefingHero";
@@ -33,7 +33,7 @@ export default function MarketsPage() {
       <BreadcrumbJsonLd items={[{ name: "Markets", path: "/markets" }]} />
       <MarketTicker />
 
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-5">
         <BriefingHero
           eyebrow="Markets briefing"
           title="See the market before chasing the move."
@@ -49,30 +49,42 @@ export default function MarketsPage() {
         <Reveal>
           <MarketHeatmap />
         </Reveal>
-        <Reveal>
-          <EquityMarketsTable />
-        </Reveal>
-        {/* Full width: 9 columns across two listing groups doesn't fit a half column. */}
-        <Reveal>
-          <ETFTable />
-        </Reveal>
+        {/* Two independently-packing columns rather than three two-up rows.
+            In a row grid every row is as tall as its taller card, so the
+            shorter one leaves dead space beneath it — ETFs (1612px) next to
+            Commodities (827px) left ~780px empty. Here each column stacks
+            flush and the split is chosen so both finish within ~100px of each
+            other: 2843px left vs 2744px right.
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-          <Reveal>
-            <BondsTable />
-          </Reveal>
-          <Reveal delay={100}>
-            <CommoditiesGrid />
-          </Reveal>
-        </div>
+            `items-start` is what stops the grid stretching a column to match
+            its neighbour. Below xl the two columns stack, giving the reading
+            order equities → ETFs → rates → commodities → FX → crypto.
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-          <Reveal>
-            <ForexGrid />
-          </Reveal>
-          <Reveal delay={100}>
-            <CryptoGrid />
-          </Reveal>
+            Re-balance if a table's row count changes materially. */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 items-start">
+          <div className="space-y-5">
+            <Reveal>
+              <EquityMarketsTable />
+            </Reveal>
+            <Reveal>
+              <ETFTable />
+            </Reveal>
+          </div>
+
+          <div className="space-y-5">
+            <Reveal delay={100}>
+              <BondsTable />
+            </Reveal>
+            <Reveal delay={100}>
+              <CommoditiesTable />
+            </Reveal>
+            <Reveal>
+              <ForexTable />
+            </Reveal>
+            <Reveal>
+              <CryptoTable />
+            </Reveal>
+          </div>
         </div>
       </div>
     </>

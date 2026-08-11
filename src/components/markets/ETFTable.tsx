@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
 import { ETFS } from "@/lib/site-data";
 import { yahooEtfUrl } from "@/lib/external-links";
@@ -14,96 +13,10 @@ import {
   type ChartView,
 } from "@/lib/chart-window";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
+import TrendSparkline from "@/components/markets/TrendSparkline";
+import { ChangeStack } from "@/components/markets/StatStack";
 import type { CSSProperties } from "react";
-import type { EChartsOption } from "echarts";
 import type { ETF } from "@/types";
-
-const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
-
-function SparklineChart({
-  data,
-  view,
-  label,
-}: {
-  data: number[];
-  view: ChartView;
-  label: string;
-}) {
-  const slice = sliceFor(view, data);
-  const min = Math.min(...slice);
-  const max = Math.max(...slice);
-  // Colour follows the trend of the *visible* window, so it stays truthful when
-  // the reader toggles between YTD and 3Y.
-  const positive = slice[slice.length - 1] >= slice[0];
-  const color = positive ? "#34d399" : "#fb7185";
-
-  const option: EChartsOption = {
-    animation: false,
-    // Room at the bottom for the axis labels that say WHEN this line is.
-    grid: { top: 3, bottom: 16, left: 2, right: 2 },
-    tooltip: {
-      trigger: "axis",
-      confine: true,
-      backgroundColor: "rgba(20,22,18,0.94)",
-      borderWidth: 0,
-      textStyle: { color: "#f2f1eb", fontSize: 11 },
-      // Points are weekly, so the date is good to about a week — label the
-      // month, never a specific day.
-      formatter: (params) => {
-        const p = Array.isArray(params) ? params[0] : params;
-        const i = Number(p.dataIndex);
-        return `${pointLabel(i, slice.length)}<br/><strong>${Number(p.value).toFixed(2)}</strong>`;
-      },
-    },
-    xAxis: {
-      type: "category",
-      data: slice.map((_, i) => pointLabel(i, slice.length)),
-      axisLine: { show: false },
-      axisTick: { show: false },
-      // Two anchors only — first and last. More would not fit at this size.
-      axisLabel: {
-        show: true,
-        showMinLabel: true,
-        showMaxLabel: true,
-        interval: slice.length - 2,
-        color: "#8a8a7d",
-        fontSize: 9,
-        fontFamily: "monospace",
-        margin: 6,
-      },
-    },
-    yAxis: { type: "value", show: false, min: min * 0.997, max: max * 1.003 },
-    series: [
-      {
-        type: "line",
-        data: slice,
-        smooth: true,
-        symbol: "none",
-        lineStyle: { width: 1.5, color },
-        areaStyle: {
-          color: {
-            type: "linear",
-            x: 0, y: 0, x2: 0, y2: 1,
-            colorStops: [
-              { offset: 0, color: positive ? "rgba(52,211,153,0.16)" : "rgba(251,113,133,0.16)" },
-              { offset: 1, color: "rgba(0,0,0,0)" },
-            ],
-          },
-        },
-      },
-    ],
-  };
-  return (
-    <ReactECharts
-      option={option}
-      // Fills the chart column rather than sitting at a fixed 100px, which
-      // otherwise left ~135px of dead space at the right edge of every row.
-      style={{ height: 54, width: "100%", minWidth: 100 }}
-      opts={{ renderer: "svg" }}
-      aria-label={label}
-    />
-  );
-}
 
 const TH_STYLE: CSSProperties = {
   color: "var(--color-text-muted)",
@@ -119,7 +32,7 @@ const GROUPS: { listing: ETF["listing"]; label: string; flag: string }[] = [
   { listing: "United States", label: "Listed in the US", flag: "🇺🇸" },
 ];
 
-const COLUMN_COUNT = 7;
+const COLUMN_COUNT = 4;
 
 export default function ETFTable() {
   const [chartView, setChartView] = useState<ChartView>("YTD");
@@ -131,18 +44,15 @@ export default function ETFTable() {
         subtitle="16 funds · grouped by exposure, not ranked · hover a chart for the value at that point · click a ticker for the full quote on Yahoo Finance"
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 900 }}>
-          {/* Explicit split: with only 7 columns the browser hands all the slack
-              to the last one, which parked a 100px sparkline in a 236px cell.
-              minWidth above keeps the columns readable before the card scrolls. */}
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 500 }}>
+          {/* Sized to sit two-up with the equity table. Exposure moves into the
+              fund cell and the three periods share one cell, so a half-width
+              card fits without losing anything. */}
           <colgroup>
-            <col style={{ width: "23%" }} />
-            <col style={{ width: "15%" }} />
-            <col style={{ width: "13%" }} />
-            <col style={{ width: "8%" }} />
-            <col style={{ width: "8%" }} />
-            <col style={{ width: "8%" }} />
-            <col style={{ width: "25%" }} />
+            <col style={{ width: "34%" }} />
+            <col style={{ width: "19%" }} />
+            <col style={{ width: "17%" }} />
+            <col style={{ width: "30%" }} />
           </colgroup>
           <thead>
             <tr
@@ -151,7 +61,7 @@ export default function ETFTable() {
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
-              {["Fund", "Exposure", "Last", "1W", "1M", "YTD"].map((h) => (
+              {["Fund", "Last", "Change"].map((h) => (
                 <th
                   key={h}
                   className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase whitespace-nowrap"
@@ -262,10 +172,18 @@ export default function ETFTable() {
                       >
                         {etf.name}
                       </div>
-                    </td>
-
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <span style={{ color: "var(--color-text-secondary)" }}>{etf.exposure}</span>
+                      <div className="mt-1 flex flex-wrap items-center gap-1">
+                        <span
+                          className="rounded px-1 py-0.5"
+                          style={{
+                            background: "rgba(167,139,250,0.10)",
+                            color: "var(--color-text-secondary)",
+                            fontFamily: FONT_MONO,
+                            fontSize: "9px",
+                          }}
+                        >
+                          {etf.exposure}
+                        </span>
                       {etf.hedged && (
                         <span
                           className="ml-1.5 rounded px-1 py-0.5"
@@ -280,6 +198,7 @@ export default function ETFTable() {
                           HEDGED
                         </span>
                       )}
+                      </div>
                     </td>
 
                     <td className="px-4 py-3 whitespace-nowrap">
@@ -311,23 +230,27 @@ export default function ETFTable() {
                       </div>
                     </td>
 
-                    {[etf.weekChange, etf.monthChange, etf.ytdChange].map((v, idx) => (
-                      <td key={idx} className="px-4 py-3">
-                        <span
-                          className={`font-semibold ${getChangeColor(v)}`}
-                          style={{ fontFamily: FONT_MONO }}
-                        >
-                          {formatChange(v)}
-                        </span>
-                      </td>
-                    ))}
+                    <td className="px-4 py-3">
+                      <ChangeStack
+                        items={[
+                          { label: "1W", value: etf.weekChange },
+                          { label: "1M", value: etf.monthChange },
+                          { label: "YTD", value: etf.ytdChange },
+                        ]}
+                      />
+                    </td>
 
                     <td className="px-4 py-3">
-                      <SparklineChart
-                        data={etf.sparkline}
-                        view={chartView}
-                        label={`${etf.ticker} price, ${windowLabel(chartView)}`}
-                      />
+                      {(() => {
+                        const slice = sliceFor(chartView, etf.sparkline);
+                        return (
+                          <TrendSparkline
+                            values={slice}
+                            labels={slice.map((_, j) => pointLabel(j, slice.length))}
+                            ariaLabel={`${etf.ticker} price, ${windowLabel(chartView)}`}
+                          />
+                        );
+                      })()}
                     </td>
                   </tr>
                 )),

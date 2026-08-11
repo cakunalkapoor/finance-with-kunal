@@ -1,40 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
 import { BOND_YIELDS, DATA_UPDATED_AT } from "@/lib/site-data";
 import { INVESTING_BOND_URL } from "@/lib/external-links";
-import { getChangeColor, FONT_MONO } from "@/lib/utils";
+import { monthlyPointLabel, monthlyWindowLabel } from "@/lib/chart-window";
+import { FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
-import type { EChartsOption } from "echarts";
-
-const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
-
-function YieldTrendChart({ data, positive }: { data: number[]; positive: boolean }) {
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const option: EChartsOption = {
-    animation: false,
-    grid: { top: 2, bottom: 2, left: 2, right: 2 },
-    xAxis: { type: "category", show: false, data: data.map((_, i) => i) },
-    yAxis: { type: "value", show: false, min: min - 0.05, max: max + 0.05 },
-    series: [
-      {
-        type: "line",
-        data,
-        smooth: true,
-        symbol: "none",
-        lineStyle: {
-          width: 1.5,
-          color: positive ? "#34d399" : "#fb7185",
-        },
-      },
-    ],
-  };
-  return (
-    <ReactECharts option={option} style={{ height: 32, width: 80 }} opts={{ renderer: "svg" }} />
-  );
-}
+import TrendSparkline from "@/components/markets/TrendSparkline";
+import { ChangeStack } from "@/components/markets/StatStack";
 
 // The UK, India and South Korea have no free daily yield feed and sit on FRED's
 // monthly OECD series, which can lag by 1-3 months. Rather than let a stale
@@ -68,7 +41,15 @@ export default function BondsTable() {
         subtitle="10-Year Benchmark Rates · each row shows its observation date; ⚠ marks a monthly series still awaiting its next print · click a country for the full curve on Investing.com"
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 440 }}>
+          {/* Sized to sit two-up. 1D/1M/1Y move into one grouped cell rather
+              than being dropped — see StatStack. */}
+          <colgroup>
+            <col style={{ width: "31%" }} />
+            <col style={{ width: "20%" }} />
+            <col style={{ width: "17%" }} />
+            <col style={{ width: "32%" }} />
+          </colgroup>
           <thead>
             <tr
               style={{
@@ -76,7 +57,7 @@ export default function BondsTable() {
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
-              {["Country", "Yield", "1D", "1M", "1Y", "Trend"].map((h) => (
+              {["Country", "Yield", "Move"].map((h) => (
                 <th
                   key={h}
                   className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase"
@@ -90,6 +71,30 @@ export default function BondsTable() {
                   {h}
                 </th>
               ))}
+              <th
+                className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase"
+                style={{
+                  color: "var(--color-text-muted)",
+                  fontFamily: FONT_MONO,
+                  fontSize: "10px",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                <div>Trend</div>
+                {/* No view toggle here: every bond carries exactly 12 monthly
+                    points, so there is only one window to show. */}
+                <div
+                  style={{
+                    fontSize: "9px",
+                    letterSpacing: "0.05em",
+                    opacity: 0.7,
+                    marginTop: "1px",
+                    textTransform: "none",
+                  }}
+                >
+                  12 months, monthly
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -165,21 +170,32 @@ export default function BondsTable() {
                   })()}
                 </td>
 
-                {[bond.dailyMove, bond.oneMonthMove, bond.oneYearMove].map((v, idx) => (
-                  <td key={idx} className="px-4 py-3">
-                    <span
-                      className={getChangeColor(v, false)}
-                      style={{ fontFamily: FONT_MONO }}
-                    >
-                      {v >= 0 ? "+" : ""}{v.toFixed(2)}%
-                    </span>
-                  </td>
-                ))}
+                <td className="px-4 py-3">
+                  {/* Yield MOVES are percentage points, and a falling yield is
+                      the friendly direction — hence raw + inverted colouring. */}
+                  <ChangeStack
+                    raw
+                    items={[
+                      { label: "1D", value: bond.dailyMove },
+                      { label: "1M", value: bond.oneMonthMove },
+                      { label: "1Y", value: bond.oneYearMove },
+                    ]}
+                  />
+                </td>
 
                 <td className="px-4 py-3">
-                  <YieldTrendChart
-                    data={bond.trend}
-                    positive={bond.oneYearMove < 0}
+                  {/* Each row's trend ends at its OWN asOf, which differs by a
+                      couple of days across sources — so labels come from the
+                      row, not from the site-wide refresh date. */}
+                  <TrendSparkline
+                    values={bond.trend}
+                    labels={bond.trend.map((_, j) =>
+                      monthlyPointLabel(j, bond.trend.length, bond.asOf),
+                    )}
+                    ariaLabel={`${bond.country} 10Y yield, ${monthlyWindowLabel(bond.trend.length, bond.asOf)}`}
+                    format={(n) => `${n.toFixed(2)}%`}
+                    // A falling yield is the "good" direction for bond prices.
+                    positiveIsUp={false}
                   />
                 </td>
               </tr>

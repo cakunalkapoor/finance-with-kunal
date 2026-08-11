@@ -137,7 +137,7 @@ for (const idx of yahoo.indices || []) {
 for (const c of yahoo.commodities || []) {
   if (patchBySymbol(c.symbol, {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
-    monthChange: c.monthChange, ytdChange: c.ytdChange,
+    monthChange: c.monthChange, ytdChange: c.ytdChange, sparkline: c.sparkline,
   })) stats.commodity++;
 }
 
@@ -145,7 +145,7 @@ for (const c of yahoo.commodities || []) {
 for (const c of yahoo.crypto || []) {
   if (patchBySymbol(c.symbol, {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
-    monthChange: c.monthChange, ytdChange: c.ytdChange,
+    monthChange: c.monthChange, ytdChange: c.ytdChange, sparkline: c.sparkline,
   })) stats.crypto++;
 }
 
@@ -161,7 +161,7 @@ for (const e of yahoo.etfs || []) {
 for (const fx of yahoo.forex || []) {
   if (patchBySymbol(fx.symbol, {
     value: fx.value, dailyChange: fx.dailyChange, weekChange: fx.weekChange,
-    monthChange: fx.monthChange, ytdChange: fx.ytdChange,
+    monthChange: fx.monthChange, ytdChange: fx.ytdChange, sparkline: fx.sparkline,
   })) stats.forex++;
 }
 

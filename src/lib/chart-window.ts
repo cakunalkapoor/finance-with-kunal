@@ -60,6 +60,30 @@ export function pointLabel(i: number, length: number): string {
   return MONTH_YEAR.format(pointDate(i, length));
 }
 
+/* ── Monthly series (bond yield trends) ────────────────────────────────────
+   BOND_YIELDS.trend is one point per calendar month ending at that row's own
+   `asOf`, which differs per country by a day or two — and by months for the
+   OECD monthly series. So bond labels are derived per row from its asOf,
+   never from the site-wide refresh date. */
+
+/** Date of point `i` in a monthly series of `length` ending at `asOf` (ISO). */
+export function monthlyPointDate(i: number, length: number, asOf: string): Date {
+  const end = new Date(`${asOf}T00:00:00Z`);
+  return new Date(
+    Date.UTC(end.getUTCFullYear(), end.getUTCMonth() - (length - 1 - i), 1),
+  );
+}
+
+export function monthlyPointLabel(i: number, length: number, asOf: string): string {
+  return MONTH_YEAR.format(monthlyPointDate(i, length, asOf));
+}
+
+/** "Sep 2025 – Aug 2026" for one row's monthly trend. */
+export function monthlyWindowLabel(length: number, asOf: string): string {
+  if (length < 2) return "";
+  return `${monthlyPointLabel(0, length, asOf)} – ${monthlyPointLabel(length - 1, length, asOf)}`;
+}
+
 /** "Jan – Aug 2026" / "Aug 2025 – Aug 2026" — the span the chart column covers,
  *  shown once in the header since every row shares the same window. */
 export function windowLabel(view: ChartView, total = 156): string {

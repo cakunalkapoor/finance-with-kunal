@@ -46,6 +46,8 @@ export interface Commodity {
   monthChange: number;
   ytdChange: number;
   icon: string;
+  /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
+  sparkline: number[];
 }
 
 export interface CryptoAsset {
@@ -57,6 +59,8 @@ export interface CryptoAsset {
   weekChange: number;
   monthChange: number;
   ytdChange: number;
+  /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
+  sparkline: number[];
 }
 
 export interface ETF {
@@ -91,6 +95,8 @@ export interface ForexRate {
   weekChange: number;
   monthChange: number;
   ytdChange: number;
+  /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
+  sparkline: number[];
 }
 
 export interface HeatmapSector {

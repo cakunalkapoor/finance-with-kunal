@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
 import { EQUITY_INDICES } from "@/lib/site-data";
 import { INVESTING_INDEX_URL } from "@/lib/external-links";
@@ -14,91 +13,8 @@ import {
   type ChartView,
 } from "@/lib/chart-window";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
-import type { EChartsOption } from "echarts";
-
-const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
-
-function SparklineChart({
-  data,
-  view,
-  label,
-}: {
-  data: number[];
-  view: ChartView;
-  label: string;
-}) {
-  const slice = sliceFor(view, data);
-  const min = Math.min(...slice);
-  const max = Math.max(...slice);
-  // Color follows the trend of the *visible* window, so it stays correct when
-  // the user toggles between YTD and 52W.
-  const positive = slice[slice.length - 1] >= slice[0];
-  const color = positive ? "#34d399" : "#fb7185";
-  const option: EChartsOption = {
-    animation: false,
-    // Room at the bottom for the axis labels that say WHEN this line is.
-    grid: { top: 3, bottom: 16, left: 2, right: 2 },
-    tooltip: {
-      trigger: "axis",
-      confine: true,
-      backgroundColor: "rgba(20,22,18,0.94)",
-      borderWidth: 0,
-      textStyle: { color: "#f2f1eb", fontSize: 11 },
-      // Weekly points — the date is good to about a week, so label the month.
-      formatter: (params) => {
-        const p = Array.isArray(params) ? params[0] : params;
-        const i = Number(p.dataIndex);
-        return `${pointLabel(i, slice.length)}<br/><strong>${formatNumber(Number(p.value), 2)}</strong>`;
-      },
-    },
-    xAxis: {
-      type: "category",
-      data: slice.map((_, i) => pointLabel(i, slice.length)),
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: {
-        show: true,
-        showMinLabel: true,
-        showMaxLabel: true,
-        interval: slice.length - 2,
-        color: "#8a8a7d",
-        fontSize: 9,
-        fontFamily: "monospace",
-        margin: 6,
-      },
-    },
-    yAxis: { type: "value", show: false, min: min * 0.997, max: max * 1.003 },
-    series: [
-      {
-        type: "line",
-        data: slice,
-        smooth: true,
-        symbol: "none",
-        lineStyle: { width: 1.5, color },
-        areaStyle: {
-          color: {
-            type: "linear",
-            x: 0, y: 0, x2: 0, y2: 1,
-            colorStops: [
-              { offset: 0, color: positive ? "rgba(52,211,153,0.16)" : "rgba(251,113,133,0.16)" },
-              { offset: 1, color: "rgba(0,0,0,0)" },
-            ],
-          },
-        },
-      },
-    ],
-  };
-  return (
-    <ReactECharts
-      option={option}
-      // Fills the chart column instead of a fixed 100px, so the table doesn't
-      // end in dead space — matches ETFTable.
-      style={{ height: 54, width: "100%", minWidth: 100 }}
-      opts={{ renderer: "svg" }}
-      aria-label={label}
-    />
-  );
-}
+import TrendSparkline from "@/components/markets/TrendSparkline";
+import { ChangeStack } from "@/components/markets/StatStack";
 
 // P/E cell — shows current P/E and % variance from 10-year average
 function PECell({ pe, pe10yAvg }: { pe: number; pe10yAvg: number }) {
@@ -120,7 +36,7 @@ function PECell({ pe, pe10yAvg }: { pe: number; pe10yAvg: number }) {
   }
 
   return (
-    <div className="flex flex-col gap-0.5 min-w-[80px]">
+    <div className="flex w-full min-w-0 flex-col gap-0.5">
       <div className="font-bold" style={{ fontFamily: FONT_MONO, color: "var(--color-text-primary)", fontSize: "12px" }}>
         {pe.toFixed(1)}x
       </div>
@@ -171,7 +87,7 @@ function RangeBar({ value, low, high }: { value: number; low: number; high: numb
   const fmt = (n: number) => formatNumber(n, n > 10000 ? 0 : 2);
 
   return (
-    <div className="flex flex-col gap-1 min-w-[110px]">
+    <div className="flex w-full min-w-0 flex-col gap-1">
       {/* High */}
       <div
         className="font-semibold"
@@ -240,7 +156,18 @@ export default function EquityMarketsTable() {
         subtitle="11 Major Indices · 30d realized volatility · click an index for full detail on Investing.com"
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 560 }}>
+          {/* Sized to sit two-up with the ETF table. Nine columns don't fit a
+              half-width card, so related metrics share a cell instead of being
+              dropped: periods in "Change", P/E + vol in "Valuation", and the
+              52W range under the price. */}
+          <colgroup>
+            <col style={{ width: "21%" }} />
+            <col style={{ width: "21%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "16%" }} />
+            <col style={{ width: "27%" }} />
+          </colgroup>
           <thead>
             <tr
               style={{
@@ -249,19 +176,15 @@ export default function EquityMarketsTable() {
               }}
             >
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>Index</th>
-              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>Last</th>
-              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>1W</th>
-              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>1M</th>
-              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>YTD</th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>
-                <div>VOL</div>
-                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>30d realized</div>
+                <div>Last</div>
+                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>52W range</div>
               </th>
+              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>Change</th>
               <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>
-                <div>P/E RATIO</div>
-                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>vs 10Y avg</div>
+                <div>Valuation</div>
+                <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>P/E vs 10Y · 30d vol</div>
               </th>
-              <th className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase" style={TH_STYLE}>52W Range</th>
 
               {/* Chart column with YTD / 52W toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
@@ -303,8 +226,6 @@ export default function EquityMarketsTable() {
 
           <tbody>
             {EQUITY_INDICES.map((idx, i) => {
-              const weekPos = idx.weekChange >= 0;
-              const ytdPos  = idx.ytdChange >= 0;
               return (
                 <tr
                   key={idx.symbol}
@@ -341,65 +262,51 @@ export default function EquityMarketsTable() {
                     </div>
                   </td>
 
-                  {/* Last */}
+                  {/* Last, with the 52W range bar tucked underneath */}
                   <td className="px-4 py-3">
                     <div className="font-bold" style={{ fontFamily: FONT_MONO, color: "var(--color-text-primary)" }}>
                       {formatNumber(idx.value, idx.value > 10000 ? 0 : 2)}
                     </div>
                     <div className={getChangeColor(idx.dailyChange)} style={{ fontSize: "10px", fontFamily: FONT_MONO }}>
-                      {formatChange(idx.dailyChange)}
+                      {formatChange(idx.dailyChange)} today
+                    </div>
+                    <div className="mt-1.5">
+                      <RangeBar value={idx.value} low={idx.low52w} high={idx.high52w} />
                     </div>
                   </td>
 
-                  {/* 1W */}
+                  {/* 1W / 1M / YTD, grouped */}
                   <td className="px-4 py-3">
-                    <span
-                      className={`px-2 py-0.5 rounded text-xs font-semibold ${getChangeColor(idx.weekChange)}`}
-                      style={{ background: weekPos ? "rgba(52,211,153,0.11)" : "rgba(251,113,133,0.11)", fontFamily: FONT_MONO }}
-                    >
-                      {formatChange(idx.weekChange)}
-                    </span>
+                    <ChangeStack
+                      items={[
+                        { label: "1W", value: idx.weekChange },
+                        { label: "1M", value: idx.monthChange },
+                        { label: "YTD", value: idx.ytdChange },
+                      ]}
+                    />
                   </td>
 
-                  {/* 1M */}
+                  {/* Valuation: P/E against its 10Y average, plus realized vol */}
                   <td className="px-4 py-3">
-                    <span className={getChangeColor(idx.monthChange)} style={{ fontFamily: FONT_MONO }}>
-                      {formatChange(idx.monthChange)}
-                    </span>
-                  </td>
-
-                  {/* YTD */}
-                  <td className="px-4 py-3">
-                    <span
-                      className={`px-2 py-0.5 rounded text-xs font-semibold ${getChangeColor(idx.ytdChange)}`}
-                      style={{ background: ytdPos ? "rgba(52,211,153,0.11)" : "rgba(251,113,133,0.11)", fontFamily: FONT_MONO }}
-                    >
-                      {formatChange(idx.ytdChange)}
-                    </span>
-                  </td>
-
-                  {/* 30-day realized volatility, computed from daily log-returns */}
-                  <td className="px-4 py-3">
-                    <VolCell value={idx.realizedVol} />
-                  </td>
-
-                  {/* P/E Ratio */}
-                  <td className="px-4 py-3">
-                    <PECell pe={idx.pe} pe10yAvg={idx.pe10yAvg} />
-                  </td>
-
-                  {/* 52W Range */}
-                  <td className="px-4 py-3">
-                    <RangeBar value={idx.value} low={idx.low52w} high={idx.high52w} />
+                    <div className="flex flex-col gap-1.5">
+                      <PECell pe={idx.pe} pe10yAvg={idx.pe10yAvg} />
+                      <VolCell value={idx.realizedVol} />
+                    </div>
                   </td>
 
                   {/* Chart */}
                   <td className="px-4 py-3">
-                    <SparklineChart
-                      data={idx.sparkline}
-                      view={chartView}
-                      label={`${idx.name} price, ${windowLabel(chartView)}`}
-                    />
+                    {(() => {
+                      const slice = sliceFor(chartView, idx.sparkline);
+                      return (
+                        <TrendSparkline
+                          values={slice}
+                          labels={slice.map((_, j) => pointLabel(j, slice.length))}
+                          ariaLabel={`${idx.name} price, ${windowLabel(chartView)}`}
+                          format={(n) => formatNumber(n, 2)}
+                        />
+                      );
+                    })()}
                   </td>
                 </tr>
               );
