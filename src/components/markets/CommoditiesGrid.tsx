@@ -1,6 +1,8 @@
 import { COMMODITIES } from "@/lib/site-data";
+import { INVESTING_COMMODITY_URL } from "@/lib/external-links";
 import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
+import ExternalTile, { TileName } from "@/components/markets/ExternalTile";
 
 export default function CommoditiesGrid() {
   return (
@@ -9,15 +11,9 @@ export default function CommoditiesGrid() {
       <div className="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-3 gap-3">
         {COMMODITIES.map((c) => {
           const pos = c.dailyChange >= 0;
+          const href = INVESTING_COMMODITY_URL[c.symbol];
           return (
-            <div
-              key={c.symbol}
-              className="rounded-lg p-3 flex flex-col gap-1 transition-all duration-200 hover:scale-[1.02]"
-              style={{
-                background: "rgba(124,58,237,0.025)",
-                border: "1px solid var(--color-space-border)",
-              }}
-            >
+            <ExternalTile key={c.symbol} href={href} label={c.name} className="p-3 gap-1">
               <div className="flex items-center justify-between">
                 <span className="text-xl">{c.icon}</span>
                 <span
@@ -46,12 +42,7 @@ export default function CommoditiesGrid() {
                   : `$${formatNumber(c.value)}`}
               </div>
 
-              <div
-                className="font-semibold text-sm"
-                style={{ color: "var(--color-text-secondary)" }}
-              >
-                {c.name}
-              </div>
+              <TileName linked={Boolean(href)}>{c.name}</TileName>
 
               <div
                 className="text-xs"
@@ -88,7 +79,7 @@ export default function CommoditiesGrid() {
                   </div>
                 ))}
               </div>
-            </div>
+            </ExternalTile>
           );
         })}
       </div>

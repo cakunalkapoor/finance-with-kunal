@@ -1,6 +1,8 @@
 import { FOREX_RATES } from "@/lib/site-data";
+import { INVESTING_FOREX_URL } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
+import ExternalTile, { TileName } from "@/components/markets/ExternalTile";
 
 function formatRate(value: number, pair: string): string {
   if (pair === "DXY")     return value.toFixed(2);
@@ -15,15 +17,9 @@ export default function ForexGrid() {
       <div className="p-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
         {FOREX_RATES.map((fx) => {
           const pos = fx.dailyChange >= 0;
+          const href = INVESTING_FOREX_URL[fx.symbol];
           return (
-            <div
-              key={fx.symbol}
-              className="rounded-lg p-4 flex flex-col gap-1.5 transition-all duration-200 hover:scale-[1.02]"
-              style={{
-                background: "rgba(124,58,237,0.025)",
-                border: "1px solid var(--color-space-border)",
-              }}
-            >
+            <ExternalTile key={fx.symbol} href={href} label={fx.name} className="p-4 gap-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-lg">{fx.icon}</span>
                 <span
@@ -50,12 +46,7 @@ export default function ForexGrid() {
                 {formatRate(fx.value, fx.pair)}
               </div>
 
-              <div
-                className="font-semibold text-sm"
-                style={{ color: "var(--color-text-secondary)" }}
-              >
-                {fx.name}
-              </div>
+              <TileName linked={Boolean(href)}>{fx.name}</TileName>
 
               <div
                 className="text-xs"
@@ -91,7 +82,7 @@ export default function ForexGrid() {
                   </div>
                 ))}
               </div>
-            </div>
+            </ExternalTile>
           );
         })}
       </div>

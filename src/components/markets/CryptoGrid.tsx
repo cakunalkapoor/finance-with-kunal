@@ -1,6 +1,8 @@
 import { CRYPTO } from "@/lib/site-data";
+import { INVESTING_CRYPTO_URL } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
+import ExternalTile, { TileName } from "@/components/markets/ExternalTile";
 
 function formatPrice(value: number): string {
   if (value >= 10000) return value.toLocaleString("en-US", { maximumFractionDigits: 0 });
@@ -16,15 +18,9 @@ export default function CryptoGrid() {
       <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
         {CRYPTO.map((c) => {
           const pos = c.dailyChange >= 0;
+          const href = INVESTING_CRYPTO_URL[c.symbol];
           return (
-            <div
-              key={c.symbol}
-              className="rounded-lg p-4 flex flex-col gap-1.5 transition-all duration-200 hover:scale-[1.02]"
-              style={{
-                background: "rgba(124,58,237,0.025)",
-                border: "1px solid var(--color-space-border)",
-              }}
-            >
+            <ExternalTile key={c.symbol} href={href} label={c.name} className="p-4 gap-1.5">
               <div className="flex items-center justify-between">
                 <span
                   className="text-lg font-bold"
@@ -59,12 +55,7 @@ export default function CryptoGrid() {
                 ${formatPrice(c.value)}
               </div>
 
-              <div
-                className="font-semibold text-sm"
-                style={{ color: "var(--color-text-secondary)" }}
-              >
-                {c.name}
-              </div>
+              <TileName linked={Boolean(href)}>{c.name}</TileName>
 
               <div
                 className="text-xs"
@@ -101,7 +92,7 @@ export default function CryptoGrid() {
                   </div>
                 ))}
               </div>
-            </div>
+            </ExternalTile>
           );
         })}
       </div>

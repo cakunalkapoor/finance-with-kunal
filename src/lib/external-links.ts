@@ -2,10 +2,13 @@
 //
 // Two destinations, chosen per dataset for a reason:
 //
-//   • Indices and government bonds → Investing.com. Small, fixed sets (11 and 9),
-//     and Investing.com has stable hand-written slugs with the depth Kunal wants
-//     (technicals, forecasts, contributor commentary). Every slug below was
-//     opened and confirmed to resolve to the right instrument on 2026-08-09.
+//   • Indices, government bonds, commodities, crypto and FX → Investing.com.
+//     Small, fixed sets, and Investing.com has stable hand-written slugs with the
+//     depth Kunal wants (technicals, forecasts, contributor commentary). Every
+//     slug below was opened and confirmed to resolve to the right instrument —
+//     indices and bonds on 2026-08-09, the rest on 2026-08-11. The slugs are not
+//     derivable from the symbol (brent-oil, iron-ore-62-cfr-futures, usdollar),
+//     so re-check by hand when adding an instrument rather than guessing.
 //
 //   • Heatmap constituents → Yahoo Finance. 564 tickers across 11 exchanges;
 //     Investing.com equity URLs need a per-company slug (/equities/apple-computer-inc)
@@ -40,6 +43,41 @@ export const INVESTING_BOND_URL: Record<string, string> = {
   "South Korea":    "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield",
   "Australia":      "https://www.investing.com/rates-bonds/australia-10-year-bond-yield",
   "South Africa":   "https://www.investing.com/rates-bonds/south-africa-10-year-bond-yield",
+};
+
+/** Investing.com commodity pages, keyed by `Commodity.symbol`.
+ *  Aluminum is the one loose match: our quote is the CME future (ALI=F) but
+ *  Investing.com only publishes an LME cash page, so the prices differ a little.
+ *  It is the same metal and the only page they have. */
+export const INVESTING_COMMODITY_URL: Record<string, string> = {
+  "BZ=F":  "https://www.investing.com/commodities/brent-oil",
+  "CL=F":  "https://www.investing.com/commodities/crude-oil",
+  "GC=F":  "https://www.investing.com/commodities/gold",
+  "SI=F":  "https://www.investing.com/commodities/silver",
+  "HG=F":  "https://www.investing.com/commodities/copper",
+  "ALI=F": "https://www.investing.com/commodities/aluminum",
+  "TIO=F": "https://www.investing.com/commodities/iron-ore-62-cfr-futures",
+  "ZS=F":  "https://www.investing.com/commodities/us-soybeans",
+  "NG=F":  "https://www.investing.com/commodities/natural-gas",
+};
+
+/** Investing.com crypto pages, keyed by `CryptoAsset.symbol`. */
+export const INVESTING_CRYPTO_URL: Record<string, string> = {
+  "BTC-USD": "https://www.investing.com/crypto/bitcoin",
+  "ETH-USD": "https://www.investing.com/crypto/ethereum",
+  "SOL-USD": "https://www.investing.com/crypto/solana",
+  "BNB-USD": "https://www.investing.com/crypto/bnb",
+};
+
+/** Investing.com FX pages, keyed by `ForexRate.symbol`. The dollar index is an
+ *  index rather than a pair, so it lives under /indices/. */
+export const INVESTING_FOREX_URL: Record<string, string> = {
+  "DX-Y.NYB": "https://www.investing.com/indices/usdollar",
+  "EURUSD=X": "https://www.investing.com/currencies/eur-usd",
+  "GBPUSD=X": "https://www.investing.com/currencies/gbp-usd",
+  "USDJPY=X": "https://www.investing.com/currencies/usd-jpy",
+  "USDCAD=X": "https://www.investing.com/currencies/usd-cad",
+  "USDINR=X": "https://www.investing.com/currencies/usd-inr",
 };
 
 // Yahoo exchange suffix per heatmap index id. `site-data.ts` stores the plain
