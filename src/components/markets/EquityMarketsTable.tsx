@@ -6,27 +6,28 @@ import { ArrowUpRight } from "lucide-react";
 import { EQUITY_INDICES } from "@/lib/site-data";
 import { INVESTING_INDEX_URL } from "@/lib/external-links";
 import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
+import {
+  CHART_VIEWS,
+  pointLabel,
+  sliceFor,
+  windowLabel,
+  type ChartView,
+} from "@/lib/chart-window";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
-type ChartView = "YTD" | "52W" | "3Y";
-
-// The sparkline array is ~156 weekly points spanning the trailing ~3 years.
-// YTD ≈ last 28 weeks (Jan → now); 52W = last 52 weeks; 3Y = the full array.
-const YTD_WEEKS = 28;
-const WEEKS_52 = 52;
-
 function SparklineChart({
   data,
   view,
+  label,
 }: {
   data: number[];
   view: ChartView;
+  label: string;
 }) {
-  const slice =
-    view === "YTD" ? data.slice(-YTD_WEEKS) : view === "52W" ? data.slice(-WEEKS_52) : data;
+  const slice = sliceFor(view, data);
   const min = Math.min(...slice);
   const max = Math.max(...slice);
   // Color follows the trend of the *visible* window, so it stays correct when
@@ -35,8 +36,37 @@ function SparklineChart({
   const color = positive ? "#34d399" : "#fb7185";
   const option: EChartsOption = {
     animation: false,
-    grid: { top: 2, bottom: 2, left: 2, right: 2 },
-    xAxis: { type: "category", show: false, data: slice.map((_, i) => i) },
+    // Room at the bottom for the axis labels that say WHEN this line is.
+    grid: { top: 3, bottom: 16, left: 2, right: 2 },
+    tooltip: {
+      trigger: "axis",
+      confine: true,
+      backgroundColor: "rgba(20,22,18,0.94)",
+      borderWidth: 0,
+      textStyle: { color: "#f2f1eb", fontSize: 11 },
+      // Weekly points — the date is good to about a week, so label the month.
+      formatter: (params) => {
+        const p = Array.isArray(params) ? params[0] : params;
+        const i = Number(p.dataIndex);
+        return `${pointLabel(i, slice.length)}<br/><strong>${formatNumber(Number(p.value), 2)}</strong>`;
+      },
+    },
+    xAxis: {
+      type: "category",
+      data: slice.map((_, i) => pointLabel(i, slice.length)),
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: {
+        show: true,
+        showMinLabel: true,
+        showMaxLabel: true,
+        interval: slice.length - 2,
+        color: "#8a8a7d",
+        fontSize: 9,
+        fontFamily: "monospace",
+        margin: 6,
+      },
+    },
     yAxis: { type: "value", show: false, min: min * 0.997, max: max * 1.003 },
     series: [
       {
@@ -63,8 +93,9 @@ function SparklineChart({
       option={option}
       // Fills the chart column instead of a fixed 100px, so the table doesn't
       // end in dead space — matches ETFTable.
-      style={{ height: 36, width: "100%", minWidth: 100 }}
+      style={{ height: 54, width: "100%", minWidth: 100 }}
       opts={{ renderer: "svg" }}
+      aria-label={label}
     />
   );
 }
@@ -235,7 +266,7 @@ export default function EquityMarketsTable() {
               {/* Chart column with YTD / 52W toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {(["YTD", "52W", "3Y"] as ChartView[]).map((v) => (
+                  {CHART_VIEWS.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -253,7 +284,18 @@ export default function EquityMarketsTable() {
                       {v}
                     </button>
                   ))}
-                  <span className="ml-1 tracking-widest uppercase">Chart</span>
+                </div>
+                {/* Every row shares one window, so name the span once here. */}
+                <div
+                  style={{
+                    fontSize: "9px",
+                    letterSpacing: "0.05em",
+                    opacity: 0.7,
+                    marginTop: "3px",
+                    textTransform: "none",
+                  }}
+                >
+                  {windowLabel(chartView)}
                 </div>
               </th>
             </tr>
@@ -353,7 +395,11 @@ export default function EquityMarketsTable() {
 
                   {/* Chart */}
                   <td className="px-4 py-3">
-                    <SparklineChart data={idx.sparkline} view={chartView} />
+                    <SparklineChart
+                      data={idx.sparkline}
+                      view={chartView}
+                      label={`${idx.name} price, ${windowLabel(chartView)}`}
+                    />
                   </td>
                 </tr>
               );

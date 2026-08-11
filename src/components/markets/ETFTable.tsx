@@ -6,6 +6,13 @@ import { ArrowUpRight } from "lucide-react";
 import { ETFS } from "@/lib/site-data";
 import { yahooEtfUrl } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
+import {
+  CHART_VIEWS,
+  pointLabel,
+  sliceFor,
+  windowLabel,
+  type ChartView,
+} from "@/lib/chart-window";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { CSSProperties } from "react";
 import type { EChartsOption } from "echarts";
@@ -13,26 +20,58 @@ import type { ETF } from "@/types";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
-type ChartView = "YTD" | "52W" | "3Y";
-
-// Same windows as the equity table: the sparkline is ~156 weekly points across
-// the trailing ~3 years, so YTD ≈ the last 28 weeks and 52W the last 52.
-const YTD_WEEKS = 28;
-const WEEKS_52 = 52;
-
-function SparklineChart({ data, view }: { data: number[]; view: ChartView }) {
-  const slice =
-    view === "YTD" ? data.slice(-YTD_WEEKS) : view === "52W" ? data.slice(-WEEKS_52) : data;
+function SparklineChart({
+  data,
+  view,
+  label,
+}: {
+  data: number[];
+  view: ChartView;
+  label: string;
+}) {
+  const slice = sliceFor(view, data);
   const min = Math.min(...slice);
   const max = Math.max(...slice);
   // Colour follows the trend of the *visible* window, so it stays truthful when
   // the reader toggles between YTD and 3Y.
   const positive = slice[slice.length - 1] >= slice[0];
   const color = positive ? "#34d399" : "#fb7185";
+
   const option: EChartsOption = {
     animation: false,
-    grid: { top: 2, bottom: 2, left: 2, right: 2 },
-    xAxis: { type: "category", show: false, data: slice.map((_, i) => i) },
+    // Room at the bottom for the axis labels that say WHEN this line is.
+    grid: { top: 3, bottom: 16, left: 2, right: 2 },
+    tooltip: {
+      trigger: "axis",
+      confine: true,
+      backgroundColor: "rgba(20,22,18,0.94)",
+      borderWidth: 0,
+      textStyle: { color: "#f2f1eb", fontSize: 11 },
+      // Points are weekly, so the date is good to about a week — label the
+      // month, never a specific day.
+      formatter: (params) => {
+        const p = Array.isArray(params) ? params[0] : params;
+        const i = Number(p.dataIndex);
+        return `${pointLabel(i, slice.length)}<br/><strong>${Number(p.value).toFixed(2)}</strong>`;
+      },
+    },
+    xAxis: {
+      type: "category",
+      data: slice.map((_, i) => pointLabel(i, slice.length)),
+      axisLine: { show: false },
+      axisTick: { show: false },
+      // Two anchors only — first and last. More would not fit at this size.
+      axisLabel: {
+        show: true,
+        showMinLabel: true,
+        showMaxLabel: true,
+        interval: slice.length - 2,
+        color: "#8a8a7d",
+        fontSize: 9,
+        fontFamily: "monospace",
+        margin: 6,
+      },
+    },
     yAxis: { type: "value", show: false, min: min * 0.997, max: max * 1.003 },
     series: [
       {
@@ -59,8 +98,9 @@ function SparklineChart({ data, view }: { data: number[]; view: ChartView }) {
       option={option}
       // Fills the chart column rather than sitting at a fixed 100px, which
       // otherwise left ~135px of dead space at the right edge of every row.
-      style={{ height: 36, width: "100%", minWidth: 100 }}
+      style={{ height: 54, width: "100%", minWidth: 100 }}
       opts={{ renderer: "svg" }}
+      aria-label={label}
     />
   );
 }
@@ -88,7 +128,7 @@ export default function ETFTable() {
     <SciFiCard glow="cyan" cornerAccent>
       <CardHeader
         title="ETFs"
-        subtitle="16 funds · grouped by exposure, not ranked · click a ticker for the full quote on Yahoo Finance"
+        subtitle="16 funds · grouped by exposure, not ranked · hover a chart for the value at that point · click a ticker for the full quote on Yahoo Finance"
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 900 }}>
@@ -124,7 +164,7 @@ export default function ETFTable() {
               {/* Chart column with the YTD / 52W / 3Y toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {(["YTD", "52W", "3Y"] as ChartView[]).map((v) => (
+                  {CHART_VIEWS.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -145,7 +185,18 @@ export default function ETFTable() {
                       {v}
                     </button>
                   ))}
-                  <span className="ml-1 tracking-widest uppercase">Chart</span>
+                </div>
+                {/* Every row shares one window, so name the span once here. */}
+                <div
+                  style={{
+                    fontSize: "9px",
+                    letterSpacing: "0.05em",
+                    opacity: 0.7,
+                    marginTop: "3px",
+                    textTransform: "none",
+                  }}
+                >
+                  {windowLabel(chartView)}
                 </div>
               </th>
             </tr>
@@ -272,7 +323,11 @@ export default function ETFTable() {
                     ))}
 
                     <td className="px-4 py-3">
-                      <SparklineChart data={etf.sparkline} view={chartView} />
+                      <SparklineChart
+                        data={etf.sparkline}
+                        view={chartView}
+                        label={`${etf.ticker} price, ${windowLabel(chartView)}`}
+                      />
                     </td>
                   </tr>
                 )),
