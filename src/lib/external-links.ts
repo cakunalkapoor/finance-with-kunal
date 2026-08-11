@@ -80,6 +80,13 @@ export const INVESTING_FOREX_URL: Record<string, string> = {
   "USDINR=X": "https://www.investing.com/currencies/usd-inr",
 };
 
+/** Yahoo Finance quote page for an ETF. Unlike Investing.com's hand-written
+ *  fund slugs, the Yahoo symbol IS the URL — and Yahoo is already the price
+ *  source for these rows, so the linked page shows the same numbers. */
+export function yahooEtfUrl(symbol: string): string {
+  return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
+}
+
 // Yahoo exchange suffix per heatmap index id. `site-data.ts` stores the plain
 // local ticker (RY, 9983, HDFCBANK); Yahoo wants the exchange-qualified symbol.
 const YAHOO_SUFFIX: Record<string, string> = {

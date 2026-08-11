@@ -88,6 +88,37 @@ CRYPTO = [
     ("bnb",   "BNB-USD",  "BNB",      "USD", "⬡"),
 ]
 
+# (key, yahoo_symbol, ticker)
+#
+# Canada-listed first — that is the differentiated set, and the pairs matter:
+# VFV vs VSP is the same S&P 500 exposure unhedged vs CAD-hedged, and the gap
+# between them is the USD/CAD move already tracked above. The four US majors
+# are a reference block, not a recommendation list.
+#
+# NOTE: neither fees nor fund assets are fetched. Yahoo reports an annual expense
+# ratio of 0.000 for Canadian listings (verified on XEQT.TO, 2026-08-11), and its
+# totalAssets for a Vanguard US fund covers every share class rather than the ETF
+# (VTI came back at $2.29T against SPY's $795B). Neither is published.
+ETFS = [
+    ("xeqt", "XEQT.TO", "XEQT"),
+    ("veqt", "VEQT.TO", "VEQT"),
+    ("xgro", "XGRO.TO", "XGRO"),
+    ("vgro", "VGRO.TO", "VGRO"),
+    ("xic",  "XIC.TO",  "XIC"),
+    ("zcn",  "ZCN.TO",  "ZCN"),
+    ("xiu",  "XIU.TO",  "XIU"),
+    ("vfv",  "VFV.TO",  "VFV"),
+    ("vsp",  "VSP.TO",  "VSP"),
+    ("zsp",  "ZSP.TO",  "ZSP"),
+    ("zag",  "ZAG.TO",  "ZAG"),
+    ("xbb",  "XBB.TO",  "XBB"),
+    # US reference block.
+    ("spy",  "SPY",     "SPY"),
+    ("qqq",  "QQQ",     "QQQ"),
+    ("vti",  "VTI",     "VTI"),
+    ("agg",  "AGG",     "AGG"),
+]
+
 # (key, yahoo_symbol, display_name, pair_label, icon)
 # DXY = USD strength index. Others are quoted as X per 1 USD (or USD per 1 X for EUR/GBP).
 FOREX = [
@@ -311,6 +342,24 @@ def main():
             **d,
         })
 
+    print()
+    etfs_out = []
+    for key, sym, ticker in ETFS:
+        print(f"  {sym:12} {ticker:6} ", end="", flush=True)
+        hist, err = fetch_one(sym)
+        if err or hist is None:
+            print(f"✗ {err}")
+            continue
+        d = derive(hist)
+        if d is None:
+            print("✗ no closes")
+            continue
+        print(f"{d['value']:>9.2f}  {d['dailyChange']:+.2f}%  YTD {d['ytdChange']:+.2f}%")
+        etfs_out.append({
+            "key": key, "symbol": sym, "ticker": ticker,
+            **d,
+        })
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w") as f:
         json.dump({
@@ -321,9 +370,10 @@ def main():
             "commodities": commodities_out,
             "crypto":      crypto_out,
             "forex":      forex_out,
+            "etfs":        etfs_out,
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
-    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto")
+    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs")
 
 
 if __name__ == "__main__":

@@ -59,6 +59,28 @@ export interface CryptoAsset {
   ytdChange: number;
 }
 
+export interface ETF {
+  /** Yahoo symbol — TSX listings carry the .TO suffix. */
+  symbol: string;
+  /** Exchange ticker as a reader would type it (XEQT, SPY). */
+  ticker: string;
+  name: string;
+  provider: string;
+  listing: "Canada" | "United States";
+  /** Exposure group the row is filed under, e.g. "US equity". */
+  exposure: string;
+  currency: "CAD" | "USD";
+  /** True for a CAD-hedged share class — the whole point of VSP next to VFV. */
+  hedged?: boolean;
+  value: number;
+  dailyChange: number;
+  weekChange: number;
+  monthChange: number;
+  ytdChange: number;
+  /** ~156 weekly closes spanning the trailing 3 years, as on IndexQuote. */
+  sparkline: number[];
+}
+
 export interface ForexRate {
   symbol: string;
   name: string;

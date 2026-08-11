@@ -117,7 +117,7 @@ function patchBondByCountry(country, fields) {
   return patchObject(re, fields);
 }
 
-const stats = { equity: 0, realizedVol: 0, commodity: 0, crypto: 0, forex: 0, bond: 0, macro: 0 };
+const stats = { equity: 0, realizedVol: 0, commodity: 0, crypto: 0, etf: 0, forex: 0, bond: 0, macro: 0 };
 
 // EQUITY INDICES — base fields + realized vol
 for (const idx of yahoo.indices || []) {
@@ -147,6 +147,14 @@ for (const c of yahoo.crypto || []) {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
     monthChange: c.monthChange, ytdChange: c.ytdChange,
   })) stats.crypto++;
+}
+
+// ETFs — same shape as the equity indices above, sparkline included.
+for (const e of yahoo.etfs || []) {
+  if (patchBySymbol(e.symbol, {
+    value: e.value, dailyChange: e.dailyChange, weekChange: e.weekChange,
+    monthChange: e.monthChange, ytdChange: e.ytdChange, sparkline: e.sparkline,
+  })) stats.etf++;
 }
 
 // FOREX

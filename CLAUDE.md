@@ -13,7 +13,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 | Route | Nav label | Purpose |
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
-| `/markets` | **Markets** | Equity indices, bonds, commodities, FX, crypto, S&P 500 / TSX / NIFTY heatmap |
+| `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, S&P 500 / TSX / NIFTY heatmap |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators |
 | `/blog` | **Blog** | Long-form market commentary |
 
@@ -61,7 +61,7 @@ src/
 │   ├── layout/{Navbar,Footer}.tsx
 │   ├── ui/{SciFiCard,PageHeader}.tsx
 │   ├── seo/JsonLd.tsx          # Schema.org Person/WebSite + per-page breadcrumbs
-│   ├── markets/                # MarketTicker, EquityMarketsTable, BondsTable,
+│   ├── markets/                # MarketTicker, EquityMarketsTable, ETFTable, BondsTable,
 │   │                           #   CommoditiesGrid, CryptoGrid, ForexGrid, MarketHeatmap
 │   └── dashboard/              # MacroSnapshot, EconomicChart, EconomicNotes
 ├── lib/
@@ -74,7 +74,9 @@ src/
 
 ## Data (summary — full detail in `docs/DATA.md`)
 
-Live providers wired in (Yahoo, Alpha Vantage, FRED; Twelve Data + Finnhub are scaffolds); everything else is **deterministic mock**. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
+Live providers wired in (Yahoo, Alpha Vantage, FRED; Twelve Data + Finnhub are scaffolds); everything else is **deterministic mock**. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
+
+`ETFS` carries no fee or fund-size fields on purpose — Yahoo reports a 0.000 expense ratio for Canadian listings, and its `totalAssets` for a Vanguard US fund spans every share class rather than the ETF. Don't add either back from Yahoo; they'd have to come from the fund fact sheets.
 
 ## Running locally
 
