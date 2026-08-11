@@ -55,7 +55,13 @@ function SparklineChart({ data, view }: { data: number[]; view: ChartView }) {
     ],
   };
   return (
-    <ReactECharts option={option} style={{ height: 36, width: 100 }} opts={{ renderer: "svg" }} />
+    <ReactECharts
+      option={option}
+      // Fills the chart column rather than sitting at a fixed 100px, which
+      // otherwise left ~135px of dead space at the right edge of every row.
+      style={{ height: 36, width: "100%", minWidth: 100 }}
+      opts={{ renderer: "svg" }}
+    />
   );
 }
 
@@ -85,7 +91,19 @@ export default function ETFTable() {
         subtitle="16 funds · grouped by exposure, not ranked · click a ticker for the full quote on Yahoo Finance"
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 900 }}>
+          {/* Explicit split: with only 7 columns the browser hands all the slack
+              to the last one, which parked a 100px sparkline in a 236px cell.
+              minWidth above keeps the columns readable before the card scrolls. */}
+          <colgroup>
+            <col style={{ width: "23%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "13%" }} />
+            <col style={{ width: "8%" }} />
+            <col style={{ width: "8%" }} />
+            <col style={{ width: "8%" }} />
+            <col style={{ width: "25%" }} />
+          </colgroup>
           <thead>
             <tr
               style={{

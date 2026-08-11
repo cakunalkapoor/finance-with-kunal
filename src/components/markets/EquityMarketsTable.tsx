@@ -61,7 +61,9 @@ function SparklineChart({
   return (
     <ReactECharts
       option={option}
-      style={{ height: 36, width: 100 }}
+      // Fills the chart column instead of a fixed 100px, so the table doesn't
+      // end in dead space — matches ETFTable.
+      style={{ height: 36, width: "100%", minWidth: 100 }}
       opts={{ renderer: "svg" }}
     />
   );
