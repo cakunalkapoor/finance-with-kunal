@@ -7,11 +7,24 @@ import Reveal from "@/components/ui/Reveal";
 import { FONT_MONO } from "@/lib/utils";
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import type { EconomicIndicator } from "@/types";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Global Economy — Finance with Kunal",
-  description: "Global economic indicators: GDP, PMI, inflation, employment, and energy.",
-};
+export const metadata = pageMetadata({
+  title: "Global Economy",
+  description:
+    "Global economic indicators updated weekly: GDP growth, PMI, inflation, employment and energy, with multi-year history and plain-English notes.",
+  path: "/dashboard",
+  keywords: [
+    "global economy",
+    "economic indicators",
+    "GDP growth",
+    "manufacturing PMI",
+    "inflation rate",
+    "unemployment rate",
+    "macro dashboard",
+  ],
+});
 
 const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: string }[] = [
   { id: "pmi", label: "PMI", icon: "🌐" },
@@ -34,6 +47,7 @@ const US_CANADA_ONLY = new Set([
 export default function DashboardPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Global Economy", path: "/dashboard" }]} />
       <MarketTicker />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">

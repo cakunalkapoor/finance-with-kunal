@@ -31,7 +31,10 @@ export default function ProfileHero({ data }: { data: ProfileData }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={withBasePath(data.photo)}
-            alt={data.name}
+            alt={`${data.name} — ${data.tagline}`}
+            width={112}
+            height={112}
+            decoding="async"
             ref={(el) => {
               // Catches the case where the 404 fires before React hydrates,
               // so onError never re-fires on the client.

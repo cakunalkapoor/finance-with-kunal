@@ -7,15 +7,29 @@ import ForexGrid from "@/components/markets/ForexGrid";
 import MarketHeatmap from "@/components/markets/MarketHeatmap";
 import BriefingHero from "@/components/ui/BriefingHero";
 import Reveal from "@/components/ui/Reveal";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Markets — Finance with Kunal",
-  description: "Global equity indices, government bond yields, commodities, and S&P 500 sector heatmap.",
-};
+export const metadata = pageMetadata({
+  title: "Markets",
+  description:
+    "Weekly cross-asset snapshot: global equity indices, government bond yields, commodities, forex and crypto, plus S&P 500, TSX and NIFTY sector heatmaps.",
+  path: "/markets",
+  keywords: [
+    "global equity indices",
+    "government bond yields",
+    "commodity prices",
+    "S&P 500 sector heatmap",
+    "TSX",
+    "NIFTY 50",
+    "forex rates",
+  ],
+});
 
 export default function MarketsPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Markets", path: "/markets" }]} />
       <MarketTicker />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">

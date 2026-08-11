@@ -52,6 +52,7 @@ src/
 │   ├── layout.tsx              # Root layout, fonts, metadata + OG, Navbar, Footer
 │   ├── page.tsx                # Homepage: hero, Market + Economic snapshots, latest posts
 │   ├── opengraph-image.tsx     # Build-time branded OG/social card
+│   ├── sitemap.ts, robots.ts   # Static /sitemap.xml + /robots.txt
 │   ├── globals.css             # @theme tokens, animations, grid bg
 │   ├── markets/page.tsx        # Heatmap + Equity + Bonds + Commodities + Forex + Crypto
 │   ├── dashboard/page.tsx      # MacroSnapshot + EconomicCharts + Notes
@@ -59,12 +60,14 @@ src/
 ├── components/
 │   ├── layout/{Navbar,Footer}.tsx
 │   ├── ui/{SciFiCard,PageHeader}.tsx
+│   ├── seo/JsonLd.tsx          # Schema.org Person/WebSite + per-page breadcrumbs
 │   ├── markets/                # MarketTicker, EquityMarketsTable, BondsTable,
 │   │                           #   CommoditiesGrid, CryptoGrid, ForexGrid, MarketHeatmap
 │   └── dashboard/              # MacroSnapshot, EconomicChart, EconomicNotes
 ├── lib/
 │   ├── site-data.ts            # ALL canned data (large — read with grep/offset, not whole-file)
 │   ├── ticker-names.ts         # ticker → company name (heatmap tooltips)
+│   ├── seo.ts                  # SITE_URL, canonical/OG helper — every page uses pageMetadata()
 │   └── utils.ts                # cn(), formatNumber, formatChange, getChangeColor, FONT_MONO
 └── types/index.ts              # IndexQuote, BondYield, Commodity, CryptoAsset, ForexRate, ...
 ```

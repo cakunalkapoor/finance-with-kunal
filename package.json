@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",
+    "postbuild": "node src/lib/postbuild-og.mjs",
     "start": "next start",
     "lint": "eslint",
     "fetch:data": "node src/lib/process-alpha-vantage.mjs",

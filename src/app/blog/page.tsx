@@ -3,17 +3,23 @@ import { ArrowUpRight, Clock, PenLine } from "lucide-react";
 import { FONT_MONO } from "@/lib/utils";
 import { BLOG_POSTS } from "@/lib/site-data";
 import BriefingHero from "@/components/ui/BriefingHero";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Blog — Finance with Kunal",
-  description: "Finance commentary, market analysis, and economic perspectives by Kunal Kapoor.",
-};
+export const metadata = pageMetadata({
+  title: "Blog",
+  description:
+    "Long-form finance commentary, market analysis, and economic perspectives by Kunal Kapoor — written to stay useful after the headline has moved on.",
+  path: "/blog",
+  keywords: ["finance blog", "market commentary", "macro analysis", "economic perspectives"],
+});
 
 export default function BlogPage() {
   const posts = [...BLOG_POSTS].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <BreadcrumbJsonLd items={[{ name: "Blog", path: "/blog" }]} />
       <BriefingHero
         eyebrow="Journal"
         title="Ideas that outlive the news cycle."
