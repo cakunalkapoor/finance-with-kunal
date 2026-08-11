@@ -20,6 +20,15 @@ import WeeklyCommentary from "@/components/home/WeeklyCommentary";
 import TrendingHeadlines from "@/components/home/TrendingHeadlines";
 import { EQUITY_INDICES, WEEKLY_COMMENTARY } from "@/lib/site-data";
 import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
+import { OG_IMAGE } from "@/lib/seo";
+
+// Title/description/canonical come from the root layout; this only pins the
+// social image to the .png copy (see OG_IMAGE) so the homepage doesn't fall
+// back to the extensionless opengraph-image route.
+export const metadata = {
+  openGraph: { images: [OG_IMAGE] },
+  twitter: { images: [OG_IMAGE.url] },
+};
 
 const QUICK_LINKS = [
   {
