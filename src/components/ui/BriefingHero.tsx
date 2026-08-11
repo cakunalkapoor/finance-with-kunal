@@ -15,7 +15,8 @@ interface BriefingStat {
 interface BriefingHeroProps {
   eyebrow: string;
   title: string;
-  description: string;
+  /** Omit to render the hero without the lede paragraph. */
+  description?: string;
   lastUpdated?: string;
   nextUpdate?: string;
   accent?: "violet" | "indigo" | "emerald";
@@ -108,12 +109,14 @@ export default function BriefingHero({
           >
             {title}
           </h1>
-          <p
-            className="animate-enter mt-4 max-w-2xl text-sm leading-7 sm:text-base"
-            style={{ color: "var(--color-text-secondary)", ...enter(160) }}
-          >
-            {description}
-          </p>
+          {description && (
+            <p
+              className="animate-enter mt-4 max-w-2xl text-sm leading-7 sm:text-base"
+              style={{ color: "var(--color-text-secondary)", ...enter(160) }}
+            >
+              {description}
+            </p>
+          )}
 
           {lastUpdated !== "—" && (
             <div className="animate-enter mt-6 flex flex-wrap items-center gap-x-5 gap-y-2" style={enter(240)}>
