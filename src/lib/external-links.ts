@@ -22,6 +22,9 @@ export const INVESTING_INDEX_URL: Record<string, string> = {
   "^GSPC":     "https://www.investing.com/indices/us-spx-500",
   "^NDX":      "https://www.investing.com/indices/nq-100",
   "000001.SS": "https://www.investing.com/indices/shanghai-composite",
+  // Investing.com's slug for the Hang Seng is "hang-sen-40" — not a typo on our
+  // side, and not derivable from the name. Confirmed 2026-08-13.
+  "^HSI":      "https://www.investing.com/indices/hang-sen-40",
   "^N225":     "https://www.investing.com/indices/japan-ni225",
   "^NSEI":     "https://www.investing.com/indices/s-p-cnx-nifty",
   "^GDAXI":    "https://www.investing.com/indices/germany-30",

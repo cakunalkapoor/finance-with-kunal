@@ -16,8 +16,23 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import { ChangeStack } from "@/components/markets/StatStack";
 
-// P/E cell — shows current P/E and % variance from 10-year average
-function PECell({ pe, pe10yAvg }: { pe: number; pe10yAvg: number }) {
+// P/E cell — shows current P/E and % variance from 10-year average.
+//
+// Index P/E is hand-curated (no fetcher supplies it), so a newly added index
+// has none until someone sources it. Render an explicit dash rather than
+// substituting a plausible-looking number — this is a valuation figure on a
+// finance site, and a wrong one is worse than a visibly absent one.
+function PECell({ pe, pe10yAvg }: { pe?: number; pe10yAvg?: number }) {
+  if (pe == null || pe10yAvg == null) {
+    return (
+      <span
+        style={{ fontFamily: FONT_MONO, color: "var(--color-text-muted)", fontSize: "12px" }}
+        title="Index P/E not yet sourced for this index"
+      >
+        —
+      </span>
+    );
+  }
   const variancePct = Math.round(((pe - pe10yAvg) / pe10yAvg) * 100);
   const isAbove = variancePct > 0;
 
@@ -153,7 +168,9 @@ export default function EquityMarketsTable() {
     <SciFiCard glow="cyan" cornerAccent>
       <CardHeader
         title="Global Equity Markets"
-        subtitle="11 Major Indices · 30d realized volatility · click an index for full detail on Investing.com"
+        // Counted from the data, not written out — the hardcoded "11" went
+        // stale the moment an index was added.
+        subtitle={`${EQUITY_INDICES.length} Major Indices · 30d realized volatility · click an index for full detail on Investing.com`}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 560 }}>

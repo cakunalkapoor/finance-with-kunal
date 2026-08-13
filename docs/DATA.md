@@ -16,7 +16,7 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 | Provider | Tier | Coverage in this app | Refresh cmd | Key in .env.local |
 |---|---|---|---|---|
-| **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 11 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 1,618 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
+| **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 12 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 1,618 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
 | **FRED** (St. Louis Fed) | Free | US macro data and six non-Canadian sovereign 10Y series | `npm run fetch:fred` | `FRED_API_KEY` |
 | **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y yield | `npm run fetch:boc` | — |
 | **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, and government revenue | `npm run fetch:statcan` | — |
@@ -46,6 +46,10 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 - **PMI indicators** — licensed S&P Global series are updated manually each month.
 - **China and India GDP cards** — updated from official NBS and MoSPI releases until dedicated adapters are added.
+- **Index P/E (`pe`, `pe10yAvg`)** — no free provider supplies index-level P/E, so both are typed
+  optional and hand-entered in `site-data.ts`. An index without them renders a dash in the
+  Valuation column rather than a made-up multiple. **Hang Seng (`^HSI`) currently has none** —
+  add both when you have a source you trust for the trailing P/E and its 10-year average.
 
 Heatmap weekly changes are live Yahoo observations. Missing quotes are stored as `null`, rendered as
 `N/A`, and excluded from sector-return calculations; they must never default to a neutral 0% change.
@@ -96,7 +100,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 
 | Export | What it powers |
 |--------|----------------|
-| `EQUITY_INDICES` | The 11 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
+| `EQUITY_INDICES` | The 12 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
 | `BOND_YIELDS` | 10Y govt bonds for US, DE, GB, CA, JP, IN, KR, AU, ZA with daily/1M/1Y moves and a 12-point trend |
 | `COMMODITIES` | Brent, WTI, Gold, Silver, Copper, Aluminum, Iron Ore, Soybeans, Natural Gas (9 total) |
 | `CRYPTO` | Bitcoin, Ethereum, Solana, BNB spot prices (typed `CryptoAsset[]`, not `Commodity[]`) |

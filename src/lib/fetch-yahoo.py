@@ -39,6 +39,7 @@ INDICES = [
     ("sp500",  "^GSPC",     "S&P 500",            "USA",         "🇺🇸"),
     ("ndx",    "^NDX",      "NASDAQ 100",         "USA",         "🇺🇸"),
     ("sse",    "000001.SS", "Shanghai Composite", "China",       "🇨🇳"),
+    ("hsi",    "^HSI",      "Hang Seng",          "Hong Kong",   "🇭🇰"),
     ("nikkei", "^N225",     "Nikkei 225",         "Japan",       "🇯🇵"),
     ("nifty",  "^NSEI",     "NIFTY 50",           "India",       "🇮🇳"),
     ("dax",    "^GDAXI",    "DAX",                "Germany",     "🇩🇪"),
