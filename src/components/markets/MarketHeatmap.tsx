@@ -95,7 +95,10 @@ export default function MarketHeatmap() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleTileClick = (params: any) => {
     if (!Array.isArray(params?.treePathInfo) || params.treePathInfo.length < 3) return;
-    const url = yahooQuoteUrl(activeId, params.name);
+    const stock = sectors
+      .flatMap((s) => s.children ?? [])
+      .find((c) => c.ticker === params.name);
+    const url = yahooQuoteUrl(activeId, params.name, stock?.yahoo);
     if (url) window.open(url, "_blank", "noopener,noreferrer");
   };
 
@@ -123,7 +126,7 @@ export default function MarketHeatmap() {
         const sign = change != null && change >= 0 ? "+" : "";
         const val = typeof params.value === "number" ? params.value.toFixed(1) : params.value;
         // For stock tiles, show ticker + company name. For sector tiles, just the name.
-        const companyName = stock ? getCompanyName(params.name) : null;
+        const companyName = stock ? getCompanyName(stock.yahoo ?? params.name, params.name) : null;
         const headerHtml = companyName
           ? `<div style="font-weight:700;color:#1e1b3a;font-size:13px">${params.name}</div>
              <div style="color:#524b7a;font-size:11px;margin-bottom:4px">${companyName}</div>`

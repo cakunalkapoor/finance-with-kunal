@@ -109,6 +109,10 @@ export interface HeatmapSector {
 export interface HeatmapStock {
   name: string;
   ticker: string;
+  /** Exchange-qualified Yahoo symbol the quote was fetched under (0700.HK,
+   *  BA.L, BRK-B). Carried through from the catalogue so a tile's link and its
+   *  price can never refer to different listings. */
+  yahoo?: string;
   value: number;
   change: number | null;
 }

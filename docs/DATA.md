@@ -16,7 +16,7 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 | Provider | Tier | Coverage in this app | Refresh cmd | Key in .env.local |
 |---|---|---|---|---|
-| **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 11 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 564 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
+| **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 11 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 1,618 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
 | **FRED** (St. Louis Fed) | Free | US macro data and six non-Canadian sovereign 10Y series | `npm run fetch:fred` | `FRED_API_KEY` |
 | **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y yield | `npm run fetch:boc` | — |
 | **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, and government revenue | `npm run fetch:statcan` | — |
@@ -26,6 +26,10 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 ### Fetcher scripts
 
 - `src/lib/fetch-yahoo.py` — uses `./.venv/bin/python3` (venv created by `npm run fetch:yahoo:setup`). Returns 1-year daily history per index, computes daily/1W/1M/YTD changes + 52W range + 52-pt sparkline. Output: `src/lib/yahoo-data.json`.
+- `src/lib/build-catalogue.py` — turns the index membership workbook into the heatmap constituent catalogue (top 250 per index, renormalised weights, resolved Yahoo symbols). Output: `src/lib/heatmap-catalogue.json`. See [The heatmap pipeline](#the-heatmap-pipeline).
+- `src/lib/fetch-sectors.py` — incremental, rate-limit-aware sector + company-name resolver. Output: `src/lib/heatmap-sectors.json` (**committed** — a cache, not a regenerable dump).
+- `src/lib/fetch-heatmap.py` — batch weekly % change for every catalogue constituent. Output: `src/lib/heatmap-data.json`.
+- `src/lib/gen-ticker-names.py` — regenerates `src/lib/ticker-names.ts` from the catalogue + sector cache.
 - `src/lib/process-alpha-vantage.mjs` — reads previously-saved Alpha Vantage tool-call JSON dumps (one per commodity + treasury), computes derived values. Output: `src/lib/market-data.json`.
 - `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, fetches US macro series and foreign 10Y yields, and preserves full dates for weekly claims. Output: `src/lib/fred-data.json`.
 - `src/lib/fetch-boc.mjs` — fetches Canadian policy, CPI, and 10Y yield data from the Bank of Canada Valet API. Output: `src/lib/boc-data.json`.
@@ -48,6 +52,46 @@ Heatmap weekly changes are live Yahoo observations. Missing quotes are stored as
 
 ---
 
+## The heatmap pipeline
+
+Four stages, each writing an artefact the next one reads. Only stage 3 needs to run on the weekly
+refresh; stages 1–2 change only when index membership does.
+
+| # | Command | Reads | Writes |
+|---|---|---|---|
+| 1 | `npm run build:catalogue` | `data/index-constituents.xlsx` | `src/lib/heatmap-catalogue.json` |
+| 2 | `npm run fetch:sectors` | the catalogue | `src/lib/heatmap-sectors.json` |
+| 3 | `npm run fetch:heatmap` | the catalogue | `src/lib/heatmap-data.json` |
+| 4 | `npm run patch:heatmap` | all three | the heatmap section of `site-data.ts` |
+
+**Membership and weights** come from `data/index-constituents.xlsx` — published index weights for all
+11 indices, so tile area is the real index weight rather than a hand-tuned estimate. Two of the
+workbook's sheets are whole-market listings rather than index membership (TAIEX 1,093 rows, KOSPI
+829), and the S&P 500's tail falls under the treemap's `visibleMin`, so `build-catalogue.py` cuts
+every index to its top 250 names by weight and renormalises to 100%. Coverage stays ≥91% of each
+index's weight (TAIEX ~96%, KOSPI ~97%, S&P 500 ~91%); the other eight indices are carried whole.
+
+**Sectors** come from Yahoo, mapped to one 11-sector taxonomy shared by every index. Each index used
+to carry its own ad-hoc sector set (`Luxury`, `Trading`, `Banks`, `Internet`), which made two
+heatmaps impossible to compare. `heatmap-sectors.json` is a **committed cache, not a feed** — sector
+membership is near-static, so the fetch is incremental and a normal weekly refresh resolves nothing.
+
+> Yahoo rate-limits the per-symbol profile endpoint hard: ~3 req/s sails through ~800 symbols and
+> then earns a multi-minute global 429 that fails everything after it. `fetch-sectors.py` paces at
+> ~1 req/s, checkpoints every 50 symbols, and never caches a throttled symbol — so an interrupted
+> run resumes rather than restarting, and re-running picks up exactly what is still missing. A cold
+> run over the full catalogue takes ~20 minutes.
+
+**Yahoo symbols** are resolved once, in the catalogue, and carried through to each tile as
+`HeatmapStock.yahoo`. The exchange conventions are not reproducible from a bare ticker — an LSE
+trailing dot is dropped (`BA.` → `BA.L`) while an interior dot becomes a dash (`BT.A` → `BT-A.L`),
+and HK codes are stored 5-digit but quoted 4-digit (`00700` → `0700.HK`) — so deriving them a second
+time in TypeScript for the tile's click-through was a standing source of drift. `SYMBOL_OVERRIDES`
+in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-B`, `QGEN` →
+`QIA.DE`, `STLAM` → `STLAP.PA`, `MT` → `MT.AS`).
+
+---
+
 ## Major datasets in `site-data.ts`
 
 | Export | What it powers |
@@ -57,7 +101,7 @@ Heatmap weekly changes are live Yahoo observations. Missing quotes are stored as
 | `COMMODITIES` | Brent, WTI, Gold, Silver, Copper, Aluminum, Iron Ore, Soybeans, Natural Gas (9 total) |
 | `CRYPTO` | Bitcoin, Ethereum, Solana, BNB spot prices (typed `CryptoAsset[]`, not `Commodity[]`) |
 | `FOREX_RATES` | US Dollar Index + EUR / GBP / JPY / CAD / INR vs USD |
-| `HEATMAP_INDICES` | 11 regional heatmaps with 564 unique constituent rows and explicit missing-quote handling |
+| `HEATMAP_INDICES` | 11 regional heatmaps with 1,618 constituent rows and explicit missing-quote handling |
 | `ECONOMIC_INDICATORS` | All economic-dashboard cards. Categories: `pmi`, `growth`, `employment`, `inflation`, `energy` |
 | `MACRO_SNAPSHOT` | The 6 hero tiles on /dashboard top (also reused on the homepage) |
 | `EXTERNAL_COMMENTARY` | 6 curated external headlines on the homepage, linking to Reuters/Bloomberg/FT/WSJ/Economist/MarketWatch |
@@ -75,10 +119,15 @@ When adding a new indicator: append to `ECONOMIC_INDICATORS` with the right `cat
 is listed in the dashboard page's `CATEGORIES` array.
 
 ### Ticker name resolution
-`src/lib/ticker-names.ts` exports `TICKER_NAMES: Record<string, string>` and `getCompanyName(ticker)`.
-Used by the heatmap tooltip to show "TD → TD Bank", "BRK.B → Berkshire Hathaway", etc. Covers all
-~210 unique tickers across the three indices. When adding new tickers to `HEATMAP_INDICES`, add the
-corresponding company name here.
+`src/lib/ticker-names.ts` exports `TICKER_NAMES: Record<string, string>` and
+`getCompanyName(symbol, ticker?)`. Used by the heatmap tooltip to show "TD → TD Bank",
+"0700.HK → Tencent Holdings", etc.
+
+**Generated — do not hand-edit**; run `npm run gen:ticker-names`. The map is keyed by the
+exchange-qualified Yahoo symbol rather than the bare ticker, because bare tickers collide across the
+11 indices: `T` is AT&T in the S&P 500 but Telus on the TSX, `AIR` is Airbus on both the DAX and the
+CAC, `MRK` is Merck & Co. in the US and Merck KGaA in Germany. The previous ticker-keyed map showed
+the wrong company on those tiles.
 
 ---
 

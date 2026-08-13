@@ -10,15 +10,18 @@
     "lint": "eslint",
     "fetch:data": "node src/lib/process-alpha-vantage.mjs",
     "fetch:yahoo": "./.venv/bin/python3 src/lib/fetch-yahoo.py",
-    "fetch:yahoo:setup": "python3 -m venv .venv && ./.venv/bin/pip install yfinance pandas",
+    "fetch:yahoo:setup": "python3 -m venv .venv && ./.venv/bin/pip install yfinance pandas openpyxl",
     "fetch:bonds": "node src/lib/fetch-bonds.mjs",
     "fetch:fred": "node src/lib/fetch-fred.mjs",
     "fetch:boc": "node src/lib/fetch-boc.mjs",
     "fetch:statcan": "node src/lib/fetch-statcan.mjs",
     "fetch:twelvedata": "node src/lib/fetch-twelvedata.mjs",
     "fetch:finnhub": "node src/lib/fetch-finnhub.mjs",
+    "build:catalogue": "./.venv/bin/python3 src/lib/build-catalogue.py",
+    "fetch:sectors": "./.venv/bin/python3 src/lib/fetch-sectors.py",
     "fetch:heatmap": "./.venv/bin/python3 src/lib/fetch-heatmap.py",
-    "patch:heatmap": "./.venv/bin/python3 src/lib/patch-heatmap.py"
+    "patch:heatmap": "./.venv/bin/python3 src/lib/patch-heatmap.py",
+    "gen:ticker-names": "./.venv/bin/python3 src/lib/gen-ticker-names.py"
   },
   "dependencies": {
     "clsx": "^2.1.1",

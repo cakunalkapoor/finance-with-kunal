@@ -87,8 +87,15 @@ export function yahooEtfUrl(symbol: string): string {
   return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
 }
 
-// Yahoo exchange suffix per heatmap index id. `site-data.ts` stores the plain
-// local ticker (RY, 9983, HDFCBANK); Yahoo wants the exchange-qualified symbol.
+// Yahoo exchange suffix per heatmap index id — the FALLBACK path only.
+//
+// Every constituent in `site-data.ts` now carries the exact `yahoo` symbol it
+// was priced under (see `HeatmapStock.yahoo`), because the exchange quirks are
+// not reliably reproducible from a bare ticker: an LSE trailing dot is dropped
+// (BA. → BA.L) while an interior dot becomes a dash (BT.A → BT-A.L), and HK
+// codes are stored 5-digit but quoted 4-digit (00700 → 0700.HK). This map is
+// kept only so a hand-authored tile without a `yahoo` field still resolves.
+// Must match INDEX_SUFFIX in build-catalogue.py.
 const YAHOO_SUFFIX: Record<string, string> = {
   sp500:   "",
   ndx:     "",
@@ -98,7 +105,7 @@ const YAHOO_SUFFIX: Record<string, string> = {
   cac:     ".PA",
   nifty50: ".NS",
   nikkei:  ".T",
-  sse:     ".SS",
+  hsi:     ".HK",
   kospi:   ".KS",
   twse:    ".TW",
 };
@@ -112,15 +119,17 @@ const YAHOO_SYMBOL_OVERRIDES: Record<string, string> = {
  * Yahoo Finance quote URL for a heatmap constituent, or `null` for an unknown
  * index id (so a caller can fall back to rendering a non-clickable tile).
  *
- * Two ticker quirks, in order:
- *   1. A TRAILING dot is an LSE ordinary-line marker, not a share class — Yahoo
- *      drops it (BA. → BA.L, AV. → AV.L). Note `fetch-heatmap.py::yahoo_ftse`
- *      currently dashes these instead (BA. → BA-.L), which is why those seven
- *      FTSE tiles come back with a null price; we deliberately do NOT copy that.
- *   2. An INTERIOR dot is a share class, which Yahoo writes as a dash
- *      (BRK.B → BRK-B, BT.A → BT-A.L, CAR.UN → CAR-UN.TO).
+ * Pass the constituent's own `yahoo` symbol whenever there is one; the
+ * ticker-derived fallback cannot represent every exchange's conventions.
  */
-export function yahooQuoteUrl(indexId: string, ticker: string): string | null {
+export function yahooQuoteUrl(
+  indexId: string,
+  ticker: string,
+  yahoo?: string,
+): string | null {
+  if (yahoo) {
+    return `https://finance.yahoo.com/quote/${encodeURIComponent(yahoo)}`;
+  }
   const suffix = YAHOO_SUFFIX[indexId];
   if (suffix === undefined) return null;
   const symbol =

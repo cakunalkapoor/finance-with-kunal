@@ -13,7 +13,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 | Route | Nav label | Purpose |
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
-| `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, S&P 500 / TSX / NIFTY heatmap |
+| `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators |
 | `/blog` | **Blog** | Long-form market commentary |
 
@@ -66,7 +66,7 @@ src/
 │   └── dashboard/              # MacroSnapshot, EconomicChart, EconomicNotes
 ├── lib/
 │   ├── site-data.ts            # ALL canned data (large — read with grep/offset, not whole-file)
-│   ├── ticker-names.ts         # ticker → company name (heatmap tooltips)
+│   ├── ticker-names.ts         # GENERATED — Yahoo symbol → company name (heatmap tooltips)
 │   ├── seo.ts                  # SITE_URL, canonical/OG helper — every page uses pageMetadata()
 │   └── utils.ts                # cn(), formatNumber, formatChange, getChangeColor, FONT_MONO
 └── types/index.ts              # IndexQuote, BondYield, Commodity, CryptoAsset, ForexRate, ...
@@ -75,6 +75,12 @@ src/
 ## Data (summary — full detail in `docs/DATA.md`)
 
 Live providers wired in (Yahoo, Alpha Vantage, FRED; Twelve Data + Finnhub are scaffolds); everything else is **deterministic mock**. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
+
+**Heatmaps** are a four-stage pipeline of their own — `build:catalogue` → `fetch:sectors` →
+`fetch:heatmap` → `patch:heatmap`. Membership and weights come from `data/index-constituents.xlsx`
+(published index weights, 11 indices, 1,618 constituents); sectors come from Yahoo and are held in a
+**committed** cache, `src/lib/heatmap-sectors.json`, not a gitignored dump. Only `fetch:heatmap` and
+`patch:heatmap` need to run on a weekly refresh. Full detail in `docs/DATA.md`.
 
 `ETFS` carries no fee or fund-size fields on purpose — Yahoo reports a 0.000 expense ratio for Canadian listings, and its `totalAssets` for a Vanguard US fund spans every share class rather than the ETF. Don't add either back from Yahoo; they'd have to come from the fund fact sheets.
 

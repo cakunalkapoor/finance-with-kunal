@@ -1,0 +1,6179 @@
+{
+  "000080.KS": {
+    "name": "HITEJINRO Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "0001.HK": {
+    "name": "CK Hutchison Holdings Limited",
+    "sector": "Industrials"
+  },
+  "000100.KS": {
+    "name": "Yuhan Corporation",
+    "sector": "Healthcare"
+  },
+  "000120.KS": {
+    "name": "CJ Logistics Corporation",
+    "sector": "Industrials"
+  },
+  "000150.KS": {
+    "name": "Doosan Corporation",
+    "sector": "Industrials"
+  },
+  "0002.HK": {
+    "name": "CLP Holdings Limited",
+    "sector": "Utilities"
+  },
+  "000270.KS": {
+    "name": "Kia Corporation",
+    "sector": "Consumer Disc."
+  },
+  "0003.HK": {
+    "name": "The Hong Kong and China Gas Company Limited",
+    "sector": "Utilities"
+  },
+  "0005.HK": {
+    "name": "HSBC Holdings plc",
+    "sector": "Financials"
+  },
+  "0006.HK": {
+    "name": "Power Assets Holdings Limited",
+    "sector": "Utilities"
+  },
+  "000660.KS": {
+    "name": "SK hynix Inc.",
+    "sector": "Technology"
+  },
+  "000720.KS": {
+    "name": "Hyundai Engineering & Construction Co.,Ltd.",
+    "sector": "Industrials"
+  },
+  "000810.KS": {
+    "name": "Samsung Fire & Marine Insurance Co., Ltd.",
+    "sector": "Financials"
+  },
+  "000880.KS": {
+    "name": "Hanwha Corporation",
+    "sector": "Industrials"
+  },
+  "000990.KS": {
+    "name": "DB HiTek CO., LTD.",
+    "sector": "Technology"
+  },
+  "001040.KS": {
+    "name": "CJ Corporation",
+    "sector": "Industrials"
+  },
+  "0012.HK": {
+    "name": "Henderson Land Development Company Limited",
+    "sector": "Real Estate"
+  },
+  "001440.KS": {
+    "name": "Taihan Cable & Solution Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "0016.HK": {
+    "name": "Sun Hung Kai Properties Limited",
+    "sector": "Real Estate"
+  },
+  "002350.KS": {
+    "name": "Nexen Tire Corporation",
+    "sector": "Consumer Disc."
+  },
+  "002380.KS": {
+    "name": "KCC Corporation",
+    "sector": "Materials"
+  },
+  "0027.HK": {
+    "name": "Galaxy Entertainment Group Limited",
+    "sector": "Consumer Disc."
+  },
+  "003230.KS": {
+    "name": "Samyang Foods Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "003490.KS": {
+    "name": "Korean Airlines Co.,Ltd.",
+    "sector": "Industrials"
+  },
+  "003550.KS": {
+    "name": "LG Corp.",
+    "sector": "Technology"
+  },
+  "003620.KS": {
+    "name": "KG Mobility Corp.",
+    "sector": "Consumer Disc."
+  },
+  "003670.KS": {
+    "name": "Posco Future M Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "004170.KS": {
+    "name": "SHINSEGAE Inc.",
+    "sector": "Consumer Disc."
+  },
+  "004370.KS": {
+    "name": "Nongshim Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "004990.KS": {
+    "name": "LOTTE Corporation",
+    "sector": "Consumer Staples"
+  },
+  "005380.KS": {
+    "name": "Hyundai Motor Company",
+    "sector": "Consumer Disc."
+  },
+  "005490.KS": {
+    "name": "POSCO Holdings Inc.",
+    "sector": "Materials"
+  },
+  "005830.KS": {
+    "name": "DB Insurance Co., Ltd.",
+    "sector": "Financials"
+  },
+  "005930.KS": {
+    "name": "Samsung Electronics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "005940.KS": {
+    "name": "NH Investment & Securities Co., Ltd.",
+    "sector": "Financials"
+  },
+  "006260.KS": {
+    "name": "LS Corp.",
+    "sector": "Industrials"
+  },
+  "006400.KS": {
+    "name": "Samsung SDI Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "0066.HK": {
+    "name": "MTR Corporation Limited",
+    "sector": "Industrials"
+  },
+  "006800.KS": {
+    "name": "Mirae Asset Securities Co., Ltd.",
+    "sector": "Financials"
+  },
+  "007310.KS": {
+    "name": "Otoki Corporation",
+    "sector": "Consumer Staples"
+  },
+  "007660.KS": {
+    "name": "ISU Petasys Co., Ltd.",
+    "sector": "Technology"
+  },
+  "008930.KS": {
+    "name": "Hanmi Science Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "009150.KS": {
+    "name": "Samsung Electro-Mechanics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "009540.KS": {
+    "name": "HD Korea Shipbuilding & Offshore Engineering Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "009830.KS": {
+    "name": "Hanwha Solutions Corporation",
+    "sector": "Technology"
+  },
+  "009900.KS": {
+    "name": "Myoung Shin Industrial Co.,Ltd",
+    "sector": "Consumer Disc."
+  },
+  "010060.KS": {
+    "name": "OCI Holdings Company Ltd.",
+    "sector": "Financials"
+  },
+  "0101.HK": {
+    "name": "Hang Lung Properties Limited",
+    "sector": "Real Estate"
+  },
+  "010120.KS": {
+    "name": "LS ELECTRIC Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "010130.KS": {
+    "name": "Korea Zinc Company, Ltd.",
+    "sector": "Materials"
+  },
+  "010140.KS": {
+    "name": "Samsung Heavy Industries Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "010400.KS": {
+    "name": "Woojin I&S Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "010950.KS": {
+    "name": "S-Oil Corporation",
+    "sector": "Energy"
+  },
+  "011070.KS": {
+    "name": "LG Innotek Co., Ltd.",
+    "sector": "Technology"
+  },
+  "011170.KS": {
+    "name": "Lotte Chemical Corporation",
+    "sector": "Materials"
+  },
+  "011200.KS": {
+    "name": "HMM Co.,Ltd",
+    "sector": "Industrials"
+  },
+  "011780.KS": {
+    "name": "Kumho Petro Chemical Co.,Ltd",
+    "sector": "Materials"
+  },
+  "011790.KS": {
+    "name": "SKC Co., Ltd.",
+    "sector": "Materials"
+  },
+  "012330.KS": {
+    "name": "Hyundai Mobis Co.,Ltd",
+    "sector": "Consumer Disc."
+  },
+  "012450.KS": {
+    "name": "Hanwha Aerospace Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "013890.KS": {
+    "name": "Zinus, Inc",
+    "sector": "Consumer Disc."
+  },
+  "014680.KS": {
+    "name": "Hansol Chemical Co., Ltd.",
+    "sector": "Materials"
+  },
+  "015760.KS": {
+    "name": "Korea Electric Power Corporation",
+    "sector": "Utilities"
+  },
+  "016360.KS": {
+    "name": "Samsung Securities Co.,Ltd.",
+    "sector": "Financials"
+  },
+  "0175.HK": {
+    "name": "Geely Automobile Holdings Limited",
+    "sector": "Consumer Disc."
+  },
+  "017670.KS": {
+    "name": "SK Telecom Co., Ltd.",
+    "sector": "Communication"
+  },
+  "017860.KS": {
+    "name": "DS DANSUK CO., LTD.",
+    "sector": "Materials"
+  },
+  "018250.KS": {
+    "name": "Aekyung Industrial Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "018260.KS": {
+    "name": "Samsung SDS Co., Ltd.",
+    "sector": "Technology"
+  },
+  "018880.KS": {
+    "name": "Hanon Systems",
+    "sector": "Consumer Disc."
+  },
+  "019170.KS": {
+    "name": "Shinpoong Pharmaceutical Co.,Ltd",
+    "sector": "Healthcare"
+  },
+  "020560.KS": {
+    "name": "Asiana Airlines, Inc.",
+    "sector": "Industrials"
+  },
+  "021240.KS": {
+    "name": "COWAY Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "022100.KS": {
+    "name": "Posco Dx Company Ltd.",
+    "sector": "Technology"
+  },
+  "023530.KS": {
+    "name": "Lotte Shopping Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "0241.HK": {
+    "name": "Alibaba Health Information Technology Limited",
+    "sector": "Healthcare"
+  },
+  "024110.KS": {
+    "name": "Industrial Bank of Korea",
+    "sector": "Financials"
+  },
+  "0267.HK": {
+    "name": "CITIC Limited",
+    "sector": "Industrials"
+  },
+  "028050.KS": {
+    "name": "Samsung E&A Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "028260.KS": {
+    "name": "Samsung C&T Corporation",
+    "sector": "Industrials"
+  },
+  "0285.HK": {
+    "name": "BYD Electronic (International) Company Limited",
+    "sector": "Technology"
+  },
+  "028670.KS": {
+    "name": "Pan Ocean Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "0288.HK": {
+    "name": "WH Group Limited",
+    "sector": "Consumer Staples"
+  },
+  "0291.HK": {
+    "name": "China Resources Beer (Holdings) Company Limited",
+    "sector": "Consumer Staples"
+  },
+  "029780.KS": {
+    "name": "Samsung Card Co., Ltd.",
+    "sector": "Financials"
+  },
+  "0300.HK": {
+    "name": "Midea Group Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "030000.KS": {
+    "name": "Cheil Worldwide Inc.",
+    "sector": "Communication"
+  },
+  "030190.KS": {
+    "name": "NICE Information Service Co., Ltd.",
+    "sector": "Financials"
+  },
+  "030200.KS": {
+    "name": "KT Corporation",
+    "sector": "Communication"
+  },
+  "031210.KS": {
+    "name": "Seoul Guarantee Insurance Company",
+    "sector": "Financials"
+  },
+  "0316.HK": {
+    "name": "Orient Overseas (International) Limited",
+    "sector": "Industrials"
+  },
+  "0322.HK": {
+    "name": "Tingyi (Cayman Islands) Holding Corp.",
+    "sector": "Consumer Staples"
+  },
+  "032640.KS": {
+    "name": "LG Uplus Corp.",
+    "sector": "Communication"
+  },
+  "032830.KS": {
+    "name": "Samsung Life Insurance Co., Ltd.",
+    "sector": "Financials"
+  },
+  "033780.KS": {
+    "name": "KT&G Corporation",
+    "sector": "Consumer Staples"
+  },
+  "034020.KS": {
+    "name": "Doosan Enerbility Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "034220.KS": {
+    "name": "LG Display Co., Ltd.",
+    "sector": "Technology"
+  },
+  "034230.KS": {
+    "name": "Paradise Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "034730.KS": {
+    "name": "SK Inc.",
+    "sector": "Industrials"
+  },
+  "035250.KS": {
+    "name": "Kangwon Land, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "035420.KS": {
+    "name": "NAVER Corporation",
+    "sector": "Communication"
+  },
+  "035720.KS": {
+    "name": "Kakao Corp.",
+    "sector": "Communication"
+  },
+  "036420.KS": {
+    "name": "ContentreeJoongAng corp.",
+    "sector": "Communication"
+  },
+  "036460.KS": {
+    "name": "Korea Gas Corporation",
+    "sector": "Utilities"
+  },
+  "036570.KS": {
+    "name": "NC Corporation",
+    "sector": "Communication"
+  },
+  "0386.HK": {
+    "name": "China Petroleum & Chemical Corporation",
+    "sector": "Energy"
+  },
+  "0388.HK": {
+    "name": "Hong Kong Exchanges and Clearing Limited",
+    "sector": "Financials"
+  },
+  "039490.KS": {
+    "name": "Kiwoom Securities Co., Ltd.",
+    "sector": "Financials"
+  },
+  "042660.KS": {
+    "name": "Hanwha Ocean Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "042700.KS": {
+    "name": "HANMI Semiconductor Co., Ltd.",
+    "sector": "Technology"
+  },
+  "047040.KS": {
+    "name": "Daewoo Engineering & Construction Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "047050.KS": {
+    "name": "Posco International Corporation",
+    "sector": "Industrials"
+  },
+  "047810.KS": {
+    "name": "Korea Aerospace Industries, Ltd.",
+    "sector": "Industrials"
+  },
+  "051900.KS": {
+    "name": "LG H&H Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "051910.KS": {
+    "name": "LG Chem, Ltd.",
+    "sector": "Materials"
+  },
+  "052690.KS": {
+    "name": "KEPCO Engineering & Construction Company, Inc.",
+    "sector": "Industrials"
+  },
+  "055490.KS": {
+    "name": "Tapex Co., Ltd.",
+    "sector": "Materials"
+  },
+  "055550.KS": {
+    "name": "Shinhan Financial Group Co., Ltd.",
+    "sector": "Financials"
+  },
+  "062040.KS": {
+    "name": "SANIL ELECTRIC",
+    "sector": "Industrials"
+  },
+  "064350.KS": {
+    "name": "Hyundai Rotem Company",
+    "sector": "Industrials"
+  },
+  "064400.KS": {
+    "name": "LG CNS",
+    "sector": "Technology"
+  },
+  "066570.KS": {
+    "name": "LG Electronics Inc.",
+    "sector": "Technology"
+  },
+  "0669.HK": {
+    "name": "Techtronic Industries Company Limited",
+    "sector": "Industrials"
+  },
+  "066970.KS": {
+    "name": "L&F",
+    "sector": "Industrials"
+  },
+  "068270.KS": {
+    "name": "Celltrion, Inc.",
+    "sector": "Healthcare"
+  },
+  "0688.HK": {
+    "name": "China Overseas Land & Investment Limited",
+    "sector": "Real Estate"
+  },
+  "0700.HK": {
+    "name": "Tencent Holdings Limited",
+    "sector": "Communication"
+  },
+  "071050.KS": {
+    "name": "Korea Investment Holdings Co., Ltd.",
+    "sector": "Financials"
+  },
+  "0728.HK": {
+    "name": "China Telecom Corporation Limited",
+    "sector": "Communication"
+  },
+  "073240.KS": {
+    "name": "Kumho Tire Co., Inc.",
+    "sector": "Consumer Disc."
+  },
+  "0762.HK": {
+    "name": "China Unicom (Hong Kong) Limited",
+    "sector": "Communication"
+  },
+  "078930.KS": {
+    "name": "GS Holdings Corp.",
+    "sector": "Industrials"
+  },
+  "079160.KS": {
+    "name": "CJ CGV Co., Ltd.",
+    "sector": "Communication"
+  },
+  "079550.KS": {
+    "name": "LIG Defense&Aerospace Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "079900.KS": {
+    "name": "Junjin Construction & Robot Co.,Ltd.",
+    "sector": "Industrials"
+  },
+  "081660.KS": {
+    "name": "Misto Holdings Corp.",
+    "sector": "Consumer Disc."
+  },
+  "0823.HK": {
+    "name": "Link Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "082740.KS": {
+    "name": "Hanwha Engine Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "0836.HK": {
+    "name": "China Resources Power Holdings Company Limited",
+    "sector": "Utilities"
+  },
+  "0857.HK": {
+    "name": "PetroChina Company Limited",
+    "sector": "Energy"
+  },
+  "086280.KS": {
+    "name": "Hyundai Glovis Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "086790.KS": {
+    "name": "Hana Financial Group Inc.",
+    "sector": "Financials"
+  },
+  "0868.HK": {
+    "name": "Xinyi Glass Holdings Limited",
+    "sector": "Materials"
+  },
+  "088260.KS": {
+    "name": "E Kocref Cr-Reit",
+    "sector": "Real Estate"
+  },
+  "0883.HK": {
+    "name": "CNOOC Limited",
+    "sector": "Energy"
+  },
+  "089590.KS": {
+    "name": "Jeju Air Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "089860.KS": {
+    "name": "LOTTE rental co.,ltd.",
+    "sector": "Industrials"
+  },
+  "090430.KS": {
+    "name": "Amorepacific Corporation",
+    "sector": "Consumer Staples"
+  },
+  "090460.KS": {
+    "name": "BH Co., Ltd.",
+    "sector": "Technology"
+  },
+  "091810.KS": {
+    "name": "Trinity Airways Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "092780.KS": {
+    "name": "DYP Co.,Ltd",
+    "sector": "Consumer Disc."
+  },
+  "092790.KS": {
+    "name": "NEXTEEL Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "0939.HK": {
+    "name": "China Construction Bank Corporation",
+    "sector": "Financials"
+  },
+  "0941.HK": {
+    "name": "China Mobile Limited",
+    "sector": "Communication"
+  },
+  "0960.HK": {
+    "name": "Longfor Group Holdings Limited",
+    "sector": "Real Estate"
+  },
+  "096770.KS": {
+    "name": "SK Innovation Co., Ltd.",
+    "sector": "Energy"
+  },
+  "0968.HK": {
+    "name": "Xinyi Solar Holdings Limited",
+    "sector": "Technology"
+  },
+  "097520.KS": {
+    "name": "MCNEX Co., Ltd",
+    "sector": "Technology"
+  },
+  "097950.KS": {
+    "name": "CJ Cheiljedang Corporation",
+    "sector": "Consumer Staples"
+  },
+  "0981.HK": {
+    "name": "Semiconductor Manufacturing International Corporation",
+    "sector": "Technology"
+  },
+  "0992.HK": {
+    "name": "Lenovo Group Limited",
+    "sector": "Technology"
+  },
+  "100090.KS": {
+    "name": "SK oceanplant Co.,Ltd",
+    "sector": "Industrials"
+  },
+  "1024.HK": {
+    "name": "Kuaishou Technology",
+    "sector": "Communication"
+  },
+  "103590.KS": {
+    "name": "Iljin Electric Co.,Ltd",
+    "sector": "Industrials"
+  },
+  "1038.HK": {
+    "name": "CK Infrastructure Holdings Limited",
+    "sector": "Utilities"
+  },
+  "1044.HK": {
+    "name": "Hengan International Group Company Limited",
+    "sector": "Consumer Staples"
+  },
+  "105560.KS": {
+    "name": "KB Financial Group Inc.",
+    "sector": "Financials"
+  },
+  "108320.KS": {
+    "name": "LX Semicon Co., Ltd.",
+    "sector": "Technology"
+  },
+  "1088.HK": {
+    "name": "China Shenhua Energy Company Limited",
+    "sector": "Energy"
+  },
+  "1093.HK": {
+    "name": "CSPC Pharmaceutical Group Limited",
+    "sector": "Healthcare"
+  },
+  "1099.HK": {
+    "name": "Sinopharm Group Co. Ltd.",
+    "sector": "Healthcare"
+  },
+  "1101.TW": {
+    "name": "TCC Group Holdings Co., Ltd.",
+    "sector": "Materials"
+  },
+  "1102.TW": {
+    "name": "Asia Cement Corporation",
+    "sector": "Materials"
+  },
+  "1109.HK": {
+    "name": "China Resources Land Limited",
+    "sector": "Real Estate"
+  },
+  "111110.KS": {
+    "name": "Hojeon Limited",
+    "sector": "Consumer Disc."
+  },
+  "1113.HK": {
+    "name": "CK Asset Holdings Limited",
+    "sector": "Real Estate"
+  },
+  "111380.KS": {
+    "name": "DONG IN ENTECH",
+    "sector": "Consumer Disc."
+  },
+  "1177.HK": {
+    "name": "Sino Biopharmaceutical Limited",
+    "sector": "Healthcare"
+  },
+  "1209.HK": {
+    "name": "China Resources Mixc Lifestyle Services Limited",
+    "sector": "Real Estate"
+  },
+  "1210.TW": {
+    "name": "Great Wall Enterprise Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "1211.HK": {
+    "name": "BYD Company Limited",
+    "sector": "Consumer Disc."
+  },
+  "1216.TW": {
+    "name": "Uni-President Enterprises Corp.",
+    "sector": "Consumer Staples"
+  },
+  "1229.TW": {
+    "name": "Lien Hwa Industrial Holdings Corporation",
+    "sector": "Industrials"
+  },
+  "126720.KS": {
+    "name": "Soosan Industries Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "1299.HK": {
+    "name": "AIA Group Limited",
+    "sector": "Financials"
+  },
+  "1301.TW": {
+    "name": "Formosa Plastics Corporation",
+    "sector": "Materials"
+  },
+  "1303.TW": {
+    "name": "Nan Ya Plastics Corporation",
+    "sector": "Materials"
+  },
+  "1319.TW": {
+    "name": "Tong Yang Industry Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1326.TW": {
+    "name": "Formosa Chemicals & Fibre Corporation",
+    "sector": "Materials"
+  },
+  "1332.T": {
+    "name": "Nissui Corporation",
+    "sector": "Consumer Staples"
+  },
+  "137310.KS": {
+    "name": "SD Biosensor, Inc.",
+    "sector": "Healthcare"
+  },
+  "1378.HK": {
+    "name": "China Hongqiao Group Limited",
+    "sector": "Materials"
+  },
+  "138040.KS": {
+    "name": "Meritz Financial Group Inc.",
+    "sector": "Financials"
+  },
+  "1398.HK": {
+    "name": "Industrial and Commercial Bank of China Limited",
+    "sector": "Financials"
+  },
+  "139990.KS": {
+    "name": "AJUSTEEL Co.,Ltd",
+    "sector": "Materials"
+  },
+  "1402.TW": {
+    "name": "Far Eastern New Century Corporation",
+    "sector": "Consumer Disc."
+  },
+  "1409.TW": {
+    "name": "Shinkong Synthetic Fibers Corporation",
+    "sector": "Consumer Disc."
+  },
+  "145720.KS": {
+    "name": "Dentium CO., LTD",
+    "sector": "Healthcare"
+  },
+  "1476.TW": {
+    "name": "Eclat Textile Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1477.TW": {
+    "name": "Makalot Industrial Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1503.TW": {
+    "name": "Shihlin Electric & Engineering Corp.",
+    "sector": "Industrials"
+  },
+  "1504.TW": {
+    "name": "TECO Electric & Machinery Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "1513.TW": {
+    "name": "Chung-Hsin Electric and Machinery Manufacturing Corp.",
+    "sector": "Industrials"
+  },
+  "1519.HK": {
+    "name": "J&T Global Express Limited",
+    "sector": "Industrials"
+  },
+  "1519.TW": {
+    "name": "Fortune Electric Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "1560.TW": {
+    "name": "Kinik Company",
+    "sector": "Industrials"
+  },
+  "1590.TW": {
+    "name": "Airtac International Group",
+    "sector": "Industrials"
+  },
+  "1605.T": {
+    "name": "Inpex Corporation",
+    "sector": "Energy"
+  },
+  "1605.TW": {
+    "name": "Walsin Lihwa Corporation",
+    "sector": "Materials"
+  },
+  "161390.KS": {
+    "name": "Hankook Tire & Technology Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1717.TW": {
+    "name": "Eternal Materials Co., Ltd.",
+    "sector": "Materials"
+  },
+  "1721.T": {
+    "name": "COMSYS Holdings Corporation",
+    "sector": "Industrials"
+  },
+  "1722.TW": {
+    "name": "Taiwan Fertilizer Co., Ltd.",
+    "sector": "Materials"
+  },
+  "1736.TW": {
+    "name": "Johnson Health Tech .Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1773.TW": {
+    "name": "Shiny Chemical Industrial Co., Ltd.",
+    "sector": "Materials"
+  },
+  "178920.KS": {
+    "name": "PI Advanced Materials Co., Ltd.",
+    "sector": "Materials"
+  },
+  "1795.TW": {
+    "name": "Lotus Pharmaceutical Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "1801.HK": {
+    "name": "Innovent Biologics, Inc.",
+    "sector": "Healthcare"
+  },
+  "1801.T": {
+    "name": "Taisei Corporation",
+    "sector": "Industrials"
+  },
+  "1802.T": {
+    "name": "Obayashi Corporation",
+    "sector": "Industrials"
+  },
+  "1802.TW": {
+    "name": "Taiwan Glass Ind. Corp.",
+    "sector": "Materials"
+  },
+  "1803.T": {
+    "name": "Shimizu Corporation",
+    "sector": "Industrials"
+  },
+  "180640.KS": {
+    "name": "Hanjin Kal",
+    "sector": "Consumer Disc."
+  },
+  "1808.T": {
+    "name": "HASEKO Corporation",
+    "sector": "Consumer Disc."
+  },
+  "1810.HK": {
+    "name": "Xiaomi Corporation",
+    "sector": "Technology"
+  },
+  "1812.T": {
+    "name": "Kajima Corporation",
+    "sector": "Industrials"
+  },
+  "181710.KS": {
+    "name": "NHN Corporation",
+    "sector": "Communication"
+  },
+  "1876.HK": {
+    "name": "Budweiser Brewing Company APAC Limited",
+    "sector": "Consumer Staples"
+  },
+  "1907.TW": {
+    "name": "YFY Inc.",
+    "sector": "Materials"
+  },
+  "192080.KS": {
+    "name": "DoubleUGames Co., Ltd.",
+    "sector": "Communication"
+  },
+  "1925.T": {
+    "name": "Daiwa House Industry Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "192650.KS": {
+    "name": "DREAMTECH Co., Ltd.",
+    "sector": "Technology"
+  },
+  "1928.HK": {
+    "name": "Sands China Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1928.T": {
+    "name": "Sekisui House, Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "1929.HK": {
+    "name": "Chow Tai Fook Jewellery Group Limited",
+    "sector": "Consumer Disc."
+  },
+  "1963.T": {
+    "name": "JGC Holdings Corporation",
+    "sector": "Industrials"
+  },
+  "1997.HK": {
+    "name": "Wharf Real Estate Investment Company Limited",
+    "sector": "Real Estate"
+  },
+  "2002.T": {
+    "name": "Nisshin Seifun Group Inc.",
+    "sector": "Consumer Staples"
+  },
+  "2002.TW": {
+    "name": "China Steel Corporation",
+    "sector": "Materials"
+  },
+  "2006.TW": {
+    "name": "Tung Ho Steel Enterprise Corporation",
+    "sector": "Materials"
+  },
+  "2015.HK": {
+    "name": "Li Auto Inc.",
+    "sector": "Consumer Disc."
+  },
+  "2015.TW": {
+    "name": "Feng Hsin Steel Co., Ltd.",
+    "sector": "Materials"
+  },
+  "2020.HK": {
+    "name": "ANTA Sports Products Limited",
+    "sector": "Consumer Disc."
+  },
+  "2027.TW": {
+    "name": "Ta Chen Stainless Pipe Co., Ltd.",
+    "sector": "Materials"
+  },
+  "2049.TW": {
+    "name": "Hiwin Technologies Corporation",
+    "sector": "Industrials"
+  },
+  "2057.HK": {
+    "name": "ZTO Express (Cayman) Inc.",
+    "sector": "Industrials"
+  },
+  "2059.TW": {
+    "name": "King Slide Works Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "207940.KS": {
+    "name": "Samsung Biologics Co.,Ltd.",
+    "sector": "Healthcare"
+  },
+  "2105.TW": {
+    "name": "Cheng Shin Rubber Ind. Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "217590.KS": {
+    "name": "TMC",
+    "sector": "Industrials"
+  },
+  "2206.TW": {
+    "name": "Sanyang Motor Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "2207.TW": {
+    "name": "Hotai Motor Co.,Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "2211.TW": {
+    "name": "Evergreen Steel Corp.",
+    "sector": "Materials"
+  },
+  "2258.TW": {
+    "name": "FOXTRON VEHICLE TECHS CO LTD",
+    "sector": "Consumer Disc."
+  },
+  "2269.HK": {
+    "name": "WuXi Biologics (Cayman) Inc.",
+    "sector": "Healthcare"
+  },
+  "2269.T": {
+    "name": "Meiji Holdings Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "2282.T": {
+    "name": "NH Foods Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "2301.TW": {
+    "name": "Lite-On Technology Corporation",
+    "sector": "Technology"
+  },
+  "2303.TW": {
+    "name": "United Microelectronics Corporation",
+    "sector": "Technology"
+  },
+  "2308.TW": {
+    "name": "Delta Electronics, Inc.",
+    "sector": "Technology"
+  },
+  "2312.TW": {
+    "name": "Kinpo Electronics, Inc.",
+    "sector": "Technology"
+  },
+  "2313.HK": {
+    "name": "Shenzhou International Group Holdings Limited",
+    "sector": "Consumer Disc."
+  },
+  "2313.TW": {
+    "name": "Compeq Manufacturing Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2317.TW": {
+    "name": "Hon Hai Precision Industry Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2318.HK": {
+    "name": "Ping An Insurance (Group) Company of China, Ltd.",
+    "sector": "Financials"
+  },
+  "2319.HK": {
+    "name": "China Mengniu Dairy Company Limited",
+    "sector": "Consumer Staples"
+  },
+  "2324.TW": {
+    "name": "Compal Electronics, Inc.",
+    "sector": "Technology"
+  },
+  "2327.TW": {
+    "name": "Yageo Corporation",
+    "sector": "Technology"
+  },
+  "2330.TW": {
+    "name": "Taiwan Semiconductor Manufacturing Company Limited",
+    "sector": "Technology"
+  },
+  "2331.HK": {
+    "name": "Li Ning Company Limited",
+    "sector": "Consumer Disc."
+  },
+  "2337.TW": {
+    "name": "Macronix International Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2344.TW": {
+    "name": "Winbond Electronics Corporation",
+    "sector": "Technology"
+  },
+  "2345.TW": {
+    "name": "Accton Technology Corporation",
+    "sector": "Technology"
+  },
+  "2347.TW": {
+    "name": "Synnex Technology International Corporation",
+    "sector": "Technology"
+  },
+  "2351.TW": {
+    "name": "SDI Corporation",
+    "sector": "Technology"
+  },
+  "2352.TW": {
+    "name": "Qisda Corporation",
+    "sector": "Technology"
+  },
+  "2353.TW": {
+    "name": "Acer Incorporated",
+    "sector": "Technology"
+  },
+  "2354.TW": {
+    "name": "Foxconn Technology Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2356.TW": {
+    "name": "Inventec Corporation",
+    "sector": "Technology"
+  },
+  "2357.TW": {
+    "name": "ASUSTeK Computer Inc.",
+    "sector": "Technology"
+  },
+  "2359.HK": {
+    "name": "WuXi AppTec Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "2360.TW": {
+    "name": "Chroma ATE Inc.",
+    "sector": "Technology"
+  },
+  "2368.TW": {
+    "name": "Gold Circuit Electronics Ltd.",
+    "sector": "Technology"
+  },
+  "2371.TW": {
+    "name": "Tatung Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "2376.TW": {
+    "name": "Giga-Byte Technology Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2377.TW": {
+    "name": "Micro-Star International Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2379.TW": {
+    "name": "Realtek Semiconductor Corp.",
+    "sector": "Technology"
+  },
+  "2382.HK": {
+    "name": "Sunny Optical Technology (Group) Company Limited",
+    "sector": "Technology"
+  },
+  "2382.TW": {
+    "name": "Quanta Computer Inc.",
+    "sector": "Technology"
+  },
+  "2383.TW": {
+    "name": "Elite Material Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2385.TW": {
+    "name": "Chicony Electronics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2388.HK": {
+    "name": "BOC Hong Kong (Holdings) Limited",
+    "sector": "Financials"
+  },
+  "2388.TW": {
+    "name": "VIA Technologies, Inc.",
+    "sector": "Technology"
+  },
+  "2395.TW": {
+    "name": "Advantech Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2404.TW": {
+    "name": "United Integrated Services Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "2408.TW": {
+    "name": "Nanya Technology Corporation",
+    "sector": "Technology"
+  },
+  "2409.TW": {
+    "name": "AUO Corporation",
+    "sector": "Technology"
+  },
+  "2412.TW": {
+    "name": "Chunghwa Telecom Co., Ltd.",
+    "sector": "Communication"
+  },
+  "2413.T": {
+    "name": "M3, Inc.",
+    "sector": "Healthcare"
+  },
+  "241560.KS": {
+    "name": "Doosan Bobcat Inc.",
+    "sector": "Industrials"
+  },
+  "2421.TW": {
+    "name": "Sunonwealth Electric Machine Industry Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "2428.TW": {
+    "name": "Thinking Electronic Industrial Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2432.T": {
+    "name": "DeNA Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "2441.TW": {
+    "name": "Greatek Electronics Inc.",
+    "sector": "Technology"
+  },
+  "2449.TW": {
+    "name": "King Yuan Electronics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "244920.KS": {
+    "name": "Aplus Asset Advisor Co. Ltd",
+    "sector": "Financials"
+  },
+  "2451.TW": {
+    "name": "Transcend Information, Inc.",
+    "sector": "Technology"
+  },
+  "2454.TW": {
+    "name": "MediaTek Inc.",
+    "sector": "Technology"
+  },
+  "2455.TW": {
+    "name": "Visual Photonics Epitaxy Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2458.TW": {
+    "name": "ELAN Microelectronics Corporation",
+    "sector": "Technology"
+  },
+  "2464.TW": {
+    "name": "Mirle Automation Corporation",
+    "sector": "Industrials"
+  },
+  "2467.TW": {
+    "name": "C Sun Mfg Ltd.",
+    "sector": "Industrials"
+  },
+  "2472.TW": {
+    "name": "Lelon Electronics Corp.",
+    "sector": "Technology"
+  },
+  "2474.TW": {
+    "name": "Catcher Technology Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "248070.KS": {
+    "name": "Solum Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2481.TW": {
+    "name": "PANJIT International Inc.",
+    "sector": "Technology"
+  },
+  "2486.TW": {
+    "name": "I-Chiun Precision Industry Co., Ltd.",
+    "sector": "Technology"
+  },
+  "2492.TW": {
+    "name": "Walsin Technology Corporation",
+    "sector": "Technology"
+  },
+  "2498.TW": {
+    "name": "HTC Corporation",
+    "sector": "Technology"
+  },
+  "2501.T": {
+    "name": "Sapporo Breweries Limited",
+    "sector": "Consumer Staples"
+  },
+  "2502.T": {
+    "name": "Asahi Group Holdings, Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "2503.T": {
+    "name": "Kirin Holdings Company, Limited",
+    "sector": "Consumer Staples"
+  },
+  "2504.TW": {
+    "name": "Goldsun Building Materials Co., Ltd.",
+    "sector": "Materials"
+  },
+  "251270.KS": {
+    "name": "Netmarble Corporation",
+    "sector": "Communication"
+  },
+  "2539.TW": {
+    "name": "Sakura Development Co.,Ltd",
+    "sector": "Real Estate"
+  },
+  "2540.TW": {
+    "name": "JSL Construction & Development Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "2542.TW": {
+    "name": "Highwealth Construction Corp.",
+    "sector": "Real Estate"
+  },
+  "2597.TW": {
+    "name": "Ruentex Engineering & Construction Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "259960.KS": {
+    "name": "KRAFTON, Inc.",
+    "sector": "Communication"
+  },
+  "2600.HK": {
+    "name": "Aluminum Corporation of China Limited",
+    "sector": "Materials"
+  },
+  "2603.TW": {
+    "name": "Evergreen Marine Corporation (Taiwan) Ltd.",
+    "sector": "Industrials"
+  },
+  "2606.TW": {
+    "name": "U-Ming Marine Transport Corporation",
+    "sector": "Industrials"
+  },
+  "2609.TW": {
+    "name": "Yang Ming Marine Transport Corporation",
+    "sector": "Industrials"
+  },
+  "2610.TW": {
+    "name": "China Airlines, Ltd.",
+    "sector": "Industrials"
+  },
+  "2615.TW": {
+    "name": "Wan Hai Lines Ltd.",
+    "sector": "Industrials"
+  },
+  "2618.HK": {
+    "name": "JD Logistics, Inc.",
+    "sector": "Industrials"
+  },
+  "2618.TW": {
+    "name": "EVA Airways Corp.",
+    "sector": "Industrials"
+  },
+  "2628.HK": {
+    "name": "China Life Insurance Company Limited",
+    "sector": "Financials"
+  },
+  "2633.TW": {
+    "name": "Taiwan High Speed Rail Corporation",
+    "sector": "Industrials"
+  },
+  "2634.TW": {
+    "name": "Aerospace Industrial Development Corporation",
+    "sector": "Industrials"
+  },
+  "2637.TW": {
+    "name": "Wisdom Marine Lines Co., Limited (Cayman)",
+    "sector": "Industrials"
+  },
+  "2645.TW": {
+    "name": "Evergreen Aviation Technologies Corporation",
+    "sector": "Industrials"
+  },
+  "2646.TW": {
+    "name": "STARLUX Airlines Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "264900.KS": {
+    "name": "Crown Confectionery Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "267250.KS": {
+    "name": "HD Hyundai Co., Ltd.",
+    "sector": "Energy"
+  },
+  "267260.KS": {
+    "name": "HD Hyundai Electric Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "267270.KS": {
+    "name": "HD Construction Equipment Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "267290.KS": {
+    "name": "Kyungdong City Gas Co., Ltd",
+    "sector": "Utilities"
+  },
+  "267850.KS": {
+    "name": "Asiana IDT, Inc.",
+    "sector": "Technology"
+  },
+  "268280.KS": {
+    "name": "Miwon Specialty Chemical Co., Ltd.",
+    "sector": "Materials"
+  },
+  "2688.HK": {
+    "name": "ENN Energy Holdings Limited",
+    "sector": "Utilities"
+  },
+  "271560.KS": {
+    "name": "ORION Corp.",
+    "sector": "Consumer Staples"
+  },
+  "271940.KS": {
+    "name": "Iljin Hysolus Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "271980.KS": {
+    "name": "Jeil Pharmaceutical Co.,Ltd",
+    "sector": "Healthcare"
+  },
+  "272210.KS": {
+    "name": "Hanwha Systems Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "272450.KS": {
+    "name": "Jin Air Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "272550.KS": {
+    "name": "Samyang Packaging Corporation",
+    "sector": "Consumer Disc."
+  },
+  "2768.T": {
+    "name": "Sojitz Corporation",
+    "sector": "Industrials"
+  },
+  "278470.KS": {
+    "name": "APR Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "279570.KS": {
+    "name": "Kbank",
+    "sector": "Financials"
+  },
+  "2801.T": {
+    "name": "Kikkoman Corporation",
+    "sector": "Consumer Staples"
+  },
+  "2801.TW": {
+    "name": "Chang Hwa Commercial Bank, Ltd.",
+    "sector": "Financials"
+  },
+  "2802.T": {
+    "name": "Ajinomoto Co., Inc.",
+    "sector": "Consumer Staples"
+  },
+  "280360.KS": {
+    "name": "Lotte Wellfood Co.,Ltd",
+    "sector": "Consumer Staples"
+  },
+  "2812.TW": {
+    "name": "Taichung Commercial Bank Co., Ltd.",
+    "sector": "Financials"
+  },
+  "281820.KS": {
+    "name": "KCTech Co., Ltd.",
+    "sector": "Technology"
+  },
+  "282330.KS": {
+    "name": "BGF Retail Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "2834.TW": {
+    "name": "Taiwan Business Bank, Ltd.",
+    "sector": "Financials"
+  },
+  "2838.TW": {
+    "name": "Union Bank of Taiwan",
+    "sector": "Financials"
+  },
+  "2845.TW": {
+    "name": "Far Eastern International Bank Ltd.",
+    "sector": "Financials"
+  },
+  "284740.KS": {
+    "name": "CUCKOO Homesys Co., Ltd",
+    "sector": "Industrials"
+  },
+  "2850.TW": {
+    "name": "Shinkong Insurance Co., Ltd.",
+    "sector": "Financials"
+  },
+  "285130.KS": {
+    "name": "SK Chemicals Co.,Ltd",
+    "sector": "Materials"
+  },
+  "2855.TW": {
+    "name": "President Securities Corporation",
+    "sector": "Financials"
+  },
+  "285A.T": {
+    "name": "KIOXIA HOLDINGS CORPORATION",
+    "sector": "Technology"
+  },
+  "2867.TW": {
+    "name": "Mercuries Life Insurance Company Ltd.",
+    "sector": "Financials"
+  },
+  "286940.KS": {
+    "name": "LOTTE INNOVATE Co.,Ltd",
+    "sector": "Technology"
+  },
+  "2871.T": {
+    "name": "Nichirei Corporation",
+    "sector": "Consumer Staples"
+  },
+  "2880.TW": {
+    "name": "Hua Nan Financial Holdings Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2881.TW": {
+    "name": "Fubon Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2882.TW": {
+    "name": "Cathay Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2883.TW": {
+    "name": "KGI Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2884.TW": {
+    "name": "E.SUN Financial Holding Company, Ltd.",
+    "sector": "Financials"
+  },
+  "2885.TW": {
+    "name": "Yuanta Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2886.TW": {
+    "name": "Mega Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2887.TW": {
+    "name": "TS Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2889.TW": {
+    "name": "IBF Financial Holdings Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2890.TW": {
+    "name": "SinoPac Financial Holdings Company Limited",
+    "sector": "Financials"
+  },
+  "2891.TW": {
+    "name": "CTBC Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2892.TW": {
+    "name": "First Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "2899.HK": {
+    "name": "Zijin Mining Group Company Limited",
+    "sector": "Materials"
+  },
+  "2912.TW": {
+    "name": "President Chain Store Corporation",
+    "sector": "Consumer Staples"
+  },
+  "2914.T": {
+    "name": "Japan Tobacco Inc.",
+    "sector": "Consumer Staples"
+  },
+  "2915.TW": {
+    "name": "Ruentex Industries Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "2923.TW": {
+    "name": "Sino Horizon Holdings Limited",
+    "sector": "Real Estate"
+  },
+  "293480.KS": {
+    "name": "Hana Pharm Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "293940.KS": {
+    "name": "Shinhan Alpha REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "294870.KS": {
+    "name": "IPARK Hyundai Development Company",
+    "sector": "Industrials"
+  },
+  "298000.KS": {
+    "name": "Hyosung Chemical Corporation",
+    "sector": "Materials"
+  },
+  "298020.KS": {
+    "name": "Hyosung TNC Corporation",
+    "sector": "Consumer Disc."
+  },
+  "298040.KS": {
+    "name": "Hyosung Heavy Industries Corporation",
+    "sector": "Industrials"
+  },
+  "298050.KS": {
+    "name": "HS Hyosung Advanced Materials Corporation",
+    "sector": "Consumer Disc."
+  },
+  "3005.TW": {
+    "name": "Getac Holdings Corporation",
+    "sector": "Technology"
+  },
+  "3006.TW": {
+    "name": "Elite Semiconductor Microelectronics Technology Inc.",
+    "sector": "Technology"
+  },
+  "300720.KS": {
+    "name": "Hanil Cement Co., Ltd.",
+    "sector": "Materials"
+  },
+  "3008.TW": {
+    "name": "Largan Precision Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3010.TW": {
+    "name": "Wah Lee Industrial Corporation",
+    "sector": "Technology"
+  },
+  "3017.TW": {
+    "name": "Asia Vital Components Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3019.TW": {
+    "name": "Asia Optical Co., Inc.",
+    "sector": "Technology"
+  },
+  "3023.TW": {
+    "name": "SINBON Electronics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "302440.KS": {
+    "name": "SK bioscience Co.,Ltd.",
+    "sector": "Healthcare"
+  },
+  "3026.TW": {
+    "name": "Holy Stone Enterprise Co.,Ltd.",
+    "sector": "Technology"
+  },
+  "3030.TW": {
+    "name": "Test Research, Inc.",
+    "sector": "Technology"
+  },
+  "3034.TW": {
+    "name": "Novatek Microelectronics Corp.",
+    "sector": "Technology"
+  },
+  "3035.TW": {
+    "name": "Faraday Technology Corporation",
+    "sector": "Technology"
+  },
+  "3036.TW": {
+    "name": "WT Microelectronics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3037.TW": {
+    "name": "Unimicron Technology Corp.",
+    "sector": "Technology"
+  },
+  "3042.TW": {
+    "name": "TXC Corporation",
+    "sector": "Technology"
+  },
+  "3044.TW": {
+    "name": "Tripod Technology Corporation",
+    "sector": "Technology"
+  },
+  "3045.TW": {
+    "name": "Taiwan Mobile Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "306200.KS": {
+    "name": "SeAH Steel Corporation",
+    "sector": "Materials"
+  },
+  "307950.KS": {
+    "name": "Hyundai Autoever Corporation",
+    "sector": "Technology"
+  },
+  "308170.KS": {
+    "name": "CTR Mobility Co.,Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "3086.T": {
+    "name": "J. Front Retailing Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "3090.TW": {
+    "name": "Nichidenbo Corporation",
+    "sector": "Technology"
+  },
+  "3092.T": {
+    "name": "ZOZO, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "3099.T": {
+    "name": "Isetan Mitsukoshi Holdings Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "316140.KS": {
+    "name": "Woori Financial Group Inc.",
+    "sector": "Financials"
+  },
+  "3167.TW": {
+    "name": "Ta Liang Technology Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "317400.KS": {
+    "name": "Xi S&D Inc.",
+    "sector": "Real Estate"
+  },
+  "317450.KS": {
+    "name": "MYUNGIN PHARM",
+    "sector": "Healthcare"
+  },
+  "3189.TW": {
+    "name": "Kinsus Interconnect Technology Corp.",
+    "sector": "Technology"
+  },
+  "322000.KS": {
+    "name": "HD Hyundai Energy Solutions Co.,Ltd.",
+    "sector": "Technology"
+  },
+  "3231.TW": {
+    "name": "Wistron Corporation",
+    "sector": "Technology"
+  },
+  "323410.KS": {
+    "name": "KakaoBank Corp.",
+    "sector": "Financials"
+  },
+  "326030.KS": {
+    "name": "SK Biopharmaceuticals Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "3289.T": {
+    "name": "Tokyu Fudosan Holdings Corporation",
+    "sector": "Real Estate"
+  },
+  "329180.KS": {
+    "name": "HD Hyundai Heavy Industries Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "330590.KS": {
+    "name": "LOTTE REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "334890.KS": {
+    "name": "IGIS Value Plus REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "336260.KS": {
+    "name": "Doosan Fuel Cell Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "336370.KS": {
+    "name": "Solus Advanced Materials Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3376.TW": {
+    "name": "Shin Zu Shing Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "338100.KS": {
+    "name": "NH Prime REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "3382.T": {
+    "name": "Seven & i Holdings Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "339770.KS": {
+    "name": "Kyochon Food&Beverage Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "3401.T": {
+    "name": "Teijin Limited",
+    "sector": "Industrials"
+  },
+  "3402.T": {
+    "name": "Toray Industries, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "3405.T": {
+    "name": "Kuraray Co., Ltd.",
+    "sector": "Materials"
+  },
+  "3406.TW": {
+    "name": "Genius Electronic Optical Co.,Ltd.",
+    "sector": "Technology"
+  },
+  "3407.T": {
+    "name": "Asahi Kasei Corporation",
+    "sector": "Industrials"
+  },
+  "3413.TW": {
+    "name": "Foxsemicon Integrated Technology Inc.",
+    "sector": "Technology"
+  },
+  "3436.T": {
+    "name": "Sumco Corporation",
+    "sector": "Technology"
+  },
+  "3443.TW": {
+    "name": "Global Unichip Corp.",
+    "sector": "Technology"
+  },
+  "344820.KS": {
+    "name": "KCC GLASS Corporation",
+    "sector": "Industrials"
+  },
+  "3450.TW": {
+    "name": "Elite Advanced Laser Corporation",
+    "sector": "Technology"
+  },
+  "3481.TW": {
+    "name": "Innolux Corporation",
+    "sector": "Technology"
+  },
+  "348950.KS": {
+    "name": "JR Global REIT",
+    "sector": "Real Estate"
+  },
+  "350520.KS": {
+    "name": "IGIS RESIDENCE REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "352820.KS": {
+    "name": "HYBE Co., Ltd.",
+    "sector": "Communication"
+  },
+  "3532.TW": {
+    "name": "Formosa Sumco Technology Corporation",
+    "sector": "Technology"
+  },
+  "353200.KS": {
+    "name": "DAEDUCK ELECTRONICS Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3533.TW": {
+    "name": "Lotes Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3563.TW": {
+    "name": "Machvision Inc.",
+    "sector": "Technology"
+  },
+  "357120.KS": {
+    "name": "Koramco Life Infra Reit",
+    "sector": "Real Estate"
+  },
+  "357250.KS": {
+    "name": "Miraeasset Maps REIT 1 Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "357430.KS": {
+    "name": "MASTERN PREMIER REIT 1 Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "3583.TW": {
+    "name": "Scientech Corporation",
+    "sector": "Technology"
+  },
+  "3596.TW": {
+    "name": "Arcadyan Technology Corporation",
+    "sector": "Technology"
+  },
+  "361610.KS": {
+    "name": "SK IE Technology Co., Ltd.",
+    "sector": "Technology"
+  },
+  "363280.KS": {
+    "name": "TY Holdings Co., Ltd",
+    "sector": "Communication"
+  },
+  "3653.TW": {
+    "name": "Jentech Precision Industrial Co., Ltd",
+    "sector": "Technology"
+  },
+  "365550.KS": {
+    "name": "ESR Kendall Square REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "3659.T": {
+    "name": "NEXON Co., Ltd.",
+    "sector": "Communication"
+  },
+  "3661.TW": {
+    "name": "Alchip Technologies, Limited",
+    "sector": "Technology"
+  },
+  "3665.TW": {
+    "name": "BizLink Holding Inc.",
+    "sector": "Industrials"
+  },
+  "3690.HK": {
+    "name": "Meituan",
+    "sector": "Consumer Disc."
+  },
+  "3692.HK": {
+    "name": "Hansoh Pharmaceutical Group Company Limited",
+    "sector": "Healthcare"
+  },
+  "3697.T": {
+    "name": "SHIFT Inc.",
+    "sector": "Technology"
+  },
+  "3702.TW": {
+    "name": "WPG Holdings Limited",
+    "sector": "Technology"
+  },
+  "3706.TW": {
+    "name": "MiTAC Holdings Corporation",
+    "sector": "Technology"
+  },
+  "3711.TW": {
+    "name": "ASE Technology Holding Co., Ltd.",
+    "sector": "Technology"
+  },
+  "3714.TW": {
+    "name": "ENNOSTAR Inc.",
+    "sector": "Technology"
+  },
+  "3715.TW": {
+    "name": "Dynamic Holding Co., Ltd.",
+    "sector": "Technology"
+  },
+  "372910.KS": {
+    "name": "Hancom Lifecare Inc.",
+    "sector": "Technology"
+  },
+  "373220.KS": {
+    "name": "LG Energy Solution, Ltd.",
+    "sector": "Industrials"
+  },
+  "3750.HK": {
+    "name": "Contemporary Amperex Technology Co., Limited",
+    "sector": "Industrials"
+  },
+  "375500.KS": {
+    "name": "DL E&C Co.,Ltd.",
+    "sector": "Industrials"
+  },
+  "377190.KS": {
+    "name": "D&D platform REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "377300.KS": {
+    "name": "Kakao Pay Corp.",
+    "sector": "Technology"
+  },
+  "377740.KS": {
+    "name": "BioNote, Inc.",
+    "sector": "Healthcare"
+  },
+  "378850.KS": {
+    "name": "Hwaseung R&A Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "381970.KS": {
+    "name": "K Car Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "383220.KS": {
+    "name": "F&F Co., Ltd",
+    "sector": "Consumer Disc."
+  },
+  "383800.KS": {
+    "name": "LX Holdings Corp.",
+    "sector": "Financials"
+  },
+  "3861.T": {
+    "name": "Oji Holdings Corporation",
+    "sector": "Materials"
+  },
+  "395400.KS": {
+    "name": "SK Reits Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "396690.KS": {
+    "name": "Mirae Asset Global REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "3968.HK": {
+    "name": "China Merchants Bank Co., Ltd.",
+    "sector": "Financials"
+  },
+  "3988.HK": {
+    "name": "Bank of China Limited",
+    "sector": "Financials"
+  },
+  "3993.HK": {
+    "name": "CMOC Group Limited",
+    "sector": "Materials"
+  },
+  "4004.T": {
+    "name": "Resonac Holdings Corporation",
+    "sector": "Materials"
+  },
+  "4005.T": {
+    "name": "Sumitomo Chemical Company, Limited",
+    "sector": "Materials"
+  },
+  "400760.KS": {
+    "name": "NH All-One REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "4021.T": {
+    "name": "Nissan Chemical Corporation",
+    "sector": "Materials"
+  },
+  "402340.KS": {
+    "name": "SK Square Co., Ltd.",
+    "sector": "Technology"
+  },
+  "403550.KS": {
+    "name": "SOCAR Inc.",
+    "sector": "Technology"
+  },
+  "4042.T": {
+    "name": "Tosoh Corporation",
+    "sector": "Materials"
+  },
+  "4043.T": {
+    "name": "Tokuyama Corporation",
+    "sector": "Materials"
+  },
+  "404990.KS": {
+    "name": "Shinhan Seobu T&D REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "4061.T": {
+    "name": "Denka Company Limited",
+    "sector": "Materials"
+  },
+  "4062.T": {
+    "name": "Ibiden Co.,Ltd.",
+    "sector": "Technology"
+  },
+  "4063.T": {
+    "name": "Shin-Etsu Chemical Co., Ltd.",
+    "sector": "Materials"
+  },
+  "4151.T": {
+    "name": "Kyowa Kirin Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "415640.KS": {
+    "name": "KB Balhae Infrastructure Fund",
+    "sector": "Financials"
+  },
+  "417310.KS": {
+    "name": "Koramco The One REIT",
+    "sector": "Real Estate"
+  },
+  "4183.T": {
+    "name": "Mitsui Chemicals, Inc.",
+    "sector": "Materials"
+  },
+  "4188.T": {
+    "name": "Mitsubishi Chemical Group Corporation",
+    "sector": "Materials"
+  },
+  "4208.T": {
+    "name": "UBE Corporation",
+    "sector": "Materials"
+  },
+  "4307.T": {
+    "name": "Nomura Research Institute, Ltd.",
+    "sector": "Technology"
+  },
+  "432320.KS": {
+    "name": "KB STAR REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "4324.T": {
+    "name": "Dentsu Group Inc.",
+    "sector": "Communication"
+  },
+  "4385.T": {
+    "name": "Mercari, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "439260.KS": {
+    "name": "Daehan Shipbuilding Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "443060.KS": {
+    "name": "HD Hyundai Marine Solution CO.,LTD.",
+    "sector": "Industrials"
+  },
+  "4452.T": {
+    "name": "Kao Corporation",
+    "sector": "Consumer Staples"
+  },
+  "446070.KS": {
+    "name": "유니드비티플러스",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "448730.KS": {
+    "name": "Samsung FN REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "450080.KS": {
+    "name": "ECOPRO MAT",
+    "sector": "Industrials"
+  },
+  "4502.T": {
+    "name": "Takeda Pharmaceutical Company Limited",
+    "sector": "Healthcare"
+  },
+  "4503.T": {
+    "name": "Astellas Pharma Inc.",
+    "sector": "Healthcare"
+  },
+  "4506.T": {
+    "name": "Sumitomo Pharma Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "4507.T": {
+    "name": "Shionogi & Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "451800.KS": {
+    "name": "Hanwha REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "4519.T": {
+    "name": "Chugai Pharmaceutical Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "452260.KS": {
+    "name": "Hanwha Galleria Corporation",
+    "sector": "Consumer Disc."
+  },
+  "4523.T": {
+    "name": "Eisai Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "453340.KS": {
+    "name": "Hyundai Green Food Co., Ltd",
+    "sector": "Industrials"
+  },
+  "4543.T": {
+    "name": "Terumo Corporation",
+    "sector": "Healthcare"
+  },
+  "454910.KS": {
+    "name": "Doosan Robotics Inc.",
+    "sector": "Industrials"
+  },
+  "456040.KS": {
+    "name": "OCI Company Ltd.",
+    "sector": "Materials"
+  },
+  "4568.T": {
+    "name": "Daiichi Sankyo Company, Limited",
+    "sector": "Healthcare"
+  },
+  "457190.KS": {
+    "name": "이수스페셜티케미컬",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "4578.T": {
+    "name": "Otsuka Holdings Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "4583.TW": {
+    "name": "Apex Dynamics, Inc.",
+    "sector": "Industrials"
+  },
+  "460850.KS": {
+    "name": "Dongkuk CM Co., Ltd.",
+    "sector": "Materials"
+  },
+  "460860.KS": {
+    "name": "Dongkuk Steel Mill Company Limited",
+    "sector": "Materials"
+  },
+  "462520.KS": {
+    "name": "Chosun Refractories Co.,Ltd.",
+    "sector": "Materials"
+  },
+  "462870.KS": {
+    "name": "SHIFT UP",
+    "sector": "Communication"
+  },
+  "465770.KS": {
+    "name": "STX Green Logis Ltd",
+    "sector": "Industrials"
+  },
+  "4661.T": {
+    "name": "Oriental Land Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "4689.T": {
+    "name": "LY Corporation",
+    "sector": "Consumer Disc."
+  },
+  "4704.T": {
+    "name": "Trend Micro Incorporated",
+    "sector": "Technology"
+  },
+  "4751.T": {
+    "name": "CyberAgent, Inc.",
+    "sector": "Communication"
+  },
+  "475150.KS": {
+    "name": "SK eternix Co., Ltd.",
+    "sector": "Utilities"
+  },
+  "4755.T": {
+    "name": "Rakuten Group, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "475560.KS": {
+    "name": "The BORN Korea",
+    "sector": "Consumer Disc."
+  },
+  "4763.TW": {
+    "name": "Jinan Acetate Chemical Co., Ltd.",
+    "sector": "Materials"
+  },
+  "4766.TW": {
+    "name": "Nan Pao Resins Chemical Co., Ltd.",
+    "sector": "Materials"
+  },
+  "480370.KS": {
+    "name": "씨케이솔루션",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "481850.KS": {
+    "name": "Shinhan Global Active REIT Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "483650.KS": {
+    "name": "d'Alba Global",
+    "sector": "Consumer Staples"
+  },
+  "484870.KS": {
+    "name": "MNC Solution",
+    "sector": "Industrials"
+  },
+  "487570.KS": {
+    "name": "HS HYOSUNG Corporation",
+    "sector": "Industrials"
+  },
+  "489790.KS": {
+    "name": "Hanwha Vision CO.,LTD",
+    "sector": "Industrials"
+  },
+  "4901.T": {
+    "name": "FUJIFILM Holdings Corporation",
+    "sector": "Industrials"
+  },
+  "4902.T": {
+    "name": "Konica Minolta, Inc.",
+    "sector": "Industrials"
+  },
+  "4904.TW": {
+    "name": "Far EasTone Telecommunications Co., Ltd.",
+    "sector": "Communication"
+  },
+  "4911.T": {
+    "name": "Shiseido Company, Limited",
+    "sector": "Consumer Staples"
+  },
+  "4919.TW": {
+    "name": "Nuvoton Technology Corporation",
+    "sector": "Technology"
+  },
+  "4938.TW": {
+    "name": "Pegatron Corporation",
+    "sector": "Technology"
+  },
+  "4958.TW": {
+    "name": "Zhen Ding Technology Holding Limited",
+    "sector": "Technology"
+  },
+  "499790.KS": {
+    "name": "GS P&L",
+    "sector": "Industrials"
+  },
+  "5019.T": {
+    "name": "Idemitsu Kosan Co.,Ltd.",
+    "sector": "Energy"
+  },
+  "5020.T": {
+    "name": "ENEOS Holdings, Inc.",
+    "sector": "Energy"
+  },
+  "5101.T": {
+    "name": "The Yokohama Rubber Company, Limited",
+    "sector": "Consumer Disc."
+  },
+  "5108.T": {
+    "name": "Bridgestone Corporation",
+    "sector": "Consumer Disc."
+  },
+  "5201.T": {
+    "name": "AGC Inc.",
+    "sector": "Industrials"
+  },
+  "5214.T": {
+    "name": "Nippon Electric Glass Co., Ltd.",
+    "sector": "Technology"
+  },
+  "5233.T": {
+    "name": "Taiheiyo Cement Corporation",
+    "sector": "Materials"
+  },
+  "5234.TW": {
+    "name": "Daxin Materials Corporation",
+    "sector": "Materials"
+  },
+  "5269.TW": {
+    "name": "ASMedia Technology Inc.",
+    "sector": "Technology"
+  },
+  "5301.T": {
+    "name": "Tokai Carbon Co., Ltd.",
+    "sector": "Materials"
+  },
+  "5332.T": {
+    "name": "TOTO LTD.",
+    "sector": "Industrials"
+  },
+  "5333.T": {
+    "name": "NGK Corporation",
+    "sector": "Industrials"
+  },
+  "5401.T": {
+    "name": "Nippon Steel Corporation",
+    "sector": "Materials"
+  },
+  "5406.T": {
+    "name": "Kobe Steel, Ltd.",
+    "sector": "Materials"
+  },
+  "5411.T": {
+    "name": "JFE Holdings, Inc.",
+    "sector": "Materials"
+  },
+  "5434.TW": {
+    "name": "Topco Scientific Co.,Ltd.",
+    "sector": "Technology"
+  },
+  "543A.T": {
+    "name": "ARCHION Corporation",
+    "sector": "Industrials"
+  },
+  "5469.TW": {
+    "name": "HannStar Board Corporation",
+    "sector": "Technology"
+  },
+  "5522.TW": {
+    "name": "Farglory Land Development Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "5631.T": {
+    "name": "The Japan Steel Works, Ltd.",
+    "sector": "Industrials"
+  },
+  "5706.T": {
+    "name": "Mitsui Kinzoku Company, Limited",
+    "sector": "Industrials"
+  },
+  "5711.T": {
+    "name": "Mitsubishi Materials Corporation",
+    "sector": "Materials"
+  },
+  "5713.T": {
+    "name": "Sumitomo Metal Mining Co., Ltd.",
+    "sector": "Materials"
+  },
+  "5714.T": {
+    "name": "Dowa Holdings Co., Ltd.",
+    "sector": "Materials"
+  },
+  "5801.T": {
+    "name": "Furukawa Electric Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "5802.T": {
+    "name": "Sumitomo Electric Industries, Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "5803.T": {
+    "name": "Fujikura Ltd.",
+    "sector": "Industrials"
+  },
+  "5831.T": {
+    "name": "Shizuoka Financial Group,Inc.",
+    "sector": "Financials"
+  },
+  "5871.TW": {
+    "name": "Chailease Holding Company Limited",
+    "sector": "Financials"
+  },
+  "5876.TW": {
+    "name": "The Shanghai Commercial & Savings Bank, Ltd.",
+    "sector": "Financials"
+  },
+  "5880.TW": {
+    "name": "Taiwan Cooperative Financial Holding Co., Ltd.",
+    "sector": "Financials"
+  },
+  "6005.TW": {
+    "name": "Capital Securities Corporation",
+    "sector": "Financials"
+  },
+  "6098.T": {
+    "name": "Recruit Holdings Co., Ltd.",
+    "sector": "Communication"
+  },
+  "6103.T": {
+    "name": "Okuma Corporation",
+    "sector": "Industrials"
+  },
+  "6113.T": {
+    "name": "Amada Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "6116.TW": {
+    "name": "HannStar Display Corporation",
+    "sector": "Technology"
+  },
+  "6139.TW": {
+    "name": "L&K Engineering Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "6146.T": {
+    "name": "Disco Corporation",
+    "sector": "Technology"
+  },
+  "6160.HK": {
+    "name": "BeOne Medicines AG",
+    "sector": "Healthcare"
+  },
+  "6178.T": {
+    "name": "Japan Post Holdings Co., Ltd.",
+    "sector": "Financials"
+  },
+  "6181.HK": {
+    "name": "Laopu Gold Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "6191.TW": {
+    "name": "Global Brands Manufacture Ltd.",
+    "sector": "Technology"
+  },
+  "6196.TW": {
+    "name": "Marketech International Corp.",
+    "sector": "Technology"
+  },
+  "6197.TW": {
+    "name": "JPC Connectivity Inc.",
+    "sector": "Technology"
+  },
+  "6213.TW": {
+    "name": "ITEQ Corporation",
+    "sector": "Technology"
+  },
+  "6214.TW": {
+    "name": "Systex Corporation",
+    "sector": "Technology"
+  },
+  "6239.TW": {
+    "name": "Powertech Technology Inc.",
+    "sector": "Technology"
+  },
+  "6257.TW": {
+    "name": "Sigurd Microelectronics Corporation",
+    "sector": "Technology"
+  },
+  "6271.TW": {
+    "name": "Tong Hsing Electronic Industries, Ltd.",
+    "sector": "Technology"
+  },
+  "6273.T": {
+    "name": "SMC Corporation",
+    "sector": "Industrials"
+  },
+  "6278.TW": {
+    "name": "Taiwan Surface Mounting Technology Corp.",
+    "sector": "Technology"
+  },
+  "6282.TW": {
+    "name": "AcBel Polytech Inc.",
+    "sector": "Industrials"
+  },
+  "6285.TW": {
+    "name": "WNC Corporation",
+    "sector": "Technology"
+  },
+  "6301.T": {
+    "name": "Komatsu Ltd.",
+    "sector": "Industrials"
+  },
+  "6302.T": {
+    "name": "Sumitomo Heavy Industries, Ltd.",
+    "sector": "Industrials"
+  },
+  "6305.T": {
+    "name": "Hitachi Construction Machinery Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "6326.T": {
+    "name": "Kubota Corporation",
+    "sector": "Industrials"
+  },
+  "6361.T": {
+    "name": "Ebara Corporation",
+    "sector": "Industrials"
+  },
+  "6367.T": {
+    "name": "Daikin Industries,Ltd.",
+    "sector": "Industrials"
+  },
+  "6409.TW": {
+    "name": "Voltronic Power Technology Corp.",
+    "sector": "Industrials"
+  },
+  "6414.TW": {
+    "name": "Ennoconn Corporation",
+    "sector": "Technology"
+  },
+  "6415.TW": {
+    "name": "Silergy Corp.",
+    "sector": "Technology"
+  },
+  "6442.TW": {
+    "name": "EZconn Corporation",
+    "sector": "Technology"
+  },
+  "6446.TW": {
+    "name": "PharmaEssentia Corporation",
+    "sector": "Healthcare"
+  },
+  "6451.TW": {
+    "name": "ShunSin Technology Holdings Limited",
+    "sector": "Technology"
+  },
+  "6471.T": {
+    "name": "NSK Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "6472.T": {
+    "name": "NTN Corporation",
+    "sector": "Industrials"
+  },
+  "6472.TW": {
+    "name": "Bora Pharmaceuticals Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "6473.T": {
+    "name": "JTEKT Corporation",
+    "sector": "Consumer Disc."
+  },
+  "6479.T": {
+    "name": "MINEBEA MITSUMI Inc.",
+    "sector": "Technology"
+  },
+  "6501.T": {
+    "name": "Hitachi, Ltd.",
+    "sector": "Industrials"
+  },
+  "6503.T": {
+    "name": "Mitsubishi Electric Corporation",
+    "sector": "Industrials"
+  },
+  "6504.T": {
+    "name": "Fuji Electric Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "6505.TW": {
+    "name": "Formosa Petrochemical Corporation",
+    "sector": "Energy"
+  },
+  "6506.T": {
+    "name": "YASKAWA Electric Corporation",
+    "sector": "Industrials"
+  },
+  "6515.TW": {
+    "name": "WinWay Technology Co., Ltd.",
+    "sector": "Technology"
+  },
+  "6526.T": {
+    "name": "Socionext Inc.",
+    "sector": "Industrials"
+  },
+  "6526.TW": {
+    "name": "Airoha Technology Corp.",
+    "sector": "Technology"
+  },
+  "6531.TW": {
+    "name": "AP Memory Technology Corporation",
+    "sector": "Technology"
+  },
+  "6532.T": {
+    "name": "Baycurrent, Inc.",
+    "sector": "Industrials"
+  },
+  "6592.TW": {
+    "name": "Hotai Finance Co., Ltd.",
+    "sector": "Financials"
+  },
+  "6618.HK": {
+    "name": "JD Health International Inc.",
+    "sector": "Healthcare"
+  },
+  "6645.T": {
+    "name": "OMRON Corporation",
+    "sector": "Technology"
+  },
+  "6669.TW": {
+    "name": "Wiwynn Corporation",
+    "sector": "Technology"
+  },
+  "6670.TW": {
+    "name": "FuSheng Precision Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "6690.HK": {
+    "name": "Haier Smart Home Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "6691.TW": {
+    "name": "Yankey Engineering Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "6701.T": {
+    "name": "NEC Corporation",
+    "sector": "Technology"
+  },
+  "6702.T": {
+    "name": "Fujitsu Limited",
+    "sector": "Technology"
+  },
+  "6723.T": {
+    "name": "Renesas Electronics Corporation",
+    "sector": "Technology"
+  },
+  "6724.T": {
+    "name": "Seiko Epson Corporation",
+    "sector": "Technology"
+  },
+  "6752.T": {
+    "name": "Panasonic Holdings Corporation",
+    "sector": "Technology"
+  },
+  "6753.T": {
+    "name": "Sharp Corporation",
+    "sector": "Technology"
+  },
+  "6758.T": {
+    "name": "Sony Group Corporation",
+    "sector": "Technology"
+  },
+  "6762.T": {
+    "name": "TDK Corporation",
+    "sector": "Technology"
+  },
+  "6770.T": {
+    "name": "Alps Alpine Co., Ltd.",
+    "sector": "Technology"
+  },
+  "6770.TW": {
+    "name": "Powerchip Semiconductor Manufacturing Corporation",
+    "sector": "Technology"
+  },
+  "6781.TW": {
+    "name": "Advanced Energy Solution Holding Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "6789.TW": {
+    "name": "VisEra Technologies Company Ltd.",
+    "sector": "Technology"
+  },
+  "6805.TW": {
+    "name": "Fositek Corp.",
+    "sector": "Technology"
+  },
+  "6831.TW": {
+    "name": "Taiwan Microloops Corp.",
+    "sector": "Industrials"
+  },
+  "6841.T": {
+    "name": "Yokogawa Electric Corporation",
+    "sector": "Industrials"
+  },
+  "6857.T": {
+    "name": "Advantest Corporation",
+    "sector": "Technology"
+  },
+  "6861.T": {
+    "name": "Keyence Corporation",
+    "sector": "Technology"
+  },
+  "6862.HK": {
+    "name": "Haidilao International Holding Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "6890.TW": {
+    "name": "Lai Yih Footwear Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "6902.T": {
+    "name": "DENSO Corporation",
+    "sector": "Consumer Disc."
+  },
+  "6919.TW": {
+    "name": "CALIWAY BIOPHARMACEUTICALS CO L",
+    "sector": "Healthcare"
+  },
+  "6920.T": {
+    "name": "Lasertec Corporation",
+    "sector": "Technology"
+  },
+  "6944.TW": {
+    "name": "Mega Union Technology Inc.",
+    "sector": "Industrials"
+  },
+  "6949.TW": {
+    "name": "Pell Bio-Med Technology Co., Ltd.",
+    "sector": "Healthcare"
+  },
+  "6954.T": {
+    "name": "Fanuc Corporation",
+    "sector": "Industrials"
+  },
+  "6963.T": {
+    "name": "ROHM Co., Ltd.",
+    "sector": "Technology"
+  },
+  "6971.T": {
+    "name": "Kyocera Corporation",
+    "sector": "Industrials"
+  },
+  "6976.T": {
+    "name": "Taiyo Yuden Co., Ltd.",
+    "sector": "Technology"
+  },
+  "6981.T": {
+    "name": "Murata Manufacturing Co., Ltd.",
+    "sector": "Technology"
+  },
+  "6988.T": {
+    "name": "Nitto Denko Corporation",
+    "sector": "Materials"
+  },
+  "7004.T": {
+    "name": "Kanadevia Corporation",
+    "sector": "Industrials"
+  },
+  "7011.T": {
+    "name": "Mitsubishi Heavy Industries, Ltd.",
+    "sector": "Industrials"
+  },
+  "7012.T": {
+    "name": "Kawasaki Heavy Industries, Ltd.",
+    "sector": "Industrials"
+  },
+  "7013.T": {
+    "name": "IHI Corporation",
+    "sector": "Industrials"
+  },
+  "7186.T": {
+    "name": "Yokohama Financial Group, Inc.",
+    "sector": "Financials"
+  },
+  "7201.T": {
+    "name": "Nissan Motor Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "7202.T": {
+    "name": "Isuzu Motors Limited",
+    "sector": "Consumer Disc."
+  },
+  "7203.T": {
+    "name": "Toyota Motor Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7211.T": {
+    "name": "Mitsubishi Motors Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7261.T": {
+    "name": "Mazda Motor Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7267.T": {
+    "name": "Honda Motor Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "7269.T": {
+    "name": "Suzuki Motor Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7270.T": {
+    "name": "Subaru Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7272.T": {
+    "name": "Yamaha Motor Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "7453.T": {
+    "name": "Ryohin Keikaku Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "7532.T": {
+    "name": "Pan Pacific International Holdings Corporation",
+    "sector": "Consumer Staples"
+  },
+  "7610.TW": {
+    "name": "LIANYOU METALS CO LTD",
+    "sector": "Materials"
+  },
+  "7711.TW": {
+    "name": "ASRock Rack Incorporation",
+    "sector": "Technology"
+  },
+  "7731.T": {
+    "name": "Nikon Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7733.T": {
+    "name": "Olympus Corporation",
+    "sector": "Healthcare"
+  },
+  "7735.T": {
+    "name": "SCREEN Holdings Co., Ltd.",
+    "sector": "Technology"
+  },
+  "7741.T": {
+    "name": "HOYA Corporation",
+    "sector": "Healthcare"
+  },
+  "7750.TW": {
+    "name": "Syntec Technology Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "7751.T": {
+    "name": "Canon Inc.",
+    "sector": "Technology"
+  },
+  "7752.T": {
+    "name": "Ricoh Company, Ltd.",
+    "sector": "Industrials"
+  },
+  "7769.TW": {
+    "name": "Hon. Precision, Inc.",
+    "sector": "Technology"
+  },
+  "7795.TW": {
+    "name": "Eternal Precision Mechanics Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "7799.TW": {
+    "name": "Heron Neutron Medical Corp.",
+    "sector": "Healthcare"
+  },
+  "7822.TW": {
+    "name": "V5 TECHNOLOGIES CO LTD",
+    "sector": "Technology"
+  },
+  "7832.T": {
+    "name": "BANDAI NAMCO Holdings Inc.",
+    "sector": "Consumer Disc."
+  },
+  "7911.T": {
+    "name": "TOPPAN Holdings Inc.",
+    "sector": "Industrials"
+  },
+  "7912.T": {
+    "name": "Dai Nippon Printing Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "7951.T": {
+    "name": "Yamaha Corporation",
+    "sector": "Consumer Disc."
+  },
+  "7974.T": {
+    "name": "Nintendo Co., Ltd.",
+    "sector": "Communication"
+  },
+  "8001.T": {
+    "name": "ITOCHU Corporation",
+    "sector": "Industrials"
+  },
+  "8002.T": {
+    "name": "Marubeni Corporation",
+    "sector": "Industrials"
+  },
+  "8015.T": {
+    "name": "Toyota Tsusho Corporation",
+    "sector": "Industrials"
+  },
+  "8016.TW": {
+    "name": "Sitronix Technology Corporation",
+    "sector": "Technology"
+  },
+  "8021.TW": {
+    "name": "Topoint Technology Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "8028.TW": {
+    "name": "Phoenix Silicon International Corporation",
+    "sector": "Technology"
+  },
+  "8031.T": {
+    "name": "Mitsui & Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "8035.T": {
+    "name": "Tokyo Electron Limited",
+    "sector": "Technology"
+  },
+  "8039.TW": {
+    "name": "Taiflex Scientific Co., Ltd.",
+    "sector": "Technology"
+  },
+  "8046.TW": {
+    "name": "Nan Ya Printed Circuit Board Corporation",
+    "sector": "Technology"
+  },
+  "8053.T": {
+    "name": "Sumitomo Corporation",
+    "sector": "Industrials"
+  },
+  "8058.T": {
+    "name": "Mitsubishi Corporation",
+    "sector": "Industrials"
+  },
+  "8070.TW": {
+    "name": "Chang Wah Electromaterials Inc.",
+    "sector": "Technology"
+  },
+  "8112.TW": {
+    "name": "Supreme Electronics Co., Ltd.",
+    "sector": "Technology"
+  },
+  "8150.TW": {
+    "name": "ChipMOS TECHNOLOGIES INC.",
+    "sector": "Technology"
+  },
+  "8210.TW": {
+    "name": "Chenbro Micom Co., Ltd.",
+    "sector": "Technology"
+  },
+  "8233.T": {
+    "name": "Takashimaya Company, Limited",
+    "sector": "Consumer Disc."
+  },
+  "8252.T": {
+    "name": "Marui Group Co., Ltd.",
+    "sector": "Financials"
+  },
+  "8253.T": {
+    "name": "Credit Saison Co., Ltd.",
+    "sector": "Financials"
+  },
+  "8267.T": {
+    "name": "Aeon Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "8304.T": {
+    "name": "Aozora Bank, Ltd.",
+    "sector": "Financials"
+  },
+  "8306.T": {
+    "name": "Mitsubishi UFJ Financial Group, Inc.",
+    "sector": "Financials"
+  },
+  "8308.T": {
+    "name": "Resona Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "8309.T": {
+    "name": "Sumitomo Mitsui Trust Group, Inc.",
+    "sector": "Financials"
+  },
+  "8316.T": {
+    "name": "Sumitomo Mitsui Financial Group, Inc.",
+    "sector": "Financials"
+  },
+  "8331.T": {
+    "name": "The Chiba Bank, Ltd.",
+    "sector": "Financials"
+  },
+  "8354.T": {
+    "name": "Fukuoka Financial Group, Inc.",
+    "sector": "Financials"
+  },
+  "8411.T": {
+    "name": "Mizuho Financial Group, Inc.",
+    "sector": "Financials"
+  },
+  "8422.TW": {
+    "name": "Cleanaway Company Limited",
+    "sector": "Industrials"
+  },
+  "8454.TW": {
+    "name": "momo.com Inc.",
+    "sector": "Consumer Disc."
+  },
+  "8464.TW": {
+    "name": "Nien Made Enterprise Co., LTD.",
+    "sector": "Consumer Disc."
+  },
+  "8591.T": {
+    "name": "ORIX Corporation",
+    "sector": "Financials"
+  },
+  "8601.T": {
+    "name": "Daiwa Securities Group Inc.",
+    "sector": "Financials"
+  },
+  "8604.T": {
+    "name": "Nomura Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "8630.T": {
+    "name": "Sompo Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "8697.T": {
+    "name": "Japan Exchange Group, Inc.",
+    "sector": "Financials"
+  },
+  "8725.T": {
+    "name": "MS&AD Insurance Group Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "8750.T": {
+    "name": "Daiichi Life Group, Inc.",
+    "sector": "Financials"
+  },
+  "8766.T": {
+    "name": "Tokio Marine Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "8795.T": {
+    "name": "T&D Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "8801.T": {
+    "name": "Mitsui Fudosan Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "8802.T": {
+    "name": "Mitsubishi Estate Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "8804.T": {
+    "name": "Tokyo Tatemono Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "8830.T": {
+    "name": "Sumitomo Realty & Development Co., Ltd.",
+    "sector": "Real Estate"
+  },
+  "8926.TW": {
+    "name": "Taiwan Cogeneration Corporation",
+    "sector": "Industrials"
+  },
+  "8996.TW": {
+    "name": "Kaori Heat Treatment Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9001.T": {
+    "name": "Tobu Railway Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9005.T": {
+    "name": "Tokyu Corporation",
+    "sector": "Consumer Disc."
+  },
+  "9007.T": {
+    "name": "Odakyu Electric Railway Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9008.T": {
+    "name": "Keio Corporation",
+    "sector": "Industrials"
+  },
+  "9009.T": {
+    "name": "Keisei Electric Railway Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9020.T": {
+    "name": "East Japan Railway Company",
+    "sector": "Industrials"
+  },
+  "9021.T": {
+    "name": "West Japan Railway Company",
+    "sector": "Industrials"
+  },
+  "9022.T": {
+    "name": "Central Japan Railway Company",
+    "sector": "Industrials"
+  },
+  "9064.T": {
+    "name": "Yamato Holdings Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9101.T": {
+    "name": "Nippon Yusen Kabushiki Kaisha",
+    "sector": "Industrials"
+  },
+  "910322.TW": {
+    "name": "Tingyi (Cayman Islands) Holding Corp.",
+    "sector": "Consumer Staples"
+  },
+  "9104.T": {
+    "name": "Mitsui O.S.K. Lines, Ltd.",
+    "sector": "Industrials"
+  },
+  "9105.TW": {
+    "name": "Cal-Comp Electronics (Thailand) Public Company Limited",
+    "sector": "Technology"
+  },
+  "9107.T": {
+    "name": "Kawasaki Kisen Kaisha, Ltd.",
+    "sector": "Industrials"
+  },
+  "9147.T": {
+    "name": "Nippon Express Holdings, Inc.",
+    "sector": "Industrials"
+  },
+  "9201.T": {
+    "name": "Japan Airlines Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9202.T": {
+    "name": "ANA Holdings Inc.",
+    "sector": "Industrials"
+  },
+  "9432.T": {
+    "name": "NTT, Inc.",
+    "sector": "Communication"
+  },
+  "9433.T": {
+    "name": "KDDI Corporation",
+    "sector": "Communication"
+  },
+  "9434.T": {
+    "name": "SoftBank Corp.",
+    "sector": "Communication"
+  },
+  "9501.T": {
+    "name": "Tokyo Electric Power Company Holdings, Incorporated",
+    "sector": "Utilities"
+  },
+  "9502.T": {
+    "name": "Chubu Electric Power Company, Incorporated",
+    "sector": "Utilities"
+  },
+  "950210.KS": {
+    "name": "Prestige BioPharma Limited",
+    "sector": "Healthcare"
+  },
+  "9503.T": {
+    "name": "The Kansai Electric Power Company, Incorporated",
+    "sector": "Utilities"
+  },
+  "9531.T": {
+    "name": "Tokyo Gas Co.,Ltd.",
+    "sector": "Utilities"
+  },
+  "9532.T": {
+    "name": "Osaka Gas Co., Ltd.",
+    "sector": "Utilities"
+  },
+  "9602.T": {
+    "name": "Toho Co., Ltd.",
+    "sector": "Communication"
+  },
+  "9618.HK": {
+    "name": "JD.com, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "9633.HK": {
+    "name": "Nongfu Spring Co., Ltd.",
+    "sector": "Consumer Staples"
+  },
+  "9735.T": {
+    "name": "SECOM CO., LTD.",
+    "sector": "Industrials"
+  },
+  "9766.T": {
+    "name": "Konami Group Corporation",
+    "sector": "Communication"
+  },
+  "9843.T": {
+    "name": "Nitori Holdings Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "9888.HK": {
+    "name": "Baidu, Inc.",
+    "sector": "Communication"
+  },
+  "9901.HK": {
+    "name": "New Oriental Education & Technology Group Inc.",
+    "sector": "Consumer Staples"
+  },
+  "9904.TW": {
+    "name": "Pou Chen Corporation",
+    "sector": "Consumer Disc."
+  },
+  "9910.TW": {
+    "name": "Feng Tay Enterprises Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "9917.TW": {
+    "name": "Taiwan Secom Co., Ltd.",
+    "sector": "Industrials"
+  },
+  "9921.TW": {
+    "name": "Giant Manufacturing Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "9933.TW": {
+    "name": "CTCI Corporation",
+    "sector": "Industrials"
+  },
+  "9939.TW": {
+    "name": "Taiwan Hon Chuan Enterprise Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "9941.TW": {
+    "name": "Taiwan Acceptance Corporation",
+    "sector": "Financials"
+  },
+  "9945.TW": {
+    "name": "Ruentex Development Co.,Ltd.",
+    "sector": "Industrials"
+  },
+  "9961.HK": {
+    "name": "Trip.com Group Limited",
+    "sector": "Consumer Disc."
+  },
+  "9983.T": {
+    "name": "Fast Retailing Co., Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "9984.T": {
+    "name": "SoftBank Group Corp.",
+    "sector": "Communication"
+  },
+  "9988.HK": {
+    "name": "Alibaba Group Holding Limited",
+    "sector": "Consumer Disc."
+  },
+  "9992.HK": {
+    "name": "Pop Mart International Group Limited",
+    "sector": "Consumer Disc."
+  },
+  "9999.HK": {
+    "name": "NetEase, Inc.",
+    "sector": "Communication"
+  },
+  "AAF.L": {
+    "name": "Airtel Africa Plc",
+    "sector": "Communication"
+  },
+  "AAL.L": {
+    "name": "Anglo American plc",
+    "sector": "Materials"
+  },
+  "AAPL": {
+    "name": "Apple Inc.",
+    "sector": "Technology"
+  },
+  "AAUC.TO": {
+    "name": "Allied Gold Corporation",
+    "sector": "Materials"
+  },
+  "AAV.TO": {
+    "name": "Advantage Energy Ltd.",
+    "sector": "Energy"
+  },
+  "ABBV": {
+    "name": "AbbVie Inc.",
+    "sector": "Healthcare"
+  },
+  "ABDN.L": {
+    "name": "Aberdeen Group Plc",
+    "sector": "Financials"
+  },
+  "ABF.L": {
+    "name": "Associated British Foods plc",
+    "sector": "Consumer Staples"
+  },
+  "ABNB": {
+    "name": "Airbnb, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "ABRA.TO": {
+    "name": "AbraSilver Resource Corp.",
+    "sector": "Materials"
+  },
+  "ABT": {
+    "name": "Abbott Laboratories",
+    "sector": "Healthcare"
+  },
+  "ABX.TO": {
+    "name": "Barrick Mining Corporation",
+    "sector": "Materials"
+  },
+  "AC.PA": {
+    "name": "Accor SA",
+    "sector": "Consumer Disc."
+  },
+  "AC.TO": {
+    "name": "Air Canada",
+    "sector": "Industrials"
+  },
+  "ACA.PA": {
+    "name": "Crédit Agricole S.A.",
+    "sector": "Financials"
+  },
+  "ACN": {
+    "name": "Accenture plc",
+    "sector": "Technology"
+  },
+  "ACO-X.TO": {
+    "name": "ATCO Ltd.",
+    "sector": "Utilities"
+  },
+  "ADANIENT.NS": {
+    "name": "Adani Enterprises Limited",
+    "sector": "Energy"
+  },
+  "ADANIPORTS.NS": {
+    "name": "Adani Ports and Special Economic Zone Limited",
+    "sector": "Industrials"
+  },
+  "ADBE": {
+    "name": "Adobe Inc.",
+    "sector": "Technology"
+  },
+  "ADI": {
+    "name": "Analog Devices, Inc.",
+    "sector": "Technology"
+  },
+  "ADM.L": {
+    "name": "Admiral Group plc",
+    "sector": "Financials"
+  },
+  "ADP": {
+    "name": "Automatic Data Processing, Inc.",
+    "sector": "Technology"
+  },
+  "ADS.DE": {
+    "name": "adidas AG",
+    "sector": "Consumer Disc."
+  },
+  "ADSK": {
+    "name": "Autodesk, Inc.",
+    "sector": "Technology"
+  },
+  "AEM.TO": {
+    "name": "Agnico Eagle Mines Limited",
+    "sector": "Materials"
+  },
+  "AEP": {
+    "name": "American Electric Power Company, Inc.",
+    "sector": "Utilities"
+  },
+  "AFL": {
+    "name": "Aflac Incorporated",
+    "sector": "Financials"
+  },
+  "AG.TO": {
+    "name": "First Majestic Silver Corp.",
+    "sector": "Materials"
+  },
+  "AGI.TO": {
+    "name": "Alamos Gold Inc.",
+    "sector": "Materials"
+  },
+  "AI.PA": {
+    "name": "L'Air Liquide S.A.",
+    "sector": "Materials"
+  },
+  "AIF.TO": {
+    "name": "Altus Group Limited",
+    "sector": "Real Estate"
+  },
+  "AIR.DE": {
+    "name": "Airbus SE",
+    "sector": "Industrials"
+  },
+  "AIR.PA": {
+    "name": "Airbus SE",
+    "sector": "Industrials"
+  },
+  "AJG": {
+    "name": "Arthur J. Gallagher & Co.",
+    "sector": "Financials"
+  },
+  "ALA.TO": {
+    "name": "AltaGas Ltd.",
+    "sector": "Energy"
+  },
+  "ALAB": {
+    "name": "Astera Labs, Inc.",
+    "sector": "Technology"
+  },
+  "ALL": {
+    "name": "The Allstate Corporation",
+    "sector": "Financials"
+  },
+  "ALNY": {
+    "name": "Alnylam Pharmaceuticals, Inc.",
+    "sector": "Healthcare"
+  },
+  "ALS.TO": {
+    "name": "Altius Minerals Corporation",
+    "sector": "Materials"
+  },
+  "ALV.DE": {
+    "name": "Allianz SE",
+    "sector": "Financials"
+  },
+  "ALW.L": {
+    "name": "Alliance Witan",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "AMAT": {
+    "name": "Applied Materials, Inc.",
+    "sector": "Technology"
+  },
+  "AMD": {
+    "name": "Advanced Micro Devices, Inc.",
+    "sector": "Technology"
+  },
+  "AME": {
+    "name": "AMETEK, Inc.",
+    "sector": "Industrials"
+  },
+  "AMGN": {
+    "name": "Amgen Inc.",
+    "sector": "Healthcare"
+  },
+  "AMP": {
+    "name": "Ameriprise Financial, Inc.",
+    "sector": "Financials"
+  },
+  "AMT": {
+    "name": "American Tower Corporation",
+    "sector": "Real Estate"
+  },
+  "AMZN": {
+    "name": "Amazon.com, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "ANET": {
+    "name": "Arista Networks, Inc.",
+    "sector": "Technology"
+  },
+  "ANTO.L": {
+    "name": "Antofagasta plc",
+    "sector": "Materials"
+  },
+  "AON": {
+    "name": "Aon plc",
+    "sector": "Financials"
+  },
+  "AP-UN.TO": {
+    "name": "Allied Properties Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "APD": {
+    "name": "Air Products and Chemicals, Inc.",
+    "sector": "Materials"
+  },
+  "APH": {
+    "name": "Amphenol Corporation",
+    "sector": "Technology"
+  },
+  "APO": {
+    "name": "Apollo Global Management, Inc.",
+    "sector": "Financials"
+  },
+  "APOLLOHOSP.NS": {
+    "name": "Apollo Hospitals Enterprise Limited",
+    "sector": "Healthcare"
+  },
+  "APP": {
+    "name": "AppLovin Corporation",
+    "sector": "Communication"
+  },
+  "AQN.TO": {
+    "name": "Algonquin Power & Utilities Corp.",
+    "sector": "Utilities"
+  },
+  "ARE.TO": {
+    "name": "Aecon Group Inc.",
+    "sector": "Industrials"
+  },
+  "ARIS.TO": {
+    "name": "Aris Mining Corporation",
+    "sector": "Materials"
+  },
+  "ARM": {
+    "name": "Arm Holdings plc",
+    "sector": "Technology"
+  },
+  "ARX.TO": {
+    "name": "ARC Resources Ltd.",
+    "sector": "Energy"
+  },
+  "ASIANPAINT.NS": {
+    "name": "Asian Paints Limited",
+    "sector": "Materials"
+  },
+  "ASM.TO": {
+    "name": "Avino Silver & Gold Mines Ltd.",
+    "sector": "Materials"
+  },
+  "ASML": {
+    "name": "ASML Holding N.V.",
+    "sector": "Technology"
+  },
+  "ATD.TO": {
+    "name": "Alimentation Couche-Tard Inc.",
+    "sector": "Consumer Disc."
+  },
+  "ATH.TO": {
+    "name": "Athabasca Oil Corporation",
+    "sector": "Energy"
+  },
+  "ATRL.TO": {
+    "name": "AtkinsRéalis Group Inc.",
+    "sector": "Industrials"
+  },
+  "ATS.TO": {
+    "name": "ATS Corporation",
+    "sector": "Industrials"
+  },
+  "ATZ.TO": {
+    "name": "Aritzia Inc.",
+    "sector": "Consumer Disc."
+  },
+  "AUTO.L": {
+    "name": "Autotrader Group plc",
+    "sector": "Communication"
+  },
+  "AV.L": {
+    "name": "Aviva plc",
+    "sector": "Financials"
+  },
+  "AVGO": {
+    "name": "Broadcom Inc.",
+    "sector": "Technology"
+  },
+  "AXISBANK.NS": {
+    "name": "Axis Bank Limited",
+    "sector": "Financials"
+  },
+  "AXON": {
+    "name": "Axon Enterprise, Inc.",
+    "sector": "Industrials"
+  },
+  "AXP": {
+    "name": "American Express Company",
+    "sector": "Financials"
+  },
+  "AYA.TO": {
+    "name": "Aya Gold & Silver Inc.",
+    "sector": "Materials"
+  },
+  "AZN.L": {
+    "name": "AstraZeneca PLC",
+    "sector": "Healthcare"
+  },
+  "AZO": {
+    "name": "AutoZone, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "BA": {
+    "name": "The Boeing Company",
+    "sector": "Industrials"
+  },
+  "BA.L": {
+    "name": "BAE Systems plc",
+    "sector": "Industrials"
+  },
+  "BAB.L": {
+    "name": "Babcock International Group PLC",
+    "sector": "Industrials"
+  },
+  "BAC": {
+    "name": "Bank of America Corporation",
+    "sector": "Financials"
+  },
+  "BAJAJ-AUTO.NS": {
+    "name": "Bajaj Auto Limited",
+    "sector": "Consumer Disc."
+  },
+  "BAJAJFINSV.NS": {
+    "name": "Bajaj Finserv Ltd.",
+    "sector": "Financials"
+  },
+  "BAJFINANCE.NS": {
+    "name": "Bajaj Finance Limited",
+    "sector": "Financials"
+  },
+  "BAM.TO": {
+    "name": "Brookfield Asset Management Ltd.",
+    "sector": "Financials"
+  },
+  "BARC.L": {
+    "name": "Barclays PLC",
+    "sector": "Financials"
+  },
+  "BAS.DE": {
+    "name": "BASF SE",
+    "sector": "Materials"
+  },
+  "BATS.L": {
+    "name": "British American Tobacco p.l.c.",
+    "sector": "Consumer Staples"
+  },
+  "BAYN.DE": {
+    "name": "Bayer Aktiengesellschaft",
+    "sector": "Healthcare"
+  },
+  "BB.TO": {
+    "name": "BlackBerry Limited",
+    "sector": "Technology"
+  },
+  "BBD-B.TO": {
+    "name": "Bombardier Inc.",
+    "sector": "Industrials"
+  },
+  "BBOX.L": {
+    "name": "Tritax Big Box REIT",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "BBUC.TO": {
+    "name": "Brookfield Business Corporation",
+    "sector": "Industrials"
+  },
+  "BCE.TO": {
+    "name": "BCE Inc.",
+    "sector": "Communication"
+  },
+  "BDGI.TO": {
+    "name": "Badger Infrastructure Solutions Ltd.",
+    "sector": "Industrials"
+  },
+  "BDT.TO": {
+    "name": "Bird Construction Inc.",
+    "sector": "Industrials"
+  },
+  "BDX": {
+    "name": "Becton, Dickinson and Company",
+    "sector": "Healthcare"
+  },
+  "BEI-UN.TO": {
+    "name": "Boardwalk Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "BEI.DE": {
+    "name": "Beiersdorf Aktiengesellschaft",
+    "sector": "Consumer Staples"
+  },
+  "BEL.NS": {
+    "name": "Bharat Electronics Limited",
+    "sector": "Industrials"
+  },
+  "BEP-UN.TO": {
+    "name": "Brookfield Renewable Partners L.P.",
+    "sector": "Utilities"
+  },
+  "BEZ.L": {
+    "name": "Beazley plc",
+    "sector": "Financials"
+  },
+  "BGEO.L": {
+    "name": "Lion Finance Group PLC",
+    "sector": "Financials"
+  },
+  "BHARTIARTL.NS": {
+    "name": "Bharti Airtel Limited",
+    "sector": "Communication"
+  },
+  "BHC.TO": {
+    "name": "Bausch Health Companies Inc.",
+    "sector": "Healthcare"
+  },
+  "BIP-UN.TO": {
+    "name": "Brookfield Infrastructure Partners L.P.",
+    "sector": "Utilities"
+  },
+  "BIR.TO": {
+    "name": "Birchcliff Energy Ltd.",
+    "sector": "Energy"
+  },
+  "BKNG": {
+    "name": "Booking Holdings Inc.",
+    "sector": "Consumer Disc."
+  },
+  "BKR": {
+    "name": "Baker Hughes Company",
+    "sector": "Energy"
+  },
+  "BLK": {
+    "name": "BlackRock, Inc.",
+    "sector": "Financials"
+  },
+  "BLND.L": {
+    "name": "British Land Company PLC",
+    "sector": "Real Estate"
+  },
+  "BLX.TO": {
+    "name": "Boralex Inc.",
+    "sector": "Utilities"
+  },
+  "BMO.TO": {
+    "name": "Bank of Montreal",
+    "sector": "Financials"
+  },
+  "BMW.DE": {
+    "name": "Bayerische Motoren Werke Aktiengesellschaft",
+    "sector": "Consumer Disc."
+  },
+  "BMY": {
+    "name": "Bristol-Myers Squibb Company",
+    "sector": "Healthcare"
+  },
+  "BN.PA": {
+    "name": "Danone S.A.",
+    "sector": "Consumer Staples"
+  },
+  "BN.TO": {
+    "name": "Brookfield Corporation",
+    "sector": "Financials"
+  },
+  "BNP.PA": {
+    "name": "BNP Paribas SA",
+    "sector": "Financials"
+  },
+  "BNR.DE": {
+    "name": "Brenntag SE",
+    "sector": "Materials"
+  },
+  "BNS.TO": {
+    "name": "The Bank of Nova Scotia",
+    "sector": "Financials"
+  },
+  "BNY": {
+    "name": "The Bank of New York Mellon Cor",
+    "sector": "Financials"
+  },
+  "BNZL.L": {
+    "name": "Bunzl plc",
+    "sector": "Consumer Staples"
+  },
+  "BP.L": {
+    "name": "BP p.l.c.",
+    "sector": "Energy"
+  },
+  "BRBY.L": {
+    "name": "Burberry Group plc",
+    "sector": "Consumer Disc."
+  },
+  "BRK-B": {
+    "name": "Berkshire Hathaway Inc.",
+    "sector": "Financials"
+  },
+  "BSX": {
+    "name": "Boston Scientific Corporation",
+    "sector": "Healthcare"
+  },
+  "BT-A.L": {
+    "name": "BT Group plc",
+    "sector": "Communication"
+  },
+  "BTE.TO": {
+    "name": "Baytex Energy Corp.",
+    "sector": "Energy"
+  },
+  "BTO.TO": {
+    "name": "B2Gold Corp.",
+    "sector": "Materials"
+  },
+  "BTRW.L": {
+    "name": "Barratt Redrow plc",
+    "sector": "Consumer Disc."
+  },
+  "BVI.PA": {
+    "name": "Bureau Veritas SA",
+    "sector": "Industrials"
+  },
+  "BX": {
+    "name": "Blackstone Inc.",
+    "sector": "Financials"
+  },
+  "BYD.TO": {
+    "name": "Boyd Group Services Inc.",
+    "sector": "Consumer Disc."
+  },
+  "C": {
+    "name": "Citigroup Inc.",
+    "sector": "Financials"
+  },
+  "CA.PA": {
+    "name": "Carrefour SA",
+    "sector": "Consumer Staples"
+  },
+  "CAE.TO": {
+    "name": "CAE Inc.",
+    "sector": "Industrials"
+  },
+  "CAH": {
+    "name": "Cardinal Health, Inc.",
+    "sector": "Healthcare"
+  },
+  "CAP.PA": {
+    "name": "Capgemini SE",
+    "sector": "Technology"
+  },
+  "CAR-UN.TO": {
+    "name": "Canadian Apartment Properties Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "CARR": {
+    "name": "Carrier Global Corporation",
+    "sector": "Industrials"
+  },
+  "CAT": {
+    "name": "Caterpillar Inc.",
+    "sector": "Industrials"
+  },
+  "CB": {
+    "name": "Chubb Limited",
+    "sector": "Financials"
+  },
+  "CBK.DE": {
+    "name": "Commerzbank AG",
+    "sector": "Financials"
+  },
+  "CBRE": {
+    "name": "CBRE Group, Inc.",
+    "sector": "Real Estate"
+  },
+  "CCA.TO": {
+    "name": "Cogeco Communications Inc.",
+    "sector": "Communication"
+  },
+  "CCC.L": {
+    "name": "Computacenter plc",
+    "sector": "Technology"
+  },
+  "CCEP": {
+    "name": "Coca-Cola Europacific Partners PLC",
+    "sector": "Consumer Staples"
+  },
+  "CCEP.L": {
+    "name": "Coca-Cola Europacific Partners PLC",
+    "sector": "Consumer Staples"
+  },
+  "CCH.L": {
+    "name": "Coca-Cola HBC AG",
+    "sector": "Consumer Staples"
+  },
+  "CCL-B.TO": {
+    "name": "CCL Industries Inc.",
+    "sector": "Consumer Disc."
+  },
+  "CCO.TO": {
+    "name": "Cameco Corporation",
+    "sector": "Energy"
+  },
+  "CDNS": {
+    "name": "Cadence Design Systems, Inc.",
+    "sector": "Technology"
+  },
+  "CEG": {
+    "name": "Constellation Energy Corporation",
+    "sector": "Utilities"
+  },
+  "CEU.TO": {
+    "name": "CES Energy Solutions Corp.",
+    "sector": "Energy"
+  },
+  "CG.TO": {
+    "name": "Centerra Gold Inc.",
+    "sector": "Materials"
+  },
+  "CHP-UN.TO": {
+    "name": "Choice Properties Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "CI": {
+    "name": "The Cigna Group",
+    "sector": "Healthcare"
+  },
+  "CIEN": {
+    "name": "Ciena Corporation",
+    "sector": "Technology"
+  },
+  "CIGI.TO": {
+    "name": "Colliers International Group Inc.",
+    "sector": "Real Estate"
+  },
+  "CIPLA.NS": {
+    "name": "Cipla Limited",
+    "sector": "Healthcare"
+  },
+  "CJT.TO": {
+    "name": "Cargojet Inc.",
+    "sector": "Industrials"
+  },
+  "CL": {
+    "name": "Colgate-Palmolive Company",
+    "sector": "Consumer Staples"
+  },
+  "CLS.TO": {
+    "name": "Celestica Inc.",
+    "sector": "Technology"
+  },
+  "CM.TO": {
+    "name": "Canadian Imperial Bank of Commerce",
+    "sector": "Financials"
+  },
+  "CMCSA": {
+    "name": "Comcast Corporation",
+    "sector": "Communication"
+  },
+  "CME": {
+    "name": "CME Group Inc.",
+    "sector": "Financials"
+  },
+  "CMI": {
+    "name": "Cummins Inc.",
+    "sector": "Industrials"
+  },
+  "CNA.L": {
+    "name": "Centrica plc",
+    "sector": "Utilities"
+  },
+  "CNQ.TO": {
+    "name": "Canadian Natural Resources Limited",
+    "sector": "Energy"
+  },
+  "CNR.TO": {
+    "name": "Canadian National Railway Company",
+    "sector": "Industrials"
+  },
+  "COALINDIA.NS": {
+    "name": "Coal India Limited",
+    "sector": "Energy"
+  },
+  "COF": {
+    "name": "Capital One Financial Corporation",
+    "sector": "Financials"
+  },
+  "COHR": {
+    "name": "Coherent Corp.",
+    "sector": "Technology"
+  },
+  "CON.DE": {
+    "name": "Continental Aktiengesellschaft",
+    "sector": "Consumer Disc."
+  },
+  "COP": {
+    "name": "ConocoPhillips",
+    "sector": "Energy"
+  },
+  "COR": {
+    "name": "Cencora, Inc.",
+    "sector": "Healthcare"
+  },
+  "COST": {
+    "name": "Costco Wholesale Corporation",
+    "sector": "Consumer Staples"
+  },
+  "CP.TO": {
+    "name": "Canadian Pacific Kansas City Limited",
+    "sector": "Industrials"
+  },
+  "CPG.L": {
+    "name": "Compass Group PLC",
+    "sector": "Consumer Disc."
+  },
+  "CPRT": {
+    "name": "Copart, Inc.",
+    "sector": "Industrials"
+  },
+  "CPX.TO": {
+    "name": "Capital Power Corporation",
+    "sector": "Utilities"
+  },
+  "CRDA.L": {
+    "name": "Croda International Plc",
+    "sector": "Materials"
+  },
+  "CRH": {
+    "name": "CRH plc",
+    "sector": "Materials"
+  },
+  "CRM": {
+    "name": "Salesforce, Inc.",
+    "sector": "Technology"
+  },
+  "CRR-UN.TO": {
+    "name": "Crombie Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "CRT-UN.TO": {
+    "name": "CT Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "CRWD": {
+    "name": "CrowdStrike Holdings, Inc.",
+    "sector": "Technology"
+  },
+  "CRWV": {
+    "name": "CoreWeave, Inc.",
+    "sector": "Technology"
+  },
+  "CS.PA": {
+    "name": "AXA SA",
+    "sector": "Financials"
+  },
+  "CS.TO": {
+    "name": "Capstone Copper Corp.",
+    "sector": "Materials"
+  },
+  "CSCO": {
+    "name": "Cisco Systems, Inc.",
+    "sector": "Technology"
+  },
+  "CSH-UN.TO": {
+    "name": "Chartwell Retirement Residences",
+    "sector": "Real Estate"
+  },
+  "CSU.TO": {
+    "name": "Constellation Software Inc.",
+    "sector": "Technology"
+  },
+  "CSX": {
+    "name": "CSX Corporation",
+    "sector": "Industrials"
+  },
+  "CTAS": {
+    "name": "Cintas Corporation",
+    "sector": "Industrials"
+  },
+  "CTC-A.TO": {
+    "name": "Canadian Tire Corporation, Limited",
+    "sector": "Consumer Disc."
+  },
+  "CTEC.L": {
+    "name": "Convatec Group PLC",
+    "sector": "Healthcare"
+  },
+  "CTVA": {
+    "name": "Corteva, Inc.",
+    "sector": "Materials"
+  },
+  "CU.TO": {
+    "name": "Canadian Utilities Limited",
+    "sector": "Utilities"
+  },
+  "CURA.TO": {
+    "name": "Curaleaf Holdings, Inc.",
+    "sector": "Healthcare"
+  },
+  "CVE.TO": {
+    "name": "Cenovus Energy Inc.",
+    "sector": "Energy"
+  },
+  "CVNA": {
+    "name": "Carvana Co.",
+    "sector": "Consumer Disc."
+  },
+  "CVS": {
+    "name": "CVS Health Corporation",
+    "sector": "Healthcare"
+  },
+  "CVX": {
+    "name": "Chevron Corporation",
+    "sector": "Energy"
+  },
+  "D": {
+    "name": "Dominion Energy, Inc.",
+    "sector": "Utilities"
+  },
+  "DAL": {
+    "name": "Delta Air Lines, Inc.",
+    "sector": "Industrials"
+  },
+  "DASH": {
+    "name": "DoorDash, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "DB1.DE": {
+    "name": "Deutsche Börse AG",
+    "sector": "Financials"
+  },
+  "DBK.DE": {
+    "name": "Deutsche Bank Aktiengesellschaft",
+    "sector": "Financials"
+  },
+  "DCC.L": {
+    "name": "DCC Energy plc",
+    "sector": "Energy"
+  },
+  "DDOG": {
+    "name": "Datadog, Inc.",
+    "sector": "Technology"
+  },
+  "DE": {
+    "name": "Deere & Company",
+    "sector": "Industrials"
+  },
+  "DELL": {
+    "name": "Dell Technologies Inc.",
+    "sector": "Technology"
+  },
+  "DFY.TO": {
+    "name": "Definity Financial Corporation",
+    "sector": "Financials"
+  },
+  "DG.PA": {
+    "name": "Vinci SA",
+    "sector": "Industrials"
+  },
+  "DGE.L": {
+    "name": "Diageo plc",
+    "sector": "Consumer Staples"
+  },
+  "DHL.DE": {
+    "name": "Deutsche Post AG",
+    "sector": "Industrials"
+  },
+  "DHR": {
+    "name": "Danaher Corporation",
+    "sector": "Healthcare"
+  },
+  "DIR-UN.TO": {
+    "name": "Dream Industrial Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "DIS": {
+    "name": "The Walt Disney Company",
+    "sector": "Communication"
+  },
+  "DLR": {
+    "name": "Digital Realty Trust, Inc.",
+    "sector": "Real Estate"
+  },
+  "DML.TO": {
+    "name": "Denison Mines Corp.",
+    "sector": "Energy"
+  },
+  "DOL.TO": {
+    "name": "Dollarama Inc.",
+    "sector": "Consumer Staples"
+  },
+  "DOO.TO": {
+    "name": "BRP Inc.",
+    "sector": "Consumer Disc."
+  },
+  "DPLM.L": {
+    "name": "Diploma PLC",
+    "sector": "Industrials"
+  },
+  "DPM.TO": {
+    "name": "DPM Metals Inc.",
+    "sector": "Materials"
+  },
+  "DRREDDY.NS": {
+    "name": "Dr. Reddy's Laboratories Limited",
+    "sector": "Healthcare"
+  },
+  "DSG.TO": {
+    "name": "The Descartes Systems Group Inc.",
+    "sector": "Technology"
+  },
+  "DSV.TO": {
+    "name": "Discovery Mining Ltd.",
+    "sector": "Materials"
+  },
+  "DSY.PA": {
+    "name": "Dassault Systèmes SE",
+    "sector": "Technology"
+  },
+  "DTE.DE": {
+    "name": "Deutsche Telekom AG",
+    "sector": "Communication"
+  },
+  "DTG.DE": {
+    "name": "Daimler Truck Holding AG",
+    "sector": "Industrials"
+  },
+  "DUK": {
+    "name": "Duke Energy Corporation",
+    "sector": "Utilities"
+  },
+  "DVN": {
+    "name": "Devon Energy Corporation",
+    "sector": "Energy"
+  },
+  "DXCM": {
+    "name": "DexCom, Inc.",
+    "sector": "Healthcare"
+  },
+  "EA": {
+    "name": "Electronic Arts Inc.",
+    "sector": "Communication"
+  },
+  "EBAY": {
+    "name": "eBay Inc.",
+    "sector": "Consumer Disc."
+  },
+  "ECL": {
+    "name": "Ecolab Inc.",
+    "sector": "Materials"
+  },
+  "EDR.TO": {
+    "name": "Endeavour Silver Corp.",
+    "sector": "Materials"
+  },
+  "EDV.L": {
+    "name": "Endeavour Mining plc",
+    "sector": "Materials"
+  },
+  "EFN.TO": {
+    "name": "Element Fleet Management Corp.",
+    "sector": "Industrials"
+  },
+  "EFR.TO": {
+    "name": "Energy Fuels Inc.",
+    "sector": "Energy"
+  },
+  "EFX.TO": {
+    "name": "Enerflex Ltd.",
+    "sector": "Energy"
+  },
+  "EICHERMOT.NS": {
+    "name": "Eicher Motors Limited",
+    "sector": "Consumer Disc."
+  },
+  "EIF.TO": {
+    "name": "Exchange Income Corporation",
+    "sector": "Industrials"
+  },
+  "EL.PA": {
+    "name": "EssilorLuxottica Société anonyme",
+    "sector": "Healthcare"
+  },
+  "ELD.TO": {
+    "name": "Eldorado Gold Corporation",
+    "sector": "Materials"
+  },
+  "ELV": {
+    "name": "Elevance Health, Inc.",
+    "sector": "Healthcare"
+  },
+  "EMA.TO": {
+    "name": "Emera Incorporated",
+    "sector": "Utilities"
+  },
+  "EMP-A.TO": {
+    "name": "Empire Company Limited",
+    "sector": "Consumer Staples"
+  },
+  "EMR": {
+    "name": "Emerson Electric Co.",
+    "sector": "Industrials"
+  },
+  "EN.PA": {
+    "name": "Bouygues SA",
+    "sector": "Industrials"
+  },
+  "ENB.TO": {
+    "name": "Enbridge Inc.",
+    "sector": "Energy"
+  },
+  "ENGI.PA": {
+    "name": "Engie SA",
+    "sector": "Utilities"
+  },
+  "ENR.DE": {
+    "name": "Siemens Energy AG",
+    "sector": "Industrials"
+  },
+  "ENT.L": {
+    "name": "Entain Plc",
+    "sector": "Consumer Disc."
+  },
+  "ENX.PA": {
+    "name": "Euronext N.V.",
+    "sector": "Financials"
+  },
+  "EOAN.DE": {
+    "name": "E.ON SE",
+    "sector": "Utilities"
+  },
+  "EOG": {
+    "name": "EOG Resources, Inc.",
+    "sector": "Energy"
+  },
+  "EQB.TO": {
+    "name": "EQB Inc.",
+    "sector": "Financials"
+  },
+  "EQIX": {
+    "name": "Equinix, Inc.",
+    "sector": "Real Estate"
+  },
+  "EQX.TO": {
+    "name": "Equinox Gold Corp.",
+    "sector": "Materials"
+  },
+  "ERF.PA": {
+    "name": "Eurofins Scientific SE",
+    "sector": "Healthcare"
+  },
+  "ERO.TO": {
+    "name": "Ero Copper Corp.",
+    "sector": "Materials"
+  },
+  "ETERNAL.NS": {
+    "name": "Eternal Limited",
+    "sector": "Consumer Disc."
+  },
+  "ETN": {
+    "name": "Eaton Corporation plc",
+    "sector": "Industrials"
+  },
+  "ETR": {
+    "name": "Entergy Corporation",
+    "sector": "Utilities"
+  },
+  "EW": {
+    "name": "Edwards Lifesciences Corporation",
+    "sector": "Healthcare"
+  },
+  "EXC": {
+    "name": "Exelon Corporation",
+    "sector": "Utilities"
+  },
+  "EXE.TO": {
+    "name": "Extendicare Inc.",
+    "sector": "Healthcare"
+  },
+  "EXPN.L": {
+    "name": "Experian plc",
+    "sector": "Industrials"
+  },
+  "F": {
+    "name": "Ford Motor Company",
+    "sector": "Consumer Disc."
+  },
+  "FAST": {
+    "name": "Fastenal Company",
+    "sector": "Industrials"
+  },
+  "FCIT.L": {
+    "name": "F&C Investment Trust",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "FCR-UN.TO": {
+    "name": "First Capital Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "FCX": {
+    "name": "Freeport-McMoRan Inc.",
+    "sector": "Materials"
+  },
+  "FDX": {
+    "name": "FedEx Corporation",
+    "sector": "Industrials"
+  },
+  "FER": {
+    "name": "Ferrovial N.V.",
+    "sector": "Industrials"
+  },
+  "FERG": {
+    "name": "Ferguson Enterprises Inc.",
+    "sector": "Industrials"
+  },
+  "FFH.TO": {
+    "name": "Fairfax Financial Holdings Limited",
+    "sector": "Financials"
+  },
+  "FGR.PA": {
+    "name": "Eiffage SA",
+    "sector": "Industrials"
+  },
+  "FITB": {
+    "name": "Fifth Third Bancorp",
+    "sector": "Financials"
+  },
+  "FIX": {
+    "name": "Comfort Systems USA, Inc.",
+    "sector": "Industrials"
+  },
+  "FLEX": {
+    "name": "Flex Ltd.",
+    "sector": "Technology"
+  },
+  "FM.TO": {
+    "name": "First Quantum Minerals Ltd.",
+    "sector": "Materials"
+  },
+  "FME.DE": {
+    "name": "Fresenius Medical Care AG",
+    "sector": "Healthcare"
+  },
+  "FNV.TO": {
+    "name": "Franco-Nevada Corporation",
+    "sector": "Materials"
+  },
+  "FRE.DE": {
+    "name": "Fresenius SE & Co. KGaA",
+    "sector": "Healthcare"
+  },
+  "FRES.L": {
+    "name": "Fresnillo plc",
+    "sector": "Materials"
+  },
+  "FRU.TO": {
+    "name": "Freehold Royalties Ltd.",
+    "sector": "Energy"
+  },
+  "FSV.TO": {
+    "name": "FirstService Corporation",
+    "sector": "Real Estate"
+  },
+  "FTNT": {
+    "name": "Fortinet, Inc.",
+    "sector": "Technology"
+  },
+  "FTS.TO": {
+    "name": "Fortis Inc.",
+    "sector": "Utilities"
+  },
+  "FTT.TO": {
+    "name": "Finning International Inc.",
+    "sector": "Industrials"
+  },
+  "FVI.TO": {
+    "name": "Fortuna Mining Corp.",
+    "sector": "Materials"
+  },
+  "G1A.DE": {
+    "name": "GEA Group Aktiengesellschaft",
+    "sector": "Industrials"
+  },
+  "G24.DE": {
+    "name": "Scout24 SE",
+    "sector": "Communication"
+  },
+  "GAW.L": {
+    "name": "Games Workshop Group PLC",
+    "sector": "Consumer Disc."
+  },
+  "GD": {
+    "name": "General Dynamics Corporation",
+    "sector": "Industrials"
+  },
+  "GE": {
+    "name": "GE Aerospace",
+    "sector": "Industrials"
+  },
+  "GEHC": {
+    "name": "GE HealthCare Technologies Inc.",
+    "sector": "Healthcare"
+  },
+  "GEI.TO": {
+    "name": "Gibson Energy Inc.",
+    "sector": "Energy"
+  },
+  "GEV": {
+    "name": "GE Vernova Inc.",
+    "sector": "Industrials"
+  },
+  "GFL.TO": {
+    "name": "GFL Environmental Inc.",
+    "sector": "Industrials"
+  },
+  "GIB-A.TO": {
+    "name": "CGI Inc.",
+    "sector": "Technology"
+  },
+  "GIL.TO": {
+    "name": "Gildan Activewear Inc.",
+    "sector": "Consumer Disc."
+  },
+  "GILD": {
+    "name": "Gilead Sciences, Inc.",
+    "sector": "Healthcare"
+  },
+  "GLE.PA": {
+    "name": "Société Générale Société anonyme",
+    "sector": "Financials"
+  },
+  "GLEN.L": {
+    "name": "Glencore plc",
+    "sector": "Materials"
+  },
+  "GLW": {
+    "name": "Corning Incorporated",
+    "sector": "Technology"
+  },
+  "GM": {
+    "name": "General Motors Company",
+    "sector": "Consumer Disc."
+  },
+  "GMIN.TO": {
+    "name": "G Mining Ventures Corp.",
+    "sector": "Materials"
+  },
+  "GOOG": {
+    "name": "Alphabet Inc.",
+    "sector": "Communication"
+  },
+  "GOOGL": {
+    "name": "Alphabet Inc.",
+    "sector": "Communication"
+  },
+  "GRASIM.NS": {
+    "name": "Grasim Industries Limited",
+    "sector": "Materials"
+  },
+  "GRMN": {
+    "name": "Garmin Ltd.",
+    "sector": "Technology"
+  },
+  "GRT-UN.TO": {
+    "name": "Granite Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "GS": {
+    "name": "The Goldman Sachs Group, Inc.",
+    "sector": "Financials"
+  },
+  "GSK.L": {
+    "name": "GSK plc",
+    "sector": "Healthcare"
+  },
+  "GWO.TO": {
+    "name": "Great-West Lifeco Inc.",
+    "sector": "Financials"
+  },
+  "GWW": {
+    "name": "W.W. Grainger, Inc.",
+    "sector": "Industrials"
+  },
+  "H.TO": {
+    "name": "Hydro One Limited",
+    "sector": "Utilities"
+  },
+  "HBM.TO": {
+    "name": "Hudbay Minerals Inc.",
+    "sector": "Materials"
+  },
+  "HCA": {
+    "name": "HCA Healthcare, Inc.",
+    "sector": "Healthcare"
+  },
+  "HCLTECH.NS": {
+    "name": "HCL Technologies Limited",
+    "sector": "Technology"
+  },
+  "HD": {
+    "name": "The Home Depot, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "HDFCBANK.NS": {
+    "name": "HDFC Bank Limited",
+    "sector": "Financials"
+  },
+  "HDFCLIFE.NS": {
+    "name": "HDFC Life Insurance Company Limited",
+    "sector": "Financials"
+  },
+  "HEI.DE": {
+    "name": "Heidelberg Materials AG",
+    "sector": "Materials"
+  },
+  "HEN3.DE": {
+    "name": "Henkel AG & Co. KGaA",
+    "sector": "Consumer Staples"
+  },
+  "HINDALCO.NS": {
+    "name": "Hindalco Industries Limited",
+    "sector": "Materials"
+  },
+  "HINDUNILVR.NS": {
+    "name": "Hindustan Unilever Limited",
+    "sector": "Consumer Staples"
+  },
+  "HLMA.L": {
+    "name": "Halma plc",
+    "sector": "Industrials"
+  },
+  "HLN.L": {
+    "name": "Haleon plc",
+    "sector": "Healthcare"
+  },
+  "HLT": {
+    "name": "Hilton Worldwide Holdings Inc.",
+    "sector": "Consumer Disc."
+  },
+  "HNR1.DE": {
+    "name": "Hannover Rück SE",
+    "sector": "Financials"
+  },
+  "HO.PA": {
+    "name": "Thales S.A.",
+    "sector": "Industrials"
+  },
+  "HON": {
+    "name": "Honeywell International Inc.",
+    "sector": "Industrials"
+  },
+  "HONA": {
+    "name": "Honeywell Aerospace Inc.",
+    "sector": "Industrials"
+  },
+  "HOOD": {
+    "name": "Robinhood Markets, Inc.",
+    "sector": "Financials"
+  },
+  "HPE": {
+    "name": "Hewlett Packard Enterprise Company",
+    "sector": "Technology"
+  },
+  "HPS-A.TO": {
+    "name": "Hammond Power Solutions Inc.",
+    "sector": "Industrials"
+  },
+  "HR-UN.TO": {
+    "name": "H&R Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "HSBA.L": {
+    "name": "HSBC Holdings plc",
+    "sector": "Financials"
+  },
+  "HSX.L": {
+    "name": "Hiscox Ltd",
+    "sector": "Financials"
+  },
+  "HUM": {
+    "name": "Humana Inc.",
+    "sector": "Healthcare"
+  },
+  "HWDN.L": {
+    "name": "Howden Joinery Group Plc",
+    "sector": "Consumer Disc."
+  },
+  "HWM": {
+    "name": "Howmet Aerospace Inc.",
+    "sector": "Industrials"
+  },
+  "HWX.TO": {
+    "name": "Headwater Exploration Inc.",
+    "sector": "Energy"
+  },
+  "IAG.L": {
+    "name": "International Consolidated Airlines Group S.A.",
+    "sector": "Industrials"
+  },
+  "IAG.TO": {
+    "name": "iA Financial Corporation Inc.",
+    "sector": "Financials"
+  },
+  "IAU.TO": {
+    "name": "i-80 Gold Corp.",
+    "sector": "Materials"
+  },
+  "IBM": {
+    "name": "International Business Machines Corporation",
+    "sector": "Technology"
+  },
+  "ICE": {
+    "name": "Intercontinental Exchange, Inc.",
+    "sector": "Financials"
+  },
+  "ICG.L": {
+    "name": "ICG plc",
+    "sector": "Financials"
+  },
+  "ICICIBANK.NS": {
+    "name": "ICICI Bank Limited",
+    "sector": "Financials"
+  },
+  "IDXX": {
+    "name": "IDEXX Laboratories, Inc.",
+    "sector": "Healthcare"
+  },
+  "IFC.TO": {
+    "name": "Intact Financial Corporation",
+    "sector": "Financials"
+  },
+  "IFX.DE": {
+    "name": "Infineon Technologies AG",
+    "sector": "Technology"
+  },
+  "IGG.L": {
+    "name": "IG Group Holdings plc",
+    "sector": "Financials"
+  },
+  "IGM.TO": {
+    "name": "IGM Financial Inc.",
+    "sector": "Financials"
+  },
+  "IHG.L": {
+    "name": "InterContinental Hotels Group PLC",
+    "sector": "Consumer Disc."
+  },
+  "III.L": {
+    "name": "3i Group Ord",
+    "sector": "Financials"
+  },
+  "IMB.L": {
+    "name": "Imperial Brands PLC",
+    "sector": "Consumer Staples"
+  },
+  "IMG.TO": {
+    "name": "IAMGOLD Corporation",
+    "sector": "Materials"
+  },
+  "IMI.L": {
+    "name": "IMI plc",
+    "sector": "Industrials"
+  },
+  "IMO.TO": {
+    "name": "Imperial Oil Limited",
+    "sector": "Energy"
+  },
+  "INDIGO.NS": {
+    "name": "InterGlobe Aviation Limited",
+    "sector": "Industrials"
+  },
+  "INF.L": {
+    "name": "Informa plc",
+    "sector": "Communication"
+  },
+  "INFY.NS": {
+    "name": "Infosys Limited",
+    "sector": "Technology"
+  },
+  "INTC": {
+    "name": "Intel Corporation",
+    "sector": "Technology"
+  },
+  "INTU": {
+    "name": "Intuit Inc.",
+    "sector": "Technology"
+  },
+  "INVP.L": {
+    "name": "Investec Group",
+    "sector": "Financials"
+  },
+  "IPCO.TO": {
+    "name": "International Petroleum Corporation",
+    "sector": "Energy"
+  },
+  "ISRG": {
+    "name": "Intuitive Surgical, Inc.",
+    "sector": "Healthcare"
+  },
+  "ITC.NS": {
+    "name": "ITC Limited",
+    "sector": "Consumer Staples"
+  },
+  "ITRK.L": {
+    "name": "Intertek Group plc",
+    "sector": "Industrials"
+  },
+  "ITW": {
+    "name": "Illinois Tool Works Inc.",
+    "sector": "Industrials"
+  },
+  "IVN.TO": {
+    "name": "Ivanhoe Mines Ltd.",
+    "sector": "Materials"
+  },
+  "JCI": {
+    "name": "Johnson Controls International plc",
+    "sector": "Industrials"
+  },
+  "JD.L": {
+    "name": "JD Sports Fashion Plc",
+    "sector": "Consumer Disc."
+  },
+  "JIOFIN.NS": {
+    "name": "Jio Financial Services Limited",
+    "sector": "Financials"
+  },
+  "JNJ": {
+    "name": "Johnson & Johnson",
+    "sector": "Healthcare"
+  },
+  "JPM": {
+    "name": "JPMorgan Chase & Co.",
+    "sector": "Financials"
+  },
+  "JSWSTEEL.NS": {
+    "name": "JSW Steel Limited",
+    "sector": "Materials"
+  },
+  "JWEL.TO": {
+    "name": "Jamieson Wellness Inc.",
+    "sector": "Consumer Staples"
+  },
+  "K.TO": {
+    "name": "Kinross Gold Corporation",
+    "sector": "Materials"
+  },
+  "KDP": {
+    "name": "Keurig Dr Pepper Inc.",
+    "sector": "Consumer Staples"
+  },
+  "KEL.TO": {
+    "name": "Kelt Exploration Ltd.",
+    "sector": "Energy"
+  },
+  "KER.PA": {
+    "name": "Kering SA",
+    "sector": "Consumer Disc."
+  },
+  "KEY.TO": {
+    "name": "Keyera Corp.",
+    "sector": "Energy"
+  },
+  "KEYS": {
+    "name": "Keysight Technologies, Inc.",
+    "sector": "Technology"
+  },
+  "KGF.L": {
+    "name": "Kingfisher plc",
+    "sector": "Consumer Disc."
+  },
+  "KHC": {
+    "name": "The Kraft Heinz Company",
+    "sector": "Consumer Staples"
+  },
+  "KKR": {
+    "name": "KKR & Co. Inc.",
+    "sector": "Financials"
+  },
+  "KLAC": {
+    "name": "KLA Corporation",
+    "sector": "Technology"
+  },
+  "KMI": {
+    "name": "Kinder Morgan, Inc.",
+    "sector": "Energy"
+  },
+  "KMP-UN.TO": {
+    "name": "Killam Apartment REIT",
+    "sector": "Real Estate"
+  },
+  "KNT.TO": {
+    "name": "K92 Mining Inc.",
+    "sector": "Materials"
+  },
+  "KO": {
+    "name": "The Coca-Cola Company",
+    "sector": "Consumer Staples"
+  },
+  "KOTAKBANK.NS": {
+    "name": "Kotak Mahindra Bank Limited",
+    "sector": "Financials"
+  },
+  "KXS.TO": {
+    "name": "Kinaxis Inc.",
+    "sector": "Technology"
+  },
+  "L.TO": {
+    "name": "Loblaw Companies Limited",
+    "sector": "Consumer Staples"
+  },
+  "LAC.TO": {
+    "name": "Lithium Americas Corp.",
+    "sector": "Materials"
+  },
+  "LAND.L": {
+    "name": "Land Securities Group Plc",
+    "sector": "Real Estate"
+  },
+  "LB.TO": {
+    "name": "Laurentian Bank of Canada",
+    "sector": "Financials"
+  },
+  "LGEN.L": {
+    "name": "Legal & General Group Plc",
+    "sector": "Financials"
+  },
+  "LHX": {
+    "name": "L3Harris Technologies, Inc.",
+    "sector": "Industrials"
+  },
+  "LIF.TO": {
+    "name": "Labrador Iron Ore Royalty Corporation",
+    "sector": "Materials"
+  },
+  "LIN": {
+    "name": "Linde plc",
+    "sector": "Materials"
+  },
+  "LITE": {
+    "name": "Lumentum Holdings Inc.",
+    "sector": "Technology"
+  },
+  "LLOY.L": {
+    "name": "Lloyds Banking Group plc",
+    "sector": "Financials"
+  },
+  "LLY": {
+    "name": "Eli Lilly and Company",
+    "sector": "Healthcare"
+  },
+  "LMP.L": {
+    "name": "LondonMetric Property Plc",
+    "sector": "Real Estate"
+  },
+  "LMT": {
+    "name": "Lockheed Martin Corporation",
+    "sector": "Industrials"
+  },
+  "LNR.TO": {
+    "name": "Linamar Corporation",
+    "sector": "Consumer Disc."
+  },
+  "LOW": {
+    "name": "Lowe's Companies, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "LR.PA": {
+    "name": "Legrand SA",
+    "sector": "Industrials"
+  },
+  "LRCX": {
+    "name": "Lam Research Corporation",
+    "sector": "Technology"
+  },
+  "LSEG.L": {
+    "name": "London Stock Exchange Group plc",
+    "sector": "Financials"
+  },
+  "LSPD.TO": {
+    "name": "Lightspeed Commerce Inc.",
+    "sector": "Technology"
+  },
+  "LT.NS": {
+    "name": "Larsen & Toubro Limited",
+    "sector": "Industrials"
+  },
+  "LUG.TO": {
+    "name": "Lundin Gold Inc.",
+    "sector": "Materials"
+  },
+  "LUN.TO": {
+    "name": "Lundin Mining Corporation",
+    "sector": "Materials"
+  },
+  "M&M.NS": {
+    "name": "Mahindra & Mahindra Limited",
+    "sector": "Consumer Disc."
+  },
+  "MA": {
+    "name": "Mastercard Incorporated",
+    "sector": "Financials"
+  },
+  "MAR": {
+    "name": "Marriott International, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "MARUTI.NS": {
+    "name": "Maruti Suzuki India Limited",
+    "sector": "Consumer Disc."
+  },
+  "MAU.TO": {
+    "name": "Montage Gold Corp.",
+    "sector": "Materials"
+  },
+  "MAXHEALTH.NS": {
+    "name": "Max Healthcare Institute Limited",
+    "sector": "Healthcare"
+  },
+  "MBG.DE": {
+    "name": "Mercedes-Benz Group AG",
+    "sector": "Consumer Disc."
+  },
+  "MC.PA": {
+    "name": "LVMH Moët Hennessy - Louis Vuitton, Société Européenne",
+    "sector": "Consumer Disc."
+  },
+  "MCD": {
+    "name": "McDonald's Corporation",
+    "sector": "Consumer Disc."
+  },
+  "MCHP": {
+    "name": "Microchip Technology Incorporated",
+    "sector": "Technology"
+  },
+  "MCK": {
+    "name": "McKesson Corporation",
+    "sector": "Healthcare"
+  },
+  "MCO": {
+    "name": "Moody's Corporation",
+    "sector": "Financials"
+  },
+  "MDA.TO": {
+    "name": "MDA Space Ltd.",
+    "sector": "Industrials"
+  },
+  "MDLZ": {
+    "name": "Mondelez International, Inc.",
+    "sector": "Consumer Staples"
+  },
+  "MDT": {
+    "name": "Medtronic plc",
+    "sector": "Healthcare"
+  },
+  "MELI": {
+    "name": "MercadoLibre, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "MET": {
+    "name": "MetLife, Inc.",
+    "sector": "Financials"
+  },
+  "META": {
+    "name": "Meta Platforms, Inc.",
+    "sector": "Communication"
+  },
+  "MFC.TO": {
+    "name": "Manulife Financial Corporation",
+    "sector": "Financials"
+  },
+  "MFI.TO": {
+    "name": "Maple Leaf Foods Inc.",
+    "sector": "Consumer Staples"
+  },
+  "MG.TO": {
+    "name": "Magna International Inc.",
+    "sector": "Consumer Disc."
+  },
+  "MKS.L": {
+    "name": "Marks and Spencer Group plc",
+    "sector": "Consumer Disc."
+  },
+  "ML.PA": {
+    "name": "Michelin",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "MMM": {
+    "name": "3M Company",
+    "sector": "Industrials"
+  },
+  "MNG.L": {
+    "name": "M&G plc",
+    "sector": "Financials"
+  },
+  "MNST": {
+    "name": "Monster Beverage Corporation",
+    "sector": "Consumer Staples"
+  },
+  "MO": {
+    "name": "Altria Group, Inc.",
+    "sector": "Consumer Staples"
+  },
+  "MPC": {
+    "name": "Marathon Petroleum Corporation",
+    "sector": "Energy"
+  },
+  "MPWR": {
+    "name": "Monolithic Power Systems, Inc.",
+    "sector": "Technology"
+  },
+  "MRK": {
+    "name": "Merck & Co., Inc.",
+    "sector": "Healthcare"
+  },
+  "MRK.DE": {
+    "name": "Merck KGaA",
+    "sector": "Healthcare"
+  },
+  "MRO.L": {
+    "name": "Melrose Industries PLC",
+    "sector": "Industrials"
+  },
+  "MRSH": {
+    "name": "Marsh & McLennan Companies, Inc.",
+    "sector": "Financials"
+  },
+  "MRU.TO": {
+    "name": "Metro Inc.",
+    "sector": "Consumer Staples"
+  },
+  "MRVL": {
+    "name": "Marvell Technology, Inc.",
+    "sector": "Technology"
+  },
+  "MS": {
+    "name": "Morgan Stanley",
+    "sector": "Financials"
+  },
+  "MSFT": {
+    "name": "Microsoft Corporation",
+    "sector": "Technology"
+  },
+  "MSI": {
+    "name": "Motorola Solutions, Inc.",
+    "sector": "Technology"
+  },
+  "MSTR": {
+    "name": "Strategy Inc",
+    "sector": "Technology"
+  },
+  "MT.AS": {
+    "name": "ArcelorMittal S.A.",
+    "sector": "Materials"
+  },
+  "MTL.TO": {
+    "name": "Mullen Group Ltd.",
+    "sector": "Industrials"
+  },
+  "MTLN.L": {
+    "name": "Metlen Energy & Metals PLC",
+    "sector": "Utilities"
+  },
+  "MTX.DE": {
+    "name": "MTU Aero Engines AG",
+    "sector": "Industrials"
+  },
+  "MU": {
+    "name": "Micron Technology, Inc.",
+    "sector": "Technology"
+  },
+  "MUV2.DE": {
+    "name": "Münchener Rückversicherungs-Gesellschaft Aktiengesellschaft in München",
+    "sector": "Financials"
+  },
+  "MX.TO": {
+    "name": "Methanex Corporation",
+    "sector": "Materials"
+  },
+  "NA.TO": {
+    "name": "National Bank of Canada",
+    "sector": "Financials"
+  },
+  "NBIS": {
+    "name": "Nebius Group N.V.",
+    "sector": "Communication"
+  },
+  "NEE": {
+    "name": "NextEra Energy, Inc.",
+    "sector": "Utilities"
+  },
+  "NEM": {
+    "name": "Newmont Corporation",
+    "sector": "Materials"
+  },
+  "NESTLEIND.NS": {
+    "name": "Nestlé India Limited",
+    "sector": "Consumer Staples"
+  },
+  "NFI.TO": {
+    "name": "NFI Group Inc.",
+    "sector": "Consumer Disc."
+  },
+  "NFLX": {
+    "name": "Netflix, Inc.",
+    "sector": "Communication"
+  },
+  "NG.L": {
+    "name": "National Grid plc",
+    "sector": "Utilities"
+  },
+  "NG.TO": {
+    "name": "NovaGold Resources Inc.",
+    "sector": "Materials"
+  },
+  "NGEX.TO": {
+    "name": "NGEx Minerals Ltd.",
+    "sector": "Materials"
+  },
+  "NKE": {
+    "name": "NIKE, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "NOC": {
+    "name": "Northrop Grumman Corporation",
+    "sector": "Industrials"
+  },
+  "NOW": {
+    "name": "ServiceNow, Inc.",
+    "sector": "Technology"
+  },
+  "NPI.TO": {
+    "name": "Northland Power Inc.",
+    "sector": "Utilities"
+  },
+  "NSC": {
+    "name": "Norfolk Southern Corporation",
+    "sector": "Industrials"
+  },
+  "NTPC.NS": {
+    "name": "NTPC Limited",
+    "sector": "Utilities"
+  },
+  "NTR.TO": {
+    "name": "Nutrien Ltd.",
+    "sector": "Materials"
+  },
+  "NUE": {
+    "name": "Nucor Corporation",
+    "sector": "Materials"
+  },
+  "NVDA": {
+    "name": "NVIDIA Corporation",
+    "sector": "Technology"
+  },
+  "NWC.TO": {
+    "name": "The North West Company Inc.",
+    "sector": "Consumer Staples"
+  },
+  "NWG.L": {
+    "name": "NatWest Group plc",
+    "sector": "Financials"
+  },
+  "NXE.TO": {
+    "name": "NexGen Energy Ltd.",
+    "sector": "Energy"
+  },
+  "NXPI": {
+    "name": "NXP Semiconductors N.V.",
+    "sector": "Technology"
+  },
+  "NXT.L": {
+    "name": "NEXT plc",
+    "sector": "Consumer Disc."
+  },
+  "O": {
+    "name": "Realty Income Corporation",
+    "sector": "Real Estate"
+  },
+  "ODFL": {
+    "name": "Old Dominion Freight Line, Inc.",
+    "sector": "Industrials"
+  },
+  "OGC.TO": {
+    "name": "OceanaGold Corporation",
+    "sector": "Materials"
+  },
+  "OKE": {
+    "name": "ONEOK, Inc.",
+    "sector": "Energy"
+  },
+  "ONEX.TO": {
+    "name": "Onex Corporation",
+    "sector": "Financials"
+  },
+  "ONGC.NS": {
+    "name": "Oil and Natural Gas Corporation Limited",
+    "sector": "Energy"
+  },
+  "OR.PA": {
+    "name": "L'Oréal S.A.",
+    "sector": "Consumer Staples"
+  },
+  "OR.TO": {
+    "name": "OR Royalties Inc.",
+    "sector": "Materials"
+  },
+  "ORA.PA": {
+    "name": "Orange S.A.",
+    "sector": "Communication"
+  },
+  "ORCL": {
+    "name": "Oracle Corporation",
+    "sector": "Technology"
+  },
+  "ORLY": {
+    "name": "O'Reilly Automotive, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "OTEX.TO": {
+    "name": "Open Text Corporation",
+    "sector": "Technology"
+  },
+  "PAAS.TO": {
+    "name": "Pan American Silver Corp.",
+    "sector": "Materials"
+  },
+  "PAH3.DE": {
+    "name": "Porsche Automobil Holding SE",
+    "sector": "Consumer Disc."
+  },
+  "PANW": {
+    "name": "Palo Alto Networks, Inc.",
+    "sector": "Technology"
+  },
+  "PAYX": {
+    "name": "Paychex, Inc.",
+    "sector": "Technology"
+  },
+  "PBH.TO": {
+    "name": "Premium Brands Holdings Corporation",
+    "sector": "Consumer Staples"
+  },
+  "PCAR": {
+    "name": "PACCAR Inc",
+    "sector": "Industrials"
+  },
+  "PCT.L": {
+    "name": "Polar Capital Technology Trust",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "PDD": {
+    "name": "PDD Holdings Inc.",
+    "sector": "Consumer Disc."
+  },
+  "PEP": {
+    "name": "PepsiCo, Inc.",
+    "sector": "Consumer Staples"
+  },
+  "PEY.TO": {
+    "name": "Peyto Exploration & Development Corp.",
+    "sector": "Energy"
+  },
+  "PFE": {
+    "name": "Pfizer Inc.",
+    "sector": "Healthcare"
+  },
+  "PG": {
+    "name": "The Procter & Gamble Company",
+    "sector": "Consumer Staples"
+  },
+  "PGR": {
+    "name": "The Progressive Corporation",
+    "sector": "Financials"
+  },
+  "PH": {
+    "name": "Parker-Hannifin Corporation",
+    "sector": "Industrials"
+  },
+  "PLD": {
+    "name": "Prologis, Inc.",
+    "sector": "Real Estate"
+  },
+  "PLTR": {
+    "name": "Palantir Technologies Inc.",
+    "sector": "Technology"
+  },
+  "PM": {
+    "name": "Philip Morris International Inc.",
+    "sector": "Consumer Staples"
+  },
+  "PMZ-UN.TO": {
+    "name": "Primaris Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "PNC": {
+    "name": "The PNC Financial Services Group, Inc.",
+    "sector": "Financials"
+  },
+  "POU.TO": {
+    "name": "Paramount Resources Ltd.",
+    "sector": "Energy"
+  },
+  "POW.TO": {
+    "name": "Power Corporation of Canada",
+    "sector": "Financials"
+  },
+  "POWERGRID.NS": {
+    "name": "Power Grid Corporation of India Limited",
+    "sector": "Utilities"
+  },
+  "PPL.TO": {
+    "name": "Pembina Pipeline Corporation",
+    "sector": "Energy"
+  },
+  "PPTA.TO": {
+    "name": "Perpetua Resources Corp.",
+    "sector": "Materials"
+  },
+  "PRU.L": {
+    "name": "Prudential plc",
+    "sector": "Financials"
+  },
+  "PSA": {
+    "name": "Public Storage",
+    "sector": "Real Estate"
+  },
+  "PSH.L": {
+    "name": "Pershing Square Holdings, Ltd.",
+    "sector": "Financials"
+  },
+  "PSK.TO": {
+    "name": "PrairieSky Royalty Ltd.",
+    "sector": "Energy"
+  },
+  "PSN.L": {
+    "name": "Persimmon Plc",
+    "sector": "Consumer Disc."
+  },
+  "PSON.L": {
+    "name": "Pearson plc",
+    "sector": "Communication"
+  },
+  "PSX": {
+    "name": "Phillips 66",
+    "sector": "Energy"
+  },
+  "PUB.PA": {
+    "name": "Publicis Groupe S.A.",
+    "sector": "Communication"
+  },
+  "PWR": {
+    "name": "Quanta Services, Inc.",
+    "sector": "Industrials"
+  },
+  "PXT.TO": {
+    "name": "Parex Resources Inc.",
+    "sector": "Energy"
+  },
+  "PYPL": {
+    "name": "PayPal Holdings, Inc.",
+    "sector": "Financials"
+  },
+  "QBR-B.TO": {
+    "name": "Quebecor Inc.",
+    "sector": "Communication"
+  },
+  "QCOM": {
+    "name": "QUALCOMM Incorporated",
+    "sector": "Technology"
+  },
+  "QIA.DE": {
+    "name": "Qiagen N.V.",
+    "sector": "Healthcare"
+  },
+  "QSR.TO": {
+    "name": "Restaurant Brands International Inc.",
+    "sector": "Consumer Disc."
+  },
+  "RBA.TO": {
+    "name": "RB Global, Inc.",
+    "sector": "Industrials"
+  },
+  "RCH.TO": {
+    "name": "Richelieu Hardware Ltd.",
+    "sector": "Industrials"
+  },
+  "RCI-B.TO": {
+    "name": "Rogers Communications Inc.",
+    "sector": "Communication"
+  },
+  "RCL": {
+    "name": "Royal Caribbean Cruises Ltd.",
+    "sector": "Consumer Disc."
+  },
+  "REGN": {
+    "name": "Regeneron Pharmaceuticals, Inc.",
+    "sector": "Healthcare"
+  },
+  "REI-UN.TO": {
+    "name": "RioCan Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "REL.L": {
+    "name": "RELX PLC",
+    "sector": "Industrials"
+  },
+  "RELIANCE.NS": {
+    "name": "Reliance Industries Limited",
+    "sector": "Energy"
+  },
+  "RHM.DE": {
+    "name": "Rheinmetall AG",
+    "sector": "Industrials"
+  },
+  "RI.PA": {
+    "name": "Pernod Ricard SA",
+    "sector": "Consumer Staples"
+  },
+  "RIO.L": {
+    "name": "Rio Tinto Group",
+    "sector": "Materials"
+  },
+  "RKLB": {
+    "name": "Rocket Lab Corporation",
+    "sector": "Industrials"
+  },
+  "RKT.L": {
+    "name": "Reckitt Benckiser Group plc",
+    "sector": "Consumer Staples"
+  },
+  "RMS.PA": {
+    "name": "Hermès International Société en commandite par actions",
+    "sector": "Consumer Disc."
+  },
+  "RNO.PA": {
+    "name": "Renault SA",
+    "sector": "Consumer Disc."
+  },
+  "ROK": {
+    "name": "Rockwell Automation, Inc.",
+    "sector": "Industrials"
+  },
+  "ROP": {
+    "name": "Roper Technologies, Inc.",
+    "sector": "Technology"
+  },
+  "ROST": {
+    "name": "Ross Stores, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "RR.L": {
+    "name": "Rolls-Royce Holdings plc",
+    "sector": "Industrials"
+  },
+  "RSG": {
+    "name": "Republic Services, Inc.",
+    "sector": "Industrials"
+  },
+  "RTO.L": {
+    "name": "Rentokil Initial plc",
+    "sector": "Industrials"
+  },
+  "RTX": {
+    "name": "RTX Corporation",
+    "sector": "Industrials"
+  },
+  "RUS.TO": {
+    "name": "Russel Metals Inc.",
+    "sector": "Industrials"
+  },
+  "RWE.DE": {
+    "name": "RWE Aktiengesellschaft",
+    "sector": "Utilities"
+  },
+  "RY.TO": {
+    "name": "Royal Bank of Canada",
+    "sector": "Financials"
+  },
+  "SAF.PA": {
+    "name": "Safran SA",
+    "sector": "Industrials"
+  },
+  "SAN.PA": {
+    "name": "Sanofi",
+    "sector": "Healthcare"
+  },
+  "SAP.DE": {
+    "name": "SAP SE",
+    "sector": "Technology"
+  },
+  "SAP.TO": {
+    "name": "Saputo Inc.",
+    "sector": "Consumer Staples"
+  },
+  "SBILIFE.NS": {
+    "name": "SBI Life Insurance Company Limited",
+    "sector": "Financials"
+  },
+  "SBIN.NS": {
+    "name": "State Bank of India",
+    "sector": "Financials"
+  },
+  "SBRY.L": {
+    "name": "J Sainsbury plc",
+    "sector": "Consumer Staples"
+  },
+  "SBUX": {
+    "name": "Starbucks Corporation",
+    "sector": "Consumer Disc."
+  },
+  "SCHW": {
+    "name": "The Charles Schwab Corporation",
+    "sector": "Financials"
+  },
+  "SCR.TO": {
+    "name": "Strathcona Resources Ltd.",
+    "sector": "Energy"
+  },
+  "SDE.TO": {
+    "name": "Spartan Delta Corp.",
+    "sector": "Energy"
+  },
+  "SDLF.L": {
+    "name": "Standard Life plc",
+    "sector": "Financials"
+  },
+  "SDR.L": {
+    "name": "Schroders plc",
+    "sector": "Financials"
+  },
+  "SEA.TO": {
+    "name": "Seabridge Gold Inc.",
+    "sector": "Materials"
+  },
+  "SES.TO": {
+    "name": "SECURE Waste Infrastructure Corp.",
+    "sector": "Industrials"
+  },
+  "SGE.L": {
+    "name": "The Sage Group plc",
+    "sector": "Technology"
+  },
+  "SGO.PA": {
+    "name": "Compagnie de Saint-Gobain S.A.",
+    "sector": "Industrials"
+  },
+  "SGRO.L": {
+    "name": "SEGRO Plc",
+    "sector": "Real Estate"
+  },
+  "SHEL.L": {
+    "name": "Shell plc",
+    "sector": "Energy"
+  },
+  "SHL.DE": {
+    "name": "Siemens Healthineers AG",
+    "sector": "Healthcare"
+  },
+  "SHOP": {
+    "name": "Shopify Inc.",
+    "sector": "Technology"
+  },
+  "SHOP.TO": {
+    "name": "Shopify Inc.",
+    "sector": "Technology"
+  },
+  "SHRIRAMFIN.NS": {
+    "name": "Shriram Finance Limited",
+    "sector": "Financials"
+  },
+  "SHW": {
+    "name": "The Sherwin-Williams Company",
+    "sector": "Materials"
+  },
+  "SIA.TO": {
+    "name": "Sienna Senior Living Inc.",
+    "sector": "Healthcare"
+  },
+  "SIE.DE": {
+    "name": "Siemens Aktiengesellschaft",
+    "sector": "Industrials"
+  },
+  "SII.TO": {
+    "name": "Sprott Inc.",
+    "sector": "Financials"
+  },
+  "SJ.TO": {
+    "name": "Stella-Jones Inc.",
+    "sector": "Materials"
+  },
+  "SKE.TO": {
+    "name": "Skeena Resources Limited",
+    "sector": "Materials"
+  },
+  "SLB": {
+    "name": "SLB N.V.",
+    "sector": "Energy"
+  },
+  "SLF.TO": {
+    "name": "Sun Life Financial Inc.",
+    "sector": "Financials"
+  },
+  "SMIN.L": {
+    "name": "Smiths Group plc",
+    "sector": "Industrials"
+  },
+  "SMT.L": {
+    "name": "Scottish Mortgage Investment Trust",
+    "resolved": false,
+    "sector": "Other"
+  },
+  "SN.L": {
+    "name": "Smith & Nephew plc",
+    "sector": "Healthcare"
+  },
+  "SNDK": {
+    "name": "Sandisk Corporation",
+    "sector": "Technology"
+  },
+  "SNPS": {
+    "name": "Synopsys, Inc.",
+    "sector": "Technology"
+  },
+  "SO": {
+    "name": "The Southern Company",
+    "sector": "Utilities"
+  },
+  "SOBO.TO": {
+    "name": "South Bow Corporation",
+    "sector": "Energy"
+  },
+  "SPB.TO": {
+    "name": "Superior Plus Corp.",
+    "sector": "Utilities"
+  },
+  "SPCX": {
+    "name": "Space Exploration Technologies Corp.",
+    "sector": "Industrials"
+  },
+  "SPG": {
+    "name": "Simon Property Group, Inc.",
+    "sector": "Real Estate"
+  },
+  "SPGI": {
+    "name": "S&P Global Inc.",
+    "sector": "Financials"
+  },
+  "SPX.L": {
+    "name": "Spirax Group plc",
+    "sector": "Industrials"
+  },
+  "SRE": {
+    "name": "Sempra",
+    "sector": "Utilities"
+  },
+  "SRU-UN.TO": {
+    "name": "SmartCentres Real Estate Investment Trust",
+    "sector": "Real Estate"
+  },
+  "SSE.L": {
+    "name": "SSE plc",
+    "sector": "Utilities"
+  },
+  "SSRM.TO": {
+    "name": "SSR Mining Inc.",
+    "sector": "Materials"
+  },
+  "STAN.L": {
+    "name": "Standard Chartered PLC",
+    "sector": "Financials"
+  },
+  "STJ.L": {
+    "name": "St. James's Place plc",
+    "sector": "Financials"
+  },
+  "STLAP.PA": {
+    "name": "Stellantis N.V.",
+    "sector": "Consumer Disc."
+  },
+  "STMPA.PA": {
+    "name": "STMicroelectronics N.V.",
+    "sector": "Technology"
+  },
+  "STN.TO": {
+    "name": "Stantec Inc.",
+    "sector": "Industrials"
+  },
+  "STT": {
+    "name": "State Street Corporation",
+    "sector": "Financials"
+  },
+  "STX": {
+    "name": "Seagate Technology Holdings plc",
+    "sector": "Technology"
+  },
+  "SU.PA": {
+    "name": "Schneider Electric S.E.",
+    "sector": "Industrials"
+  },
+  "SU.TO": {
+    "name": "Suncor Energy Inc.",
+    "sector": "Energy"
+  },
+  "SUNPHARMA.NS": {
+    "name": "Sun Pharmaceutical Industries Limited",
+    "sector": "Healthcare"
+  },
+  "SVM.TO": {
+    "name": "Silvercorp Metals Inc.",
+    "sector": "Materials"
+  },
+  "SVT.L": {
+    "name": "Severn Trent PLC",
+    "sector": "Utilities"
+  },
+  "SXGC.TO": {
+    "name": "Southern Cross Gold Consolidated Ltd.",
+    "sector": "Materials"
+  },
+  "SY1.DE": {
+    "name": "Symrise AG",
+    "sector": "Materials"
+  },
+  "SYK": {
+    "name": "Stryker Corporation",
+    "sector": "Healthcare"
+  },
+  "T": {
+    "name": "AT&T Inc.",
+    "sector": "Communication"
+  },
+  "T.TO": {
+    "name": "TELUS Corporation",
+    "sector": "Communication"
+  },
+  "TA.TO": {
+    "name": "TransAlta Corporation",
+    "sector": "Utilities"
+  },
+  "TATACONSUM.NS": {
+    "name": "Tata Consumer Products Limited",
+    "sector": "Consumer Staples"
+  },
+  "TATASTEEL.NS": {
+    "name": "Tata Steel Limited",
+    "sector": "Materials"
+  },
+  "TCS.NS": {
+    "name": "Tata Consultancy Services Limited",
+    "sector": "Technology"
+  },
+  "TD.TO": {
+    "name": "The Toronto-Dominion Bank",
+    "sector": "Financials"
+  },
+  "TDG": {
+    "name": "TransDigm Group Incorporated",
+    "sector": "Industrials"
+  },
+  "TECHM.NS": {
+    "name": "Tech Mahindra Limited",
+    "sector": "Technology"
+  },
+  "TECK-B.TO": {
+    "name": "Teck Resources Limited",
+    "sector": "Materials"
+  },
+  "TEL": {
+    "name": "TE Connectivity plc",
+    "sector": "Technology"
+  },
+  "TER": {
+    "name": "Teradyne, Inc.",
+    "sector": "Technology"
+  },
+  "TFC": {
+    "name": "Truist Financial Corporation",
+    "sector": "Financials"
+  },
+  "TFII.TO": {
+    "name": "TFI International Inc.",
+    "sector": "Industrials"
+  },
+  "TFPM.TO": {
+    "name": "Triple Flag Precious Metals Corp.",
+    "sector": "Materials"
+  },
+  "TGT": {
+    "name": "Target Corporation",
+    "sector": "Consumer Staples"
+  },
+  "TIH.TO": {
+    "name": "Toromont Industries Ltd.",
+    "sector": "Industrials"
+  },
+  "TITAN.NS": {
+    "name": "Titan Company Limited",
+    "sector": "Consumer Disc."
+  },
+  "TJX": {
+    "name": "The TJX Companies, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "TKO.TO": {
+    "name": "Trekor Metals Limited",
+    "sector": "Materials"
+  },
+  "TMO": {
+    "name": "Thermo Fisher Scientific Inc.",
+    "sector": "Healthcare"
+  },
+  "TMPV.NS": {
+    "name": "Tata Motors Passenger Vehicles Limited",
+    "sector": "Consumer Disc."
+  },
+  "TMUS": {
+    "name": "T-Mobile US, Inc.",
+    "sector": "Communication"
+  },
+  "TOU.TO": {
+    "name": "Tourmaline Oil Corp.",
+    "sector": "Energy"
+  },
+  "TPZ.TO": {
+    "name": "Topaz Energy Corp.",
+    "sector": "Energy"
+  },
+  "TRENT.NS": {
+    "name": "Trent Limited",
+    "sector": "Consumer Disc."
+  },
+  "TRGP": {
+    "name": "Targa Resources Corp.",
+    "sector": "Energy"
+  },
+  "TRI": {
+    "name": "Thomson Reuters Corporation",
+    "sector": "Industrials"
+  },
+  "TRI.TO": {
+    "name": "Thomson Reuters Corporation",
+    "sector": "Industrials"
+  },
+  "TRP.TO": {
+    "name": "TC Energy Corporation",
+    "sector": "Energy"
+  },
+  "TRV": {
+    "name": "The Travelers Companies, Inc.",
+    "sector": "Financials"
+  },
+  "TSCO.L": {
+    "name": "Tesco PLC",
+    "sector": "Consumer Staples"
+  },
+  "TSLA": {
+    "name": "Tesla, Inc.",
+    "sector": "Consumer Disc."
+  },
+  "TSU.TO": {
+    "name": "Trisura Group Ltd.",
+    "sector": "Financials"
+  },
+  "TT": {
+    "name": "Trane Technologies plc",
+    "sector": "Industrials"
+  },
+  "TTE.PA": {
+    "name": "TotalEnergies SE",
+    "sector": "Energy"
+  },
+  "TTWO": {
+    "name": "Take-Two Interactive Software, Inc.",
+    "sector": "Communication"
+  },
+  "TVE.TO": {
+    "name": "Tamarack Valley Energy Ltd.",
+    "sector": "Energy"
+  },
+  "TVK.TO": {
+    "name": "TerraVest Industries Inc.",
+    "sector": "Energy"
+  },
+  "TXG.TO": {
+    "name": "Torex Gold Resources Inc.",
+    "sector": "Materials"
+  },
+  "TXN": {
+    "name": "Texas Instruments Incorporated",
+    "sector": "Technology"
+  },
+  "UBER": {
+    "name": "Uber Technologies, Inc.",
+    "sector": "Technology"
+  },
+  "ULTRACEMCO.NS": {
+    "name": "UltraTech Cement Limited",
+    "sector": "Materials"
+  },
+  "ULVR.L": {
+    "name": "Unilever PLC",
+    "sector": "Consumer Staples"
+  },
+  "UNH": {
+    "name": "UnitedHealth Group Incorporated",
+    "sector": "Healthcare"
+  },
+  "UNP": {
+    "name": "Union Pacific Corporation",
+    "sector": "Industrials"
+  },
+  "UPS": {
+    "name": "United Parcel Service, Inc.",
+    "sector": "Industrials"
+  },
+  "URI": {
+    "name": "United Rentals, Inc.",
+    "sector": "Industrials"
+  },
+  "URW.PA": {
+    "name": "Unibail-Rodamco-Westfield SE",
+    "sector": "Real Estate"
+  },
+  "USA.TO": {
+    "name": "Americas Gold and Silver Corporation",
+    "sector": "Materials"
+  },
+  "USB": {
+    "name": "U.S. Bancorp",
+    "sector": "Financials"
+  },
+  "UU.L": {
+    "name": "United Utilities Group PLC",
+    "sector": "Utilities"
+  },
+  "V": {
+    "name": "Visa Inc.",
+    "sector": "Financials"
+  },
+  "VET.TO": {
+    "name": "Vermilion Energy Inc.",
+    "sector": "Energy"
+  },
+  "VIE.PA": {
+    "name": "Veolia Environnement SA",
+    "sector": "Industrials"
+  },
+  "VLO": {
+    "name": "Valero Energy Corporation",
+    "sector": "Energy"
+  },
+  "VNA.DE": {
+    "name": "Vonovia SE",
+    "sector": "Real Estate"
+  },
+  "VNP.TO": {
+    "name": "5N Plus Inc.",
+    "sector": "Materials"
+  },
+  "VOD.L": {
+    "name": "Vodafone Group Public Limited Company",
+    "sector": "Communication"
+  },
+  "VOW3.DE": {
+    "name": "Volkswagen AG",
+    "sector": "Consumer Disc."
+  },
+  "VRT": {
+    "name": "Vertiv Holdings Co",
+    "sector": "Industrials"
+  },
+  "VRTX": {
+    "name": "Vertex Pharmaceuticals Incorporated",
+    "sector": "Healthcare"
+  },
+  "VST": {
+    "name": "Vistra Corp.",
+    "sector": "Utilities"
+  },
+  "VTR": {
+    "name": "Ventas, Inc.",
+    "sector": "Real Estate"
+  },
+  "VZ": {
+    "name": "Verizon Communications Inc.",
+    "sector": "Communication"
+  },
+  "VZLA.TO": {
+    "name": "Vizsla Silver Corp.",
+    "sector": "Materials"
+  },
+  "WAB": {
+    "name": "Westinghouse Air Brake Technologies Corporation",
+    "sector": "Industrials"
+  },
+  "WBD": {
+    "name": "Warner Bros. Discovery, Inc.",
+    "sector": "Communication"
+  },
+  "WCN.TO": {
+    "name": "Waste Connections, Inc.",
+    "sector": "Industrials"
+  },
+  "WCP.TO": {
+    "name": "Whitecap Resources Inc.",
+    "sector": "Energy"
+  },
+  "WDAY": {
+    "name": "Workday, Inc.",
+    "sector": "Technology"
+  },
+  "WDC": {
+    "name": "Western Digital Corporation",
+    "sector": "Technology"
+  },
+  "WDO.TO": {
+    "name": "Wesdome Gold Mines Ltd.",
+    "sector": "Materials"
+  },
+  "WEIR.L": {
+    "name": "The Weir Group PLC",
+    "sector": "Industrials"
+  },
+  "WELL": {
+    "name": "Welltower Inc.",
+    "sector": "Real Estate"
+  },
+  "WFC": {
+    "name": "Wells Fargo & Company",
+    "sector": "Financials"
+  },
+  "WFG.TO": {
+    "name": "West Fraser Timber Co. Ltd.",
+    "sector": "Materials"
+  },
+  "WIPRO.NS": {
+    "name": "Wipro Limited",
+    "sector": "Technology"
+  },
+  "WM": {
+    "name": "Waste Management, Inc.",
+    "sector": "Industrials"
+  },
+  "WMB": {
+    "name": "The Williams Companies, Inc.",
+    "sector": "Energy"
+  },
+  "WMT": {
+    "name": "Walmart Inc.",
+    "sector": "Consumer Staples"
+  },
+  "WN.TO": {
+    "name": "George Weston Limited",
+    "sector": "Consumer Staples"
+  },
+  "WPM.TO": {
+    "name": "Wheaton Precious Metals Corp.",
+    "sector": "Materials"
+  },
+  "WSP.TO": {
+    "name": "WSP Global Inc.",
+    "sector": "Industrials"
+  },
+  "WTB.L": {
+    "name": "Whitbread plc",
+    "sector": "Consumer Disc."
+  },
+  "X.TO": {
+    "name": "TMX Group Limited",
+    "sector": "Financials"
+  },
+  "XEL": {
+    "name": "Xcel Energy Inc.",
+    "sector": "Utilities"
+  },
+  "XOM": {
+    "name": "ExxonMobil Holdings Corporation",
+    "sector": "Energy"
+  },
+  "ZAL.DE": {
+    "name": "Zalando SE",
+    "sector": "Consumer Disc."
+  }
+}

@@ -14,7 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Markets",
   description:
-    "Weekly cross-asset snapshot: global equity indices, government bond yields, commodities, forex and crypto, plus S&P 500, TSX and NIFTY sector heatmaps.",
+    "Weekly cross-asset snapshot: global equity indices, government bond yields, commodities, forex and crypto, plus constituent-level sector heatmaps for 11 indices from the S&P 500 to the Hang Seng.",
   path: "/markets",
   keywords: [
     "global equity indices",
