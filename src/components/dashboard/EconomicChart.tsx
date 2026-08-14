@@ -5,47 +5,20 @@ import dynamic from "next/dynamic";
 import type { EconomicIndicator, TimeHorizon } from "@/types";
 import { formatEconomicValue, getChangeColor, FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
-import { horizonsFor, defaultHorizon } from "@/lib/chart-window";
+import { horizonsFor, defaultHorizon, filterByHorizon } from "@/lib/chart-window";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
-// The full ladder. Each card offers only the rungs its own series can fill —
-// no macro series here carries more than ~37 months, so a 5Y tab would have
-// re-rendered the same three years under a longer label.
-const HORIZONS: TimeHorizon[] = ["3M", "6M", "1Y", "3Y", "5Y"];
-
-function filterByHorizon(
-  series: { date: string; value: number }[],
-  horizon: TimeHorizon
-): { date: string; value: number }[] {
-  // Anchor the window to the most recent data point (not a frozen date) so the
-  // horizon tabs stay correct as new data is published.
-  const now = series.length
-    ? new Date(series[series.length - 1].date)
-    : new Date();
-  const months: Record<TimeHorizon, number> = {
-    "1W": 0.25,
-    "1M": 1,
-    "3M": 3,
-    "6M": 6,
-    "1Y": 12,
-    "3Y": 36,
-    "5Y": 60,
-  };
-  const cutoff = new Date(now);
-  cutoff.setMonth(cutoff.getMonth() - months[horizon]);
-  return series.filter((p) => new Date(p.date) >= cutoff);
-}
 
 interface Props {
   indicator: EconomicIndicator;
 }
 
 export default function EconomicChart({ indicator }: Props) {
-  const horizons = horizonsFor(indicator.timeSeries, HORIZONS);
+  const horizons = horizonsFor(indicator.timeSeries);
   const [horizon, setHorizon] = useState<TimeHorizon>(
-    defaultHorizon(horizons, "1Y")
+    defaultHorizon(horizons, "YTD")
   );
   const theme = useTheme();
   const c = CHART_COLORS[theme];

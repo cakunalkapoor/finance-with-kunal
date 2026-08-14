@@ -71,7 +71,7 @@ export default function ETFTable() {
                 </th>
               ))}
 
-              {/* Chart column with the YTD / 52W / 3Y toggle */}
+              {/* Chart column with the shared 3M / 6M / YTD / 2Y / 3Y toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
                   {CHART_VIEWS.map((v) => (

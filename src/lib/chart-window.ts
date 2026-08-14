@@ -12,11 +12,24 @@ import type { TimeHorizon } from "@/types";
    Dates are therefore accurate to about a week, never to the day — which is
    why labels are month-and-year and never "Aug 11". */
 
-export type ChartView = "YTD" | "52W" | "3Y";
+/* The site offers ONE set of chart windows everywhere — see TimeHorizon. The
+   markets tables kept their own `ChartView` vocabulary (YTD/52W/3Y) until these
+   were unified; the alias remains so those call sites read naturally. */
+export type ChartView = TimeHorizon;
 
-export const CHART_VIEWS: ChartView[] = ["YTD", "52W", "3Y"];
+/** Every chart's tab strip, in order. The single source of truth. */
+export const CHART_VIEWS: ChartView[] = ["3M", "6M", "YTD", "2Y", "3Y"];
 
 const WEEK_MS = 7 * 86_400_000;
+
+/** Fixed-length horizons in months. YTD is absent by design: its length depends
+ *  on where in the year the data ends, so it is derived per series instead. */
+const FIXED_MONTHS: Record<Exclude<TimeHorizon, "YTD">, number> = {
+  "3M": 3,
+  "6M": 6,
+  "2Y": 24,
+  "3Y": 36,
+};
 
 /** Last data point's date. Falls back to today if DATA_UPDATED_AT is reformatted. */
 function lastPointDate(): Date {
@@ -33,10 +46,12 @@ function ytdWeeks(): number {
   return Math.max(2, Math.round((last.getTime() - jan1.getTime()) / WEEK_MS) + 1);
 }
 
-/** How many trailing points a view shows. */
+/** How many trailing points a view shows. The sparklines are weekly, so a
+ *  fixed horizon is its month count times ~4.345 weeks. */
 export function sliceLength(view: ChartView, total: number): number {
   if (view === "3Y") return total;
-  const weeks = view === "YTD" ? ytdWeeks() : 52;
+  const weeks =
+    view === "YTD" ? ytdWeeks() : Math.round(FIXED_MONTHS[view] * 4.345);
   return Math.min(total, Math.max(2, weeks));
 }
 
@@ -102,17 +117,61 @@ export function windowLabel(view: ChartView, total = 156): string {
   return `${MONTH_YEAR.format(start)} – ${MONTH_YEAR.format(end)}`;
 }
 
-/* ── Economic-chart horizons ────────────────────────────────────────────────
-   The dashboard charts offer 3M…5Y tabs, but the underlying series are short:
-   most macro cards carry 36 monthly points and the PMI cards carry 6–7. A tab
-   longer than the series just re-renders the whole series under a different
-   label, which reads as "5 years of history" when there are three. These
-   helpers keep the tab strip honest by offering only what the data can fill. */
+/* ── Dated series (economic cards, yield curves) ────────────────────────────
+   These charts carry real dates rather than a weekly sparkline, so their
+   windows are computed from the series' own last point — not from the
+   site-wide refresh date. A card only offers the windows its history can
+   fill: most macro series hold ~36 monthly points, the PMI cards 6–7, so a
+   tab longer than the data would just relabel the whole series. */
 
-/** Months of history a horizon needs to mean anything. */
-export const HORIZON_MONTHS: Record<TimeHorizon, number> = {
-  "1W": 0.25, "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "3Y": 36, "5Y": 60,
-};
+/* Series dates are ISO ("2026-07" or "2026-07-31"), which JS parses as UTC
+   midnight. Reading them back with LOCAL getters shifts the date a day west of
+   Greenwich and lands it in the previous month — which silently dropped January
+   from YTD for every viewer in the Americas. Everything below is UTC on both
+   sides of the comparison. */
+
+/** Last dated point of a series, or null if it has none/unparseable. */
+function lastDate(series: { date: string }[]): Date | null {
+  if (!series.length) return null;
+  const d = new Date(series[series.length - 1].date);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+/** Months of history a horizon needs for this series. YTD runs from January of
+ *  the last point's year, so in July it needs 7 months and in February, 2. */
+export function horizonMonths(
+  horizon: TimeHorizon,
+  series: { date: string }[]
+): number {
+  if (horizon !== "YTD") return FIXED_MONTHS[horizon];
+  const last = lastDate(series);
+  return last ? last.getUTCMonth() + 1 : 12;
+}
+
+/** Earliest date a horizon includes, relative to the series' last point. */
+export function horizonCutoff(
+  horizon: TimeHorizon,
+  series: { date: string }[]
+): Date {
+  const last = lastDate(series) ?? new Date();
+  if (horizon === "YTD") return new Date(Date.UTC(last.getUTCFullYear(), 0, 1));
+  return new Date(
+    Date.UTC(
+      last.getUTCFullYear(),
+      last.getUTCMonth() - FIXED_MONTHS[horizon],
+      last.getUTCDate()
+    )
+  );
+}
+
+/** Trim a dated series to one horizon. */
+export function filterByHorizon<T extends { date: string }>(
+  series: T[],
+  horizon: TimeHorizon
+): T[] {
+  const cutoff = horizonCutoff(horizon, series);
+  return series.filter((p) => new Date(p.date) >= cutoff);
+}
 
 /** Months of history a dated series covers, counting both endpoints: 36 monthly
  *  points from 2023-08 to 2026-07 are 36 months of data, not the 35 steps
@@ -120,25 +179,32 @@ export const HORIZON_MONTHS: Record<TimeHorizon, number> = {
 export function spanInMonths(series: { date: string }[]): number {
   if (series.length < 2) return 0;
   const a = new Date(series[0].date);
-  const b = new Date(series[series.length - 1].date);
-  if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return 0;
-  const steps =
-    (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth());
-  return steps + 1;
+  const b = lastDate(series);
+  if (!b || Number.isNaN(a.getTime())) return 0;
+  return (
+    (b.getUTCFullYear() - a.getUTCFullYear()) * 12 +
+    (b.getUTCMonth() - a.getUTCMonth()) +
+    1
+  );
 }
 
 /**
- * The subset of `all` this series can actually fill. Always returns at least
- * the shortest horizon, so a very short series still renders a tab strip
- * rather than none.
+ * The subset of CHART_VIEWS this series can actually fill. Always returns at
+ * least one window, so a very short series still renders a tab strip.
+ *
+ * Two tests, not one. The span test rejects a window longer than the history
+ * (a 5Y tab over three years of data). The point-count test rejects a window
+ * the history is too COARSE to draw: a quarterly series has one observation in
+ * any three-month window, and one point renders no line at all — so quarterly
+ * cards legitimately show fewer tabs than monthly ones.
  */
-export function horizonsFor(
-  series: { date: string }[],
-  all: TimeHorizon[]
-): TimeHorizon[] {
+export function horizonsFor(series: { date: string }[]): TimeHorizon[] {
   const span = spanInMonths(series);
-  const fits = all.filter((h) => HORIZON_MONTHS[h] <= span);
-  return fits.length ? fits : all.slice(0, 1);
+  const fits = CHART_VIEWS.filter(
+    (h) =>
+      horizonMonths(h, series) <= span && filterByHorizon(series, h).length >= 2
+  );
+  return fits.length ? fits : CHART_VIEWS.slice(-1);
 }
 
 /** Preferred default, clamped to what the series supports. */

@@ -203,7 +203,7 @@ export default function EquityMarketsTable() {
                 <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>P/E vs 10Y · 30d vol</div>
               </th>
 
-              {/* Chart column with YTD / 52W toggle */}
+              {/* Chart column with the shared 3M / 6M / YTD / 2Y / 3Y toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
                   {CHART_VIEWS.map((v) => (

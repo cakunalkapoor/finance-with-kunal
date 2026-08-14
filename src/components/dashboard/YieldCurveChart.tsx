@@ -5,23 +5,10 @@ import dynamic from "next/dynamic";
 import type { TimeHorizon, YieldCurve } from "@/types";
 import { FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
-import { horizonsFor, defaultHorizon, HORIZON_MONTHS as MONTHS } from "@/lib/chart-window";
+import { horizonsFor, defaultHorizon, filterByHorizon } from "@/lib/chart-window";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
-
-const HORIZONS: TimeHorizon[] = ["6M", "1Y", "3Y"];
-
-/** Trim a monthly series to the horizon, anchored to its own last point. */
-function filterByHorizon(
-  series: { date: string; value: number }[],
-  horizon: TimeHorizon
-): { date: string; value: number }[] {
-  if (!series.length) return series;
-  const cutoff = new Date(series[series.length - 1].date);
-  cutoff.setMonth(cutoff.getMonth() - MONTHS[horizon]);
-  return series.filter((p) => new Date(p.date) >= cutoff);
-}
 
 interface Props {
   curve: YieldCurve;
@@ -30,11 +17,12 @@ interface Props {
 export default function YieldCurveChart({ curve }: Props) {
   // Both legs share a date range, so the shorter one governs the tab strip.
   const horizons = horizonsFor(
-    curve.short.series.length <= curve.long.series.length ? curve.short.series : curve.long.series,
-    HORIZONS
+    curve.short.series.length <= curve.long.series.length
+      ? curve.short.series
+      : curve.long.series
   );
   const [horizon, setHorizon] = useState<TimeHorizon>(
-    defaultHorizon(horizons, "1Y")
+    defaultHorizon(horizons, "YTD")
   );
   const theme = useTheme();
   const c = CHART_COLORS[theme];

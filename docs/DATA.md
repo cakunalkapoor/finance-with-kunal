@@ -201,10 +201,33 @@ the wrong company on those tiles.
 - Mobile polish on the heatmap (treemap labels get tight on narrow screens)
 - Repository-hosted data refresh automation and freshness alerts
 
-### Chart horizons are derived, not fixed
+### Chart windows
 
-`EconomicChart` and `YieldCurveChart` offer only the horizon tabs their own series can
-fill (`horizonsFor` in `chart-window.ts`). No macro series here carries more than ~37
-monthly points, so the 5Y tab was always a relabelled 3Y; the PMI cards carry 6–7 points
-and now stop at 6M. Adding a longer tab means lengthening the series first — raise the
-fetcher's `limit`/`months`/`keep` and the tab appears on its own.
+Every chart on the site — the economic cards, the yield curves, and the sparkline
+columns in all five markets tables — offers exactly one ladder: **3M · 6M · YTD · 2Y · 3Y**,
+defined once as `TimeHorizon` and exported as `CHART_VIEWS` from `chart-window.ts`.
+There is no other option anywhere. The markets tables previously had their own
+YTD/52W/3Y vocabulary; `ChartView` is now an alias of `TimeHorizon` so those call
+sites still read naturally.
+
+YTD is not a fixed length — it runs from January of the **series' own last point**,
+so it needs 7 months of history in July and 2 in February (`horizonMonths`).
+
+A card offers only the windows its data can actually fill (`horizonsFor`), on two
+separate tests:
+
+- **span** — the window must not be longer than the history. Most macro series hold
+  ~36 monthly points, so nothing reaches 5Y; that tab used to be a relabelled 3Y.
+- **point count** — the window must contain at least 2 observations. A quarterly
+  series has one observation in a 3-month window, and one point draws no line, so
+  quarterly cards legitimately show fewer tabs than monthly ones. A card whose
+  latest point is January drops YTD for the same reason.
+
+Note both are computed in **UTC**. Series dates are ISO, which JS parses as UTC
+midnight; reading them back with local getters shifts the date a day west of
+Greenwich into the previous month, which silently dropped January from YTD for
+every viewer in the Americas.
+
+To give a card a longer window, lengthen its series first — raise the fetcher's
+`limit`/`months`/`keep` and the tab appears on its own. Any quarterly series needs
+>= 13 points before 3Y is offered.

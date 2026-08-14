@@ -189,7 +189,16 @@ export interface WeeklyCommentary {
   sections: WeeklyCommentarySection[];
 }
 
-export type TimeHorizon = "1W" | "1M" | "3M" | "6M" | "1Y" | "3Y" | "5Y";
+/**
+ * The one time-window vocabulary for every chart on the site — the economic
+ * cards, the yield curves, and the sparkline columns in the markets tables all
+ * offer exactly these five and nothing else.
+ *
+ * YTD is not a fixed length: it runs from January of the latest data point's
+ * year, so how much history it needs depends on when in the year you ask. See
+ * `horizonMonths` / `horizonCutoff` in `lib/chart-window.ts`.
+ */
+export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y";
 
 export interface ExperienceItem {
   title: string;
