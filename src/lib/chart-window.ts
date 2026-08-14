@@ -214,3 +214,36 @@ export function defaultHorizon(
 ): TimeHorizon {
   return available.includes(preferred) ? preferred : available[available.length - 1];
 }
+
+/* ── Monthly trends with a per-row asOf (the bond yield table) ───────────────
+   These are bare number arrays, one point per calendar month, ending at the
+   row's own asOf — which differs per country by a day or two, and by months
+   for the OECD monthly series. So a window is a trailing point count computed
+   from that row's asOf rather than a date filter. */
+
+/** Months a horizon covers for a trend ending at `asOf`. */
+function monthsForAsOf(horizon: TimeHorizon, asOf: string): number {
+  if (horizon !== "YTD") return FIXED_MONTHS[horizon];
+  const end = new Date(`${asOf}T00:00:00Z`);
+  return Number.isNaN(end.getTime()) ? 12 : end.getUTCMonth() + 1;
+}
+
+/** Trailing points of a monthly trend that a horizon covers. */
+export function monthlyHorizonSlice<T>(
+  trend: T[],
+  asOf: string,
+  horizon: TimeHorizon
+): T[] {
+  return trend.slice(-Math.min(trend.length, monthsForAsOf(horizon, asOf)));
+}
+
+/** Windows a monthly trend ending at `asOf` can fill, on the same two tests as
+ *  `horizonsFor`: the window must fit the history and hold at least 2 points.
+ *  A row whose asOf is in January therefore has no YTD. */
+export function monthlyHorizonsFor(length: number, asOf: string): TimeHorizon[] {
+  const fits = CHART_VIEWS.filter((h) => {
+    const need = monthsForAsOf(h, asOf);
+    return need <= length && need >= 2;
+  });
+  return fits.length ? fits : CHART_VIEWS.slice(-1);
+}

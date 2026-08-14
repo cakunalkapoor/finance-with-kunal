@@ -39,13 +39,20 @@ const BONDS = [
   // key            FRED ID              country         flag   limit (months of history)
   { key: "us10y",   id: "DGS10",         country: "United States", flag: "🇺🇸", limit: 1095, daily: true },
   // 30Y constant maturity — pairs with us10y to plot the long end of the curve.
-  { key: "us30y",   id: "DGS30",         country: "United States", flag: "🇺🇸", limit: 1095, daily: true },
+  { key: "us30y",   id: "DGS30",         country: "United States", flag: "🇺🇸", limit: 1095, daily: true, curveOnly: true },
   // Canada 10Y now comes from Bank of Canada Valet (daily, fresher) — see fetch-boc.mjs.
   { key: "de10y",   id: "IRLTLT01DEM156N", country: "Germany",      flag: "🇩🇪", limit: 36 },
   { key: "in10y",   id: "INDIRLTLT01STM",  country: "India",         flag: "🇮🇳", limit: 36 },
   { key: "jp10y",   id: "IRLTLT01JPM156N", country: "Japan",         flag: "🇯🇵", limit: 36 },
   { key: "kr10y",   id: "IRLTLT01KRM156N", country: "South Korea",   flag: "🇰🇷", limit: 36 },
   { key: "uk10y",   id: "IRLTLT01GBM156N", country: "United Kingdom",flag: "🇬🇧", limit: 36 },
+  // Australia and South Africa already have fresher DAILY values from
+  // bonds-data.json, which win the bondCandidates merge on asOf. These monthly
+  // OECD series are pulled only to backfill their 36-point trends — without
+  // them those two rows sat at 12 points and capped the whole bond table's
+  // window strip, since it offers the intersection of what every row can draw.
+  { key: "au10y",   id: "IRLTLT01AUM156N", country: "Australia",     flag: "🇦🇺", limit: 36 },
+  { key: "za10y",   id: "IRLTLT01ZAM156N", country: "South Africa",  flag: "🇿🇦", limit: 36 },
   // China 10Y is NOT available in FRED (PBoC doesn't share with OECD).
 ];
 
@@ -226,7 +233,17 @@ async function main() {
       const obs = await fredFetch(b.id, b.limit);
       const d = b.daily ? deriveBondDaily(obs) : deriveBond(obs);
       console.log(`${String(d?.value ?? "—").padStart(8)}%  asOf ${d?.asOf}`);
-      bonds[b.key] = { country: b.country, flag: b.flag, ...d };
+      // Carry provenance with the value. Without these the patcher fell back to
+      // "unknown" + "monthly" for any row FRED won on recency, which mislabelled
+      // the daily DGS10 as a monthly series and blanked the source in the UI.
+      bonds[b.key] = {
+        country: b.country,
+        flag: b.flag,
+        source: `FRED ${b.id}`,
+        curveOnly: Boolean(b.curveOnly),
+        cadence: b.daily ? "daily" : "monthly",
+        ...d,
+      };
     } catch (e) {
       console.log(`✗ ${e.message}`);
     }

@@ -182,6 +182,11 @@ function considerBond(b, fallbackCadence) {
   // fred/boc dumps use `value`; bonds-data.json uses `yield`.
   const value = b.yield ?? b.value;
   if (!b?.country || value == null || !b.asOf) return;
+  // Long-end series (DGS30, BD.CDN.LONG) exist only to draw the yield curve.
+  // They carry the same country and asOf as that country's 10Y, so without
+  // this guard the last one considered wins the merge and BOND_YIELDS — a
+  // table headed "10-Year Benchmark Rates" — publishes the 30-year yield.
+  if (b.curveOnly) return;
   const prev = bondCandidates[b.country];
   // ISO dates compare lexically. Strict `>` so that on an equal vintage the
   // LAST dump considered wins — bonds-data.json is applied last and is the only
@@ -233,14 +238,21 @@ for (const m of Object.values(bondsManual.bonds || {})) {
   };
 }
 
-// Top up any sparkline shorter than 12 points with the older monthly history,
-// so a daily feed with a short window doesn't render a stub chart.
+// Bond trends carry 36 monthly points so the table can offer the same window
+// ladder as every other chart (3M/6M/YTD/2Y/3Y). This was 12, which capped the
+// column at a single fixed window even though every fetcher already returns 36.
+// Top up anything shorter from the older monthly history, so a daily feed with
+// a short window doesn't render a stub chart.
+const BOND_TREND_POINTS = 36;
 for (const b of Object.values(bondCandidates)) {
   const have = Array.isArray(b.trend) ? b.trend : [];
   const monthly = monthlyTrend[b.country] ?? [];
-  if (have.length < 12 && monthly.length) {
-    const need = 12 - have.length;
-    b.trend = [...monthly.slice(Math.max(0, monthly.length - need)), ...have].slice(-12);
+  if (have.length < BOND_TREND_POINTS && monthly.length) {
+    const need = BOND_TREND_POINTS - have.length;
+    b.trend = [
+      ...monthly.slice(Math.max(0, monthly.length - need)),
+      ...have,
+    ].slice(-BOND_TREND_POINTS);
   }
 }
 

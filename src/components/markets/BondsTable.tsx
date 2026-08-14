@@ -1,9 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { BOND_YIELDS, DATA_UPDATED_AT } from "@/lib/site-data";
 import { INVESTING_BOND_URL } from "@/lib/external-links";
-import { monthlyPointLabel, monthlyWindowLabel } from "@/lib/chart-window";
+import {
+  monthlyPointLabel,
+  monthlyWindowLabel,
+  monthlyHorizonSlice,
+  monthlyHorizonsFor,
+  type ChartView,
+} from "@/lib/chart-window";
 import { FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
@@ -34,6 +41,15 @@ function formatAsOf(asOf: string): string {
 }
 
 export default function BondsTable() {
+  // Rows end at different asOf dates, so each computes its own window; the
+  // shared strip offers only what EVERY row can draw.
+  const perRow = BOND_YIELDS.map((b) => monthlyHorizonsFor(b.trend.length, b.asOf));
+  const views = perRow.length
+    ? perRow.reduce((acc, hs) => acc.filter((h) => hs.includes(h)))
+    : [];
+  const [chartView, setChartView] = useState<ChartView>("YTD");
+  const view = views.includes(chartView) ? chartView : views[views.length - 1];
+
   return (
     <SciFiCard>
       <CardHeader
@@ -81,24 +97,40 @@ export default function BondsTable() {
                 }}
               >
                 <div>Trend</div>
-                {/* No view toggle here: every bond carries exactly 12 monthly
-                    points, so there is only one window to show. */}
-                <div
-                  style={{
-                    fontSize: "9px",
-                    letterSpacing: "0.05em",
-                    opacity: 0.7,
-                    marginTop: "1px",
-                    textTransform: "none",
-                  }}
-                >
-                  12 months, monthly
+                {/* Same window ladder as every other chart. Rows end at
+                    different asOf dates, so the strip offers the intersection
+                    of what each row can draw and each row slices its own. */}
+                <div className="flex items-center gap-1 mt-1">
+                  {views.map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setChartView(v)}
+                      className="px-1.5 py-0.5 rounded transition-all"
+                      style={{
+                        fontFamily: FONT_MONO,
+                        fontSize: "10px",
+                        letterSpacing: "0.08em",
+                        textTransform: "none",
+                        fontWeight: view === v ? 700 : 500,
+                        color:
+                          view === v ? "var(--color-neon-cyan)" : "var(--color-text-muted)",
+                        background: view === v ? "rgba(167,139,250,0.12)" : "transparent",
+                        border: `1px solid ${
+                          view === v ? "var(--color-neon-cyan-dim)" : "transparent"
+                        }`,
+                      }}
+                    >
+                      {v}
+                    </button>
+                  ))}
                 </div>
               </th>
             </tr>
           </thead>
           <tbody>
-            {BOND_YIELDS.map((bond, i) => (
+            {BOND_YIELDS.map((bond, i) => {
+              const windowed = monthlyHorizonSlice(bond.trend, bond.asOf, view);
+              return (
               <tr
                 key={bond.country}
                 style={{
@@ -185,21 +217,23 @@ export default function BondsTable() {
 
                 <td className="px-4 py-3">
                   {/* Each row's trend ends at its OWN asOf, which differs by a
-                      couple of days across sources — so labels come from the
-                      row, not from the site-wide refresh date. */}
+                      couple of days across sources — and by months for the
+                      OECD series — so both the window and its labels are
+                      computed from the row, not the site-wide refresh date. */}
                   <TrendSparkline
-                    values={bond.trend}
-                    labels={bond.trend.map((_, j) =>
-                      monthlyPointLabel(j, bond.trend.length, bond.asOf),
+                    values={windowed}
+                    labels={windowed.map((_, j) =>
+                      monthlyPointLabel(j, windowed.length, bond.asOf),
                     )}
-                    ariaLabel={`${bond.country} 10Y yield, ${monthlyWindowLabel(bond.trend.length, bond.asOf)}`}
+                    ariaLabel={`${bond.country} 10Y yield, ${monthlyWindowLabel(windowed.length, bond.asOf)}`}
                     format={(n) => `${n.toFixed(2)}%`}
                     // A falling yield is the "good" direction for bond prices.
                     positiveIsUp={false}
                   />
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

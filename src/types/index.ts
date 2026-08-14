@@ -28,7 +28,9 @@ export interface BondYield {
   dailyMove: number;
   oneMonthMove: number;
   oneYearMove: number;
-  trend: number[]; // 12-month normalized
+  /** 36 monthly points ending at `asOf`, so the trend column can offer the same
+   *  window ladder as every other chart. Kept at 36 by patch-site-data.mjs. */
+  trend: number[];
   /** Observation date of `yield` (YYYY-MM-DD). Surfaced in the UI: the UK, India
    *  and South Korea have no free daily feed and sit on a monthly OECD series,
    *  so a reader needs to see how old a number is. Kept current by

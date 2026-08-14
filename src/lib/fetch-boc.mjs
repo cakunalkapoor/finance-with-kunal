@@ -41,7 +41,7 @@ const BONDS = [
   // Canada has no 30-year constant-maturity series. The BoC's long-end benchmark
   // is "long-term" — currently a ~30Y bond, but the maturity is not fixed, so it
   // is labelled long-term throughout rather than asserted to be exactly 30Y.
-  { key: "ca30y", id: "BD.CDN.LONG.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "long-term", months: 37 },
+  { key: "ca30y", id: "BD.CDN.LONG.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "long-term", months: 37, curveOnly: true },
 ];
 
 async function valetFetch(seriesId, { months = 25, daily = false } = {}) {
@@ -155,7 +155,8 @@ async function main() {
     try {
       const obs = await valetFetch(b.id, { months: b.months ?? 37, daily: true });
       const d = deriveBond(obs, b);
-      bonds[b.key] = d;
+      // Provenance travels with the value — see the note in fetch-fred.mjs.
+      bonds[b.key] = { source: `Bank of Canada ${b.id}`, cadence: "daily", curveOnly: Boolean(b.curveOnly), ...d };
       console.log(`${String(d?.value ?? "—").padStart(8)}%  asOf ${d?.asOf}  trend ${d?.trend.length}pt`);
     } catch (e) {
       console.log(`✗ ${e.message}`);
