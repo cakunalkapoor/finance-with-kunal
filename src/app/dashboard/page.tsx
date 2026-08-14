@@ -37,10 +37,10 @@ const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: stri
 // These indicators are dedicated to the /us-economy and /canada-economy pages;
 // keep the global Economy dashboard focused on its original curated (US + Asia) set.
 const US_CANADA_ONLY = new Set([
-  "us-payrolls", "us-fed-funds", "us-10y", "us-trade-balance", "us-tax-receipts",
+  "us-payrolls", "us-fed-funds", "us-trade-balance", "us-tax-receipts",
   "us-mfg-pmi", "us-services-pmi",
   "ca-gdp", "ca-cpi", "ca-unemployment", "ca-payrolls",
-  "ca-policy-rate", "ca-10y", "ca-trade-balance", "ca-tax-receipts",
+  "ca-policy-rate", "ca-trade-balance", "ca-tax-receipts",
   "ca-mfg-pmi", "ca-services-pmi", "us-retail-sales", "ca-retail-sales",
 ]);
 

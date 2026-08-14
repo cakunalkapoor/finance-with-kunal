@@ -363,27 +363,6 @@ function patchCommodityIndicator(id, rec) {
     period: `"${asOfToFullDate(rec.asOf)}"`,
   }, weeklyTsFromSparkline(rec.sparkline, rec.asOf));
 }
-// 10Y yield cards source the bonds dump (value + 12-pt trend, no dates). Build a
-// dated monthly series ending at the bond's asOf month so the chart has an x-axis.
-function patchBondIndicator(id, bond) {
-  if (!bond || bond.value == null || !Array.isArray(bond.trend)) return false;
-  const [y, mo] = bond.asOf.split("-").map(Number);
-  const series = bond.trend.map((v, i) => {
-    const d = new Date(Date.UTC(y, mo - 1 - (bond.trend.length - 1 - i), 1));
-    return { date: d.toISOString().slice(0, 7), value: v };
-  });
-  const last = bond.trend[bond.trend.length - 1];
-  const prev = bond.trend[bond.trend.length - 2] ?? last;
-  const change = +(last - prev).toFixed(2);
-  return patchIndicatorObject(id, {
-    value: bond.value,
-    previousValue: prev,
-    change,
-    direction: `"${change > 0 ? "up" : change < 0 ? "down" : "neutral"}"`,
-    period: `"${asOfToPeriod(bond.asOf)}"`,
-  }, tsLiteral(series));
-}
-
 if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
 if (patchEconomicIndicator("us-ppi", m.us_ppi)) stats.macro++;
 if (patchEconomicIndicator("us-jobless-claims", m.us_jobless, { weekly: true })) stats.macro++;
@@ -396,12 +375,10 @@ if (patchEconomicIndicator("us-trade-balance", m.us_trade)) stats.macro++;
 if (patchEconomicIndicator("us-tax-receipts", m.us_tax)) stats.macro++;
 if (patchEconomicIndicator("ca-gdp", m.ca_gdp_growth)) stats.macro++;
 if (patchEconomicIndicator("us-retail-sales", m.us_retail)) stats.macro++;
-// US & Canada dashboard — 10Y yields. Feed these from the SAME merged candidate
-// the markets table uses, not the raw fred/boc dumps: those are one input to the
-// merge, so reading them directly put 4.69 (FRED, Aug 6) on /us-canada while the
-// markets table showed 4.66 (Yahoo, Aug 7) for the identical instrument.
-if (patchBondIndicator("us-10y", bondCandidates["United States"])) stats.macro++;
-if (patchBondIndicator("ca-10y", bondCandidates["Canada"])) stats.macro++;
+// The standalone us-10y / ca-10y cards were removed: the yield curve chart on
+// each country page carries the 10Y alongside the long end, and keeping a
+// separate card meant two 10Y figures on one page from different providers.
+// BOND_YIELDS on /markets still uses bondCandidates.
 // US & Canada dashboard — Bank of Canada Valet cards
 const cm = boc.macro || {};
 if (patchEconomicIndicator("ca-policy-rate", cm.ca_policy_rate)) stats.macro++;

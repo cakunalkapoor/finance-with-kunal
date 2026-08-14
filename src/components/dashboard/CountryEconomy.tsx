@@ -67,7 +67,9 @@ export default function CountryEconomy({
           description={description}
           accent={accent}
           stats={[
-            { label: "Indicators", value: String(indicators.length), detail: "Charted series" },
+            // The curve is a charted card too, so it counts here — otherwise the
+            // hero undercounts what the reader can actually see on the page.
+            { label: "Indicators", value: String(indicators.length + (curve ? 1 : 0)), detail: "Charted series" },
             { label: "Lenses", value: String(categoriesShown.length), detail: "Economic themes" },
             { label: "History", value: "2–3Y", detail: "Per-series context" },
           ]}

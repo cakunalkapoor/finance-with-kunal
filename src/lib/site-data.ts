@@ -4319,36 +4319,6 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     ],
   },
   {
-    // LIVE from FRED DGS10 (via fred-data.json bonds.us10y)
-    id: "us-10y",
-    name: "US 10Y Treasury Yield",
-    category: "rates",
-    country: "United States",
-    flag: "🇺🇸",
-    value: 4.66,
-    unit: "%",
-    previousValue: 4.744999885559082,
-    change: -0.09,
-    direction: "down",
-    isPositiveGood: false,
-    period: "Aug 2026",
-    description: "The US 10-year Treasury yield eased to 4.66% at the Aug 7 close, down from 4.74% at the end of July but still about 12bp higher over the month, as a weak July payrolls print pulled September rate-hike odds sharply lower. Source: Yahoo Finance (^TNX), daily.",
-    timeSeries: [
-      { date: "2025-09", value: 4.1479997634887695 },
-      { date: "2025-10", value: 4.10099983215332 },
-      { date: "2025-11", value: 4.017000198364258 },
-      { date: "2025-12", value: 4.163000106811523 },
-      { date: "2026-01", value: 4.241000175476074 },
-      { date: "2026-02", value: 3.9619998931884766 },
-      { date: "2026-03", value: 4.310999870300293 },
-      { date: "2026-04", value: 4.389999866485596 },
-      { date: "2026-05", value: 4.453000068664551 },
-      { date: "2026-06", value: 4.418000221252441 },
-      { date: "2026-07", value: 4.744999885559082 },
-      { date: "2026-08", value: 4.659999847412109 }
-    ],
-  },
-  {
     // LIVE from Bank of Canada Valet V39079 — target for the overnight rate
     id: "ca-policy-rate",
     name: "Canada Policy Rate",
@@ -4400,36 +4370,6 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
       { date: "2026-06", value: 2.25 },
       { date: "2026-07", value: 2.25 },
       { date: "2026-08", value: 2.25 }
-    ],
-  },
-  {
-    // LIVE from Bank of Canada Valet BD.CDN.10YR.DQ.YLD — GoC 10Y benchmark yield (daily)
-    id: "ca-10y",
-    name: "Canada 10Y Yield",
-    category: "rates",
-    country: "Canada",
-    flag: "🇨🇦",
-    value: 3.61,
-    unit: "%",
-    previousValue: 3.65,
-    change: -0.04,
-    direction: "down",
-    isPositiveGood: false,
-    period: "Aug 2026",
-    description: "The Government of Canada 10-year benchmark yield sits at 3.61% as of Aug 6, up about 12bp over the month, with the Bank of Canada on hold at 2.25% after a July jobs report that added 75,000 positions. Source: Bank of Canada (GoC 10Y benchmark, daily).",
-    timeSeries: [
-      { date: "2025-09", value: 3.17 },
-      { date: "2025-10", value: 3.12 },
-      { date: "2025-11", value: 3.14 },
-      { date: "2025-12", value: 3.42 },
-      { date: "2026-01", value: 3.42 },
-      { date: "2026-02", value: 3.13 },
-      { date: "2026-03", value: 3.46 },
-      { date: "2026-04", value: 3.56 },
-      { date: "2026-05", value: 3.41 },
-      { date: "2026-06", value: 3.38 },
-      { date: "2026-07", value: 3.65 },
-      { date: "2026-08", value: 3.61 }
     ],
   },
 
