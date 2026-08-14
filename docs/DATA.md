@@ -20,6 +20,7 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 | **FRED** (St. Louis Fed) | Free | US macro data, six non-Canadian sovereign 10Y series, and the US 30Y (DGS30) | `npm run fetch:fred` | `FRED_API_KEY` |
 | **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y + long-term benchmark yields | `npm run fetch:boc` | — |
 | **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, government revenue, and GDP (quarterly + monthly) | `npm run fetch:statcan` | — |
+| **Eurostat** | Free | Euro-area GDP growth and HICP inflation | `npm run fetch:eurostat` | — |
 | **Twelve Data** | Free 800/day, 8/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:twelvedata` | `TWELVEDATA_API_KEY` |
 | **Finnhub** | Free 60/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:finnhub` | `FINNHUB_API_KEY` |
 
@@ -33,6 +34,7 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 - `src/lib/process-alpha-vantage.mjs` — reads previously-saved Alpha Vantage tool-call JSON dumps (one per commodity + treasury), computes derived values. Output: `src/lib/market-data.json`.
 - `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, fetches US macro series and foreign 10Y yields, and preserves full dates for weekly claims. Output: `src/lib/fred-data.json`.
 - `src/lib/fetch-boc.mjs` — fetches Canadian policy, CPI, and 10Y yield data from the Bank of Canada Valet API. Output: `src/lib/boc-data.json`.
+- `src/lib/fetch-eurostat.mjs` — fetches euro-area GDP growth and HICP inflation from the Eurostat dissemination API. Output: `src/lib/eurostat-data.json`. **Three traps, all verified against the API:** the euro-area geo code is `EA21` (EA19/EA20 are earlier compositions and return an EMPTY result, not an error); HICP lives in `prc_hicp_minr` with dimension `coicop18`, because the Feb 2026 switch to ECOICOP ver.2 froze the old `prc_hicp_manr` at 2025-12 while it still answers 200; and JSON-stat omits missing cells entirely, so a period listed in the time index may carry no observation — the euro-area aggregate often trails its member states by weeks.
 - `src/lib/fetch-statcan.mjs` — fetches Canadian macro series from Statistics Canada. Output: `src/lib/statcan-data.json`.
   Canada GDP is sourced here rather than from FRED: FRED's OECD mirror (`NAEXKP01CAQ657S`) carries the
   same figure but lags StatCan's own release by ~2.5 weeks (Q1 2026 was published May 29 and reached
@@ -47,6 +49,15 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 
 - **Twelve Data** → backup for Yahoo (international indices, forex, crypto); intraday data. Note: **does NOT have sovereign bonds or PMI**.
 - **Finnhub** → company fundamentals (market cap, P/E, EPS), earnings history + transcripts, economic calendar with impact ratings, IPO calendar, insider transactions, company news with sentiment. **Best use case here: power blog-post research and a "this week" macro events widget.**
+
+### Euro-area series: use Eurostat, not FRED
+
+FRED carries euro-area aggregates but several were **discontinued in 2023 and still
+return HTTP 200 with stale data** — `LRHUTTTTEZM156S` (unemployment, ends 2023-01),
+`EA19PRINTO01GYSAM` (industrial production, 2023-10) and `XTEXVA01EZM667S` (trade,
+2023-04). Nothing about the response signals this. Eurostat is the live source for
+euro-area statistics. FRED remains fine for the ECB policy rates (`ECBDFR`,
+`ECBMRRFR` — both daily and current) if those are ever added.
 
 ### What's still manually curated
 
@@ -127,9 +138,9 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 
 ### Economic indicators currently present
 - **PMI:** US Composite PMI, China Manufacturing PMI, India Manufacturing PMI, Taiwan Manufacturing PMI, South Korea Manufacturing PMI, India Services PMI
-- **Growth:** US GDP, Canada GDP (quarterly + monthly), China GDP, India GDP
+- **Growth:** US GDP, Euro Area GDP, Canada GDP (quarterly + monthly), China GDP, India GDP
 - **Employment:** US Initial Jobless Claims, US Unemployment Rate
-- **Inflation:** US CPI
+- **Inflation:** US CPI, US PPI, Euro Area HICP
 - **Energy:** Brent Crude Oil, Natural Gas (Henry Hub)
 
 When adding a new indicator: append to `ECONOMIC_INDICATORS` with the right `category`, set

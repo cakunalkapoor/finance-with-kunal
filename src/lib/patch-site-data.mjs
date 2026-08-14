@@ -17,6 +17,8 @@ let boc = { macro: {} };
 try { boc = JSON.parse(readFileSync(resolve(root, "src/lib/boc-data.json"), "utf8")); } catch { /* not fetched */ }
 let statcan = { macro: {} };
 try { statcan = JSON.parse(readFileSync(resolve(root, "src/lib/statcan-data.json"), "utf8")); } catch { /* not fetched */ }
+let eurostat = { macro: {} };
+try { eurostat = JSON.parse(readFileSync(resolve(root, "src/lib/eurostat-data.json"), "utf8")); } catch { /* not fetched */ }
 let bondsDump = { bonds: {} };
 try { bondsDump = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-data.json"), "utf8")); } catch { /* not fetched */ }
 // Committed, not a fetch cache — see the _README inside the file.
@@ -405,6 +407,12 @@ if (patchEconomicIndicator("ca-tax-receipts", sc.ca_govt_revenue)) stats.macro++
 if (patchEconomicIndicator("ca-retail-sales", sc.ca_retail)) stats.macro++;
 if (patchEconomicIndicator("ca-gdp", sc.ca_gdp)) stats.macro++;
 if (patchEconomicIndicator("ca-gdp-monthly", sc.ca_gdp_monthly)) stats.macro++;
+// Euro area — Eurostat direct. FRED's euro-area unemployment, industrial
+// production and trade series were discontinued in 2023 but still answer with
+// stale data, so Eurostat is the live source for anything euro-area.
+const eu = eurostat.macro || {};
+if (patchEconomicIndicator("ea-gdp", eu.ea_gdp)) stats.macro++;
+if (patchEconomicIndicator("ea-hicp", eu.ea_hicp)) stats.macro++;
 const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
 const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F");
 if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;

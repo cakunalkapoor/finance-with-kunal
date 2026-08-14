@@ -15,6 +15,7 @@
     "fetch:fred": "node src/lib/fetch-fred.mjs",
     "fetch:boc": "node src/lib/fetch-boc.mjs",
     "fetch:statcan": "node src/lib/fetch-statcan.mjs",
+    "fetch:eurostat": "node src/lib/fetch-eurostat.mjs",
     "fetch:twelvedata": "node src/lib/fetch-twelvedata.mjs",
     "fetch:finnhub": "node src/lib/fetch-finnhub.mjs",
     "build:catalogue": "./.venv/bin/python3 src/lib/build-catalogue.py",

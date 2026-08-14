@@ -38,6 +38,7 @@ next-env.d.ts
 # Ignored to keep them out of search/diffs (delete a line to commit a snapshot).
 /src/lib/boc-data.json
 /src/lib/bonds-data.json
+/src/lib/eurostat-data.json
 /src/lib/finnhub-data.json
 /src/lib/fred-data.json
 /src/lib/heatmap-data.json
