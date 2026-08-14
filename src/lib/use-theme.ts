@@ -53,6 +53,13 @@ export const CHART_COLORS = {
     axisLabel: "#878b7f",
     up: "#147d4f",
     down: "#c43d4d",
+    // Categorical series slots, for charts plotting two comparable lines.
+    // Deliberately not up/down: those are semantic, and reusing a good/bad
+    // colour for "series 2" would imply a judgement the data doesn't make.
+    // Blue/orange, validated against this mode's card surface — adjacent-pair
+    // CVD ΔE 24.7 protan (≥8 target), normal-vision 33.6 (≥15 floor).
+    series1: "#2a78d6",
+    series2: "#eb6834",
     tooltipBg: "rgba(250, 249, 244, 0.98)",
     tooltipBorder: "#d8d7cd",
     tooltipText: "#171914",
@@ -65,6 +72,10 @@ export const CHART_COLORS = {
     axisLabel: "#747b6d",
     up: "#72d6a1",
     down: "#ff7a89",
+    // Same two hues re-stepped for the dark surface, not an automatic flip.
+    // Adjacent-pair CVD ΔE 26.8 protan, normal-vision 31.8.
+    series1: "#3987e5",
+    series2: "#d95926",
     tooltipBg: "rgba(19, 23, 16, 0.98)",
     tooltipBorder: "#454d3d",
     tooltipText: "#f3f4ec",

@@ -8,6 +8,7 @@
  *   - V39079               Target for the overnight rate (BoC policy rate)
  *   - V41690973            Total CPI index → year-over-year % change
  *   - BD.CDN.10YR.DQ.YLD   Government of Canada 10-year benchmark bond yield (daily)
+ *   - BD.CDN.LONG.DQ.YLD   Government of Canada long-term benchmark bond yield (daily)
  *
  * Writes: src/lib/boc-data.json   (consumed by scripts/patch-site-data.mjs)
  * Run:    npm run fetch:boc
@@ -36,7 +37,11 @@ const SERIES = [
 // 10Y sovereign yield — bond-shaped record (value + moves + 36-pt monthly trend),
 // matching the FRED bonds dump so patch-site-data.mjs treats both identically.
 const BONDS = [
-  { key: "ca10y", id: "BD.CDN.10YR.DQ.YLD", country: "Canada", flag: "🇨🇦", months: 37 },
+  { key: "ca10y", id: "BD.CDN.10YR.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "10Y", months: 37 },
+  // Canada has no 30-year constant-maturity series. The BoC's long-end benchmark
+  // is "long-term" — currently a ~30Y bond, but the maturity is not fixed, so it
+  // is labelled long-term throughout rather than asserted to be exactly 30Y.
+  { key: "ca30y", id: "BD.CDN.LONG.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "long-term", months: 37 },
 ];
 
 async function valetFetch(seriesId, { months = 25, daily = false } = {}) {
@@ -146,7 +151,7 @@ async function main() {
 
   const bonds = {};
   for (const b of BONDS) {
-    process.stdout.write(`  ${b.id.padEnd(24)} ${(b.country + " 10Y").padEnd(22)} `);
+    process.stdout.write(`  ${b.id.padEnd(24)} ${(b.country + " " + b.tenor).padEnd(22)} `);
     try {
       const obs = await valetFetch(b.id, { months: b.months ?? 37, daily: true });
       const d = deriveBond(obs, b);

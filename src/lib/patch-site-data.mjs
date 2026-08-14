@@ -418,5 +418,85 @@ const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F
 if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;
 if (patchCommodityIndicator("natural-gas", natgasCommodity)) stats.macro++;
 
+// ── YIELD CURVES ─────────────────────────────────────────────────────────────
+// Both legs of a curve MUST come from one provider on one observation date.
+// The spread is a difference between the two, so pairing a Yahoo 10Y with a
+// FRED 30Y would report a spread neither source published — the same failure
+// the bondCandidates merge exists to prevent, but worse, because the error
+// lands in a derived number rather than a quoted one.
+//   US     → FRED DGS10 / DGS30
+//   Canada → BoC Valet 10YR / LONG. Canada has no 30Y constant maturity; the
+//            long-end benchmark is "long-term" (currently ~30Y, not fixed), so
+//            it is labelled "Long" rather than asserted to be 30Y.
+const CURVES = [
+  {
+    country: "United States", flag: "🇺🇸",
+    short: { key: "us10y", label: "10Y", name: "the 10-year Treasury", from: fred.bonds },
+    long:  { key: "us30y", label: "30Y", name: "the 30-year Treasury", from: fred.bonds },
+    source: "Source: FRED (DGS10, DGS30), daily.",
+  },
+  {
+    country: "Canada", flag: "🇨🇦",
+    short: { key: "ca10y", label: "10Y",  name: "the 10-year benchmark", from: boc.bonds },
+    long:  { key: "ca30y", label: "Long", name: "the long-term benchmark", from: boc.bonds },
+    source: "Source: Bank of Canada Valet (10-year and long-term benchmark bond yields), daily.",
+  },
+];
+
+/** Monthly labels ending at `asOf`'s month, one per trend point. */
+function monthLabels(asOf, count) {
+  const end = new Date(`${asOf.slice(0, 7)}-01T00:00:00Z`);
+  return Array.from({ length: count }, (_, i) => {
+    const d = new Date(end);
+    d.setUTCMonth(d.getUTCMonth() - (count - 1 - i));
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+  });
+}
+
+function tenorTs(t, rec, indent) {
+  const labels = monthLabels(rec.asOf, rec.trend.length);
+  const pts = rec.trend
+    .map((v, i) => `${indent}    { date: "${labels[i]}", value: ${v} }`)
+    .join(",\n");
+  return `{
+${indent}  label: "${t.label}",
+${indent}  name: "${t.name}",
+${indent}  value: ${rec.value},
+${indent}  series: [
+${pts},
+${indent}  ],
+${indent}}`;
+}
+
+const curveBlocks = [];
+for (const cfg of CURVES) {
+  const s = (cfg.short.from || {})[cfg.short.key];
+  const l = (cfg.long.from || {})[cfg.long.key];
+  // Skip rather than half-render: a curve card missing a leg would show a
+  // spread computed against nothing.
+  if (!s?.trend?.length || !l?.trend?.length || s.value == null || l.value == null) {
+    console.warn(`  yield curve ${cfg.country}: skipped (missing leg)`);
+    continue;
+  }
+  const asOf = s.asOf < l.asOf ? s.asOf : l.asOf;
+  curveBlocks.push(`  {
+    country: ${JSON.stringify(cfg.country)},
+    flag: "${cfg.flag}",
+    asOf: "${asOf}",
+    spreadBps: ${Math.round((l.value - s.value) * 100)},
+    short: ${tenorTs(cfg.short, s, "    ")},
+    long: ${tenorTs(cfg.long, l, "    ")},
+    source: ${JSON.stringify(cfg.source)},
+  }`);
+  stats.yieldCurve = (stats.yieldCurve || 0) + 1;
+}
+
+if (curveBlocks.length) {
+  src = src.replace(
+    /export const YIELD_CURVES: YieldCurve\[\] = \[[\s\S]*?\n?\];/,
+    `export const YIELD_CURVES: YieldCurve[] = [\n${curveBlocks.join(",\n")},\n];`
+  );
+}
+
 writeFileSync(dataPath, src);
 console.log("patched site-data.ts:", stats);

@@ -17,8 +17,8 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 | Provider | Tier | Coverage in this app | Refresh cmd | Key in .env.local |
 |---|---|---|---|---|
 | **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 12 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 1,618 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
-| **FRED** (St. Louis Fed) | Free | US macro data and six non-Canadian sovereign 10Y series | `npm run fetch:fred` | `FRED_API_KEY` |
-| **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y yield | `npm run fetch:boc` | — |
+| **FRED** (St. Louis Fed) | Free | US macro data, six non-Canadian sovereign 10Y series, and the US 30Y (DGS30) | `npm run fetch:fred` | `FRED_API_KEY` |
+| **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y + long-term benchmark yields | `npm run fetch:boc` | — |
 | **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, and government revenue | `npm run fetch:statcan` | — |
 | **Twelve Data** | Free 800/day, 8/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:twelvedata` | `TWELVEDATA_API_KEY` |
 | **Finnhub** | Free 60/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:finnhub` | `FINNHUB_API_KEY` |
@@ -109,6 +109,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 |--------|----------------|
 | `EQUITY_INDICES` | The 12 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
 | `BOND_YIELDS` | 10Y govt bonds for US, DE, GB, CA, JP, IN, KR, AU, ZA with daily/1M/1Y moves and a 12-point trend |
+| `YIELD_CURVES` | US and Canada long-end curves — two tenors with 36-month history plus the spread in bp. **Regenerated wholesale** by `patch-site-data.mjs`; hand edits are overwritten |
 | `COMMODITIES` | Brent, WTI, Gold, Silver, Copper, Aluminum, Iron Ore, Soybeans, Natural Gas (9 total) |
 | `CRYPTO` | Bitcoin, Ethereum, Solana, BNB spot prices (typed `CryptoAsset[]`, not `Commodity[]`) |
 | `FOREX_RATES` | US Dollar Index + EUR / GBP / JPY / CAD / INR vs USD |

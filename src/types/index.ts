@@ -237,3 +237,30 @@ export interface ProfileData {
   skills: SkillCategory[];
   links: { label: string; url: string; icon: string }[];
 }
+
+/** One maturity on a country's yield curve, with its monthly history. */
+export interface YieldCurveTenor {
+  /** Short axis/legend label, e.g. "10Y". */
+  label: string;
+  /** Full name for the tooltip and description, e.g. "10-year Treasury". */
+  name: string;
+  value: number;
+  series: { date: string; value: number }[];
+}
+
+/**
+ * The long end of one country's curve: two maturities on a shared % axis, plus
+ * the spread between them. Kept separate from EconomicIndicator, which models a
+ * single series and cannot express the pair or their spread.
+ */
+export interface YieldCurve {
+  country: string;
+  flag: string;
+  /** Observation date of the latest point, ISO yyyy-mm-dd. */
+  asOf: string;
+  /** long minus short, in basis points; negative means the curve is inverted. */
+  spreadBps: number;
+  short: YieldCurveTenor;
+  long: YieldCurveTenor;
+  source: string;
+}

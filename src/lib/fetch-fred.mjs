@@ -38,6 +38,8 @@ if (!API_KEY) {
 const BONDS = [
   // key            FRED ID              country         flag   limit (months of history)
   { key: "us10y",   id: "DGS10",         country: "United States", flag: "🇺🇸", limit: 1095, daily: true },
+  // 30Y constant maturity — pairs with us10y to plot the long end of the curve.
+  { key: "us30y",   id: "DGS30",         country: "United States", flag: "🇺🇸", limit: 1095, daily: true },
   // Canada 10Y now comes from Bank of Canada Valet (daily, fresher) — see fetch-boc.mjs.
   { key: "de10y",   id: "IRLTLT01DEM156N", country: "Germany",      flag: "🇩🇪", limit: 36 },
   { key: "in10y",   id: "INDIRLTLT01STM",  country: "India",         flag: "🇮🇳", limit: 36 },
