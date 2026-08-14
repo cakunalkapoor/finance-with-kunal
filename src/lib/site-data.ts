@@ -4505,7 +4505,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: true,
     period: "Jan 2026",
-    description: "US federal current tax receipts ran at a $3.65T annualised pace in Q1, easing from the prior quarter. Source: BEA via FRED (W006RC1Q027SBEA).",
+    description: "US federal current tax receipts ran at a $3.65T annualised pace in Q1, easing from the prior quarter. Q1 is the latest print: BEA carries the government receipts detail on its second GDP estimate rather than the advance, so this series trails headline GDP by a quarter — Q2 is due at the end of August. Source: BEA via FRED (W006RC1Q027SBEA).",
     timeSeries: [
       { date: "2023-04", value: 2891.71 },
       { date: "2023-07", value: 2921.2 },
@@ -4536,7 +4536,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Jan 2026",
-    description: "Federal government revenue ran at a C$513B annualised pace in Q1 — the fiscal take from a growing economy. Source: Statistics Canada (table 36-10-0477, seasonally adjusted at annual rates).",
+    description: "Federal government revenue ran at a C$513B annualised pace in Q1 — the fiscal take from a growing economy. Q1 is the latest print: it comes with StatCan quarterly national accounts, published about two months after quarter-end (Q1 landed May 29), so Q2 is due at the end of August. Source: Statistics Canada (table 36-10-0477, seasonally adjusted at annual rates).",
     timeSeries: [
       { date: "2023-01", value: 469 },
       { date: "2023-04", value: 456.1 },
@@ -4604,7 +4604,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: true,
     period: "May 2026",
-    description: "Canada's real GDP by industry rose 0.34% in May, a smaller gain than April's 0.58%. This monthly series runs about four months ahead of the quarterly expenditure-based measure, so it is the more current read on Canadian growth between quarterly prints. Source: Statistics Canada (table 36-10-0434, chained 2017 dollars, seasonally adjusted).",
+    description: "Canada's real GDP by industry rose 0.34% in May, a smaller gain than April's 0.58%. May is the latest print — StatCan publishes monthly GDP about two months in arrears (May landed July 31), so June is due at the end of August — but this series still runs four months ahead of the quarterly expenditure-based measure, so it is the more current read on Canadian growth. Source: Statistics Canada (table 36-10-0434, chained 2017 dollars, seasonally adjusted).",
     timeSeries: [
       { date: "2023-06", value: -0.13 },
       { date: "2023-07", value: 0.11 },
@@ -4771,7 +4771,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "May 2026",
-    description: "Canadian retail sales grew 5.9% YoY in May, accelerating from 3.6% in April. Source: Statistics Canada (table 20-10-0056, seasonally adjusted).",
+    description: "Canadian retail sales grew 5.9% YoY in May, accelerating from 3.6% in April. May is the latest print: StatCan publishes retail trade about two months in arrears (May landed July 23), so June is due in late August. Source: Statistics Canada (table 20-10-0056, seasonally adjusted).",
     timeSeries: [
       { date: "2023-06", value: -1.2 },
       { date: "2023-07", value: 1.6 },
