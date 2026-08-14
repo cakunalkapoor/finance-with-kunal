@@ -3544,17 +3544,18 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     category: "pmi",
     country: "China",
     flag: "🇨🇳",
-    value: 50.3,
+    value: 49.2,
     unit: "Index",
-    previousValue: 50.0,
-    change: 0.3,
-    direction: "up",
+    previousValue: 50.3,
+    change: -1.1,
+    direction: "down",
     isPositiveGood: true,
-    period: "Jun 2026",
-    description: "China's official manufacturing PMI rose to 50.3 in June from 50.0 in May, returning to expansion territory. This is the NBS official PMI, not the separate S&P Global/RatingDog survey. Source: National Bureau of Statistics of China, released July 1, 2026.",
+    period: "Jul 2026",
+    description: "China's official manufacturing PMI fell to 49.2 in July from 50.3 in June, dropping below the 50.0 threshold into contraction after four months at or above it. Production eased to 49.9 (from 51.4) and new orders to 48.5 (from 51.2), while high-tech manufacturing (53.3) and equipment manufacturing (51.4) kept expanding. This is the NBS official PMI, not the separate S&P Global/RatingDog survey. Source: National Bureau of Statistics of China, released July 31, 2026.",
     timeSeries: [
       { date: "2026-01", value: 49.3 }, { date: "2026-02", value: 49.0 }, { date: "2026-03", value: 50.4 },
       { date: "2026-04", value: 50.3 }, { date: "2026-05", value: 50.0 }, { date: "2026-06", value: 50.3 },
+      { date: "2026-07", value: 49.2 },
     ],
   },
   {
@@ -4890,7 +4891,12 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
 // FRED + Yahoo by patch-site-data.mjs. PMI remains manually curated.
 export const MACRO_SNAPSHOT: MacroSnapshot = {
   gdp: { value: 1.5, trend: "down" },        // FRED A191RL1Q225SBEA  Q2 2026 (2.1 → 1.5)
-  pmi: { value: 52.0, trend: "up" },         // J.P.Morgan Global Composite PMI, Jun 2026 (51.9 → 52.0)
+  // China NBS official manufacturing PMI, Jul 2026 (50.3 → 49.2), released Jul 31.
+  // Replaced the J.P.Morgan Global Composite PMI, which is a licensed S&P Global
+  // series: no free feed, and the press release is not publicly retrievable, so the
+  // figure could be neither refreshed automatically nor independently checked. The
+  // NBS series is published free and monthly, so this tile is now verifiable.
+  pmi: { value: 49.2, trend: "down" },
   inflation: { value: 3.73, trend: "down" }, // FRED CPIAUCSL  YoY  Jun 2026 (4.27 → 3.73)
   jobs: { value: 4.1, trend: "down" },       // FRED UNRATE  Jul 2026 (4.2 → 4.1)
   claims: { value: 199, trend: "up" },       // FRED ICSA  Aug 1 2026 (198 → 199)

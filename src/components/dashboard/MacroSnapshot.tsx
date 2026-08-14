@@ -22,9 +22,11 @@ const METRICS = [
   },
   {
     key: "pmi" as const,
-    label: "Global PMI",
+    label: "China Mfg PMI",
     displayValue: `${MACRO_SNAPSHOT.pmi.value}`,
-    context: "Composite",
+    // Dated on the tile: a PMI print is a monthly snapshot, and the previous
+    // undated "Global PMI" read as current long after it had been superseded.
+    context: "NBS · Jul 2026",
     icon: Factory,
   },
   {

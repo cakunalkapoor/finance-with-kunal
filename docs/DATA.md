@@ -45,6 +45,13 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 ### What's still manually curated
 
 - **PMI indicators** — licensed S&P Global series are updated manually each month.
+  The macro-snapshot PMI tile deliberately uses **China's NBS official manufacturing
+  PMI**, not the J.P.Morgan Global Composite PMI it previously showed. The JPM/S&P
+  global series has no free feed and its monthly press release is not publicly
+  retrievable, so that tile could be neither refreshed automatically nor
+  independently verified, and it sat undated on the homepage a month after being
+  superseded. NBS publishes free and monthly on the last day of each month.
+  Don't reinstate a global composite unless a checkable source comes with it.
 - **China and India GDP cards** — updated from official NBS and MoSPI releases until dedicated adapters are added.
 - **Index P/E (`pe`, `pe10yAvg`)** — no free provider supplies index-level P/E, so both are typed
   optional and hand-entered in `site-data.ts`. An index without them renders a dash in the
@@ -173,7 +180,7 @@ the wrong company on those tiles.
 - Homepage Market Snapshot + Economic Snapshot sections
 - Eleven-index market heatmap with company-name tooltips and quote-coverage status
 - 52W range column and YTD/52W chart toggle in the equity table
-- Global PMI section + regional PMIs (China, India, Taiwan, South Korea) in the Economy dashboard
+- PMI section + regional PMIs (China, India, Taiwan, South Korea) in the Economy dashboard
 - Blog page set to Coming Soon; individual post routes still exist but are not linked
 - Branded OG/social card (`opengraph-image.tsx`) + full `openGraph`/`twitter` metadata
 - GitHub Pages workflow (`.github/workflows/deploy.yml`); `next.config.ts` supports optional `NEXT_PUBLIC_BASE_PATH` for project-page hosting
