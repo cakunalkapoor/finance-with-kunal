@@ -373,7 +373,8 @@ if (patchEconomicIndicator("us-payrolls", m.us_payrolls)) stats.macro++;
 if (patchEconomicIndicator("us-fed-funds", m.us_fed_funds)) stats.macro++;
 if (patchEconomicIndicator("us-trade-balance", m.us_trade)) stats.macro++;
 if (patchEconomicIndicator("us-tax-receipts", m.us_tax)) stats.macro++;
-if (patchEconomicIndicator("ca-gdp", m.ca_gdp_growth)) stats.macro++;
+// ca-gdp moved off FRED's OECD mirror to StatCan direct — same figure (both
+// give -0.04% for Q1 2026), ~2.5 weeks sooner. See the Canada block below.
 if (patchEconomicIndicator("us-retail-sales", m.us_retail)) stats.macro++;
 // The standalone us-10y / ca-10y cards were removed: the yield curve chart on
 // each country page carries the 10Y alongside the long end, and keeping a
@@ -390,6 +391,8 @@ if (patchEconomicIndicator("ca-trade-balance", sc.ca_trade)) stats.macro++;
 if (patchEconomicIndicator("ca-payrolls", sc.ca_jobs_added)) stats.macro++;
 if (patchEconomicIndicator("ca-tax-receipts", sc.ca_govt_revenue)) stats.macro++;
 if (patchEconomicIndicator("ca-retail-sales", sc.ca_retail)) stats.macro++;
+if (patchEconomicIndicator("ca-gdp", sc.ca_gdp)) stats.macro++;
+if (patchEconomicIndicator("ca-gdp-monthly", sc.ca_gdp_monthly)) stats.macro++;
 const brentCommodity = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
 const natgasCommodity = (yahoo.commodities || []).find((c) => c.symbol === "NG=F");
 if (patchCommodityIndicator("brent-oil", brentCommodity)) stats.macro++;

@@ -5,15 +5,12 @@ import dynamic from "next/dynamic";
 import type { TimeHorizon, YieldCurve } from "@/types";
 import { FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
+import { horizonsFor, defaultHorizon, HORIZON_MONTHS as MONTHS } from "@/lib/chart-window";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
 const HORIZONS: TimeHorizon[] = ["6M", "1Y", "3Y"];
-
-const MONTHS: Record<TimeHorizon, number> = {
-  "1W": 0.25, "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "3Y": 36, "5Y": 60,
-};
 
 /** Trim a monthly series to the horizon, anchored to its own last point. */
 function filterByHorizon(
@@ -31,7 +28,14 @@ interface Props {
 }
 
 export default function YieldCurveChart({ curve }: Props) {
-  const [horizon, setHorizon] = useState<TimeHorizon>("1Y");
+  // Both legs share a date range, so the shorter one governs the tab strip.
+  const horizons = horizonsFor(
+    curve.short.series.length <= curve.long.series.length ? curve.short.series : curve.long.series,
+    HORIZONS
+  );
+  const [horizon, setHorizon] = useState<TimeHorizon>(
+    defaultHorizon(horizons, "1Y")
+  );
   const theme = useTheme();
   const c = CHART_COLORS[theme];
 
@@ -243,7 +247,7 @@ export default function YieldCurveChart({ curve }: Props) {
       </div>
 
       <div className="flex items-center gap-1 px-4 pb-2">
-        {HORIZONS.map((h) => (
+        {horizons.map((h) => (
           <button
             key={h}
             onClick={() => setHorizon(h)}

@@ -1,4 +1,5 @@
 import { DATA_UPDATED_AT } from "@/lib/site-data";
+import type { TimeHorizon } from "@/types";
 
 /* Shared window maths for the sparkline columns in EquityMarketsTable and
    ETFTable.
@@ -99,4 +100,51 @@ export function windowLabel(view: ChartView, total = 156): string {
     return `${startMonth} – ${MONTH_YEAR.format(end)}`;
   }
   return `${MONTH_YEAR.format(start)} – ${MONTH_YEAR.format(end)}`;
+}
+
+/* ── Economic-chart horizons ────────────────────────────────────────────────
+   The dashboard charts offer 3M…5Y tabs, but the underlying series are short:
+   most macro cards carry 36 monthly points and the PMI cards carry 6–7. A tab
+   longer than the series just re-renders the whole series under a different
+   label, which reads as "5 years of history" when there are three. These
+   helpers keep the tab strip honest by offering only what the data can fill. */
+
+/** Months of history a horizon needs to mean anything. */
+export const HORIZON_MONTHS: Record<TimeHorizon, number> = {
+  "1W": 0.25, "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "3Y": 36, "5Y": 60,
+};
+
+/** Months of history a dated series covers, counting both endpoints: 36 monthly
+ *  points from 2023-08 to 2026-07 are 36 months of data, not the 35 steps
+ *  between them, and that difference decides whether a 3Y tab is offered. */
+export function spanInMonths(series: { date: string }[]): number {
+  if (series.length < 2) return 0;
+  const a = new Date(series[0].date);
+  const b = new Date(series[series.length - 1].date);
+  if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return 0;
+  const steps =
+    (b.getFullYear() - a.getFullYear()) * 12 + (b.getMonth() - a.getMonth());
+  return steps + 1;
+}
+
+/**
+ * The subset of `all` this series can actually fill. Always returns at least
+ * the shortest horizon, so a very short series still renders a tab strip
+ * rather than none.
+ */
+export function horizonsFor(
+  series: { date: string }[],
+  all: TimeHorizon[]
+): TimeHorizon[] {
+  const span = spanInMonths(series);
+  const fits = all.filter((h) => HORIZON_MONTHS[h] <= span);
+  return fits.length ? fits : all.slice(0, 1);
+}
+
+/** Preferred default, clamped to what the series supports. */
+export function defaultHorizon(
+  available: TimeHorizon[],
+  preferred: TimeHorizon
+): TimeHorizon {
+  return available.includes(preferred) ? preferred : available[available.length - 1];
 }

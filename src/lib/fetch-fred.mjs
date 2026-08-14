@@ -78,7 +78,9 @@ const MACRO = [
   { key: "us_retail",       id: "RSAFS",    limit: 48, label: "US Retail Sales", unit: "% YoY", positiveGood: true, yoy: true },
 
   // Canada Real GDP — already a quarterly QoQ growth %; pass through.
-  { key: "ca_gdp_growth",   id: "NAEXKP01CAQ657S", limit: 12, label: "Canada GDP Growth", unit: "% QoQ", positiveGood: true },
+  // Canada GDP now comes from Statistics Canada direct (table 36-10-0104, vector
+  // 62305752) — same figure, but FRED's OECD mirror carried Q1 2026 only from
+  // Jun 15 when StatCan had published it on May 29. See fetch-statcan.mjs.
   // NOTE: Canada CPI + policy rate come from Bank of Canada Valet (FRED's CA CPI/
   // policy-rate series lag badly). See scripts/fetch-boc.mjs.
 ];

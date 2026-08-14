@@ -25,6 +25,7 @@ const PROJECT = path.resolve(__dirname, "..", "..");
 const OUT = path.join(PROJECT, "src", "lib", "statcan-data.json");
 
 const round1 = (n) => (n == null || !Number.isFinite(n) ? null : Math.round(n * 10) / 10);
+const round2 = (n) => (n == null || !Number.isFinite(n) ? null : Math.round(n * 100) / 100);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const SERIES = [
@@ -41,6 +42,18 @@ const SERIES = [
   // Total retail trade sales, Canada, seasonally adjusted (table 20-10-0056). LEVEL → YoY %.
   // latestN = keep + 12 (YoY needs 12 extra months of raw levels).
   { key: "ca_retail",           vector: 1446859483, latestN: 48, unit: "% YoY", yoy: true, keep: 36,         label: "Canada Retail Sales" },
+  // Real GDP, expenditure-based, chained 2017$, quarterly SA (table 36-10-0104).
+  // LEVEL → plain (not annualised) quarter-over-quarter %, which is what the card
+  // has always shown. Replaces FRED's OECD mirror NAEXKP01CAQ657S: StatCan
+  // released Q1 2026 on May 29 and FRED did not carry it until Jun 15, so the
+  // mirror costs ~2.5 weeks on top of StatCan's own two-month schedule.
+  // Two decimals — quarterly moves here run to hundredths (Q1 2026 was -0.04%),
+  // and one decimal would round that to -0.0.
+  { key: "ca_gdp",              vector: 62305752,   latestN: 16, unit: "% QoQ", pct: true, round: "two", keep: 12, label: "Canada GDP (QoQ)" },
+  // Real GDP by industry, chained 2017$, monthly SA (table 36-10-0434). LEVEL →
+  // month-over-month %. Runs ~4 months ahead of the quarterly series, so this is
+  // the fresher read on Canadian growth between quarterly prints.
+  { key: "ca_gdp_monthly",      vector: 65201210,   latestN: 37, unit: "% MoM", pct: true, round: "two", keep: 36, label: "Canada GDP (MoM)" },
 ];
 
 async function fetchVector(vectorId, latestN) {
@@ -70,15 +83,18 @@ async function fetchVector(vectorId, latestN) {
 }
 
 function buildRecord(series, { scale = 1, round = "one", keep = 24 } = {}) {
-  const apply = (v) => (round === "whole" ? Math.round(v * scale) : round1(v * scale));
+  const rounder = round === "whole" ? Math.round : round === "two" ? round2 : round1;
+  const apply = (v) => rounder(v * scale);
   const s = series.map((p) => ({ date: p.date, value: apply(p.value) }));
   if (s.length === 0) return null;
   const last = s[s.length - 1];
   const prev = s[s.length - 2];
   return {
     value: last.value,
+    // Same precision as the values themselves — rounding the delta harder than
+    // its operands makes `change` disagree with value minus previousValue.
+    change: prev ? rounder(last.value - prev.value) : 0,
     previousValue: prev ? prev.value : null,
-    change: prev ? round1(last.value - prev.value) : 0,
     direction: prev ? (last.value > prev.value ? "up" : last.value < prev.value ? "down" : "neutral") : "neutral",
     asOf: last.date,
     timeSeries: s.slice(-keep),
@@ -106,6 +122,21 @@ function deriveYoY(obs, keep = 24) {
   return buildRecord(yoy, { keep });
 }
 
+// For LEVEL series we report the period-over-period % change — MoM on a monthly
+// series, QoQ on a quarterly one. Not annualised: StatCan headlines quarterly
+// GDP at an annual rate, but this card has always shown the plain quarterly
+// move (and computing it this way reproduces the OECD/FRED figure exactly).
+function derivePct(obs, keep = 24, round = "two") {
+  if (obs.length < 2) return null;
+  const pct = [];
+  for (let i = 1; i < obs.length; i++) {
+    const prev = obs[i - 1].value;
+    if (!prev) continue;
+    pct.push({ date: obs[i].date, value: (obs[i].value / prev - 1) * 100 });
+  }
+  return buildRecord(pct, { keep, round });
+}
+
 async function main() {
   console.log("Fetching from Statistics Canada WDS...\n");
   const macro = {};
@@ -113,7 +144,10 @@ async function main() {
     process.stdout.write(`  v${String(s.vector).padEnd(10)} ${s.label.padEnd(24)} `);
     try {
       const obs = await fetchVector(s.vector, s.latestN);
-      const d = s.diff ? deriveDiff(obs, s.keep) : s.yoy ? deriveYoY(obs, s.keep) : buildRecord(obs, { scale: s.scale, round: s.round, keep: s.keep });
+      const d = s.diff ? deriveDiff(obs, s.keep)
+        : s.yoy ? deriveYoY(obs, s.keep)
+        : s.pct ? derivePct(obs, s.keep, s.round)
+        : buildRecord(obs, { scale: s.scale, round: s.round, keep: s.keep });
       macro[s.key] = { ...d, unit: s.unit, label: s.label };
       console.log(`${String(d?.value ?? "—").padStart(8)}  asOf ${d?.asOf}`);
     } catch (e) {

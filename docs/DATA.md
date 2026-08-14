@@ -19,7 +19,7 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 | **Yahoo Finance** (via `yfinance` Python) | Free, no key needed | 12 equity indices, 9 commodities, 4 crypto, 6 FX pairs, and 1,618 heatmap constituents | `npm run fetch:yahoo`; `npm run fetch:heatmap` | — |
 | **FRED** (St. Louis Fed) | Free | US macro data, six non-Canadian sovereign 10Y series, and the US 30Y (DGS30) | `npm run fetch:fred` | `FRED_API_KEY` |
 | **Bank of Canada Valet** | Free | Bank of Canada policy rate, Canadian CPI, and daily Canada 10Y + long-term benchmark yields | `npm run fetch:boc` | — |
-| **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, and government revenue | `npm run fetch:statcan` | — |
+| **Statistics Canada WDS** | Free | Canadian employment, trade, retail sales, government revenue, and GDP (quarterly + monthly) | `npm run fetch:statcan` | — |
 | **Twelve Data** | Free 800/day, 8/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:twelvedata` | `TWELVEDATA_API_KEY` |
 | **Finnhub** | Free 60/min | **Scaffold only** — proven working, not wired into dashboard yet | `npm run fetch:finnhub` | `FINNHUB_API_KEY` |
 
@@ -34,6 +34,12 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 - `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, fetches US macro series and foreign 10Y yields, and preserves full dates for weekly claims. Output: `src/lib/fred-data.json`.
 - `src/lib/fetch-boc.mjs` — fetches Canadian policy, CPI, and 10Y yield data from the Bank of Canada Valet API. Output: `src/lib/boc-data.json`.
 - `src/lib/fetch-statcan.mjs` — fetches Canadian macro series from Statistics Canada. Output: `src/lib/statcan-data.json`.
+  Canada GDP is sourced here rather than from FRED: FRED's OECD mirror (`NAEXKP01CAQ657S`) carries the
+  same figure but lags StatCan's own release by ~2.5 weeks (Q1 2026 was published May 29 and reached
+  FRED June 15). Quarterly GDP is table 36-10-0104 (vector 62305752) as a plain, **not annualised**,
+  QoQ % — that is what the card has always shown, and computing it this way reproduces the OECD
+  figure exactly. Monthly GDP by industry is table 36-10-0434 (vector 65201210) as MoM %, and runs
+  ~4 months ahead of the quarterly series.
 - `src/lib/fetch-twelvedata.mjs` — scaffold demo: batch-quotes 8 US ETFs (SPY/QQQ/IWM/EFA/EEM/TLT/GLD/USO). Exported helpers: `td(endpoint, params)`. Output: `src/lib/twelvedata-data.json`.
 - `src/lib/fetch-finnhub.mjs` — scaffold demo: fetches Magnificent 7 quotes + profiles + this-week US economic calendar. Exported helpers: `quote/profile/earningsHistory/economicCalendar/ipoCalendar/companyNews`. Output: `src/lib/finnhub-data.json`.
 
@@ -121,7 +127,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 
 ### Economic indicators currently present
 - **PMI:** US Composite PMI, China Manufacturing PMI, India Manufacturing PMI, Taiwan Manufacturing PMI, South Korea Manufacturing PMI, India Services PMI
-- **Growth:** US GDP, China GDP, India GDP
+- **Growth:** US GDP, Canada GDP (quarterly + monthly), China GDP, India GDP
 - **Employment:** US Initial Jobless Claims, US Unemployment Rate
 - **Inflation:** US CPI
 - **Energy:** Brent Crude Oil, Natural Gas (Henry Hub)
@@ -194,3 +200,11 @@ the wrong company on those tiles.
 - Search, RSS, newsletter signup
 - Mobile polish on the heatmap (treemap labels get tight on narrow screens)
 - Repository-hosted data refresh automation and freshness alerts
+
+### Chart horizons are derived, not fixed
+
+`EconomicChart` and `YieldCurveChart` offer only the horizon tabs their own series can
+fill (`horizonsFor` in `chart-window.ts`). No macro series here carries more than ~37
+monthly points, so the 5Y tab was always a relabelled 3Y; the PMI cards carry 6–7 points
+and now stop at 6M. Adding a longer tab means lengthening the series first — raise the
+fetcher's `limit`/`months`/`keep` and the tab appears on its own.

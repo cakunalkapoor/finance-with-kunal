@@ -5,10 +5,14 @@ import dynamic from "next/dynamic";
 import type { EconomicIndicator, TimeHorizon } from "@/types";
 import { formatEconomicValue, getChangeColor, FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
+import { horizonsFor, defaultHorizon } from "@/lib/chart-window";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
+// The full ladder. Each card offers only the rungs its own series can fill —
+// no macro series here carries more than ~37 months, so a 5Y tab would have
+// re-rendered the same three years under a longer label.
 const HORIZONS: TimeHorizon[] = ["3M", "6M", "1Y", "3Y", "5Y"];
 
 function filterByHorizon(
@@ -39,7 +43,10 @@ interface Props {
 }
 
 export default function EconomicChart({ indicator }: Props) {
-  const [horizon, setHorizon] = useState<TimeHorizon>("1Y");
+  const horizons = horizonsFor(indicator.timeSeries, HORIZONS);
+  const [horizon, setHorizon] = useState<TimeHorizon>(
+    defaultHorizon(horizons, "1Y")
+  );
   const theme = useTheme();
   const c = CHART_COLORS[theme];
 
@@ -190,7 +197,7 @@ export default function EconomicChart({ indicator }: Props) {
 
       {/* Time horizon tabs */}
       <div className="flex items-center gap-1 px-4 pb-2">
-        {HORIZONS.map((h) => (
+        {horizons.map((h) => (
           <button
             key={h}
             onClick={() => setHorizon(h)}
