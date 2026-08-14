@@ -3330,7 +3330,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: false,
     period: "Aug 2026",
-    description: "US initial jobless claims fell to 187K in the week ended July 18 from 209K in the prior week, remaining near multi-month lows. Source: US Department of Labor via FRED (ICSA).",
+    description: "US initial jobless claims were 199K in the week ended August 1, essentially unchanged from 198K the week before and still near multi-month lows. Source: US Department of Labor via FRED (ICSA).",
     timeSeries: [
       { date: "2023-08-12", value: 248 },
       { date: "2023-08-19", value: 240 },
@@ -3710,7 +3710,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: false,
     period: "Jun 2026",
-    description: "US Producer Price Index (Final Demand) measures the average change in selling prices received by domestic producers — often a leading indicator for CPI. Source: BLS via FRED (PPIFIS).",
+    description: "US producer prices (Final Demand) rose 5.51% year over year in June, cooling from 5.97% in May. PPI measures the average change in selling prices received by domestic producers and often leads CPI. Source: BLS via FRED (PPIFIS).",
     timeSeries: [
       { date: "2023-07", value: 1.18 },
       { date: "2023-08", value: 1.9 },
@@ -4117,7 +4117,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "down",
     isPositiveGood: true,
     period: "Jul 2026",
-    description: "US nonfarm payrolls rose just 57K in June, a sharp step down from May's 129K and one of the weakest prints of the cycle — a clear signal that hiring momentum is fading. Source: BLS via FRED (PAYEMS).",
+    description: "US nonfarm payrolls fell 23K in July after adding just 20K in June — the first outright decline since February, and a fourth straight month of slowing from March's 214K. Hiring momentum has not merely faded but reversed. Source: BLS via FRED (PAYEMS).",
     timeSeries: [
       { date: "2023-08", value: 218 },
       { date: "2023-09", value: 156 },
@@ -4228,7 +4228,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Jul 2026",
-    description: "Canada added 18K jobs in June, a modest gain that cooled sharply from May's stronger print but kept employment growing. Source: Statistics Canada Labour Force Survey (table 14-10-0287, seasonally adjusted).",
+    description: "Canada added 75K jobs in July, a sharp acceleration from June's 18K and the strongest monthly gain of the year so far. Source: Statistics Canada Labour Force Survey (table 14-10-0287, seasonally adjusted).",
     timeSeries: [
       { date: "2023-08", value: 67 },
       { date: "2023-09", value: 49 },
@@ -4394,7 +4394,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Jun 2026",
-    description: "The US goods-and-services trade deficit widened to $77.59B in May from $54.57B in April, increasing the near-term drag from net exports. Source: BEA via FRED (BOPGSTB).",
+    description: "The US goods-and-services trade deficit narrowed to $73.26B in June from $77.65B in May, easing the near-term drag from net exports. Source: BEA via FRED (BOPGSTB).",
     timeSeries: [
       { date: "2023-07", value: -62.05 },
       { date: "2023-08", value: -58.08 },
@@ -4449,7 +4449,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Jun 2026",
-    description: "Canada posted a C$4.2B merchandise trade surplus in May, widening from April as exports outpaced imports. Source: Statistics Canada (table 12-10-0011, balance-of-payments basis, seasonally adjusted).",
+    description: "Canada posted a C$3.9B merchandise trade surplus in June, up slightly from C$3.7B in May as exports continued to outpace imports. Source: Statistics Canada (table 12-10-0011, balance-of-payments basis, seasonally adjusted).",
     timeSeries: [
       { date: "2023-07", value: -1 },
       { date: "2023-08", value: 0.7 },
