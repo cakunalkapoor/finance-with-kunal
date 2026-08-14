@@ -49,7 +49,9 @@ const SERIES = [
   // mirror costs ~2.5 weeks on top of StatCan's own two-month schedule.
   // Two decimals — quarterly moves here run to hundredths (Q1 2026 was -0.04%),
   // and one decimal would round that to -0.0.
-  { key: "ca_gdp",              vector: 62305752,   latestN: 16, unit: "% QoQ", pct: true, round: "two", keep: 12, label: "Canada GDP (QoQ)" },
+  // keep 16 quarters, not 12: the chart's 3Y tab needs 36 months and 12
+  // quarterly points span only 34. latestN = keep + 1 for the first pct step.
+  { key: "ca_gdp",              vector: 62305752,   latestN: 17, unit: "% QoQ", pct: true, round: "two", keep: 16, label: "Canada GDP (QoQ)" },
   // Real GDP by industry, chained 2017$, monthly SA (table 36-10-0434). LEVEL →
   // month-over-month %. Runs ~4 months ahead of the quarterly series, so this is
   // the fresher read on Canadian growth between quarterly prints.

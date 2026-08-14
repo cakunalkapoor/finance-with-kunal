@@ -39,7 +39,7 @@ const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: stri
 const US_CANADA_ONLY = new Set([
   "us-payrolls", "us-fed-funds", "us-trade-balance", "us-tax-receipts",
   "us-mfg-pmi", "us-services-pmi",
-  "ca-gdp", "ca-cpi", "ca-unemployment", "ca-payrolls",
+  "ca-gdp", "ca-gdp-monthly", "ca-cpi", "ca-unemployment", "ca-payrolls",
   "ca-policy-rate", "ca-trade-balance", "ca-tax-receipts",
   "ca-mfg-pmi", "ca-services-pmi", "us-retail-sales", "ca-retail-sales",
 ]);
