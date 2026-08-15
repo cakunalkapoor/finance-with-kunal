@@ -15,35 +15,47 @@
     "FRED monthly series, and 1M/1Y moves are recomputed against it in",
     "patch-site-data.mjs, so no history has to be transcribed by hand."
   ],
-  "readAt": "2026-08-09",
+  "readAt": "2026-08-14",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 4.924,
-      "asOf": "2026-08-07",
+      "value": 5.0401,
+      "asOf": "2026-08-14",
       "source": "Investing.com UK 10Y",
-      "crossCheck": { "source": "Trading Economics UK 10Y", "value": 4.91 }
+      "crossCheck": {
+        "source": "Trading Economics UK 10Y",
+        "value": 5.0412
+      }
     },
     "in10y": {
       "country": "India",
-      "value": 6.766,
-      "asOf": "2026-08-07",
+      "value": 6.762,
+      "asOf": "2026-08-14",
       "source": "Investing.com India 10Y",
-      "crossCheck": { "source": "Trading Economics India 10Y", "value": 6.78 }
+      "crossCheck": {
+        "source": "Trading Economics India 10Y",
+        "value": 6.758
+      }
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 4.198,
-      "asOf": "2026-08-07",
+      "value": 4.305,
+      "asOf": "2026-08-14",
       "source": "Investing.com South Korea 10Y",
-      "crossCheck": { "source": "Trading Economics South Korea 10Y", "value": 4.2 }
+      "crossCheck": {
+        "source": "Trading Economics South Korea 10Y",
+        "value": 4.305
+      }
     },
     "au10y": {
       "country": "Australia",
-      "value": 4.977,
-      "asOf": "2026-08-07",
+      "value": 4.987,
+      "asOf": "2026-08-14",
       "source": "Investing.com Australia 10Y",
-      "crossCheck": { "source": "Trading Economics Australia 10Y", "value": 4.98 }
+      "crossCheck": {
+        "source": "Trading Economics Australia 10Y",
+        "value": 4.987
+      }
     }
   }
 }
