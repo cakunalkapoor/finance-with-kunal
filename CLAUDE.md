@@ -14,8 +14,12 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
 | `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
-| `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators |
+| `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators (incl. euro area) |
+| `/us-economy` | **US** | US-only economic dashboard + 10Y/30Y yield curve |
+| `/canada-economy` | **Canada** | Canada-only economic dashboard + 10Y/long yield curve |
 | `/blog` | **Blog** | Long-form market commentary |
+| `/about` | **About Me** | Profile, career timeline, qualifications |
+| `/us-canada` | — | `noIndex` redirect stub — the old combined page, now split into the two above. Kept so existing links don't 404. |
 
 Nav labels and route slugs differ on purpose (`/dashboard` shows as "Economy"). Don't rename routes.
 
@@ -54,19 +58,29 @@ src/
 │   ├── opengraph-image.tsx     # Build-time branded OG/social card
 │   ├── sitemap.ts, robots.ts   # Static /sitemap.xml + /robots.txt
 │   ├── globals.css             # @theme tokens, animations, grid bg
-│   ├── markets/page.tsx        # Heatmap + Equity + Bonds + Commodities + Forex + Crypto
-│   ├── dashboard/page.tsx      # MacroSnapshot + EconomicCharts + Notes
+│   ├── markets/page.tsx        # Heatmap + Equity + ETFs + Bonds + Commodities + Forex + Crypto
+│   ├── dashboard/page.tsx      # MacroSnapshot + EconomicCharts + Notes (global)
+│   ├── us-economy/page.tsx     # CountryEconomy("United States")
+│   ├── canada-economy/page.tsx # CountryEconomy("Canada")
+│   ├── about/page.tsx          # Profile, timeline, skills
+│   ├── us-canada/page.tsx      # noIndex redirect stub → us-economy / canada-economy
 │   └── blog/{page.tsx, [slug]/page.tsx}
 ├── components/
 │   ├── layout/{Navbar,Footer}.tsx
-│   ├── ui/{SciFiCard,PageHeader}.tsx
+│   ├── ui/                     # SciFiCard, BriefingHero, PageHeader, Reveal, PointerSpotlight
 │   ├── seo/JsonLd.tsx          # Schema.org Person/WebSite + per-page breadcrumbs
 │   ├── markets/                # MarketTicker, EquityMarketsTable, ETFTable, BondsTable,
-│   │                           #   CommoditiesGrid, CryptoGrid, ForexGrid, MarketHeatmap
-│   └── dashboard/              # MacroSnapshot, EconomicChart, EconomicNotes
+│   │                           #   AssetTable — shared by CommoditiesTable,
+│   │                           #   CryptoTable and ForexTable,
+│   │                           #   StatStack, TrendSparkline, MarketHeatmap
+│   └── dashboard/              # MacroSnapshot, EconomicChart, EconomicNotes,
+│                               #   CountryEconomy, YieldCurveChart
 ├── lib/
 │   ├── site-data.ts            # ALL canned data (large — read with grep/offset, not whole-file)
 │   ├── ticker-names.ts         # GENERATED — Yahoo symbol → company name (heatmap tooltips)
+│   ├── chart-window.ts         # THE chart window ladder + slicing maths (see Conventions)
+│   ├── external-links.ts       # Investing.com / Yahoo deep links per instrument
+│   ├── use-theme.ts            # theme hook + CHART_COLORS (ECharts can't read CSS vars)
 │   ├── seo.ts                  # SITE_URL, canonical/OG helper — every page uses pageMetadata()
 │   └── utils.ts                # cn(), formatNumber, formatChange, getChangeColor, FONT_MONO
 └── types/index.ts              # IndexQuote, BondYield, Commodity, CryptoAsset, ForexRate, ...
@@ -74,7 +88,7 @@ src/
 
 ## Data (summary — full detail in `docs/DATA.md`)
 
-Live providers wired in (Yahoo, Alpha Vantage, FRED; Twelve Data + Finnhub are scaffolds); everything else is **deterministic mock**. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
+Six live providers are wired in — **Yahoo Finance, FRED, Bank of Canada Valet, Statistics Canada WDS, Eurostat**, plus Alpha Vantage; Twelve Data + Finnhub are scaffolds. Only the S&P Global PMI cards, china-gdp/india-gdp, and BLOG_POSTS are still hand-maintained. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
 
 **Heatmaps** are a four-stage pipeline of their own — `build:catalogue` → `fetch:sectors` →
 `fetch:heatmap` → `patch:heatmap`. Membership and weights come from `data/index-constituents.xlsx`
@@ -105,4 +119,7 @@ build` still uses Turbopack and is unaffected.
 - **No "live / real-time / LIVE DATA"** — weekly cadence; use `Last Updated` / `Next Update`.
 - **Dashboard categories render in `CATEGORIES` array order** (`dashboard/page.tsx`) — to add a section at the top, put it first.
 - **Use color tokens** (`var(--color-*)`) over hardcoded hex, except in ECharts configs (use the hex equivalents).
+- **One chart window ladder site-wide: `3M / 6M / YTD / 2Y / 3Y`.** `TimeHorizon` (types/index.ts) is exactly these five and `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.
+- **Index P/E is optional.** No free provider supplies it, so `pe`/`pe10yAvg` are hand-entered and typed optional; a card without them renders a dash. Never substitute a plausible-looking multiple — a wrong valuation figure is worse than a visibly absent one.
+- **Heatmap % changes must be split-corrected.** Yahoo does not back-adjust recent splits: `Adj Close` and `auto_adjust=True` both come back identical to raw Close, so a 2:1 split publishes as a real -50% week (this happened, and flipped a whole sector negative). `fetch-heatmap.py` applies the factor from `Ticker.splits` for outliers past ±30%.
 - **Don't create `.md` docs unless asked.**
