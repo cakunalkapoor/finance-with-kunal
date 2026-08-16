@@ -22,6 +22,8 @@
     "fetch:sectors": "./.venv/bin/python3 src/lib/fetch-sectors.py",
     "fetch:heatmap": "./.venv/bin/python3 src/lib/fetch-heatmap.py",
     "patch:heatmap": "./.venv/bin/python3 src/lib/patch-heatmap.py",
+    "fetch:ai": "./.venv/bin/python3 src/lib/fetch-yahoo.py --only=ai",
+    "patch:ai": "node src/lib/patch-ai-stocks.mjs",
     "gen:ticker-names": "./.venv/bin/python3 src/lib/gen-ticker-names.py"
   },
   "dependencies": {

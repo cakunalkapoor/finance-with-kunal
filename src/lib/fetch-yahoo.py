@@ -120,6 +120,50 @@ ETFS = [
     ("agg",  "AGG",     "AGG"),
 ]
 
+# (key, yahoo_symbol, ticker, company, layer, currency)
+#
+# The /ai page's stock universe, grouped by where a company sits in the AI stack
+# rather than by GICS sector — the point of that page is that "AI exposure" cuts
+# across Technology, Utilities, Industrials and Real Estate. A power utility
+# signing data-centre PPAs (CEG) belongs next to the chips it keeps running, not
+# filed under Utilities three screens away.
+#
+# `layer` is the grouping key in AIStockTable — keep the four values in sync
+# with the AIStockLayer union in src/types/index.ts.
+#
+# Non-US listings are quoted in their own currency (SK hynix and Samsung come
+# back in KRW), so the table labels currency per row and never sums across them.
+AI_STOCKS = [
+    # Frontier models, clouds, and the software sold on top of them.
+    ("msft",  "MSFT",      "MSFT",   "Microsoft",            "platform", "USD"),
+    ("googl", "GOOGL",     "GOOGL",  "Alphabet",             "platform", "USD"),
+    ("amzn",  "AMZN",      "AMZN",   "Amazon",               "platform", "USD"),
+    ("meta",  "META",      "META",   "Meta Platforms",       "platform", "USD"),
+    ("pltr",  "PLTR",      "PLTR",   "Palantir",             "platform", "USD"),
+    ("now",   "NOW",       "NOW",    "ServiceNow",           "platform", "USD"),
+    # The silicon, and the tools that make it.
+    ("nvda",  "NVDA",      "NVDA",   "NVIDIA",               "silicon",  "USD"),
+    ("avgo",  "AVGO",      "AVGO",   "Broadcom",             "silicon",  "USD"),
+    ("amd",   "AMD",       "AMD",    "AMD",                  "silicon",  "USD"),
+    ("tsm",   "TSM",       "TSM",    "TSMC (ADR)",           "silicon",  "USD"),
+    ("asml",  "ASML",      "ASML",   "ASML (ADR)",           "silicon",  "USD"),
+    ("mu",    "MU",        "MU",     "Micron",               "silicon",  "USD"),
+    ("arm",   "ARM",       "ARM",    "Arm Holdings",         "silicon",  "USD"),
+    ("mrvl",  "MRVL",      "MRVL",   "Marvell",              "silicon",  "USD"),
+    # Everything that must be built before a GPU can be switched on.
+    ("vrt",   "VRT",       "VRT",    "Vertiv",               "infra",    "USD"),
+    ("anet",  "ANET",      "ANET",   "Arista Networks",      "infra",    "USD"),
+    ("etn",   "ETN",       "ETN",    "Eaton",                "infra",    "USD"),
+    ("ceg",   "CEG",       "CEG",    "Constellation Energy", "infra",    "USD"),
+    ("gev",   "GEV",       "GEV",    "GE Vernova",           "infra",    "USD"),
+    ("eqix",  "EQIX",      "EQIX",   "Equinix",              "infra",    "USD"),
+    # Servers, and the memory that became the tightest constraint in the chain.
+    ("smci",  "SMCI",      "SMCI",   "Super Micro",          "systems",  "USD"),
+    ("dell",  "DELL",      "DELL",   "Dell Technologies",    "systems",  "USD"),
+    ("hynix", "000660.KS", "000660", "SK hynix",             "systems",  "KRW"),
+    ("sec",   "005930.KS", "005930", "Samsung Electronics",  "systems",  "KRW"),
+]
+
 # (key, yahoo_symbol, display_name, pair_label, icon)
 # DXY = USD strength index. Others are quoted as X per 1 USD (or USD per 1 X for EUR/GBP).
 FOREX = [
@@ -254,9 +298,25 @@ def fetch_one(symbol, retries=3):
 
 
 def main():
-    print(f"Fetching via yfinance...\n")
+    # `--only=ai` (comma-separated, e.g. --only=ai,indices) fetches one slice
+    # instead of all ~70 symbols. Added for the /ai page: its 24 tickers move
+    # weekly like everything else, but re-pulling 5y of daily history for the
+    # whole site to refresh them costs several rate-limited minutes. Sections
+    # not fetched are carried over from the existing dump rather than dropped,
+    # so a partial run can never silently empty the file.
+    only = set()
+    for arg in sys.argv[1:]:
+        if arg.startswith("--only="):
+            only.update(p.strip() for p in arg.split("=", 1)[1].split(",") if p.strip())
+    want = lambda section: not only or section in only
+
+    if only:
+        print(f"Fetching via yfinance (sections: {', '.join(sorted(only))})...\n")
+    else:
+        print(f"Fetching via yfinance...\n")
+
     indices_out = []
-    for key, sym, name, region, flag in INDICES:
+    for key, sym, name, region, flag in (INDICES if want("indices") else []):
         print(f"  {sym:12} {name:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -274,7 +334,7 @@ def main():
 
     print()
     bonds_out = []
-    for key, sym, country, flag in BOND_RELIABLE:
+    for key, sym, country, flag in (BOND_RELIABLE if want("bonds") else []):
         print(f"  {sym:14} {country:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -291,7 +351,7 @@ def main():
 
     print()
     commodities_out = []
-    for key, sym, name, unit, icon in COMMODITIES:
+    for key, sym, name, unit, icon in (COMMODITIES if want("commodities") else []):
         print(f"  {sym:12} {name:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -309,7 +369,7 @@ def main():
 
     print()
     forex_out = []
-    for key, sym, name, pair, icon in FOREX:
+    for key, sym, name, pair, icon in (FOREX if want("forex") else []):
         print(f"  {sym:12} {name:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -327,7 +387,7 @@ def main():
 
     print()
     crypto_out = []
-    for key, sym, name, unit, icon in CRYPTO:
+    for key, sym, name, unit, icon in (CRYPTO if want("crypto") else []):
         print(f"  {sym:12} {name:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -345,7 +405,7 @@ def main():
 
     print()
     etfs_out = []
-    for key, sym, ticker in ETFS:
+    for key, sym, ticker in (ETFS if want("etfs") else []):
         print(f"  {sym:12} {ticker:6} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -361,20 +421,55 @@ def main():
             **d,
         })
 
+    print()
+    ai_out = []
+    for key, sym, ticker, company, layer, currency in (AI_STOCKS if want("ai") else []):
+        print(f"  {sym:12} {company:22} ", end="", flush=True)
+        hist, err = fetch_one(sym)
+        if err or hist is None:
+            print(f"✗ {err}")
+            continue
+        d = derive(hist)
+        if d is None:
+            print("✗ no closes")
+            continue
+        print(f"{d['value']:>10}  {d['dailyChange']:+.2f}%  YTD {d['ytdChange']:+.2f}%")
+        ai_out.append({
+            "key": key, "symbol": sym, "ticker": ticker, "company": company,
+            "layer": layer, "currency": currency,
+            **d,
+        })
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
+
+    # Carry over sections this run did not fetch, so `--only=ai` refreshes the
+    # AI universe without blanking the rest of the dump that patch-site-data
+    # depends on.
+    previous = {}
+    if OUT.exists():
+        try:
+            previous = json.load(OUT.open())
+        except (json.JSONDecodeError, OSError):
+            previous = {}
+
+    def section(name, fetched):
+        return fetched if want(name) else previous.get(name, [])
+
     with OUT.open("w") as f:
         json.dump({
             "fetchedAt":   pd.Timestamp.utcnow().isoformat(),
             "source":      "Yahoo Finance via yfinance",
-            "indices":     indices_out,
-            "bonds":       bonds_out,
-            "commodities": commodities_out,
-            "crypto":      crypto_out,
-            "forex":      forex_out,
-            "etfs":        etfs_out,
+            "indices":     section("indices", indices_out),
+            "bonds":       section("bonds", bonds_out),
+            "commodities": section("commodities", commodities_out),
+            "crypto":      section("crypto", crypto_out),
+            "forex":       section("forex", forex_out),
+            "etfs":        section("etfs", etfs_out),
+            # Section flag is "ai"; the JSON key is "aiStocks".
+            "aiStocks":    ai_out if want("ai") else previous.get("aiStocks", []),
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
-    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs")
+    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs · {len(ai_out)}/{len(AI_STOCKS)} AI stocks")
 
 
 if __name__ == "__main__":

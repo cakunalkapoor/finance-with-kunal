@@ -83,12 +83,17 @@ export const INVESTING_FOREX_URL: Record<string, string> = {
   "USDINR=X": "https://www.investing.com/currencies/usd-inr",
 };
 
-/** Yahoo Finance quote page for an ETF. Unlike Investing.com's hand-written
- *  fund slugs, the Yahoo symbol IS the URL — and Yahoo is already the price
- *  source for these rows, so the linked page shows the same numbers. */
-export function yahooEtfUrl(symbol: string): string {
+/** Yahoo Finance quote page for any symbol. Unlike Investing.com's hand-written
+ *  slugs, the Yahoo symbol IS the URL — and Yahoo is already the price source
+ *  for these rows, so the linked page shows the same numbers. Handles exchange
+ *  suffixes (XEQT.TO, 000660.KS) without special-casing. */
+export function yahooSymbolUrl(symbol: string): string {
   return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}`;
 }
+
+/** @deprecated Kept for the ETF table's existing call sites — `yahooSymbolUrl`
+ *  is the same function under a name that isn't asset-class specific. */
+export const yahooEtfUrl = yahooSymbolUrl;
 
 // Yahoo exchange suffix per heatmap index id — the FALLBACK path only.
 //

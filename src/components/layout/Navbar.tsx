@@ -9,6 +9,7 @@ import Logo from "./Logo";
 
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
+  { href: "/ai", label: "AI" },
   { href: "/dashboard", label: "Economy" },
   { href: "/us-economy", label: "US" },
   { href: "/canada-economy", label: "Canada" },

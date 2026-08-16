@@ -14,6 +14,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
 | `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
+| `/ai` | **AI** | AI basket vs index, AI stock universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators (incl. euro area) |
 | `/us-economy` | **US** | US-only economic dashboard + 10Y/30Y yield curve |
 | `/canada-economy` | **Canada** | Canada-only economic dashboard + 10Y/long yield curve |
@@ -59,6 +60,7 @@ src/
 │   ├── sitemap.ts, robots.ts   # Static /sitemap.xml + /robots.txt
 │   ├── globals.css             # @theme tokens, animations, grid bg
 │   ├── markets/page.tsx        # Heatmap + Equity + ETFs + Bonds + Commodities + Forex + Crypto
+│   ├── ai/page.tsx             # AI dashboard — see "The /ai page" below
 │   ├── dashboard/page.tsx      # MacroSnapshot + EconomicCharts + Notes (global)
 │   ├── us-economy/page.tsx     # CountryEconomy("United States")
 │   ├── canada-economy/page.tsx # CountryEconomy("Canada")
@@ -69,6 +71,9 @@ src/
 │   ├── layout/{Navbar,Footer}.tsx
 │   ├── ui/                     # SciFiCard, BriefingHero, PageHeader, Reveal, PointerSpotlight
 │   ├── seo/JsonLd.tsx          # Schema.org Person/WebSite + per-page breadcrumbs
+│   ├── ai/                     # AIStockTable, AIMarketImpact, AICapexChart,
+│   │                           #   AILayoffsChart, AIDealsTable, AIAdoptionChart,
+│   │                           #   AIFigureGrid (+ AIFigureSection wrapper)
 │   ├── markets/                # MarketTicker, EquityMarketsTable, ETFTable, BondsTable,
 │   │                           #   AssetTable — shared by CommoditiesTable,
 │   │                           #   CryptoTable and ForexTable,
@@ -111,6 +116,30 @@ default) leaks ~400–500 MB per page request in dev on this project and dies wi
 1.6 GB at 10s → 4.3 GB at 60s → OOM at ~12 GB, with no edits or rebuilds in
 between. The same six requests under `--webpack` sit flat at ~750 MB. `next
 build` still uses Turbopack and is unaffected.
+
+## The `/ai` page
+
+The one surface that is mostly **hand-curated by necessity** — there is no free
+API for AI revenue splits, layoff attribution or private deal terms, and no
+index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts`**
+(not `site-data.ts`), split in two:
+
+- **`AI_STOCKS`** — real Yahoo quotes, 24 tickers grouped by stack layer
+  (`platform` / `silicon` / `infra` / `systems`). GENERATED between the
+  `AI_STOCKS:START` / `:END` markers; refresh with `npm run fetch:ai && npm run patch:ai`.
+  `fetch:ai` is `fetch-yahoo.py --only=ai` — the new `--only=` flag fetches one
+  section and **carries the other sections over** from the existing dump, so a
+  partial run can't blank the file that `patch-site-data` depends on.
+- **Everything else** — curated `AIFigure`s, each carrying `source`, `sourceUrl`
+  and `asOf`. `AIFigureGrid` always renders all three and makes the tile a link.
+  **A figure that can't be sourced doesn't go on the page** — June is absent from
+  the layoffs chart and the two smallest firm-size bands from the adoption chart
+  for exactly that reason. Bump `AI_DATA_ASOF` when revising curated figures.
+
+`AIMarketImpact` is the only computed section: an equal-weighted, window-rebased
+basket vs the S&P 500 and NASDAQ 100, off the same 156-point weekly sparklines
+the markets tables use. Equal-weighted on purpose — cap weighting would just
+redraw the index.
 
 ## Conventions & lessons learned
 

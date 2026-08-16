@@ -16,6 +16,7 @@ function lastModified(): Date {
 const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
   { path: "/markets", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/ai", priority: 0.9, changeFrequency: "weekly" },
   { path: "/dashboard", priority: 0.9, changeFrequency: "weekly" },
   { path: "/us-economy", priority: 0.8, changeFrequency: "weekly" },
   { path: "/canada-economy", priority: 0.8, changeFrequency: "weekly" },

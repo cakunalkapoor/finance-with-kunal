@@ -202,6 +202,124 @@ export interface WeeklyCommentary {
  */
 export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y";
 
+/* ── AI dashboard (/ai) ─────────────────────────────────────────────────────
+   Almost nothing on this page has a free API behind it. Company AI revenue is
+   a run-rate mentioned on an earnings call, layoff attribution comes from one
+   private outplacement firm's monthly press release, and deal flow is whatever
+   the parties chose to announce. So every curated figure carries its own
+   `source`, `sourceUrl` and `asOf` and the UI always renders them — a number
+   on this page is only as good as the link next to it.
+
+   The one exception is AIStock, which is real Yahoo data on the site's normal
+   weekly cadence (fetch-yahoo.py --only=ai → patch-ai-stocks.mjs). */
+
+/** Where a company sits in the AI stack. Grouping is by layer, not GICS sector:
+ *  the page's argument is that AI exposure cuts across Technology, Utilities,
+ *  Industrials and Real Estate. Mirrors `layer` in fetch-yahoo.py::AI_STOCKS. */
+export type AIStockLayer = "platform" | "silicon" | "infra" | "systems";
+
+export interface AIStock {
+  /** Yahoo symbol — Korean listings carry the .KS suffix. */
+  symbol: string;
+  /** Exchange ticker as a reader would type it. */
+  ticker: string;
+  company: string;
+  layer: AIStockLayer;
+  /** Listing currency. KRW rows are never summed or ranked against USD rows. */
+  currency: "USD" | "KRW";
+  value: number;
+  dailyChange: number;
+  weekChange: number;
+  monthChange: number;
+  ytdChange: number;
+  high52w: number;
+  low52w: number;
+  /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
+  sparkline: number[];
+  /** Trailing 30-day annualized realized volatility, in percentage points. */
+  realizedVol?: number;
+}
+
+/**
+ * One hand-curated figure with its provenance. Used everywhere on /ai that a
+ * number came from a filing, a press release or a report rather than a feed.
+ */
+export interface AIFigure {
+  id: string;
+  /** What the number describes, e.g. "Microsoft AI business". */
+  label: string;
+  /** Headline number as published, formatted for display: "$37B", "76%". */
+  value: string;
+  /** The qualifier that makes the number meaningful — period, growth, basis. */
+  detail: string;
+  /** Publisher as it should be credited, e.g. "Microsoft FY26 Q2". */
+  source: string;
+  sourceUrl: string;
+  /** Date the figure was reported, ISO yyyy-mm-dd. */
+  asOf: string;
+}
+
+/** A company's published capex plan for the year. */
+export interface AICapexPlan {
+  company: string;
+  ticker: string;
+  /** Low end of guidance, USD billions. Equal to `high` for a point estimate. */
+  low: number;
+  /** High end of guidance, USD billions. */
+  high: number;
+  /** Prior-year actual, USD billions — the comparison that gives the plan scale. */
+  priorYear: number;
+  /** True where guidance was raised during the year; the page says so explicitly. */
+  raised: boolean;
+  note: string;
+  source: string;
+  sourceUrl: string;
+  asOf: string;
+}
+
+/** One month of Challenger's AI-attributed job-cut attribution. */
+export interface AILayoffMonth {
+  /** Display month, e.g. "Jan 2026". */
+  month: string;
+  /** Share of that month's announced US cuts that named AI as the reason, %. */
+  aiSharePct: number;
+  /** AI-attributed cuts announced that month, where published. */
+  aiCuts?: number;
+  /** All announced US cuts that month, where published. */
+  totalCuts?: number;
+}
+
+/** A disclosed AI financing or valuation event. */
+export interface AIDeal {
+  company: string;
+  /** Round label as announced, e.g. "Series H". */
+  round: string;
+  /** Amount raised, USD billions. */
+  amount: number;
+  /** Post-money valuation, USD billions. Omitted where not disclosed. */
+  valuation?: number;
+  /** Announcement date, ISO yyyy-mm-dd. */
+  date: string;
+  leadInvestors: string;
+  source: string;
+  sourceUrl: string;
+}
+
+/** A quarter of venture funding and how much of it went to AI. */
+export interface AIFundingQuarter {
+  quarter: string;
+  /** All global venture funding that quarter, USD billions. */
+  totalUsdBn: number;
+  /** Share of it invested in AI-focused companies, %. */
+  aiSharePct: number;
+}
+
+/** A point on a simple labelled series — adoption rates, cost curves. */
+export interface AISeriesPoint {
+  label: string;
+  value: number;
+}
+
 export interface ExperienceItem {
   title: string;
   company: string;
