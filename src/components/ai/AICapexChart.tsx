@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
-import { AI_CAPEX } from "@/lib/ai-data";
+import { AI_CAPEX, AI_CAPEX_PRIOR_YEAR_SOURCE } from "@/lib/ai-data";
 import { useTheme, CHART_COLORS } from "@/lib/use-theme";
 import { FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
@@ -209,11 +209,23 @@ export default function AICapexChart() {
           borderColor: "var(--color-space-border)",
         }}
       >
-        Combined ${totalLow}–{totalHigh}B against ${totalPrior}B the prior year. Figures are each
-        company&rsquo;s most recently published guidance, not a January plan — three of the four
-        raised during 2026, and the paler segment of a bar is the part of a range still labelled
-        &ldquo;up to&rdquo;. Capex guidance is a forecast a company can revise at will; it is not a
-        reported result.
+        Combined ${totalLow}–{totalHigh}B against ${totalPrior.toFixed(0)}B the prior year. The
+        2026 bars are each company&rsquo;s most recently published guidance, not a January plan —
+        three of the four raised during the year, and the paler segment is the part of a range
+        still labelled &ldquo;up to&rdquo;. Capex guidance is a forecast a company can revise at
+        will, not a reported result. Prior-year bars come from a single comparable series —{" "}
+        <a
+          href={AI_CAPEX_PRIOR_YEAR_SOURCE.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2"
+          style={{ color: "var(--color-text-secondary)" }}
+        >
+          {AI_CAPEX_PRIOR_YEAR_SOURCE.label}
+        </a>
+        , calendar-quarter and inclusive of finance leases, because Microsoft&rsquo;s June
+        fiscal year-end makes headline &ldquo;FY2025&rdquo; capex figures non-comparable across
+        these four.
       </p>
     </SciFiCard>
   );

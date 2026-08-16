@@ -104,14 +104,30 @@ export const AI_REVENUE: AIFigure[] = [
    The single biggest number on the page. Guidance was raised repeatedly
    through 2026, so each row carries the figure as most recently published
    rather than the one given in January — and `raised` flags the ones that
-   moved, because the revision is itself the story. */
+   moved, because the revision is itself the story.
+
+   `priorYear` is deliberately taken from ONE source for all four companies
+   (Epoch AI's hyperscaler tracker, compiled from 10-Q/10-K filings) rather
+   than four separate press reports. Mixing sources here is a trap: Microsoft's
+   fiscal year ends in June, so a "FY2025" capex headline covers a different
+   twelve months than Amazon's, and some outlets count finance leases while
+   others report cash capex only. Epoch's series is calendar-quarter and
+   includes new finance leases throughout, so the four bars are comparable to
+   each other. As a check, they sum to $408.6B against the $410B aggregate the
+   context card cites — the two agree. */
+export const AI_CAPEX_PRIOR_YEAR_SOURCE = {
+  label: "Epoch AI hyperscaler capex tracker (SEC 10-Q/10-K)",
+  url: "https://epoch.ai/data-insights/hyperscaler-capex-trend",
+  asOf: "2026-02-27",
+} as const;
+
 export const AI_CAPEX: AICapexPlan[] = [
   {
     company: "Amazon",
     ticker: "AMZN",
     low: 220,
     high: 220,
-    priorYear: 118,
+    priorYear: 134.7,
     raised: true,
     note: "Raised at Q2 on AWS capacity constraints; backlog $496B",
     source: "Amazon Q2 2026",
@@ -123,7 +139,7 @@ export const AI_CAPEX: AICapexPlan[] = [
     ticker: "GOOGL",
     low: 175,
     high: 205,
-    priorYear: 91,
+    priorYear: 93.1,
     raised: true,
     note: "Ceiling lifted to $205B at Q2; the capex hike, not the beat, moved the stock",
     source: "Alphabet Q2 2026",
@@ -135,7 +151,7 @@ export const AI_CAPEX: AICapexPlan[] = [
     ticker: "MSFT",
     low: 190,
     high: 190,
-    priorYear: 88,
+    priorYear: 108.3,
     raised: false,
     note: "Azure capacity-constrained through the year on management's own account",
     source: "CNBC",
@@ -147,7 +163,7 @@ export const AI_CAPEX: AICapexPlan[] = [
     ticker: "META",
     low: 125,
     high: 145,
-    priorYear: 72,
+    priorYear: 72.5,
     raised: true,
     note: "Guidance raised twice in 2026, from an initial $115–135B range",
     source: "CNBC",
@@ -167,10 +183,15 @@ export const AI_CAPEX_CONTEXT: AIFigure[] = [
     asOf: "2026-02-06",
   },
   {
+    // The IEA publishes a 2024 baseline and a 2030 projection — it does NOT
+    // publish a 2026 figure, so this card states the projection as a
+    // projection. Older "data centres pass 1,000 TWh in 2026" numbers in
+    // circulation come from a superseded 2024 IEA report, not this one.
     id: "power",
     label: "Data-centre electricity demand",
-    value: ">1,000 TWh",
-    detail: "Global, 2026 — roughly Japan's total consumption · AI-focused sites grew 50% in 2025",
+    value: "945 TWh",
+    detail:
+      "IEA projection for 2030 — double 2024's 415 TWh (1.5% of world electricity) · AI-accelerated servers +30%/yr",
     source: "IEA, Energy and AI",
     sourceUrl: "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai",
     asOf: "2026-04-10",
@@ -221,9 +242,9 @@ export const AI_CHIPS: AIFigure[] = [
     id: "hbm",
     label: "HBM market share",
     value: "58%",
-    detail: "SK hynix share of HBM revenue in Q1 2026 · Samsung and Micron near 21% each",
-    source: "Counterpoint via Silicon Analysts",
-    sourceUrl: "https://siliconanalysts.com/market",
+    detail: "SK hynix share of HBM revenue in Q1 2026, down from 69% a year earlier · Samsung and Micron 21% each",
+    source: "Counterpoint Research",
+    sourceUrl: "https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share",
     asOf: "2026-06-30",
   },
 ];
@@ -241,7 +262,7 @@ export const AI_LAYOFF_MONTHS: AILayoffMonth[] = [
   { month: "Feb 2026", aiSharePct: 10 },
   { month: "Mar 2026", aiSharePct: 25 },
   { month: "Apr 2026", aiSharePct: 26 },
-  { month: "May 2026", aiSharePct: 39, totalCuts: 38242 },
+  { month: "May 2026", aiSharePct: 40, aiCuts: 38579, totalCuts: 97006 },
   { month: "Jul 2026", aiSharePct: 33, aiCuts: 10970, totalCuts: 33429 },
 ];
 
@@ -405,7 +426,7 @@ export const AI_ADOPTION: AIFigure[] = [
     detail:
       "Annual rate of per-token price decline for a fixed benchmark score · frontier list prices still rose in 2026",
     source: "Epoch AI",
-    sourceUrl: "https://epoch.ai/data-insights",
+    sourceUrl: "https://epoch.ai/data-insights/llm-inference-price-trends",
     asOf: "2026-06-30",
   },
   {
