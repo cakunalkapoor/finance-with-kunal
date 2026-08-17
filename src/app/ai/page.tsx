@@ -44,6 +44,27 @@ export const metadata = pageMetadata({
   ],
 });
 
+/* Two-column section layout.
+ *
+ * A grid row is as tall as its taller side, so whenever the two columns hold
+ * different amounts of content the shorter one used to stop early and leave a
+ * hole above the next section — ~130px above "Private capital", which a comment
+ * below this used to just document and accept. Instead the shorter column's
+ * LAST card grows to absorb the difference, so the slack ends up as padding
+ * inside a card rather than as a gap in the page.
+ *
+ * `grow` and not `flex-1`: `flex-1` sets `flex-basis: 0`, which lets a card be
+ * SHRUNK below its content, and these cards are `overflow-hidden` — they would
+ * silently clip. `grow` only ever adds height.
+ *
+ * Which column is shorter changes with the data, so both sides get the rule
+ * rather than hard-coding the one that happens to be short today. */
+const TWO_COL = "grid grid-cols-1 gap-5 xl:grid-cols-2";
+const COL = "flex flex-col gap-5 [&>*:last-child]:grow [&>*:last-child>*]:h-full";
+/** Same idea where the Reveals are the grid children directly, with no column
+ *  wrapper: the grid stretches them, and this makes the card fill the Reveal. */
+const TWO_COL_DIRECT = `${TWO_COL} [&>*>*]:h-full`;
+
 /** The headline value of one curated figure, by id — so the hero can restate a
  *  number that lives (with its source) in ai-data.ts without copying it. */
 function figure(figures: AIFigure[], id: string): string {
@@ -77,14 +98,14 @@ export default function AIPage() {
           <AIMarketImpact />
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2 items-start">
-          <div className="space-y-5">
+        <div className={TWO_COL}>
+          <div className={COL}>
             <Reveal>
               <AIStockTable />
             </Reveal>
           </div>
 
-          <div className="space-y-5">
+          <div className={COL}>
             <Reveal delay={100}>
               <AIFigureSection
                 title="What AI actually earns"
@@ -119,11 +140,11 @@ export default function AIPage() {
               </AIFigureSection>
             </Reveal>
 
-            {/* Chips sit in this column rather than full-width below purely to
-                balance the grid: the stack table on the left runs ~2,550px (28
-                rows) and the three cards above only ~1,780px, so this closes a
-                ~770px gap to ~130px (measured at 1280px wide). Re-check if the
-                universe grows again — same rule as the Markets page. */}
+            {/* Chips sit in this column rather than full-width below to balance
+                the grid: the stack table on the left runs ~2,550px (28 rows)
+                against ~1,780px for the three cards above. That still leaves
+                this column the shorter of the two, so it is the one COL's
+                last-child rule stretches — see the note by TWO_COL. */}
             <Reveal>
               <AIFigureSection
                 title="The physical bottleneck"
@@ -143,8 +164,8 @@ export default function AIPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2 items-start">
-          <div className="space-y-5">
+        <div className={TWO_COL}>
+          <div className={COL}>
             <Reveal>
               <AILayoffsChart />
             </Reveal>
@@ -163,7 +184,7 @@ export default function AIPage() {
             </Reveal>
           </div>
 
-          <div className="space-y-5">
+          <div className={COL}>
             <Reveal delay={100}>
               <AIDealsTable />
             </Reveal>
@@ -183,7 +204,7 @@ export default function AIPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2 items-start">
+        <div className={TWO_COL_DIRECT}>
           <Reveal>
             <AIAdoptionChart />
           </Reveal>
