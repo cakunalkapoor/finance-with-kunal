@@ -47,7 +47,7 @@ Warm editorial palette — paper, ink, and signal green. **Two themes**: light i
 
 The `--color-neon-*` names are kept for back-compat and no longer describe the actual hues. Market up/down/neutral also differ per theme. ECharts configs can't read CSS vars — use hex equivalents there.
 
-Reusable UI: `BriefingHero` (page hero + briefing week + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections. `PageHeader` is an older variant, no longer used by any page.
+Reusable UI: `BriefingHero` (page hero + briefing week + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections.
 
 **The briefing label is never hardcoded or passed per page.** `lib/briefing.ts` derives one string — `Week of Aug 10 – Aug 14, 2026` — from `DATA_UPDATED_AT` (the last completed Mon–Fri trading week), and the hero, homepage eyebrow and weekly-commentary card all render that same constant. `patch-site-data.mjs` maintains `DATA_UPDATED_AT` on every refresh, so the label follows automatically. Pages whose content isn't the weekly data opt out with `showWeek={false}` (About, Blog). `NEXT_BRIEFING_AT` is still patched but no longer displayed anywhere — the next-briefing date was dropped.
 
@@ -71,7 +71,7 @@ src/
 │   └── blog/{page.tsx, [slug]/page.tsx}
 ├── components/
 │   ├── layout/{Navbar,Footer}.tsx
-│   ├── ui/                     # SciFiCard, BriefingHero, PageHeader, Reveal, PointerSpotlight
+│   ├── ui/                     # SciFiCard, BriefingHero, Reveal, PointerSpotlight
 │   ├── seo/JsonLd.tsx          # Schema.org Person/WebSite + per-page breadcrumbs
 │   ├── ai/                     # AIStockTable, AIMarketImpact, AICapexChart,
 │   │                           #   AILayoffsChart, AIDealsTable, AIAdoptionChart,
@@ -95,7 +95,7 @@ src/
 
 ## Data (summary — full detail in `docs/DATA.md`)
 
-Six live providers are wired in — **Yahoo Finance, FRED, Bank of Canada Valet, Statistics Canada WDS, Eurostat**, plus Alpha Vantage; Twelve Data + Finnhub are scaffolds. Only the S&P Global PMI cards, china-gdp/india-gdp, and BLOG_POSTS are still hand-maintained. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
+Five live providers are wired in — **Yahoo Finance, FRED, Bank of Canada Valet, Statistics Canada WDS, Eurostat**; Twelve Data + Finnhub are scaffolds. (The Alpha Vantage path and the older `fetch-market-data.mjs` were deleted — both wrote a `market-data.json` no component read, and the Alpha Vantage script carried the same hard-coded YTD year that was fixed in `fetch-yahoo.py`.) Only the S&P Global PMI cards, china-gdp/india-gdp, and BLOG_POSTS are still hand-maintained. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
 
 **Heatmaps** are a four-stage pipeline of their own — `build:catalogue` → `fetch:sectors` →
 `fetch:heatmap` → `patch:heatmap`. Membership and weights come from `data/index-constituents.xlsx`

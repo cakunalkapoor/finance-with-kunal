@@ -11,12 +11,10 @@ export interface IndexQuote {
   high52w: number;
   low52w: number;
   sparkline: number[]; // 52 weekly price points (used for both YTD and 52W chart)
-  // Trailing 12-month P/E and its 10-year average, for valuation context.
-  // Hand-curated — no fetcher supplies index-level P/E — so both are optional:
-  // a newly added index carries none until the figures are sourced, and the
-  // table renders a dash rather than a fabricated number.
-  pe?: number;
-  pe10yAvg?: number;
+  // NO P/E FIELDS. `pe`/`pe10yAvg` existed here and were rendered as a
+  // "Valuation" column until an audit traced them to the original mock dataset
+  // — never fetched, never sourced, and undated beside a weekly-refreshed
+  // price. Yahoo publishes no P/E for an index, so there is no feed to wire up.
   realizedVol?: number; // Trailing 30-day annualized realized volatility, in percentage points (e.g. 15.5 = ~15.5%). Computed in fetch-yahoo.py from daily log-returns.
 }
 

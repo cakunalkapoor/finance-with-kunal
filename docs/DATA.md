@@ -31,7 +31,6 @@ into `site-data.ts`) and the values are then patched into `src/lib/site-data.ts`
 - `src/lib/fetch-sectors.py` — incremental, rate-limit-aware sector + company-name resolver. Output: `src/lib/heatmap-sectors.json` (**committed** — a cache, not a regenerable dump).
 - `src/lib/fetch-heatmap.py` — batch weekly % change for every catalogue constituent. Output: `src/lib/heatmap-data.json`.
 - `src/lib/gen-ticker-names.py` — regenerates `src/lib/ticker-names.ts` from the catalogue + sector cache.
-- `src/lib/process-alpha-vantage.mjs` — reads previously-saved Alpha Vantage tool-call JSON dumps (one per commodity + treasury), computes derived values. Output: `src/lib/market-data.json`.
 - `src/lib/fetch-fred.mjs` — reads `FRED_API_KEY` from `.env.local`, fetches US macro series and foreign 10Y yields, and preserves full dates for weekly claims. Output: `src/lib/fred-data.json`.
 - `src/lib/fetch-boc.mjs` — fetches Canadian policy, CPI, and 10Y yield data from the Bank of Canada Valet API. Output: `src/lib/boc-data.json`.
 - `src/lib/fetch-eurostat.mjs` — fetches euro-area GDP growth and HICP inflation from the Eurostat dissemination API. Output: `src/lib/eurostat-data.json`. **Three traps, all verified against the API:** the euro-area geo code is `EA21` (EA19/EA20 are earlier compositions and return an EMPTY result, not an error); HICP lives in `prc_hicp_minr` with dimension `coicop18`, because the Feb 2026 switch to ECOICOP ver.2 froze the old `prc_hicp_manr` at 2025-12 while it still answers 200; and JSON-stat omits missing cells entirely, so a period listed in the time index may carry no observation — the euro-area aggregate often trails its member states by weeks.
@@ -70,10 +69,15 @@ euro-area statistics. FRED remains fine for the ECB policy rates (`ECBDFR`,
   superseded. NBS publishes free and monthly on the last day of each month.
   Don't reinstate a global composite unless a checkable source comes with it.
 - **China and India GDP cards** — updated from official NBS and MoSPI releases until dedicated adapters are added.
-- **Index P/E (`pe`, `pe10yAvg`)** — no free provider supplies index-level P/E, so both are typed
-  optional and hand-entered in `site-data.ts`. An index without them renders a dash in the
-  Valuation column rather than a made-up multiple. **Hang Seng (`^HSI`) currently has none** —
-  add both when you have a source you trust for the trailing P/E and its 10-year average.
+- ~~**Index P/E (`pe`, `pe10yAvg`)**~~ — **REMOVED.** These were never sourced. An audit traced
+  them to the commit that renamed `mock-data.ts` → `site-data.ts`, i.e. they arrived with the
+  original mock dataset, and no fetcher ever wrote a `pe` field. They were also undated, sitting
+  beside a price that refreshes weekly, and drove a "Valuation" column that computed a
+  variance-vs-10-year-average from them. Yahoo publishes **no** P/E for an index — verified across
+  all twelve symbols, where `trailingPE`, `forwardPE`, `priceToBook` and `trailingEps` all come
+  back empty — so there was nothing to wire up either. The fields, the 22 values and the column
+  are gone; the equity table now shows 30-day realized volatility there, which IS computed from
+  real closes. Don't reinstate index multiples without a provider that actually publishes them.
 
 Heatmap weekly changes are live Yahoo observations. Missing quotes are stored as `null`, rendered as
 `N/A`, and excluded from sector-return calculations; they must never default to a neutral 0% change.
@@ -184,9 +188,13 @@ the wrong company on those tiles.
 - 6 tiles, pulled from `MACRO_SNAPSHOT` (icon, value, trend arrow, label, sub-context)
 - Used at the top of `/dashboard` (with its header) and on the homepage via `showHeader={false}`
 
-### `PageHeader.tsx`
-- All three top-level pages use this. Pass `label`, `labelColor`, `title`, `lastUpdated`, `nextUpdate`.
-- The homepage data-refresh label comes from `DATA_UPDATED_AT`, which `patch-site-data.mjs` updates from provider fetch timestamps.
+### Briefing status (was `PageHeader.tsx`)
+- `PageHeader.tsx` has been **deleted** — no page had used it for some time.
+- `BriefingHero` is the standard page header. It renders one site-wide label,
+  `Week of <Mon> – <Fri>, <year>`, from `lib/briefing.ts`, which derives it from
+  `DATA_UPDATED_AT` (maintained by `patch-site-data.mjs`). There is no per-page date prop and no
+  "next briefing" date. Pages whose content isn't the weekly data pass `showWeek={false}`
+  (About, Blog).
 
 ---
 
