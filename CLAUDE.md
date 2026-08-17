@@ -173,6 +173,24 @@ index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts
   the layoffs chart and the two smallest firm-size bands from the adoption chart
   for exactly that reason. Bump `AI_DATA_ASOF` when revising curated figures.
 
+### /ai in the weekly refresh
+
+**`/ai` is part of every weekly refresh.** Two of its three layers move on
+different clocks, so the refresh has to touch both:
+
+| Layer | Cadence | How |
+|---|---|---|
+| `AI_STOCKS` + `AI_INDEX_SERIES` (quotes) | Weekly, automated | `npm run fetch:yahoo` already covers the AI section — then **`npm run patch:ai`** |
+| Curated `AIFigure` arrays (revenue, capex, chips, labour, deals, adoption) | Quarterly-ish, manual review | Re-read the sources; bump `AI_DATA_ASOF` if anything changed |
+
+Three things that will bite:
+
+1. **`npm run patch:ai` is a separate step and easy to forget.** `patch-site-data.mjs` does not touch `ai-data.ts`. Skip the patch and the fetch still succeeds, the dump still updates, and `/ai` silently serves last week's prices with no error anywhere.
+2. **`src/lib/ai-data.ts` must be in the refresh's expected-files list.** It is committed (not a gitignored dump), so a scope check that doesn't know about it will flag it as an unexpected change and block the push.
+3. **The curated figures go stale silently and fast.** An audit on 2026-08-17 found OpenAI's run rate three months out of date *and* attributed to a page that never contained it, and Anthropic's likewise three months old. Private-company revenue moves monthly. `AI_DATA_ASOF` is the only marker that these were ever reviewed — it is not maintained by any script.
+
+To refresh only the AI slice without re-pulling ~70 symbols: `npm run fetch:ai && npm run patch:ai`.
+
 `AIMarketImpact` is the only computed section: an equal-weighted AI basket
 ranked against **all 12 global indices**, defaulting to the 3Y window. The basket is a
 **chained index of weekly returns**, not an average of rebased levels — that

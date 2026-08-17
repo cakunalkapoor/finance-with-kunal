@@ -33,7 +33,7 @@ import type {
  */
 
 /** Date the curated (non-quote) figures on /ai were last reviewed. */
-export const AI_DATA_ASOF = "Aug 15, 2026";
+export const AI_DATA_ASOF = "Aug 17, 2026";
 
 /* ── Company AI revenue ─────────────────────────────────────────────────────
    Note how few of these are audited segment figures. Microsoft and Amazon give
