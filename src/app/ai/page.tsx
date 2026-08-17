@@ -57,7 +57,7 @@ export default function AIPage() {
         <BriefingHero
           eyebrow="AI briefing"
           title="Follow the money, not the demo."
-          description="AI shows up in a portfolio as capital expenditure, chip orders, power contracts, private rounds and job cuts long before it shows up as a product. This page tracks those, with a source and a date on every number."
+          description="Capital expenditure, chip orders, power contracts, private rounds, and job cuts in one view—the money AI moves long before it ships as a product, with every figure sourced and dated."
           accent="emerald"
           // Pulled from ai-data rather than retyped: these three restate figures
           // that already exist (with sources) further down the page, and a
