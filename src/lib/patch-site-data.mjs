@@ -180,6 +180,9 @@ const bondCandidates = {};
 // aside so a daily source with a short window (SARB holds well under a year)
 // can still render a full 12-point sparkline.
 const monthlyTrend = {};
+// The month each `monthlyTrend` series ENDS on, so the top-up below can work out
+// how far it overlaps the shorter daily series instead of assuming they align.
+const monthlyTrendAsOf = {};
 function considerBond(b, fallbackCadence) {
   // fred/boc dumps use `value`; bonds-data.json uses `yield`.
   const value = b.yield ?? b.value;
@@ -224,7 +227,10 @@ function considerBond(b, fallbackCadence) {
   };
 }
 for (const b of Object.values(fred.bonds || {})) {
-  if (b?.country && Array.isArray(b.trend)) monthlyTrend[b.country] = b.trend;
+  if (b?.country && Array.isArray(b.trend)) {
+    monthlyTrend[b.country] = b.trend;
+    monthlyTrendAsOf[b.country] = b.asOf;
+  }
   considerBond(b, "monthly");
 }
 for (const b of Object.values(boc.bonds || {}))   considerBond(b, "daily");
@@ -252,8 +258,15 @@ for (const m of Object.values(bondsManual.bonds || {})) {
     cadence: "daily",
     trend,
     dailyMove: base.dailyMove,
+    /* Index from the END of the series, not the start. `monthly[len - 1]` is
+       last month and `m.value` is this month, so a year back is `len - 12`.
+       This read `monthly[0]`, which was the same point only while the array was
+       exactly 12 long — once the trend grew to 36 points that silently became a
+       THREE-year move published under a 1Y label. */
     oneMonthMove: monthly.length ? round3(m.value - monthly[monthly.length - 1]) : base.oneMonthMove,
-    oneYearMove:  monthly.length ? round3(m.value - monthly[0])                  : base.oneYearMove,
+    oneYearMove:  monthly.length >= 12
+      ? round3(m.value - monthly[monthly.length - 12])
+      : base.oneYearMove,
   };
 }
 
@@ -263,15 +276,35 @@ for (const m of Object.values(bondsManual.bonds || {})) {
 // Top up anything shorter from the older monthly history, so a daily feed with
 // a short window doesn't render a stub chart.
 const BOND_TREND_POINTS = 36;
+
+/** Whole months from ISO date `a` to ISO date `b`; positive when `b` is later. */
+function monthsBetween(a, b) {
+  const [ay, am] = String(a).split("-").map(Number);
+  const [by, bm] = String(b).split("-").map(Number);
+  return (by - ay) * 12 + (bm - am);
+}
+
 for (const b of Object.values(bondCandidates)) {
   const have = Array.isArray(b.trend) ? b.trend : [];
   const monthly = monthlyTrend[b.country] ?? [];
   if (have.length < BOND_TREND_POINTS && monthly.length) {
+    /* The two series OVERLAP — both run up to (roughly) the current month, so
+       the newest `have.length` points of `monthly` describe the same months
+       `have` already covers, at coarser precision. Splicing the NEWEST points
+       of `monthly` in front of `have` therefore replayed a year of history:
+       the sparkline climbed to today's yield, fell a year backwards in one
+       step, then climbed again. Every row showed that phantom cliff, and the
+       2Y/3Y windows sliced straight into the duplicated stretch.
+
+       Take the points that PRECEDE `have`'s window instead. `gap` is how far
+       the daily series runs past the end of the monthly one, so a lagging FRED
+       series (India sits ~3 months behind) still lines up. */
+    const gap = monthlyTrendAsOf[b.country] && b.asOf
+      ? Math.max(0, monthsBetween(monthlyTrendAsOf[b.country], b.asOf))
+      : 0;
+    const older = monthly.slice(0, Math.max(0, monthly.length - have.length + gap));
     const need = BOND_TREND_POINTS - have.length;
-    b.trend = [
-      ...monthly.slice(Math.max(0, monthly.length - need)),
-      ...have,
-    ].slice(-BOND_TREND_POINTS);
+    b.trend = [...older.slice(-need), ...have].slice(-BOND_TREND_POINTS);
   }
 }
 

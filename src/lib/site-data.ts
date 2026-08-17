@@ -22,7 +22,7 @@ export const NEXT_BRIEFING_AT = "Aug 16, 2026";
 
 // Build a deterministic 52-point weekly sparkline
 // start → end with realistic noise; high52w/low52w are the actual range extremes
-// EQUITY_INDICES — LIVE DATA from Yahoo Finance via yfinance
+// EQUITY_INDICES — weekly closes from Yahoo Finance via yfinance
 // Run `npm run fetch:yahoo` to refresh (writes src/lib/yahoo-data.json, then this block).
 export const EQUITY_INDICES: IndexQuote[] = [
   {
@@ -207,13 +207,23 @@ export const EQUITY_INDICES: IndexQuote[] = [
   },
 ];
 
-// BOND_YIELDS — sourced via fetch-bonds.mjs (Quandl → Yahoo Finance → ECB fallback)
-// Refresh: npm run fetch:bonds  (run via VPN for full Quandl coverage)
-// US: Yahoo Finance ^TNX (daily). DE: ECB euro-area AAA (daily).
-// UK/CA/JP/IN/KR: Quandl blocked from current IP — values from last successful fetch.
+// BOND_YIELDS — all nine 10Y yields are daily, in two tiers. Refresh with
+// `npm run fetch:bonds`, then `node src/lib/patch-site-data.mjs`.
+//
+//   Automated  — US (Yahoo ^TNX), Canada (BoC Valet), Germany (ECB euro-area
+//                AAA), Japan (MoF JGB CSV), South Africa (SARB).
+//   Read-and-verify — UK, India, South Korea, Australia have no free
+//                machine-readable daily feed, so the headline value is read
+//                from a published page each refresh into the COMMITTED
+//                src/lib/bonds-manual.json and cross-checked against a second
+//                provider. History still comes from FRED's monthly series.
+//
+// Quandl is NOT used anywhere in this pipeline and no VPN is required; the
+// per-row `source` and `cadence` fields below are patched by the script and are
+// the authoritative record of where each number came from.
+// `node src/lib/validate-bonds.mjs` gates the push — exit 1 means do not push.
 export const BOND_YIELDS: BondYield[] = [
   {
-    // Yahoo Finance ^TNX — daily — May 29, 2026
     country: "United States",
     flag: "🇺🇸",
     maturity: "10Y",
@@ -224,10 +234,9 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: 0.055,
     oneMonthMove: 0.127,
     oneYearMove: 0.403,
-    trend: [4.15, 3.96, 4.38, 4.59, 4.72, 4.85, 4.55, 4.73, 4.69, 4.92, 4.78, 4.89, 4.97, 4.72, 4.69, 4.76, 4.82, 4.85, 4.86, 4.91, 4.98, 4.95, 5.08, 5.21, 4.1479997634887695, 4.10099983215332, 4.017000198364258, 4.163000106811523, 4.241000175476074, 3.9619998931884766, 4.310999870300293, 4.389999866485596, 4.453000068664551, 4.418000221252441, 4.744999885559082, 4.696000099182129],
+    trend: [4.05, 4.3, 4.72, 4.58, 4.14, 4.04, 4.17, 4.19, 4.63, 4.45, 4.2, 4.16, 3.89, 3.65, 4.08, 4.41, 4.52, 4.63, 4.3, 4.38, 4.23, 4.43, 4.26, 4.37, 4.28, 4.12, 4.13, 4.11, 4.15, 4.22, 4.21, 4.31, 4.42, 4.45, 4.58, 4.63],
   },
   {
-    // ECB euro-area AAA 10Y — daily — May 28, 2026
     country: "Germany",
     flag: "🇩🇪",
     maturity: "10Y",
@@ -238,10 +247,9 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.01,
     oneMonthMove: 0.001,
     oneYearMove: 0.321,
-    trend: [2.46, 2.21, 2.17, 2.23, 2.31, 2.18, 2.48, 2.41, 2.74, 2.51, 2.56, 2.52, 2.63, 2.67, 2.69, 2.62, 2.66, 2.81, 2.81, 2.75, 2.91, 3, 3.05, 2.97, 2.7786738794, 2.721602685, 2.7737857403, 2.9480486243, 2.9033834533, 2.7266574195, 3.0729993471, 3.0939583349, 3.016587454, 2.9244927445, 3.2273140986, 3.155665028],
+    trend: [2.46, 2.55, 2.66, 2.82, 2.6, 2.1, 2.17, 2.33, 2.35, 2.45, 2.52, 2.48, 2.46, 2.21, 2.17, 2.23, 2.31, 2.18, 2.48, 2.41, 2.74, 2.51, 2.56, 2.52, 2.63, 2.67, 2.69, 2.62, 2.66, 2.81, 2.81, 2.75, 2.91, 3, 3.05, 2.97],
   },
   {
-    // Quandl BOE — stale until VPN fetch
     country: "United Kingdom",
     flag: "🇬🇧",
     maturity: "10Y",
@@ -250,9 +258,9 @@ export const BOND_YIELDS: BondYield[] = [
     cadence: "daily",
     yield: 5.0401,
     dailyMove: -0.146,
-    oneMonthMove: 0.244,
-    oneYearMove: 0.448,
-    trend: [4.14, 3.94, 3.91, 4.2, 4.42, 4.43, 4.66, 4.51, 4.64, 4.58, 4.6, 4.52, 4.59, 4.64, 4.69, 4.57, 4.5, 4.48, 4.45, 4.43, 4.7, 4.82, 4.94, 4.8, 4.6369, 4.6885, 4.5721, 4.4985, 4.4826, 4.451, 4.4324, 4.7007, 4.8207, 4.9416, 4.796, 5.0401],
+    oneMonthMove: 0.24,
+    oneYearMove: 0.45,
+    trend: [4.53, 4.42, 4.57, 4.27, 3.86, 3.93, 4.12, 4.03, 4.22, 4.22, 4.16, 4.14, 3.94, 3.91, 4.2, 4.42, 4.43, 4.66, 4.51, 4.64, 4.58, 4.6, 4.52, 4.59, 4.64, 4.69, 4.57, 4.5, 4.48, 4.45, 4.43, 4.7, 4.82, 4.94, 4.8, 5.0401],
   },
   {
     country: "Canada",
@@ -268,7 +276,6 @@ export const BOND_YIELDS: BondYield[] = [
     trend: [4.03, 4.05, 3.56, 3.1, 3.35, 3.48, 3.45, 3.82, 3.62, 3.5, 3.18, 3.16, 2.95, 3.22, 3.07, 3.23, 3.07, 2.9, 2.97, 3.07, 3.2, 3.28, 3.45, 3.38, 3.17, 3.12, 3.14, 3.42, 3.42, 3.13, 3.46, 3.56, 3.41, 3.38, 3.65, 3.62],
   },
   {
-    // Quandl MOFJ — stale until VPN fetch
     country: "Japan",
     flag: "🇯🇵",
     maturity: "10Y",
@@ -279,10 +286,9 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: 0.017,
     oneMonthMove: 0.087,
     oneYearMove: 1.308,
-    trend: [1.05, 0.89, 0.86, 0.94, 1.05, 1.09, 1.25, 1.37, 1.49, 1.31, 1.5, 1.42, 1.55, 1.6, 1.65, 1.66, 1.81, 2.06, 2.24, 2.11, 2.35, 2.52, 2.65, 2.67, 1.662, 1.67, 1.812, 2.066, 2.247, 2.132, 2.366, 2.52, 2.657, 2.69, 2.801, 2.873],
+    trend: [0.6, 0.64, 0.77, 0.95, 0.66, 0.62, 0.73, 0.71, 0.73, 0.87, 1.07, 1.05, 1.05, 0.89, 0.86, 0.94, 1.05, 1.09, 1.25, 1.37, 1.49, 1.31, 1.5, 1.42, 1.55, 1.6, 1.65, 1.66, 1.81, 2.06, 2.24, 2.11, 2.35, 2.52, 2.65, 2.67],
   },
   {
-    // Quandl RBI — manual update Jun 19, 2026 (live fetch needs VPN)
     country: "India",
     flag: "🇮🇳",
     maturity: "10Y",
@@ -292,11 +298,10 @@ export const BOND_YIELDS: BondYield[] = [
     yield: 6.762,
     dailyMove: -0.03,
     oneMonthMove: -0.258,
-    oneYearMove: 0.454,
-    trend: [7.02, 7.01, 6.91, 6.83, 6.79, 6.81, 6.78, 6.76, 6.73, 6.68, 6.46, 6.27, 6.31, 6.35, 6.52, 6.59, 6.48, 6.54, 6.63, 6.73, 6.77, 6.84, 7.05, 7.02, 6.35, 6.522, 6.585, 6.482, 6.5375, 6.6325, 6.732, 6.77, 6.84, 7.05, 7.02, 6.762],
+    oneYearMove: 0.452,
+    trend: [7.11, 7.19, 7.17, 7.35, 7.27, 7.22, 7.2, 7.09, 7.07, 7.15, 7.05, 7.02, 7.01, 6.91, 6.83, 6.79, 6.81, 6.78, 6.76, 6.73, 6.68, 6.46, 6.27, 6.31, 6.35, 6.52, 6.59, 6.48, 6.54, 6.63, 6.73, 6.77, 6.84, 7.05, 7.02, 6.762],
   },
   {
-    // Quandl OECD — stale until VPN fetch
     country: "South Korea",
     flag: "🇰🇷",
     maturity: "10Y",
@@ -305,12 +310,11 @@ export const BOND_YIELDS: BondYield[] = [
     cadence: "daily",
     yield: 4.305,
     dailyMove: 0.106,
-    oneMonthMove: 0.124,
+    oneMonthMove: 0.125,
     oneYearMove: 1.465,
-    trend: [3.17, 3, 3.01, 3.07, 3.01, 2.77, 2.82, 2.83, 2.8, 2.66, 2.71, 2.84, 2.84, 2.82, 2.85, 2.93, 3.25, 3.37, 3.49, 3.61, 3.73, 3.74, 4.08, 4.18, 2.815, 2.849, 2.933, 3.248, 3.366, 3.485, 3.612, 3.728, 3.737, 4.075, 4.181, 4.305],
+    trend: [3.86, 3.95, 4.27, 3.89, 3.42, 3.35, 3.43, 3.39, 3.57, 3.53, 3.34, 3.17, 3, 3.01, 3.07, 3.01, 2.77, 2.82, 2.83, 2.8, 2.66, 2.71, 2.84, 2.84, 2.82, 2.85, 2.93, 3.25, 3.37, 3.49, 3.61, 3.73, 3.74, 4.08, 4.18, 4.305],
   },
   {
-    // FRED IRLTLT01AUM156N — monthly — Apr 1, 2026
     country: "Australia",
     flag: "🇦🇺",
     maturity: "10Y",
@@ -319,12 +323,11 @@ export const BOND_YIELDS: BondYield[] = [
     cadence: "daily",
     yield: 4.987,
     dailyMove: -0.151,
-    oneMonthMove: 0.156,
-    oneYearMove: 0.696,
-    trend: [4.33, 3.98, 3.92, 4.27, 4.54, 4.31, 4.48, 4.42, 4.42, 4.27, 4.35, 4.21, 4.29, 4.28, 4.3, 4.23, 4.42, 4.72, 4.75, 4.76, 4.93, 4.97, 4.98, 4.83, 4.275, 4.298, 4.234, 4.416, 4.719, 4.75, 4.758, 4.926, 4.969, 4.982, 4.831, 4.987],
+    oneMonthMove: 0.157,
+    oneYearMove: 0.697,
+    trend: [4.13, 4.21, 4.63, 4.58, 4.19, 4.15, 4.14, 4.05, 4.27, 4.33, 4.24, 4.33, 3.98, 3.92, 4.27, 4.54, 4.31, 4.48, 4.42, 4.42, 4.27, 4.35, 4.21, 4.29, 4.28, 4.3, 4.23, 4.42, 4.72, 4.75, 4.76, 4.93, 4.97, 4.98, 4.83, 4.987],
   },
   {
-    // FRED IRLTLT01ZAM156N — monthly — Apr 1, 2026
     country: "South Africa",
     flag: "🇿🇦",
     maturity: "10Y",
@@ -335,12 +338,12 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.01,
     oneMonthMove: 0.02,
     oneYearMove: -0.155,
-    trend: [11.02, 10.7, 10.3, 10.46, 10.37, 10.25, 10.42, 10.5, 11, 11.38, 11.07, 10.58, 10.4, 10.15, 9.87, 9.53, 9.12, 8.79, 8.62, 8.26, 9.05, 8.92, 8.99, 8.7, 8.9184210526, 8.995, 8.7, 8.385, 8.14, 8.13, 9.305, 8.93, 8.575, 8.425, 8.74, 8.545],
+    trend: [11.72, 11.72, 12.06, 12.36, 11.79, 11.49, 11.42, 11.61, 11.9, 12.27, 12.04, 11.68, 11.02, 10.7, 10.3, 10.46, 10.37, 10.25, 10.42, 10.5, 11, 11.38, 11.07, 10.58, 10.4, 10.15, 9.87, 9.53, 9.12, 8.79, 8.62, 8.26, 9.05, 8.92, 8.99, 8.7],
   },
 ];
 
 
-// COMMODITIES — LIVE DATA from Yahoo Finance via yfinance
+// COMMODITIES — weekly closes from Yahoo Finance via yfinance
 // Refresh with: npm run fetch:yahoo
 export const COMMODITIES: Commodity[] = [
   {
@@ -453,7 +456,7 @@ export const COMMODITIES: Commodity[] = [
   },
 ];
 
-// CRYPTO — LIVE DATA from Yahoo Finance via yfinance
+// CRYPTO — weekly closes from Yahoo Finance via yfinance
 // Refresh with: npm run fetch:yahoo
 export const CRYPTO: CryptoAsset[] = [
   {
@@ -502,7 +505,7 @@ export const CRYPTO: CryptoAsset[] = [
   },
 ];
 
-// FOREX_RATES — LIVE DATA from Yahoo Finance via yfinance
+// FOREX_RATES — weekly closes from Yahoo Finance via yfinance
 // Refresh with: npm run fetch:yahoo
 export const FOREX_RATES: ForexRate[] = [
   {
