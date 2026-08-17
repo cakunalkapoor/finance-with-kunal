@@ -24,9 +24,9 @@ import {
 
 export const metadata = pageMetadata({
   // Browser-tab / SEO title. The root layout appends the site name, so this
-  // renders as "Vantage AI — Finance with Kunal". The nav label stays the
-  // short "AI" (see Navbar) and the route stays /ai.
-  title: "Vantage AI",
+  // renders as "Follow the AI Story — Finance with Kunal". The nav label stays
+  // the short "AI" (see Navbar) and the route stays /ai.
+  title: "Follow the AI Story",
   description:
     "The AI boom in numbers: AI-exposed stocks against the index, hyperscaler capex and power demand, disclosed AI revenue, chip supply chain, AI-attributed job cuts, venture funding, and business adoption — every curated figure sourced and dated.",
   path: "/ai",
