@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { AI_STOCKS, AI_INDEX_SERIES, AI_SERIES_POINTS } from "@/lib/ai-data";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
 import {
-  EXTENDED_CHART_VIEWS,
+  CHART_VIEWS,
   pointLabel,
   sliceFor,
   windowLabel,
@@ -25,7 +25,7 @@ const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
  * Method, stated plainly because the method IS the caveat:
  *
  *   • Every series is rebased to 100 at the START OF THE SELECTED WINDOW, so
- *     switching 3M/YTD/5Y re-anchors rather than re-slicing a fixed baseline.
+ *     switching 3M/YTD/3Y re-anchors rather than re-slicing a fixed baseline.
  *   • The basket is EQUAL-weighted, not cap-weighted. Cap weighting would just
  *     redraw the S&P — NVIDIA and Microsoft would be most of it. Equal weight
  *     asks a different question: how did the typical AI name do?
@@ -99,9 +99,9 @@ function chainedEqualWeight(slices: (number | null)[][]): number[] {
 }
 
 export default function AIMarketImpact() {
-  // Defaults to the full five years — the longest window the data supports, and
-  // the one that shows the AI trade against a full cycle rather than a run.
-  const [view, setView] = useState<ChartView>("5Y");
+  // Defaults to 3Y, the longest rung the site-wide ladder offers. The series
+  // hold five years, but the strip is deliberately the same everywhere.
+  const [view, setView] = useState<ChartView>("3Y");
   const [highlight, setHighlight] = useState<string | null>(null);
   const theme = useTheme();
   const c = CHART_COLORS[theme];
@@ -337,7 +337,7 @@ export default function AIMarketImpact() {
         subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} global indices, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS)}`}
         action={
           <div className="flex items-center gap-1">
-            {EXTENDED_CHART_VIEWS.map((v) => (
+            {CHART_VIEWS.map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}

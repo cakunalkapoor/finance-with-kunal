@@ -198,12 +198,15 @@ export interface WeeklyCommentary {
  * The one time-window vocabulary for every chart on the site — the economic
  * cards, the yield curves, and the sparkline columns in the markets tables.
  *
- * The first five are what almost everything offers, and `CHART_VIEWS` in
- * `lib/chart-window.ts` is that strip. **5Y is not part of it**: it exists only
- * for `/ai`, whose stock and index series are fetched at 260 weekly points over
- * five years rather than the 156/3y held elsewhere, and it is offered through
- * `EXTENDED_CHART_VIEWS`. Adding it to the site-wide strip would put a 5Y tab
- * on tables whose data stops at three years.
+ * The first five are the strip — `CHART_VIEWS` in `lib/chart-window.ts` — and
+ * **every chart on the site offers exactly those five, /ai included.**
+ *
+ * `5Y` exists as a horizon but no tab strip offers it. /ai's stock and index
+ * series are fetched at 260 weekly points (five years) rather than the 156/3y
+ * held elsewhere, so the maths in `chart-window.ts` has to be able to reason
+ * about a 5-year span in order to clamp those series to a correct 3Y window.
+ * Keeping the extra history costs nothing at runtime and means re-enabling a 5Y
+ * rung is a one-line change, but the visible ladder stays consistent.
  *
  * YTD is not a fixed length: it runs from January of the latest data point's
  * year, so how much history it needs depends on when in the year you ask. See

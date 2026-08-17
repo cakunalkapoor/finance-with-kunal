@@ -6,7 +6,7 @@ import { AI_STOCKS, AI_STOCKS_ASOF, AI_SERIES_POINTS } from "@/lib/ai-data";
 import { yahooSymbolUrl } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import {
-  EXTENDED_CHART_VIEWS,
+  CHART_VIEWS,
   pointLabel,
   sliceFor,
   windowLabel,
@@ -87,10 +87,10 @@ export default function AIStockTable() {
                 </th>
               ))}
 
-              {/* The site ladder plus 5Y — /ai carries five years of history */}
+              {/* The one site-wide ladder: 3M / 6M / YTD / 2Y / 3Y */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {EXTENDED_CHART_VIEWS.map((v) => (
+                  {CHART_VIEWS.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}

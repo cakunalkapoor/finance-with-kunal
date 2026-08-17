@@ -4,7 +4,7 @@
 
 **Dev URL:** http://localhost:3001 · **Owner:** Kunal Kapoor (kunalkapoor.jnj@gmail.com) · **Repo:** `/Users/kunalkapoor/Projects/finance-with-kunal`
 
-A light, professional personal-finance blog + global-markets dashboard with a "Bloomberg terminal" feel. Static site, hosted on GitHub Pages. Curated **weekly cadence** — never use "live / real-time" language; pages show `Last Updated` / `Next Update` instead.
+A light, professional personal-finance blog + global-markets dashboard with a "Bloomberg terminal" feel. Static site, hosted on GitHub Pages. Curated **weekly cadence** — never use "live / real-time" language. Every page shows one shared label, `Week of <Mon> – <Fri>, <year>`, from `lib/briefing.ts`.
 
 > **Deep reference** — data providers, dataset inventory, economic indicators, per-component behavior, and roadmap — lives in **[`docs/DATA.md`](docs/DATA.md)**. This file is the quick overview; open DATA.md when touching data or a specific component.
 
@@ -14,7 +14,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
 | `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
-| `/ai` | **AI** | AI basket vs all global indices (5y), 28-name AI universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
+| `/ai` | **AI** | AI basket vs all 12 global indices, 28-name AI universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators (incl. euro area) |
 | `/us-economy` | **US** | US-only economic dashboard + 10Y/30Y yield curve |
 | `/canada-economy` | **Canada** | Canada-only economic dashboard + 10Y/long yield curve |
@@ -47,7 +47,9 @@ Warm editorial palette — paper, ink, and signal green. **Two themes**: light i
 
 The `--color-neon-*` names are kept for back-compat and no longer describe the actual hues. Market up/down/neutral also differ per theme. ECharts configs can't read CSS vars — use hex equivalents there.
 
-Reusable UI: `BriefingHero` (page hero + Last/Next Update + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections. `PageHeader` is the older, simpler variant. **Update dates are not hardcoded per page** — they come from `DATA_UPDATED_AT` / `NEXT_BRIEFING_AT` in `site-data.ts`, which `patch-site-data.mjs` maintains automatically (site-local time; next briefing = following Sunday).
+Reusable UI: `BriefingHero` (page hero + briefing week + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections. `PageHeader` is an older variant, no longer used by any page.
+
+**The briefing label is never hardcoded or passed per page.** `lib/briefing.ts` derives one string — `Week of Aug 10 – Aug 14, 2026` — from `DATA_UPDATED_AT` (the last completed Mon–Fri trading week), and the hero, homepage eyebrow and weekly-commentary card all render that same constant. `patch-site-data.mjs` maintains `DATA_UPDATED_AT` on every refresh, so the label follows automatically. Pages whose content isn't the weekly data opt out with `showWeek={false}` (About, Blog). `NEXT_BRIEFING_AT` is still patched but no longer displayed anywhere — the next-briefing date was dropped.
 
 ## File map
 
@@ -133,9 +135,11 @@ index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts
   partial run can't blank the file that `patch-site-data` depends on.
 
   **These series are 260 weekly points over 5 YEARS, not the 156/3y the rest of
-  the site holds** — that is why `TimeHorizon` gained a `5Y` rung and why /ai
-  uses `EXTENDED_CHART_VIEWS` while everything else uses `CHART_VIEWS`. Two
-  consequences worth knowing before touching them:
+  the site holds** — but /ai still offers only the site-wide `CHART_VIEWS`
+  ladder (3M/6M/YTD/2Y/3Y), same as every other chart. The extra history is kept
+  because it costs nothing and makes a 5Y rung a one-line change; `TimeHorizon`
+  carries `5Y` so `sliceLength` can clamp these series to a correct 3Y window.
+  Two consequences worth knowing before touching them:
 
   - Every series sits on **one shared weekly date grid** built from ^GSPC, so
     point *i* is the same calendar week everywhere. `null` marks weeks before a
@@ -153,7 +157,7 @@ index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts
   for exactly that reason. Bump `AI_DATA_ASOF` when revising curated figures.
 
 `AIMarketImpact` is the only computed section: an equal-weighted AI basket
-ranked against **all 12 global indices** over up to 5 years. The basket is a
+ranked against **all 12 global indices**, defaulting to the 3Y window. The basket is a
 **chained index of weekly returns**, not an average of rebased levels — that
 matters because three constituents list mid-window, and averaging rebased levels
 would drag the basket toward 100 the week each one appears, inventing a drop
@@ -172,7 +176,7 @@ currency this site doesn't define.
 - **Dashboard categories render in `CATEGORIES` array order** (`dashboard/page.tsx`) — to add a section at the top, put it first.
 - **Use color tokens** (`var(--color-*)`) over hardcoded hex, except in ECharts configs (use the hex equivalents).
 - **One chart window ladder site-wide: `3M / 6M / YTD / 2Y / 3Y`.** `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth for it — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.
-  - **`TimeHorizon` also carries `5Y`, which is NOT in `CHART_VIEWS`** — only `/ai` offers it, via `EXTENDED_CHART_VIEWS`, because only its series reach back five years. Keep it out of the site-wide strip or tables whose data stops at 3 years will show a 5Y tab that just relabels the same line.
+  - **`TimeHorizon` also carries `5Y`, which is NOT in `CHART_VIEWS` and is offered by no strip.** It exists so `sliceLength` can clamp /ai's 260-point series to a correct 3Y window. Don't add it to `CHART_VIEWS`: tables whose data stops at 3 years would show a 5Y tab that just relabels the same line.
   - `sliceLength` derives every fixed horizon from its month count. It used to short-circuit `3Y` to "return the whole series", which was only right while every sparkline was exactly 156 points — on /ai's 260-point series that silently drew five years under a 3Y label.
 - **Index P/E is optional.** No free provider supplies it, so `pe`/`pe10yAvg` are hand-entered and typed optional; a card without them renders a dash. Never substitute a plausible-looking multiple — a wrong valuation figure is worse than a visibly absent one.
 - **Heatmap % changes must be split-corrected.** Yahoo does not back-adjust recent splits: `Adj Close` and `auto_adjust=True` both come back identical to raw Close, so a 2:1 split publishes as a real -50% week (this happened, and flipped a whole sector negative). `fetch-heatmap.py` applies the factor from `Ticker.splits` for outliers past ±30%.

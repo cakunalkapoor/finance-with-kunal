@@ -17,26 +17,18 @@ import type { TimeHorizon } from "@/types";
    were unified; the alias remains so those call sites read naturally. */
 export type ChartView = TimeHorizon;
 
-/** Every chart's tab strip, in order. The single source of truth for the
- *  markets tables and the economic cards, all of which hold 3 years of history
- *  at most. `EXTENDED_CHART_VIEWS` adds the 5Y rung for the datasets that
- *  genuinely reach back that far. */
+/** Every chart's tab strip, in order. The single source of truth — EVERY chart
+ *  on the site offers exactly these five and nothing else, /ai included. */
 export const CHART_VIEWS: ChartView[] = ["3M", "6M", "YTD", "2Y", "3Y"];
-
-/**
- * CHART_VIEWS plus 5Y, for series that carry five years of history.
- *
- * Only `/ai` uses this: its stock and index series are fetched at 260 weekly
- * points over 5 years, rather than the 156/3y the rest of the site holds. The
- * site-wide strip is deliberately left alone — offering a 5Y tab on a table
- * whose data stops at 3 years would just relabel the same line.
- */
-export const EXTENDED_CHART_VIEWS: ChartView[] = [...CHART_VIEWS, "5Y"];
 
 const WEEK_MS = 7 * 86_400_000;
 
 /** Fixed-length horizons in months. YTD is absent by design: its length depends
- *  on where in the year the data ends, so it is derived per series instead. */
+ *  on where in the year the data ends, so it is derived per series instead.
+ *
+ *  `5Y` is present although no tab strip offers it: /ai's series still carry 260
+ *  weekly points (5 years), and `sliceLength` needs the entry to clamp them
+ *  correctly. See TimeHorizon. */
 const FIXED_MONTHS: Record<Exclude<TimeHorizon, "YTD">, number> = {
   "3M": 3,
   "6M": 6,
@@ -65,10 +57,11 @@ function ytdWeeks(): number {
  * horizon is its month count times ~4.345 weeks, clamped to what the series has.
  *
  * 3Y used to short-circuit to `total` — correct only while every series was
- * exactly 156 points / 3 years. /ai now holds 260 points / 5 years, and under
- * the old rule its 3Y tab silently drew the full five. Deriving every fixed
- * horizon from its month count fixes that and leaves the 3y series unchanged:
- * 36 × 4.345 = 156, which is already all of them.
+ * exactly 156 points / 3 years. /ai holds 260 points / 5 years, and under the
+ * old rule its 3Y tab silently drew the full five. Deriving every fixed horizon
+ * from its month count fixes that and leaves the 3y series unchanged:
+ * 36 × 4.345 = 156, which is already all of them. This is what lets /ai keep
+ * five years of history while showing the same 3Y window as everywhere else.
  */
 export function sliceLength(view: ChartView, total: number): number {
   const weeks =
