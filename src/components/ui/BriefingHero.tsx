@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Activity, CalendarCheck } from "lucide-react";
-import { BRIEFING_WEEK_LABEL } from "@/lib/briefing";
+import { briefingLabel, type BriefingStatus } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
 
 /** Entrance stagger for the hero cluster, in render order. */
@@ -17,9 +17,15 @@ interface BriefingHeroProps {
   title: string;
   /** Omit to render the hero without the lede paragraph. */
   description?: string;
-  /** Hide the briefing-week line — for pages whose content isn't weekly data
-   *  (About). The label itself is site-wide and never passed in per page. */
-  showWeek?: boolean;
+  /**
+   * Which briefing label to show. The text is site-wide — a page picks the
+   * KIND, never the date:
+   *   "week"    → "Week of Aug 10 – Aug 14, 2026"  (Markets, AI — weekly closes)
+   *   "updated" → "Last updated: Aug 15, 2026"     (Economy/US/Canada — monthly
+   *               and quarterly series, which have no trading week)
+   *   "none"    → nothing (About, Blog)
+   */
+  status?: BriefingStatus;
   accent?: "violet" | "indigo" | "emerald";
   /** Omit to render the hero without the stat tiles. */
   stats?: BriefingStat[];
@@ -50,11 +56,12 @@ export default function BriefingHero({
   eyebrow,
   title,
   description,
-  showWeek = true,
+  status = "week",
   accent = "violet",
   stats = [],
 }: BriefingHeroProps) {
   const palette = ACCENTS[accent];
+  const label = briefingLabel(status);
   // With no tiles there is no second column, so the copy should span the full width.
   const hasStats = stats.length > 0;
 
@@ -118,7 +125,7 @@ export default function BriefingHero({
             </p>
           )}
 
-          {showWeek && (
+          {label && (
             <div className="animate-enter mt-6 flex flex-wrap items-center gap-x-5 gap-y-2" style={enter(240)}>
               <span
                 className="flex items-center gap-2 text-xs font-bold uppercase"
@@ -129,7 +136,7 @@ export default function BriefingHero({
                 }}
               >
                 <CalendarCheck size={13} style={{ color: "var(--color-market-up)" }} />
-                {BRIEFING_WEEK_LABEL}
+                {label}
               </span>
             </div>
           )}

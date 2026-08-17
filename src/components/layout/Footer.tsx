@@ -122,7 +122,10 @@ export default function Footer() {
               fontFamily: FONT_MONO,
             }}
           >
-            Data: FRED · Alpha Vantage · Yahoo Finance
+            {/* The providers actually wired in. Alpha Vantage was still credited
+                here after its fetcher was deleted — keep this in step with the
+                provider list in CLAUDE.md. */}
+            Data: Yahoo Finance · FRED · Bank of Canada · Statistics Canada · Eurostat
           </p>
         </div>
       </div>

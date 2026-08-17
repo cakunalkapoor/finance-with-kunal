@@ -59,5 +59,26 @@ function briefingWeek(): string {
 /** "Aug 10 – Aug 14, 2026" — the week the current data covers. */
 export const BRIEFING_WEEK = briefingWeek();
 
-/** "WEEK OF AUG 10 – AUG 14, 2026" — the label as it renders in the UI. */
+/** "Week of Aug 10 – Aug 14, 2026" — for pages whose data IS weekly. */
 export const BRIEFING_WEEK_LABEL = `Week of ${BRIEFING_WEEK}`;
+
+/**
+ * "Last updated: Aug 15, 2026" — for pages whose data is NOT weekly.
+ *
+ * The economic pages (/dashboard, /us-economy, /canada-economy) carry monthly
+ * and quarterly series: CPI, GDP, PMI, unemployment. Labelling those "Week of
+ * Aug 10 – Aug 14" would claim a cadence the underlying statistics don't have —
+ * a GDP print doesn't belong to a trading week. Those pages say when the site
+ * last refreshed instead, which is the honest claim.
+ *
+ * Markets and /ai keep the week label: their data really is a week of closes.
+ */
+export const LAST_UPDATED_LABEL = `Last updated: ${DATA_UPDATED_AT}`;
+
+/** Which briefing label a page shows. `none` for pages that aren't data-driven. */
+export type BriefingStatus = "week" | "updated" | "none";
+
+export function briefingLabel(status: BriefingStatus): string | null {
+  if (status === "none") return null;
+  return status === "week" ? BRIEFING_WEEK_LABEL : LAST_UPDATED_LABEL;
+}

@@ -49,7 +49,15 @@ The `--color-neon-*` names are kept for back-compat and no longer describe the a
 
 Reusable UI: `BriefingHero` (page hero + briefing week + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections.
 
-**The briefing label is never hardcoded or passed per page.** `lib/briefing.ts` derives one string — `Week of Aug 10 – Aug 14, 2026` — from `DATA_UPDATED_AT` (the last completed Mon–Fri trading week), and the hero, homepage eyebrow and weekly-commentary card all render that same constant. `patch-site-data.mjs` maintains `DATA_UPDATED_AT` on every refresh, so the label follows automatically. Pages whose content isn't the weekly data opt out with `showWeek={false}` (About, Blog). `NEXT_BRIEFING_AT` is still patched but no longer displayed anywhere — the next-briefing date was dropped.
+**The briefing label is never hardcoded or passed per page — a page picks the KIND, not the date.** `lib/briefing.ts` derives both strings from `DATA_UPDATED_AT`, which `patch-site-data.mjs` maintains on every refresh, so they follow automatically. `BriefingHero` takes `status`:
+
+| `status` | Renders | Used by | Why |
+|---|---|---|---|
+| `"week"` (default) | `Week of Aug 10 – Aug 14, 2026` | Markets, AI, homepage eyebrow, weekly-commentary card | Their data really is a week of closes |
+| `"updated"` | `Last updated: Aug 15, 2026` | Economy, US, Canada | CPI, GDP, PMI and unemployment are monthly/quarterly — a GDP print doesn't belong to a trading week, so claiming one would misstate the cadence |
+| `"none"` | nothing | About, Blog | Not data-driven |
+
+`NEXT_BRIEFING_AT` is still patched but displayed nowhere — the next-briefing date was dropped.
 
 ## File map
 

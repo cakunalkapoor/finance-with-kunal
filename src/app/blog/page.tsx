@@ -27,7 +27,7 @@ export default function BlogPage() {
         accent="violet"
         // Posts aren't tied to the weekly data refresh, so the briefing week
         // would be labelling this page with something it doesn't show.
-        showWeek={false}
+        status="none"
         stats={
           posts.length === 0
             ? [

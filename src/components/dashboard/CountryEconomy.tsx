@@ -66,6 +66,8 @@ export default function CountryEconomy({
           title={title}
           description={description}
           accent={accent}
+          // CPI, GDP, unemployment: monthly/quarterly, not weekly.
+          status="updated"
           stats={[
             // The curve is a charted card too, so it counts here — otherwise the
             // hero undercounts what the reader can actually see on the page.

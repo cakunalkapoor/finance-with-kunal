@@ -74,8 +74,10 @@ export default function AILayoffsChart() {
     },
     yAxis: {
       type: "value",
+      // 0 / 15 / 30 / 45 rather than splitNumber's 0 / 20 / 40 / 45, which put an
+      // uneven 5-point gap at the top of the axis.
       max: 45,
-      splitNumber: 3,
+      interval: 15,
       splitLine: { lineStyle: { color: c.grid, width: 1 } },
       axisLine: { show: false },
       axisTick: { show: false },

@@ -56,6 +56,8 @@ export default function DashboardPage() {
           title="The macro story, organized."
           description="Growth, inflation, employment, business activity, and energy indicators in one evidence-led view—so you can separate the current signal from the prevailing narrative."
           accent="indigo"
+          // Monthly and quarterly macro series — no trading week applies.
+          status="updated"
           stats={[
             { label: "Pillars", value: "5", detail: "Macro categories" },
             { label: "Format", value: "2–3Y", detail: "Historical context" },
