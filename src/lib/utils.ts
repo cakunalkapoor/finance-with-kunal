@@ -77,22 +77,3 @@ export function getArrow(value: number): string {
   if (value < -0.2) return "▼";
   return "◆";
 }
-
-export function generateSparkline(
-  baseValue: number,
-  weeks: number,
-  volatility = 0.02
-): number[] {
-  // Deterministic (seeded by index + baseValue) so SSR and client render
-  // identically. Never use Math.random() here — it causes hydration mismatches.
-  const points: number[] = [];
-  let current = baseValue;
-  const seed = Math.round(baseValue * 100);
-  for (let i = 0; i < weeks; i++) {
-    const rand = ((((i + seed) * 1103515245 + 12345) >>> 0) % 1000) / 1000;
-    const change = (rand - 0.48) * volatility * current;
-    current += change;
-    points.push(Math.round(current * 100) / 100);
-  }
-  return points;
-}

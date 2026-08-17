@@ -10,8 +10,10 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import Reveal from "@/components/ui/Reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
+import type { AIFigure } from "@/types";
 import {
   AI_ADOPTION,
+  AI_STOCKS,
   AI_CAPEX_CONTEXT,
   AI_CHIPS,
   AI_DATA_ASOF,
@@ -40,6 +42,12 @@ export const metadata = pageMetadata({
   ],
 });
 
+/** The headline value of one curated figure, by id — so the hero can restate a
+ *  number that lives (with its source) in ai-data.ts without copying it. */
+function figure(figures: AIFigure[], id: string): string {
+  return figures.find((f) => f.id === id)?.value ?? "—";
+}
+
 export default function AIPage() {
   return (
     <>
@@ -51,9 +59,12 @@ export default function AIPage() {
           title="Follow the money, not the demo."
           description="AI shows up in a portfolio as capital expenditure, chip orders, power contracts, private rounds and job cuts long before it shows up as a product. This page tracks those, with a source and a date on every number."
           accent="emerald"
+          // Pulled from ai-data rather than retyped: these three restate figures
+          // that already exist (with sources) further down the page, and a
+          // literal here would silently drift from them on the next revision.
           stats={[
-            { label: "2026 capex", value: "$725B", detail: "Four hyperscalers" },
-            { label: "Q2 VC share", value: "70%", detail: "Of global funding" },
+            { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Four hyperscalers" },
+            { label: "Q2 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Of global funding" },
             { label: "Stated cause", value: "#1", detail: "Of US job cuts" },
           ]}
         />
@@ -208,7 +219,7 @@ export default function AIPage() {
                 was reported, and the tile itself is the link — click through and check.
               </p>
               <p>
-                The one exception is the price data. The {24} listings in the stack table and the
+                The one exception is the price data. The {AI_STOCKS.length} listings in the stack table and the
                 basket chart are Yahoo Finance closes on the same weekly cadence as the rest of the
                 site, computed the same way as the Markets page.
               </p>

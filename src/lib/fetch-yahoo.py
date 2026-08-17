@@ -210,8 +210,15 @@ def pct(curr, prev):
     return round((float(curr) - float(prev)) / float(prev) * 100, 2)
 
 
-def derive(history, year=2026):
-    """history: DataFrame with at minimum a Close column."""
+def derive(history, year=None):
+    """history: DataFrame with at minimum a Close column.
+
+    `year` is the YTD anchor year. It defaults to the year of the LAST
+    observation rather than a constant: this used to be hard-coded to 2026, so
+    on the first refresh of 2027 every ytdChange on the site — indices, ETFs,
+    commodities, crypto, FX and the AI universe — would have been measured from
+    the first close of 2026 and published a 13-month "YTD" without erroring.
+    """
     closes = history["Close"].dropna()
     if len(closes) == 0:
         return None
@@ -228,6 +235,8 @@ def derive(history, year=2026):
 
     # YTD anchor — first close in `year`
     closes_idx = closes.index
+    if year is None:
+        year = closes_idx[-1].year
     ytd_anchor = None
     for ts, val in zip(closes_idx, closes):
         if ts.year == year:

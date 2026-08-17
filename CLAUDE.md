@@ -171,7 +171,7 @@ currency this site doesn't define.
 ## Conventions & lessons learned
 
 - **SVG renderer for every ECharts chart** (`opts={{ renderer: "svg" }}`) — canvas + web font = invisible labels on first paint.
-- **Deterministic mock data only** — seed anything generated (string hash / index). Raw `Math.random()` → hydration mismatches.
+- **No mock or fabricated figures anywhere.** Every number rendered on the site is either fetched from a provider or hand-curated from a named source. Where a figure can't be sourced it is left absent and rendered as a dash — see index P/E and the `/ai` gaps. A synthetic `generateSparkline()` helper used to live in `lib/utils.ts`; it was unused and has been deleted, so there is no generator to reach for. If a visual genuinely needs generated values, seed them deterministically (string hash / index) — raw `Math.random()` also causes hydration mismatches — and never present them as data.
 - **No "live / real-time / LIVE DATA"** — weekly cadence; use `Last Updated` / `Next Update`.
 - **Dashboard categories render in `CATEGORIES` array order** (`dashboard/page.tsx`) — to add a section at the top, put it first.
 - **Use color tokens** (`var(--color-*)`) over hardcoded hex, except in ECharts configs (use the hex equivalents).
