@@ -14,7 +14,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
 | `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
-| `/ai` | **AI** | AI basket vs all 12 global indices, 28-name AI universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
+| `/ai` | **Vantage AI** | AI basket vs all 12 global indices, 28-name AI universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators (incl. euro area) |
 | `/us-economy` | **US** | US-only economic dashboard + 10Y/30Y yield curve |
 | `/canada-economy` | **Canada** | Canada-only economic dashboard + 10Y/long yield curve |
