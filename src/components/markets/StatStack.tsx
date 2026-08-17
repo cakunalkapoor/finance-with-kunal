@@ -12,7 +12,9 @@ export function ChangeStack({
   /** Bond moves are already in percentage POINTS, so they're signed but not "%". */
   raw = false,
 }: {
-  items: { label: string; value: number }[];
+  /** A `null` value renders as a dash — some rows genuinely have no figure for
+   *  a period, and showing nothing is better than showing the wrong period's. */
+  items: { label: string; value: number | null | undefined }[];
   digits?: number;
   suffix?: string;
   raw?: boolean;
@@ -32,12 +34,20 @@ export function ChangeStack({
             {label}
           </span>
           <span
-            className={`font-semibold ${getChangeColor(value, !raw)}`}
-            style={{ fontFamily: FONT_MONO, fontSize: "11px" }}
+            className={`font-semibold ${
+              value == null ? "" : getChangeColor(value, !raw)
+            }`}
+            style={{
+              fontFamily: FONT_MONO,
+              fontSize: "11px",
+              ...(value == null ? { color: "var(--color-text-muted)" } : {}),
+            }}
           >
-            {raw
-              ? `${value >= 0 ? "+" : ""}${value.toFixed(digits)}${suffix}`
-              : formatChange(value)}
+            {value == null
+              ? "—"
+              : raw
+                ? `${value >= 0 ? "+" : ""}${value.toFixed(digits)}${suffix}`
+                : formatChange(value)}
           </span>
         </div>
       ))}

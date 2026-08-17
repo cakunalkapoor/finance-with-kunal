@@ -96,7 +96,7 @@ function patchObject(anchorRegex, fields) {
     // Match field assignment. Handles: arrays (single or multi-line), numbers,
     // and quoted strings. [\s\S] makes the array branch span newlines.
     const fieldRe = new RegExp(
-      `(${key}:\\s*)(\\[[\\s\\S]*?\\]|"[^"]*"|[A-Za-z_$][\\w]*\\([^)]*\\)|-?[\\d.]+)`,
+      `(${key}:\\s*)(\\[[\\s\\S]*?\\]|"[^"]*"|[A-Za-z_$][\\w]*\\([^)]*\\)|-?[\\d.]+|null)`,
       "m"
     );
     body = body.replace(fieldRe, `$1${valStr}`);
@@ -257,7 +257,14 @@ for (const m of Object.values(bondsManual.bonds || {})) {
     source: m.source || base.source,
     cadence: "daily",
     trend,
-    dailyMove: base.dailyMove,
+    /* NOT base.dailyMove. These four countries have no free daily feed, so
+       `base` is FRED's MONTHLY series, where the fetcher's "dailyMove" is just
+       the month-over-month change (it equals oneMonthMove in the dump). Carrying
+       it through published a monthly delta in a column labelled 1D — the UK read
+       -0.146 there while its recomputed 1M read +0.244, two different periods
+       sitting one above the other. There is no daily history to compute from, so
+       the honest answer is no figure; the table renders a dash. */
+    dailyMove: null,
     /* Index from the END of the series, not the start. `monthly[len - 1]` is
        last month and `m.value` is this month, so a year back is `len - 12`.
        This read `monthly[0]`, which was the same point only while the array was
@@ -311,7 +318,9 @@ for (const b of Object.values(bondCandidates)) {
 for (const b of Object.values(bondCandidates)) {
   if (patchBondByCountry(b.country, {
     yield: b.value,
-    dailyMove: b.dailyMove,
+    // patchObject skips null/undefined so a missing field can't blank a good
+    // one — but here the ABSENCE is the fact to publish, so write it literally.
+    dailyMove: b.dailyMove ?? "null",
     oneMonthMove: b.oneMonthMove,
     oneYearMove: b.oneYearMove,
     trend: b.trend,

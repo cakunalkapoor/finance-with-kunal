@@ -23,7 +23,12 @@ export interface BondYield {
   flag: string;
   maturity: string;
   yield: number;
-  dailyMove: number;
+  /** One-day change in percentage points, or `null` where no daily history
+   *  exists. The read-and-verify countries (UK, India, South Korea, Australia)
+   *  sit on a monthly FRED series for history, so a "daily" move for them would
+   *  really be a month-over-month delta wearing a 1D label. The table renders a
+   *  dash instead — an absent figure beats a mislabelled one. */
+  dailyMove: number | null;
   oneMonthMove: number;
   oneYearMove: number;
   /** 36 monthly points ending at `asOf`, so the trend column can offer the same
