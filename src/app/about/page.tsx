@@ -22,8 +22,7 @@ export default function AboutPage() {
           eyebrow="About Kunal"
           title="Finance, risk, and decisions—connected."
           accent="violet"
-          lastUpdated="—"
-          nextUpdate="—"
+          showWeek={false}
         />
       </div>
 

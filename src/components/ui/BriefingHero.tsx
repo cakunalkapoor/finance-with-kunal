@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
-import { Activity, CalendarCheck, CalendarClock } from "lucide-react";
-import { DATA_UPDATED_AT, NEXT_BRIEFING_AT } from "@/lib/site-data";
+import { Activity, CalendarCheck } from "lucide-react";
+import { BRIEFING_WEEK_LABEL } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
 
 /** Entrance stagger for the hero cluster, in render order. */
@@ -17,8 +17,9 @@ interface BriefingHeroProps {
   title: string;
   /** Omit to render the hero without the lede paragraph. */
   description?: string;
-  lastUpdated?: string;
-  nextUpdate?: string;
+  /** Hide the briefing-week line — for pages whose content isn't weekly data
+   *  (About). The label itself is site-wide and never passed in per page. */
+  showWeek?: boolean;
   accent?: "violet" | "indigo" | "emerald";
   /** Omit to render the hero without the stat tiles. */
   stats?: BriefingStat[];
@@ -49,8 +50,7 @@ export default function BriefingHero({
   eyebrow,
   title,
   description,
-  lastUpdated = DATA_UPDATED_AT,
-  nextUpdate = NEXT_BRIEFING_AT,
+  showWeek = true,
   accent = "violet",
   stats = [],
 }: BriefingHeroProps) {
@@ -118,15 +118,18 @@ export default function BriefingHero({
             </p>
           )}
 
-          {lastUpdated !== "—" && (
+          {showWeek && (
             <div className="animate-enter mt-6 flex flex-wrap items-center gap-x-5 gap-y-2" style={enter(240)}>
-              <span className="flex items-center gap-2 text-xs" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
+              <span
+                className="flex items-center gap-2 text-xs font-bold uppercase"
+                style={{
+                  color: "var(--color-text-secondary)",
+                  fontFamily: FONT_MONO,
+                  letterSpacing: "0.12em",
+                }}
+              >
                 <CalendarCheck size={13} style={{ color: "var(--color-market-up)" }} />
-                Updated <strong style={{ color: "var(--color-text-secondary)" }}>{lastUpdated}</strong>
-              </span>
-              <span className="flex items-center gap-2 text-xs" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
-                <CalendarClock size={13} style={{ color: palette.color }} />
-                Next briefing <strong style={{ color: "var(--color-text-secondary)" }}>{nextUpdate}</strong>
+                {BRIEFING_WEEK_LABEL}
               </span>
             </div>
           )}

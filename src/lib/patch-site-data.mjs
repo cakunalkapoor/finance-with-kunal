@@ -194,6 +194,23 @@ function considerBond(b, fallbackCadence) {
   // LAST dump considered wins — bonds-data.json is applied last and is the only
   // one carrying `source`/`cadence` labels for the UI.
   if (prev && prev.asOf > b.asOf) return;
+
+  /* ...but winning the VALUE must not cost us HISTORY. bonds-data.json carries
+     12-point trends for every country; the BoC and FRED dumps carry 36. Since
+     it is applied last and ties on asOf, its 12 points used to overwrite the 36
+     — and the sparkline column offers only the windows EVERY row can fill, so
+     one short row silently capped the whole table at 3M/6M/YTD.
+
+     Eight countries were rescued by accident: the top-up below refills anything
+     short from FRED's monthly series. Canada has no FRED series (BoC Valet is
+     its source), so nothing refilled it and it sat at 12 points, holding 2Y and
+     3Y off the table for all nine rows.
+
+     Keeping whichever trend is longer fixes it at the source. This can only
+     ever retain more real history — it never fabricates a point. */
+  const prevTrend = Array.isArray(prev?.trend) ? prev.trend : [];
+  const nextTrend = Array.isArray(b.trend) ? b.trend : [];
+
   bondCandidates[b.country] = {
     country: b.country,
     value,
@@ -203,7 +220,7 @@ function considerBond(b, fallbackCadence) {
     dailyMove: b.dailyMove,
     oneMonthMove: b.oneMonthMove,
     oneYearMove: b.oneYearMove,
-    trend: b.trend,
+    trend: nextTrend.length >= prevTrend.length ? nextTrend : prevTrend,
   };
 }
 for (const b of Object.values(fred.bonds || {})) {

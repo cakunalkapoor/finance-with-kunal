@@ -16,6 +16,8 @@ import type {
 
 // Updated automatically by patch-site-data.mjs from provider fetch timestamps.
 export const DATA_UPDATED_AT = "Aug 15, 2026";
+// Still maintained by patch-site-data.mjs, but no longer displayed anywhere:
+// every surface now shows the single "Week of …" label from lib/briefing.ts.
 export const NEXT_BRIEFING_AT = "Aug 16, 2026";
 
 // Build a deterministic 52-point weekly sparkline
@@ -275,7 +277,6 @@ export const BOND_YIELDS: BondYield[] = [
     trend: [4.14, 3.94, 3.91, 4.2, 4.42, 4.43, 4.66, 4.51, 4.64, 4.58, 4.6, 4.52, 4.59, 4.64, 4.69, 4.57, 4.5, 4.48, 4.45, 4.43, 4.7, 4.82, 4.94, 4.8, 4.6369, 4.6885, 4.5721, 4.4985, 4.4826, 4.451, 4.4324, 4.7007, 4.8207, 4.9416, 4.796, 5.0401],
   },
   {
-    // Quandl BOC — stale until VPN fetch
     country: "Canada",
     flag: "🇨🇦",
     maturity: "10Y",
@@ -286,7 +287,7 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.07,
     oneMonthMove: 0.05,
     oneYearMove: 0.24,
-    trend: [3.17, 3.12, 3.14, 3.42, 3.42, 3.13, 3.46, 3.56, 3.41, 3.38, 3.65, 3.62],
+    trend: [4.03, 4.05, 3.56, 3.1, 3.35, 3.48, 3.45, 3.82, 3.62, 3.5, 3.18, 3.16, 2.95, 3.22, 3.07, 3.23, 3.07, 2.9, 2.97, 3.07, 3.2, 3.28, 3.45, 3.38, 3.17, 3.12, 3.14, 3.42, 3.42, 3.13, 3.46, 3.56, 3.41, 3.38, 3.65, 3.62],
   },
   {
     // Quandl MOFJ — stale until VPN fetch

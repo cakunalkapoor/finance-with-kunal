@@ -186,6 +186,9 @@ export interface WeeklyCommentarySection {
 }
 
 export interface WeeklyCommentary {
+  /** @deprecated No longer rendered. The site-wide briefing label is derived
+   *  from DATA_UPDATED_AT by `lib/briefing.ts` so it can't drift from the data;
+   *  this stays only as editorial metadata on the commentary itself. */
   weekRange: string;
   lead: string;
   sections: WeeklyCommentarySection[];

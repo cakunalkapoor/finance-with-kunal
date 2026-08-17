@@ -18,9 +18,10 @@ import MarketTicker from "@/components/markets/MarketTicker";
 import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
 import WeeklyCommentary from "@/components/home/WeeklyCommentary";
 import TrendingHeadlines from "@/components/home/TrendingHeadlines";
-import { EQUITY_INDICES, WEEKLY_COMMENTARY } from "@/lib/site-data";
+import { EQUITY_INDICES } from "@/lib/site-data";
 import { formatNumber, formatChange, FONT_MONO } from "@/lib/utils";
 import { OG_IMAGE } from "@/lib/seo";
+import { BRIEFING_WEEK_LABEL } from "@/lib/briefing";
 
 // Title/description/canonical come from the root layout; this only pins the
 // social image to the .png copy (see OG_IMAGE) so the homepage doesn't fall
@@ -73,7 +74,7 @@ function HeroSection() {
               style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}
             >
               <span className="h-1.5 w-1.5 rounded-full pulse-dot" style={{ background: "var(--color-neon-cyan)" }} />
-              WEEK OF {WEEKLY_COMMENTARY.weekRange.toUpperCase()}
+              {BRIEFING_WEEK_LABEL.toUpperCase()}
             </span>
           </div>
 
