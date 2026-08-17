@@ -66,16 +66,16 @@ export const AI_REVENUE: AIFigure[] = [
       "https://finance.yahoo.com/technology/ai/articles/anthropic-revenue-surges-over-11-210857853.html",
     asOf: "2026-08-14",
   },
-  {
-    id: "msft-ai",
-    label: "Microsoft AI business",
-    value: "$37B",
-    detail: "Annual run rate quoted on the call, not a reported segment · +123% YoY",
-    source: "Microsoft FY26 Q2",
-    sourceUrl:
-      "https://www.microsoft.com/en-us/investor/earnings/fy-2026-q2/press-release-webcast",
-    asOf: "2026-01-29",
-  },
+  /* REMOVED: "Microsoft AI business, $37B annual run rate" (FY26 Q2, Jan 2026).
+     Microsoft RETIRED the metric — its FY26 Q4 release (quarter ended
+     2026-06-30) discloses no standalone AI revenue figure at all, folding AI
+     into Azure and Microsoft Cloud instead. So the number was 200 days old with
+     no successor to refresh it to.
+
+     Do NOT substitute "Azure crossed $100B annualised" here. That is the whole
+     cloud business, not AI, and putting it in an AI-revenue card would overstate
+     AI revenue by a wide margin — the exact category error this page exists to
+     avoid. If Microsoft resumes disclosing an AI-specific figure, add it back. */
   {
     id: "gcp",
     label: "Google Cloud",
@@ -183,15 +183,29 @@ export const AI_CAPEX: AICapexPlan[] = [
   },
 ];
 
+/* The aggregate is COMPUTED from the four per-company plans above, not curated.
+   Two reasons. First, third-party totals disagree — $630B, $690B and $725B were
+   all in circulation in August 2026 — because they mix January guidance with
+   mid-year raises, and arbitrating between them means picking a number. Second,
+   a hand-typed total drifts from the bars it claims to sum: the old "~$725B"
+   was cited to a February report, before three of the four raised, while the
+   chart beside it already showed $710–760B. Summing the sourced parts is both
+   self-consistent and independently checkable — every component links to the
+   company's own report in the capex chart. */
+const capexLow = AI_CAPEX.reduce((sum, p) => sum + p.low, 0);
+const capexHigh = AI_CAPEX.reduce((sum, p) => sum + p.high, 0);
+const capexPrior = AI_CAPEX.reduce((sum, p) => sum + p.priorYear, 0);
+const capexGrowth = Math.round((capexLow / capexPrior - 1) * 100);
+
 export const AI_CAPEX_CONTEXT: AIFigure[] = [
   {
     id: "capex-total",
     label: "Combined 2026 capex plans",
-    value: "~$725B",
-    detail: "Four hyperscalers · up ~77% on 2025's $410B · sell-side sees >$1T in 2027",
-    source: "CNBC",
-    sourceUrl: "https://www.cnbc.com/2026/02/06/google-microsoft-meta-amazon-ai-cash.html",
-    asOf: "2026-02-06",
+    value: `$${capexLow}–${capexHigh}B`,
+    detail: `Four hyperscalers, summed from each company's own guidance · up ~${capexGrowth}% on 2025's $${Math.round(capexPrior)}B · sell-side sees >$1T in 2027`,
+    source: "Company reports · see the capex chart",
+    sourceUrl: "https://www.cnbc.com/2026/07/28/hyperscalers-face-higher-capex-scrutiny-after-alphabet-report-panned.html",
+    asOf: "2026-07-30",
   },
   {
     // The IEA publishes a 2024 baseline and a 2030 projection — it does NOT

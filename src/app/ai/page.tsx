@@ -93,10 +93,12 @@ export default function AIPage() {
                 columns={2}
               >
                 Only NVIDIA Data Center and Google Cloud are reported segments an auditor signed
-                off. Microsoft&rsquo;s and Amazon&rsquo;s AI &ldquo;run rates&rdquo; are figures
-                management chose to say on a call, with no reconciliation in the filings; Anthropic
-                and OpenAI are private and disclose what they wish. Run rate annualises a recent
-                period — it is not revenue earned.
+                off. Amazon&rsquo;s AI &ldquo;run rate&rdquo; is a figure management chose to say on
+                a call, with no reconciliation in the filings; Anthropic and OpenAI are private and
+                disclose what they wish. Run rate annualises a recent period — it is not revenue
+                earned. Microsoft used to sit here on a $37B AI run rate and no longer does: it
+                stopped disclosing an AI-specific figure after FY26 Q2, which is why the largest
+                seller of enterprise AI is absent from this card.
               </AIFigureSection>
             </Reveal>
 
