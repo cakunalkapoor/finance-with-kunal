@@ -24,9 +24,11 @@ import {
 
 export const metadata = pageMetadata({
   // Browser-tab / SEO title. The root layout appends the site name, so this
-  // renders as "Follow the AI Story — Finance with Kunal". The nav label stays
-  // the short "AI" (see Navbar) and the route stays /ai.
-  title: "Follow the AI Story",
+  // renders as "Vantage AI — Finance with Kunal". Deliberately NOT the hero
+  // line ("Follow the AI story."): the tab is what shows up in a search result
+  // and a bookmark, so it carries the distinctive name while the hero does the
+  // describing. The nav label stays the short "AI" and the route stays /ai.
+  title: "Vantage AI",
   description:
     "The AI boom in numbers: AI-exposed stocks against the index, hyperscaler capex and power demand, disclosed AI revenue, chip supply chain, AI-attributed job cuts, venture funding, and business adoption — every curated figure sourced and dated.",
   path: "/ai",
@@ -56,7 +58,7 @@ export default function AIPage() {
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-5">
         <BriefingHero
           eyebrow="AI briefing"
-          title="Follow the money, not the demo."
+          title="Follow the AI story."
           description="Capital expenditure, chip orders, power contracts, private rounds, and job cuts in one view—the money AI moves long before it ships as a product, with every figure sourced and dated."
           accent="emerald"
           // Pulled from ai-data rather than retyped: these three restate figures
