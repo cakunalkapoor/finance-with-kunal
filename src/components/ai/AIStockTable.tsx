@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { AI_STOCKS, AI_STOCKS_ASOF } from "@/lib/ai-data";
+import { AI_STOCKS, AI_STOCKS_ASOF, AI_SERIES_POINTS } from "@/lib/ai-data";
 import { yahooSymbolUrl } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import {
-  CHART_VIEWS,
+  EXTENDED_CHART_VIEWS,
   pointLabel,
   sliceFor,
   windowLabel,
@@ -87,10 +87,10 @@ export default function AIStockTable() {
                 </th>
               ))}
 
-              {/* Shared 3M / 6M / YTD / 2Y / 3Y ladder, as on every other table */}
+              {/* The site ladder plus 5Y — /ai carries five years of history */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {CHART_VIEWS.map((v) => (
+                  {EXTENDED_CHART_VIEWS.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -121,7 +121,7 @@ export default function AIStockTable() {
                     textTransform: "none",
                   }}
                 >
-                  {windowLabel(chartView)}
+                  {windowLabel(chartView, AI_SERIES_POINTS)}
                 </div>
               </th>
             </tr>
@@ -158,7 +158,16 @@ export default function AIStockTable() {
                 </tr>,
 
                 ...rows.map((stock, i) => {
-                  const slice = sliceFor(chartView, stock.sparkline);
+                  /* Drop the leading nulls of a listing younger than the window
+                     (Arm, GE Vernova, Constellation). Nulls only ever lead, so
+                     what's left is contiguous — and passing the SHORTER length
+                     to pointLabel is what makes the axis honest: the labels
+                     then count back from the last close and the sparkline
+                     correctly reads as starting at the IPO, not five years ago. */
+                  const slice = sliceFor(chartView, stock.sparkline).filter(
+                    (v): v is number => v !== null,
+                  );
+                  if (slice.length < 2) return null;
                   return (
                     <tr
                       key={stock.symbol}
@@ -189,13 +198,15 @@ export default function AIStockTable() {
                           />
                         </a>
                         <div
+                          className="flex items-center gap-1"
                           style={{
                             color: "var(--color-text-muted)",
                             fontFamily: FONT_MONO,
                             fontSize: "10px",
                           }}
                         >
-                          {stock.company}
+                          <span title={stock.country}>{stock.flag}</span>
+                          <span className="truncate">{stock.company}</span>
                         </div>
                       </td>
 
@@ -208,8 +219,8 @@ export default function AIStockTable() {
                             fontSize: "13px",
                           }}
                         >
-                          {/* KRW listings trade in the thousands with no decimals */}
-                          {stock.currency === "KRW"
+                          {/* Won and yen quote in whole units; TWD to one place */}
+                          {stock.currency === "KRW" || stock.currency === "JPY"
                             ? stock.value.toLocaleString("en-US", { maximumFractionDigits: 0 })
                             : stock.value.toFixed(2)}
                         </span>
@@ -245,7 +256,7 @@ export default function AIStockTable() {
                         <TrendSparkline
                           values={slice}
                           labels={slice.map((_, j) => pointLabel(j, slice.length))}
-                          ariaLabel={`${stock.ticker} price, ${windowLabel(chartView)}`}
+                          ariaLabel={`${stock.ticker} price, ${windowLabel(chartView, AI_SERIES_POINTS)}`}
                         />
                       </td>
                     </tr>
@@ -267,8 +278,9 @@ export default function AIStockTable() {
       >
         Listed for reference, not as recommendations, and not investment advice. Membership is a
         judgement call, not a definition — there is no official &ldquo;AI sector&rdquo;, and most of
-        these companies earn plenty of revenue that has nothing to do with AI. Korean listings are
-        quoted in won and are not comparable to the dollar rows.
+        these companies earn plenty of revenue that has nothing to do with AI. Each row is quoted
+        in its own listing currency — won, yen, New Taiwan dollars and euros alongside the dollar
+        rows — so prices are not comparable across rows. Only the percentage columns are.
       </p>
     </SciFiCard>
   );

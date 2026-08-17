@@ -120,7 +120,7 @@ ETFS = [
     ("agg",  "AGG",     "AGG"),
 ]
 
-# (key, yahoo_symbol, ticker, company, layer, currency)
+# (key, yahoo_symbol, ticker, company, layer, currency, country, flag)
 #
 # The /ai page's stock universe, grouped by where a company sits in the AI stack
 # rather than by GICS sector — the point of that page is that "AI exposure" cuts
@@ -131,37 +131,55 @@ ETFS = [
 # `layer` is the grouping key in AIStockTable — keep the four values in sync
 # with the AIStockLayer union in src/types/index.ts.
 #
-# Non-US listings are quoted in their own currency (SK hynix and Samsung come
-# back in KRW), so the table labels currency per row and never sums across them.
+# Deliberately NOT US-only. The AI supply chain is the most geographically
+# concentrated part of the trade — lithography is Dutch, advanced foundry is
+# Taiwanese, HBM is Korean, deposition and test are Japanese, AI server assembly
+# is Taiwanese, and grid/cooling kit is European. A US-only list would show the
+# demand side of the boom and none of the chokepoints.
+#
+# Each row is quoted in its own listing currency, so the table labels currency
+# per row and nothing is ever summed across them. Only rebased percentage
+# returns get compared — see AIMarketImpact.
 AI_STOCKS = [
     # Frontier models, clouds, and the software sold on top of them.
-    ("msft",  "MSFT",      "MSFT",   "Microsoft",            "platform", "USD"),
-    ("googl", "GOOGL",     "GOOGL",  "Alphabet",             "platform", "USD"),
-    ("amzn",  "AMZN",      "AMZN",   "Amazon",               "platform", "USD"),
-    ("meta",  "META",      "META",   "Meta Platforms",       "platform", "USD"),
-    ("pltr",  "PLTR",      "PLTR",   "Palantir",             "platform", "USD"),
-    ("now",   "NOW",       "NOW",    "ServiceNow",           "platform", "USD"),
+    ("msft",  "MSFT",      "MSFT",   "Microsoft",            "platform", "USD", "United States", "🇺🇸"),
+    ("googl", "GOOGL",     "GOOGL",  "Alphabet",             "platform", "USD", "United States", "🇺🇸"),
+    ("amzn",  "AMZN",      "AMZN",   "Amazon",               "platform", "USD", "United States", "🇺🇸"),
+    ("meta",  "META",      "META",   "Meta Platforms",       "platform", "USD", "United States", "🇺🇸"),
+    ("pltr",  "PLTR",      "PLTR",   "Palantir",             "platform", "USD", "United States", "🇺🇸"),
+    ("now",   "NOW",       "NOW",    "ServiceNow",           "platform", "USD", "United States", "🇺🇸"),
+    # Alibaba Cloud + the Qwen models — the largest AI platform outside the US.
+    ("baba",  "BABA",      "BABA",   "Alibaba (ADR)",        "platform", "USD", "China",         "🇨🇳"),
     # The silicon, and the tools that make it.
-    ("nvda",  "NVDA",      "NVDA",   "NVIDIA",               "silicon",  "USD"),
-    ("avgo",  "AVGO",      "AVGO",   "Broadcom",             "silicon",  "USD"),
-    ("amd",   "AMD",       "AMD",    "AMD",                  "silicon",  "USD"),
-    ("tsm",   "TSM",       "TSM",    "TSMC (ADR)",           "silicon",  "USD"),
-    ("asml",  "ASML",      "ASML",   "ASML (ADR)",           "silicon",  "USD"),
-    ("mu",    "MU",        "MU",     "Micron",               "silicon",  "USD"),
-    ("arm",   "ARM",       "ARM",    "Arm Holdings",         "silicon",  "USD"),
-    ("mrvl",  "MRVL",      "MRVL",   "Marvell",              "silicon",  "USD"),
+    ("nvda",  "NVDA",      "NVDA",   "NVIDIA",               "silicon",  "USD", "United States", "🇺🇸"),
+    ("avgo",  "AVGO",      "AVGO",   "Broadcom",             "silicon",  "USD", "United States", "🇺🇸"),
+    ("amd",   "AMD",       "AMD",    "AMD",                  "silicon",  "USD", "United States", "🇺🇸"),
+    ("tsm",   "TSM",       "TSM",    "TSMC (ADR)",           "silicon",  "USD", "Taiwan",        "🇹🇼"),
+    ("asml",  "ASML",      "ASML",   "ASML (ADR)",           "silicon",  "USD", "Netherlands",   "🇳🇱"),
+    ("mu",    "MU",        "MU",     "Micron",               "silicon",  "USD", "United States", "🇺🇸"),
+    ("arm",   "ARM",       "ARM",    "Arm Holdings",         "silicon",  "USD", "United Kingdom","🇬🇧"),
+    ("mrvl",  "MRVL",      "MRVL",   "Marvell",              "silicon",  "USD", "United States", "🇺🇸"),
+    # Deposition, etch and coater/developer tools — ASML's complement, and the
+    # second-largest semicap vendor in the world.
+    ("tel",   "8035.T",    "8035",   "Tokyo Electron",       "silicon",  "JPY", "Japan",         "🇯🇵"),
     # Everything that must be built before a GPU can be switched on.
-    ("vrt",   "VRT",       "VRT",    "Vertiv",               "infra",    "USD"),
-    ("anet",  "ANET",      "ANET",   "Arista Networks",      "infra",    "USD"),
-    ("etn",   "ETN",       "ETN",    "Eaton",                "infra",    "USD"),
-    ("ceg",   "CEG",       "CEG",    "Constellation Energy", "infra",    "USD"),
-    ("gev",   "GEV",       "GEV",    "GE Vernova",           "infra",    "USD"),
-    ("eqix",  "EQIX",      "EQIX",   "Equinix",              "infra",    "USD"),
+    ("vrt",   "VRT",       "VRT",    "Vertiv",               "infra",    "USD", "United States", "🇺🇸"),
+    ("anet",  "ANET",      "ANET",   "Arista Networks",      "infra",    "USD", "United States", "🇺🇸"),
+    ("etn",   "ETN",       "ETN",    "Eaton",                "infra",    "USD", "United States", "🇺🇸"),
+    ("ceg",   "CEG",       "CEG",    "Constellation Energy", "infra",    "USD", "United States", "🇺🇸"),
+    ("gev",   "GEV",       "GEV",    "GE Vernova",           "infra",    "USD", "United States", "🇺🇸"),
+    ("eqix",  "EQIX",      "EQIX",   "Equinix",              "infra",    "USD", "United States", "🇺🇸"),
+    # Data-centre power distribution and cooling — the European half of the
+    # infrastructure layer that the US names don't cover.
+    ("schn",  "SU.PA",     "SU",     "Schneider Electric",   "infra",    "EUR", "France",        "🇫🇷"),
     # Servers, and the memory that became the tightest constraint in the chain.
-    ("smci",  "SMCI",      "SMCI",   "Super Micro",          "systems",  "USD"),
-    ("dell",  "DELL",      "DELL",   "Dell Technologies",    "systems",  "USD"),
-    ("hynix", "000660.KS", "000660", "SK hynix",             "systems",  "KRW"),
-    ("sec",   "005930.KS", "005930", "Samsung Electronics",  "systems",  "KRW"),
+    ("smci",  "SMCI",      "SMCI",   "Super Micro",          "systems",  "USD", "United States", "🇺🇸"),
+    ("dell",  "DELL",      "DELL",   "Dell Technologies",    "systems",  "USD", "United States", "🇺🇸"),
+    ("hynix", "000660.KS", "000660", "SK hynix",             "systems",  "KRW", "South Korea",   "🇰🇷"),
+    ("sec",   "005930.KS", "005930", "Samsung Electronics",  "systems",  "KRW", "South Korea",   "🇰🇷"),
+    # The contract manufacturer that physically assembles a large share of the
+    # world's AI servers.
+    ("honhai","2317.TW",   "2317",   "Hon Hai (Foxconn)",    "systems",  "TWD", "Taiwan",        "🇹🇼"),
 ]
 
 # (key, yahoo_symbol, display_name, pair_label, icon)
@@ -246,6 +264,65 @@ def derive(history, year=2026):
         "sparkline":    downsample(closes.tail(756), 156),
         "realizedVol":  realized_vol,
     }
+
+
+def weekly_closes(history):
+    """Weekly (Friday) closes, tz-naive so series from different exchanges can
+    share one date index. Tokyo and Taipei histories come back in their own
+    timezones, and reindexing tz-aware indexes against each other raises."""
+    closes = history["Close"].dropna()
+    if len(closes) == 0:
+        return None
+    idx = closes.index
+    if getattr(idx, "tz", None) is not None:
+        closes = closes.copy()
+        closes.index = idx.tz_localize(None)
+    return closes.resample("W-FRI").last().dropna()
+
+
+def weekly_grid(history, points=260):
+    """The shared weekly date index every /ai series is aligned to.
+
+    Built once from a long-history reference (the S&P 500) and reused for all
+    28 stocks and 12 indices, so point *i* is the same calendar week in every
+    series on the page.
+    """
+    weekly = weekly_closes(history)
+    if weekly is None:
+        return None
+    return weekly.index[-points:]
+
+
+def series_on_grid(history, grid):
+    """One series aligned to the shared weekly grid, `None` before it listed.
+
+    Why alignment rather than a simple tail-and-downsample: several names in the
+    AI universe are younger than the five-year window — Arm IPO'd in Sept 2023,
+    GE Vernova was spun out in Apr 2024, Constellation in Feb 2022. Downsampling
+    "whatever history exists" to a fixed 260 points silently stretches 2.9 years
+    of Arm across a 5-year axis, which mislabels its dates AND corrupts any
+    basket built from it. (This is exactly what the first version did.)
+
+    So each series is reindexed onto the shared grid instead. Gaps *inside* a
+    history — holidays, trading halts, a week the exchange was shut — are
+    forward-filled, because a missing Friday is not missing information. Weeks
+    *before* the first real observation stay `None`: the stock did not exist, and
+    the chart must draw a line that starts late rather than one that starts
+    wrong. AIMarketImpact chains weekly returns across whatever names are
+    present, so entries are handled the way an index handles a new constituent.
+    """
+    weekly = weekly_closes(history)
+    if weekly is None:
+        return []
+
+    # Union-then-reindex so a ffill can carry the last real close onto a grid
+    # date the exchange didn't trade, without inventing pre-listing prices.
+    aligned = weekly.reindex(grid.union(weekly.index)).ffill().reindex(grid)
+    first = weekly.first_valid_index()
+    if first is not None:
+        aligned[aligned.index < first] = float("nan")
+
+    return [None if pd.isna(v) else round(float(v), 2) for v in aligned]
 
 
 def derive_bond(history):
@@ -421,9 +498,27 @@ def main():
             **d,
         })
 
-    print()
+    # Every /ai series shares ONE weekly date grid, anchored on the S&P 500 —
+    # the longest, most reliable history in the set. Fetched before anything
+    # else in this section because both loops below reindex onto it.
     ai_out = []
-    for key, sym, ticker, company, layer, currency in (AI_STOCKS if want("ai") else []):
+    ai_indices_out = []
+    grid = None
+    if want("ai"):
+        print()
+        print("  building shared 5y weekly grid from ^GSPC ", end="", flush=True)
+        ref_hist, ref_err = fetch_one("^GSPC")
+        if ref_err or ref_hist is None:
+            print(f"✗ {ref_err}")
+            print("  ✗ cannot align /ai series without the grid — skipping AI section")
+        else:
+            grid = weekly_grid(ref_hist)
+            print(f"✓ {len(grid)} weeks, {grid[0].date()} → {grid[-1].date()}")
+
+    print()
+    for key, sym, ticker, company, layer, currency, country, flag in (
+        AI_STOCKS if grid is not None else []
+    ):
         print(f"  {sym:12} {company:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -433,11 +528,43 @@ def main():
         if d is None:
             print("✗ no closes")
             continue
-        print(f"{d['value']:>10}  {d['dailyChange']:+.2f}%  YTD {d['ytdChange']:+.2f}%")
+        # Replace the 3y sparkline with the grid-aligned 5y one — /ai holds five
+        # years, and `None` marks weeks before the listing existed.
+        aligned = series_on_grid(hist, grid)
+        d["sparkline"] = aligned
+        live = sum(1 for v in aligned if v is not None)
+        note = "" if live == len(aligned) else f"  ⚠ {len(aligned) - live}w pre-listing"
+        print(
+            f"{d['value']:>10}  {d['dailyChange']:+.2f}%  YTD {d['ytdChange']:+.2f}%"
+            f"  {live}/{len(aligned)}pts{note}"
+        )
         ai_out.append({
             "key": key, "symbol": sym, "ticker": ticker, "company": company,
-            "layer": layer, "currency": currency,
+            "layer": layer, "currency": currency, "country": country, "flag": flag,
             **d,
+        })
+
+    # The same 12 global indices the Markets page carries, but on the shared 5y
+    # weekly grid so /ai can rank the AI basket against every one of them over
+    # five years. Fetched under the `ai` section rather than reusing `indices`,
+    # because those rows are patched into site-data at 156/3y and the markets
+    # tables depend on that length.
+    print()
+    for key, sym, name, region, flag in (INDICES if grid is not None else []):
+        print(f"  {sym:12} {name:22} ", end="", flush=True)
+        hist, err = fetch_one(sym)
+        if err or hist is None:
+            print(f"✗ {err}")
+            continue
+        s = series_on_grid(hist, grid)
+        live = [v for v in s if v is not None]
+        if len(live) < 2:
+            print("✗ no closes")
+            continue
+        print(f"{live[-1]:>10}  {len(live)}/{len(s)}pts  {((live[-1]/live[0])-1)*100:+.1f}%")
+        ai_indices_out.append({
+            "key": key, "symbol": sym, "name": name, "region": region, "flag": flag,
+            "series": s,
         })
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -465,11 +592,12 @@ def main():
             "crypto":      section("crypto", crypto_out),
             "forex":       section("forex", forex_out),
             "etfs":        section("etfs", etfs_out),
-            # Section flag is "ai"; the JSON key is "aiStocks".
+            # Section flag is "ai"; the JSON keys are "aiStocks" / "aiIndices".
             "aiStocks":    ai_out if want("ai") else previous.get("aiStocks", []),
+            "aiIndices":   ai_indices_out if want("ai") else previous.get("aiIndices", []),
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
-    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs · {len(ai_out)}/{len(AI_STOCKS)} AI stocks")
+    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs · {len(ai_out)}/{len(AI_STOCKS)} AI stocks · {len(ai_indices_out)}/{len(INDICES)} AI index series")
 
 
 if __name__ == "__main__":

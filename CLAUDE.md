@@ -14,7 +14,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 |-------|-----------|---------|
 | `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
 | `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
-| `/ai` | **AI** | AI basket vs index, AI stock universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
+| `/ai` | **AI** | AI basket vs all global indices (5y), 28-name AI universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators (incl. euro area) |
 | `/us-economy` | **US** | US-only economic dashboard + 10Y/30Y yield curve |
 | `/canada-economy` | **Canada** | Canada-only economic dashboard + 10Y/long yield curve |
@@ -124,22 +124,45 @@ API for AI revenue splits, layoff attribution or private deal terms, and no
 index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts`**
 (not `site-data.ts`), split in two:
 
-- **`AI_STOCKS`** — real Yahoo quotes, 24 tickers grouped by stack layer
-  (`platform` / `silicon` / `infra` / `systems`). GENERATED between the
+- **`AI_STOCKS` + `AI_INDEX_SERIES`** — real Yahoo quotes. 28 tickers from 9
+  countries grouped by stack layer (`platform` / `silicon` / `infra` /
+  `systems`), plus the 12 global indices. GENERATED between the
   `AI_STOCKS:START` / `:END` markers; refresh with `npm run fetch:ai && npm run patch:ai`.
-  `fetch:ai` is `fetch-yahoo.py --only=ai` — the new `--only=` flag fetches one
+  `fetch:ai` is `fetch-yahoo.py --only=ai` — the `--only=` flag fetches one
   section and **carries the other sections over** from the existing dump, so a
   partial run can't blank the file that `patch-site-data` depends on.
+
+  **These series are 260 weekly points over 5 YEARS, not the 156/3y the rest of
+  the site holds** — that is why `TimeHorizon` gained a `5Y` rung and why /ai
+  uses `EXTENDED_CHART_VIEWS` while everything else uses `CHART_VIEWS`. Two
+  consequences worth knowing before touching them:
+
+  - Every series sits on **one shared weekly date grid** built from ^GSPC, so
+    point *i* is the same calendar week everywhere. `null` marks weeks before a
+    listing existed — Arm (IPO Sept 2023), GE Vernova (Apr 2024) and
+    Constellation (Feb 2022) are all younger than the window. Consumers must
+    skip nulls, never treat them as zero. Don't go back to tail-and-downsample:
+    it stretches 2.9 years of Arm across a 5-year axis, which is wrong on the
+    dates *and* corrupts the basket.
+  - `patch:ai` refuses to write mismatched series lengths, and prints which
+    names list after the window opens.
 - **Everything else** — curated `AIFigure`s, each carrying `source`, `sourceUrl`
   and `asOf`. `AIFigureGrid` always renders all three and makes the tile a link.
   **A figure that can't be sourced doesn't go on the page** — June is absent from
   the layoffs chart and the two smallest firm-size bands from the adoption chart
   for exactly that reason. Bump `AI_DATA_ASOF` when revising curated figures.
 
-`AIMarketImpact` is the only computed section: an equal-weighted, window-rebased
-basket vs the S&P 500 and NASDAQ 100, off the same 156-point weekly sparklines
-the markets tables use. Equal-weighted on purpose — cap weighting would just
-redraw the index.
+`AIMarketImpact` is the only computed section: an equal-weighted AI basket
+ranked against **all 12 global indices** over up to 5 years. The basket is a
+**chained index of weekly returns**, not an average of rebased levels — that
+matters because three constituents list mid-window, and averaging rebased levels
+would drag the basket toward 100 the week each one appears, inventing a drop
+that never happened. Equal- rather than cap-weighted on purpose (cap weighting
+would just redraw the S&P). Chaining implies weekly rebalancing, so the card also
+quotes the equal-weighted buy-and-hold return, which differs by tens of points
+over five years. All lines are local-currency price returns with no FX
+conversion — stated in the card, since an FX-adjusted comparison needs a base
+currency this site doesn't define.
 
 ## Conventions & lessons learned
 
@@ -148,7 +171,9 @@ redraw the index.
 - **No "live / real-time / LIVE DATA"** — weekly cadence; use `Last Updated` / `Next Update`.
 - **Dashboard categories render in `CATEGORIES` array order** (`dashboard/page.tsx`) — to add a section at the top, put it first.
 - **Use color tokens** (`var(--color-*)`) over hardcoded hex, except in ECharts configs (use the hex equivalents).
-- **One chart window ladder site-wide: `3M / 6M / YTD / 2Y / 3Y`.** `TimeHorizon` (types/index.ts) is exactly these five and `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.
+- **One chart window ladder site-wide: `3M / 6M / YTD / 2Y / 3Y`.** `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth for it — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.
+  - **`TimeHorizon` also carries `5Y`, which is NOT in `CHART_VIEWS`** — only `/ai` offers it, via `EXTENDED_CHART_VIEWS`, because only its series reach back five years. Keep it out of the site-wide strip or tables whose data stops at 3 years will show a 5Y tab that just relabels the same line.
+  - `sliceLength` derives every fixed horizon from its month count. It used to short-circuit `3Y` to "return the whole series", which was only right while every sparkline was exactly 156 points — on /ai's 260-point series that silently drew five years under a 3Y label.
 - **Index P/E is optional.** No free provider supplies it, so `pe`/`pe10yAvg` are hand-entered and typed optional; a card without them renders a dash. Never substitute a plausible-looking multiple — a wrong valuation figure is worse than a visibly absent one.
 - **Heatmap % changes must be split-corrected.** Yahoo does not back-adjust recent splits: `Adj Close` and `auto_adjust=True` both come back identical to raw Close, so a 2:1 split publishes as a real -50% week (this happened, and flipped a whole sector negative). `fetch-heatmap.py` applies the factor from `Ticker.splits` for outliers past ±30%.
 - **Don't create `.md` docs unless asked.**

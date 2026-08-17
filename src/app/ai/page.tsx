@@ -102,10 +102,10 @@ export default function AIPage() {
             </Reveal>
 
             {/* Chips sit in this column rather than full-width below purely to
-                balance the grid: the stack table on the left runs ~2,220px and
-                the three cards above only ~1,760px, so this closes a ~460px
-                gap to ~120px (measured at 1280px wide). Re-check if a card's
-                content changes materially — same rule as the Markets page. */}
+                balance the grid: the stack table on the left runs ~2,550px (28
+                rows) and the three cards above only ~1,780px, so this closes a
+                ~770px gap to ~130px (measured at 1280px wide). Re-check if the
+                universe grows again — same rule as the Markets page. */}
             <Reveal>
               <AIFigureSection
                 title="The physical bottleneck"

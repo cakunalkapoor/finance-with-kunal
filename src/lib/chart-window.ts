@@ -17,8 +17,21 @@ import type { TimeHorizon } from "@/types";
    were unified; the alias remains so those call sites read naturally. */
 export type ChartView = TimeHorizon;
 
-/** Every chart's tab strip, in order. The single source of truth. */
+/** Every chart's tab strip, in order. The single source of truth for the
+ *  markets tables and the economic cards, all of which hold 3 years of history
+ *  at most. `EXTENDED_CHART_VIEWS` adds the 5Y rung for the datasets that
+ *  genuinely reach back that far. */
 export const CHART_VIEWS: ChartView[] = ["3M", "6M", "YTD", "2Y", "3Y"];
+
+/**
+ * CHART_VIEWS plus 5Y, for series that carry five years of history.
+ *
+ * Only `/ai` uses this: its stock and index series are fetched at 260 weekly
+ * points over 5 years, rather than the 156/3y the rest of the site holds. The
+ * site-wide strip is deliberately left alone — offering a 5Y tab on a table
+ * whose data stops at 3 years would just relabel the same line.
+ */
+export const EXTENDED_CHART_VIEWS: ChartView[] = [...CHART_VIEWS, "5Y"];
 
 const WEEK_MS = 7 * 86_400_000;
 
@@ -29,6 +42,7 @@ const FIXED_MONTHS: Record<Exclude<TimeHorizon, "YTD">, number> = {
   "6M": 6,
   "2Y": 24,
   "3Y": 36,
+  "5Y": 60,
 };
 
 /** Last data point's date. Falls back to today if DATA_UPDATED_AT is reformatted. */
@@ -46,16 +60,25 @@ function ytdWeeks(): number {
   return Math.max(2, Math.round((last.getTime() - jan1.getTime()) / WEEK_MS) + 1);
 }
 
-/** How many trailing points a view shows. The sparklines are weekly, so a
- *  fixed horizon is its month count times ~4.345 weeks. */
+/**
+ * How many trailing points a view shows. The sparklines are weekly, so a fixed
+ * horizon is its month count times ~4.345 weeks, clamped to what the series has.
+ *
+ * 3Y used to short-circuit to `total` — correct only while every series was
+ * exactly 156 points / 3 years. /ai now holds 260 points / 5 years, and under
+ * the old rule its 3Y tab silently drew the full five. Deriving every fixed
+ * horizon from its month count fixes that and leaves the 3y series unchanged:
+ * 36 × 4.345 = 156, which is already all of them.
+ */
 export function sliceLength(view: ChartView, total: number): number {
-  if (view === "3Y") return total;
   const weeks =
     view === "YTD" ? ytdWeeks() : Math.round(FIXED_MONTHS[view] * 4.345);
   return Math.min(total, Math.max(2, weeks));
 }
 
-export function sliceFor(view: ChartView, data: number[]): number[] {
+/** Generic over the element type so it also slices the nullable series on /ai,
+ *  where `null` marks a week before a listing existed. */
+export function sliceFor<T>(view: ChartView, data: T[]): T[] {
   return data.slice(-sliceLength(view, data.length));
 }
 

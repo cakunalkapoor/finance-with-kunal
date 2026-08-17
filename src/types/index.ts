@@ -193,14 +193,20 @@ export interface WeeklyCommentary {
 
 /**
  * The one time-window vocabulary for every chart on the site — the economic
- * cards, the yield curves, and the sparkline columns in the markets tables all
- * offer exactly these five and nothing else.
+ * cards, the yield curves, and the sparkline columns in the markets tables.
+ *
+ * The first five are what almost everything offers, and `CHART_VIEWS` in
+ * `lib/chart-window.ts` is that strip. **5Y is not part of it**: it exists only
+ * for `/ai`, whose stock and index series are fetched at 260 weekly points over
+ * five years rather than the 156/3y held elsewhere, and it is offered through
+ * `EXTENDED_CHART_VIEWS`. Adding it to the site-wide strip would put a 5Y tab
+ * on tables whose data stops at three years.
  *
  * YTD is not a fixed length: it runs from January of the latest data point's
  * year, so how much history it needs depends on when in the year you ask. See
  * `horizonMonths` / `horizonCutoff` in `lib/chart-window.ts`.
  */
-export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y";
+export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y" | "5Y";
 
 /* ── AI dashboard (/ai) ─────────────────────────────────────────────────────
    Almost nothing on this page has a free API behind it. Company AI revenue is
@@ -218,15 +224,21 @@ export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y";
  *  Industrials and Real Estate. Mirrors `layer` in fetch-yahoo.py::AI_STOCKS. */
 export type AIStockLayer = "platform" | "silicon" | "infra" | "systems";
 
+/** Listing currencies across the AI universe. Values are never summed or ranked
+ *  across currencies; only rebased percentage returns are compared. */
+export type AICurrency = "USD" | "KRW" | "JPY" | "TWD" | "EUR";
+
 export interface AIStock {
-  /** Yahoo symbol — Korean listings carry the .KS suffix. */
+  /** Yahoo symbol — non-US listings carry an exchange suffix (.KS, .T, .TW, .PA). */
   symbol: string;
   /** Exchange ticker as a reader would type it. */
   ticker: string;
   company: string;
   layer: AIStockLayer;
-  /** Listing currency. KRW rows are never summed or ranked against USD rows. */
-  currency: "USD" | "KRW";
+  /** Country of listing, for the flag and the "around the world" framing. */
+  country: string;
+  flag: string;
+  currency: AICurrency;
   value: number;
   dailyChange: number;
   weekChange: number;
@@ -234,10 +246,41 @@ export interface AIStock {
   ytdChange: number;
   high52w: number;
   low52w: number;
-  /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
-  sparkline: number[];
+  /**
+   * 260 weekly closes across the trailing 5 years — LONGER than the 156/3y the
+   * rest of the site holds, so /ai can offer a 5Y window. See TimeHorizon.
+   *
+   * `null` marks a week BEFORE this listing existed, and several names in the
+   * universe are younger than the window: Arm IPO'd Sept 2023, GE Vernova was
+   * spun out Apr 2024, Constellation Feb 2022. Every series shares one weekly
+   * date grid (built in fetch-yahoo.py from the S&P 500), so point `i` is the
+   * same calendar week in every series on the page — which is what makes the
+   * basket comparison valid. Consumers must skip nulls rather than treat them
+   * as zero.
+   */
+  sparkline: (number | null)[];
   /** Trailing 30-day annualized realized volatility, in percentage points. */
   realizedVol?: number;
+}
+
+/**
+ * One global equity index as a 5-year weekly series, for the /ai basket
+ * comparison.
+ *
+ * Kept here rather than read off `EQUITY_INDICES` because those sparklines are
+ * 156 points / 3 years — the markets tables need no more than that. Display
+ * metadata travels with the series so the chart has no ordering dependency on
+ * site-data.
+ */
+export interface AIIndexSeries {
+  symbol: string;
+  name: string;
+  region: string;
+  flag: string;
+  /** 260 weekly closes over the trailing 5 years, in the index's own currency,
+   *  on the same shared weekly grid as AIStock.sparkline. `null` where the
+   *  index has no observation for that week. */
+  series: (number | null)[];
 }
 
 /**

@@ -23,6 +23,7 @@ const END = "/* AI_STOCKS:END */";
 
 const dump = JSON.parse(readFileSync(dumpPath, "utf8"));
 const rows = dump.aiStocks ?? [];
+const indexRows = dump.aiIndices ?? [];
 
 if (rows.length === 0) {
   console.error(
@@ -33,15 +34,38 @@ if (rows.length === 0) {
   process.exit(1);
 }
 
-/* Sparklines dominate the file — 156 floats per row, 24 rows. Emitted on one
-   line each so the block stays roughly readable in a diff: a changed quote
-   shows as a handful of changed lines rather than 3,700. */
+/* Every series must sit on the SAME weekly grid, or the basket chart compares
+   windows of different spans — 5Y of AI against 3Y of an index reads as
+   outperformance that isn't there. The fetcher aligns them all to one grid built
+   from the S&P 500; this is the guard that they actually arrived that way. */
+const lengths = new Set([...rows, ...indexRows].map((r) => (r.sparkline ?? r.series).length));
+if (lengths.size > 1) {
+  console.error(
+    `✗ mixed series lengths ${[...lengths].join(", ")} — every AI stock and index ` +
+      "series must carry the same number of weekly points.\n" +
+      "  Re-run `npm run fetch:ai` so both are rebuilt together.",
+  );
+  process.exit(1);
+}
+
+/* Names younger than the window carry leading nulls — that is expected and
+   correct, but worth printing so a silent change in coverage is visible. */
+const partial = rows
+  .map((r) => ({ ticker: r.ticker, missing: r.sparkline.filter((v) => v === null).length }))
+  .filter((r) => r.missing > 0)
+  .sort((a, b) => b.missing - a.missing);
+
+/* Series dominate the file — 260 weekly floats per row across 28 stocks and 12
+   indices. Emitted on one line each so the block stays readable in a diff: a
+   changed quote shows as a handful of changed lines rather than 10,000. */
 const stockLiteral = (s) =>
   `  {
     symbol: ${JSON.stringify(s.symbol)},
     ticker: ${JSON.stringify(s.ticker)},
     company: ${JSON.stringify(s.company)},
     layer: ${JSON.stringify(s.layer)},
+    country: ${JSON.stringify(s.country)},
+    flag: ${JSON.stringify(s.flag)},
     currency: ${JSON.stringify(s.currency)},
     value: ${s.value},
     dailyChange: ${s.dailyChange},
@@ -51,19 +75,39 @@ const stockLiteral = (s) =>
     high52w: ${s.high52w},
     low52w: ${s.low52w},
     realizedVol: ${s.realizedVol ?? "undefined"},
-    sparkline: [${s.sparkline.join(", ")}],
+    sparkline: [${s.sparkline.map((v) => (v === null ? "null" : v)).join(", ")}],
   },`;
 
 // Latest observation date across the universe — what the page shows as "as of".
 const asOf = rows.map((r) => r.asOf).sort().at(-1);
+
+const indexLiteral = (s) =>
+  `  {
+    symbol: ${JSON.stringify(s.symbol)},
+    name: ${JSON.stringify(s.name)},
+    region: ${JSON.stringify(s.region)},
+    flag: ${JSON.stringify(s.flag)},
+    series: [${s.series.map((v) => (v === null ? "null" : v)).join(", ")}],
+  },`;
 
 const block = `${START}
 export const AI_STOCKS: AIStock[] = [
 ${rows.map(stockLiteral).join("\n")}
 ];
 
+/** The 12 global equity indices as 5-year weekly series, for the basket
+ *  comparison. Same length and cadence as AI_STOCKS[].sparkline — enforced by
+ *  patch-ai-stocks.mjs, which refuses to write a mismatch. */
+export const AI_INDEX_SERIES: AIIndexSeries[] = [
+${indexRows.map(indexLiteral).join("\n")}
+];
+
 /** Latest close date across the AI universe, ISO yyyy-mm-dd. */
 export const AI_STOCKS_ASOF = ${JSON.stringify(asOf)};
+
+/** Weekly points each 5-year series carries — the window maths in
+ *  chart-window.ts counts weeks back from the last point. */
+export const AI_SERIES_POINTS = ${rows[0].sparkline.length};
 ${END}`;
 
 const src = readFileSync(targetPath, "utf8");
@@ -78,4 +122,13 @@ if (startIdx === -1 || endIdx === -1) {
 const patched = src.slice(0, startIdx) + block + src.slice(endIdx + END.length);
 writeFileSync(targetPath, patched);
 
-console.log(`✓ patched ${rows.length} AI stocks into src/lib/ai-data.ts (as of ${asOf})`);
+console.log(
+  `✓ patched ${rows.length} AI stocks + ${indexRows.length} index series into ` +
+    `src/lib/ai-data.ts (${rows[0].sparkline.length} weekly points, as of ${asOf})`,
+);
+if (partial.length) {
+  console.log(
+    `  ${partial.length} listed after the window opened: ` +
+      partial.map((r) => `${r.ticker} (-${r.missing}w)`).join(", "),
+  );
+}
