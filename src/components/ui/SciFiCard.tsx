@@ -89,8 +89,17 @@ export function CardHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("flex items-center justify-between px-4 sm:px-5 pt-4 pb-2", className)}>
-      <div>
+    /* The action can be as wide as the heatmap's three-item legend. With no
+       wrapping, a phone squeezed the title/subtitle column down to a few
+       characters per line and STILL clipped the action off the right edge.
+       Below `sm` the action now takes its own full-width line instead. */
+    <div
+      className={cn(
+        "flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 sm:px-5 pt-4 pb-2",
+        className,
+      )}
+    >
+      <div className="min-w-0">
         <h2
           className="font-semibold text-sm tracking-wide"
           style={{ color: "var(--color-text-primary)" }}
@@ -106,7 +115,7 @@ export function CardHeader({
           </p>
         )}
       </div>
-      {action && <div>{action}</div>}
+      {action && <div className="w-full sm:w-auto sm:shrink-0">{action}</div>}
     </div>
   );
 }

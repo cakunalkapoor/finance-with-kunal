@@ -16,12 +16,33 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import { ChangeStack } from "@/components/markets/StatStack";
 
-// The UK, India and South Korea have no free daily yield feed and sit on FRED's
-// monthly OECD series, which can lag by 1-3 months. Rather than let a stale
-// number pass as current, every row shows the observation date, and anything
-// older than a normal monthly publication cycle is called out.
+// Sources differ per row and so does their lag: five countries have an
+// automated daily feed, while the UK, India, South Korea and Australia are read
+// from a published page each refresh (their HISTORY still comes from FRED's
+// monthly series, which is why they carry no 1D figure). Rather than let a
+// stale number pass as current, every row shows its own observation date, and
+// anything older than a normal monthly publication cycle is called out.
 const STALE_AFTER_DAYS = 45;
 const REFRESHED_AT = new Date(DATA_UPDATED_AT).getTime();
+
+/* Every row used to read "<maturity> Treasury", which is only true of the US
+   and Korea. A Bund is not a Treasury and neither is a Gilt or a JGB — on a
+   table read by people who trade these, the generic label is just wrong. */
+const INSTRUMENT: Record<string, string> = {
+  "United States": "Treasury",
+  "United Kingdom": "Gilt",
+  Germany: "Bund",
+  Japan: "JGB",
+  Canada: "GoC Bond",
+  India: "G-Sec",
+  "South Korea": "KTB",
+  Australia: "ACGB",
+  "South Africa": "Govt Bond",
+};
+
+function instrumentName(country: string): string {
+  return INSTRUMENT[country] ?? "Govt Bond";
+}
 
 function asOfAgeDays(asOf: string): number {
   const t = Date.parse(`${asOf}T00:00:00Z`);
@@ -166,7 +187,7 @@ export default function BondsTable() {
                           fontSize: "10px",
                         }}
                       >
-                        {bond.maturity} Treasury
+                        {bond.maturity} {instrumentName(bond.country)}
                       </div>
                     </div>
                   </div>

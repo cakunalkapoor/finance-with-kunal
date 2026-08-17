@@ -206,7 +206,7 @@ export default function MarketHeatmap() {
         title="Market Heatmap"
         subtitle={`${activeIndex.description} · click any tile for the full quote`}
         action={
-          <div className="flex items-center gap-3 text-xs" style={{ fontFamily: FONT_MONO }}>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" style={{ fontFamily: FONT_MONO }}>
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm" style={{ background: "#059669" }} />
               <span style={{ color: "var(--color-text-muted)" }}>Positive</span>
