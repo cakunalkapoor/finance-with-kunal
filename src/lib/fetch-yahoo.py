@@ -275,6 +275,99 @@ def derive(history, year=None):
     }
 
 
+# Currency → (Yahoo FX symbol, how to apply it) for the /ai page.
+#
+# /ai reports EVERYTHING in USD. A reader comparing Tokyo Electron in yen against
+# Vertiv in dollars, or the Nikkei against the S&P, is really comparing two
+# things at once — the asset and the currency — and the currency move is often
+# the larger of the two. Converting removes that confound.
+#
+# Direction matters and is easy to get backwards: "USDJPY=X" quotes YEN PER
+# DOLLAR, so a yen price is DIVIDED by it; "EURUSD=X" quotes DOLLARS PER EURO,
+# so a euro price is MULTIPLIED. Both conventions appear below.
+AI_FX = {
+    "JPY": ("USDJPY=X", "divide"),
+    "KRW": ("USDKRW=X", "divide"),
+    "TWD": ("USDTWD=X", "divide"),
+    "CNY": ("USDCNY=X", "divide"),
+    "HKD": ("USDHKD=X", "divide"),
+    "INR": ("USDINR=X", "divide"),
+    "CAD": ("USDCAD=X", "divide"),
+    "EUR": ("EURUSD=X", "multiply"),
+    "GBP": ("GBPUSD=X", "multiply"),
+}
+
+# Listing currency per index, for the same conversion. The Markets page leaves
+# these in local terms on purpose; only /ai converts.
+INDEX_CURRENCY = {
+    "^GSPC": "USD", "^NDX": "USD", "000001.SS": "CNY", "^HSI": "HKD",
+    "^N225": "JPY", "^NSEI": "INR", "^GDAXI": "EUR", "^FTSE": "GBP",
+    "^FCHI": "EUR", "^GSPTSE": "CAD", "^KS11": "KRW", "^TWII": "TWD",
+}
+
+
+def _naive_daily(series):
+    """Drop tz and snap to midnight so series from different exchanges align."""
+    idx = series.index
+    if getattr(idx, "tz", None) is not None:
+        series = series.copy()
+        series.index = idx.tz_localize(None)
+    return series.groupby(series.index.normalize()).last()
+
+
+def fetch_fx(currencies):
+    """Daily USD conversion series for each currency, keyed by currency code."""
+    out = {}
+    for cur in sorted({c for c in currencies if c != "USD"}):
+        sym, op = AI_FX[cur]
+        print(f"  {sym:12} {cur} → USD{'':11}", end="", flush=True)
+        hist, err = fetch_one(sym)
+        if err or hist is None:
+            print(f"✗ {err}")
+            continue
+        closes = _naive_daily(hist["Close"].dropna())
+        out[cur] = (closes, op)
+        print(f"✓ {len(closes)} days, latest {closes.iloc[-1]:.4f}")
+    return out
+
+
+def to_usd(history, currency, fx):
+    """Re-express a daily price history in USD.
+
+    Applied BEFORE derive(), so `value`, every % change, the 52-week range and
+    the sparkline are all computed from the same USD series. Converting only the
+    displayed price would leave the table showing dollar prices next to
+    local-currency returns — which is worse than not converting at all.
+
+    FX is forward-filled onto the equity's trading days: currencies trade a
+    near-continuous week while exchanges keep their own holidays, so a local
+    market open on a day the FX print is missing carries the previous rate
+    rather than dropping the observation.
+    """
+    # Even the USD path rebuilds the frame rather than assigning the normalised
+    # series back into the original: the source index is tz-aware, the
+    # normalised one is not, and assigning across them aligns on index and
+    # silently produces all-NaN.
+    if currency == "USD":
+        closes = _naive_daily(history["Close"].dropna())
+        out = pd.DataFrame({"Close": closes})
+        out.index.name = history.index.name
+        return out
+
+    if currency not in fx:
+        return None  # rate unavailable — caller skips rather than mixing units
+
+    rates, op = fx[currency]
+    closes = _naive_daily(history["Close"].dropna())
+    aligned = rates.reindex(rates.index.union(closes.index)).ffill().reindex(closes.index)
+    converted = closes / aligned if op == "divide" else closes * aligned
+    converted = converted.dropna()
+
+    out = pd.DataFrame({"Close": converted})
+    out.index.name = history.index.name
+    return out
+
+
 def weekly_closes(history):
     """Weekly (Friday) closes, tz-naive so series from different exchanges can
     share one date index. Tokyo and Taipei histories come back in their own
@@ -524,6 +617,14 @@ def main():
             grid = weekly_grid(ref_hist)
             print(f"✓ {len(grid)} weeks, {grid[0].date()} → {grid[-1].date()}")
 
+    # /ai reports everything in USD, so the FX series come first — every price
+    # below is converted before any figure is derived from it.
+    fx = {}
+    if grid is not None:
+        print()
+        needed = {row[5] for row in AI_STOCKS} | set(INDEX_CURRENCY.values())
+        fx = fetch_fx(needed)
+
     print()
     for key, sym, ticker, company, layer, currency, country, flag in (
         AI_STOCKS if grid is not None else []
@@ -533,13 +634,17 @@ def main():
         if err or hist is None:
             print(f"✗ {err}")
             continue
-        d = derive(hist)
+        usd = to_usd(hist, currency, fx)
+        if usd is None:
+            print(f"✗ no {currency}→USD rate")
+            continue
+        d = derive(usd)
         if d is None:
             print("✗ no closes")
             continue
         # Replace the 3y sparkline with the grid-aligned 5y one — /ai holds five
         # years, and `None` marks weeks before the listing existed.
-        aligned = series_on_grid(hist, grid)
+        aligned = series_on_grid(usd, grid)
         d["sparkline"] = aligned
         live = sum(1 for v in aligned if v is not None)
         note = "" if live == len(aligned) else f"  ⚠ {len(aligned) - live}w pre-listing"
@@ -549,7 +654,9 @@ def main():
         )
         ai_out.append({
             "key": key, "symbol": sym, "ticker": ticker, "company": company,
-            "layer": layer, "currency": currency, "country": country, "flag": flag,
+            "layer": layer, "listingCurrency": currency, "country": country,
+            "flag": flag,
+            # Every numeric field below is USD — see to_usd().
             **d,
         })
 
@@ -565,14 +672,21 @@ def main():
         if err or hist is None:
             print(f"✗ {err}")
             continue
-        s = series_on_grid(hist, grid)
+        cur = INDEX_CURRENCY.get(sym, "USD")
+        usd = to_usd(hist, cur, fx)
+        if usd is None:
+            print(f"✗ no {cur}→USD rate")
+            continue
+        s = series_on_grid(usd, grid)
         live = [v for v in s if v is not None]
         if len(live) < 2:
             print("✗ no closes")
             continue
-        print(f"{live[-1]:>10}  {len(live)}/{len(s)}pts  {((live[-1]/live[0])-1)*100:+.1f}%")
+        print(f"{live[-1]:>10.2f} USD  {len(live)}/{len(s)}pts  {((live[-1]/live[0])-1)*100:+.1f}%  (from {cur})")
         ai_indices_out.append({
             "key": key, "symbol": sym, "name": name, "region": region, "flag": flag,
+            "listingCurrency": cur,
+            # Index level restated in USD so returns are comparable across markets.
             "series": s,
         })
 

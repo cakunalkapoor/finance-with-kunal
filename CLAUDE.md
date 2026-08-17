@@ -149,6 +149,15 @@ index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts
   carries `5Y` so `sliceLength` can clamp these series to a correct 3Y window.
   Two consequences worth knowing before touching them:
 
+  - **Everything on /ai is in USD.** `fetch-yahoo.py` converts each daily close
+    at that day's rate (`to_usd`, using nine Yahoo FX pairs) **before** `derive()`
+    runs, so price, all four % changes, the 52-week range and the sparkline come
+    from one USD series — converting only the displayed price would leave dollar
+    prices beside local-currency returns. `listingCurrency` is kept for
+    disclosure only. **This is /ai-only**: the Markets page keeps local-currency
+    quotes, which is why the AI section fetches its own index series rather than
+    reusing the site-wide ones. Watch the FX direction — `USDJPY=X` is yen per
+    dollar (divide), `EURUSD=X` is dollars per euro (multiply).
   - Every series sits on **one shared weekly date grid** built from ^GSPC, so
     point *i* is the same calendar week everywhere. `null` marks weeks before a
     listing existed — Arm (IPO Sept 2023), GE Vernova (Apr 2024) and

@@ -60,7 +60,7 @@ export default function AIStockTable() {
     <SciFiCard glow="cyan" cornerAccent>
       <CardHeader
         title="The AI stack, priced"
-        subtitle={`${AI_STOCKS.length} listings · grouped by layer, not sector · not ranked · hover a chart for the value at that point · close of ${AI_STOCKS_ASOF}`}
+        subtitle={`${AI_STOCKS.length} listings · all prices and returns in USD · grouped by layer, not sector · not ranked · hover a chart for the value at that point · close of ${AI_STOCKS_ASOF}`}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 560 }}>
@@ -77,7 +77,7 @@ export default function AIStockTable() {
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
-              {["Company", "Last", "Change"].map((h) => (
+              {["Company", "Last (USD)", "Change"].map((h) => (
                 <th
                   key={h}
                   className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase whitespace-nowrap"
@@ -219,21 +219,24 @@ export default function AIStockTable() {
                             fontSize: "13px",
                           }}
                         >
-                          {/* Won and yen quote in whole units; TWD to one place */}
-                          {stock.currency === "KRW" || stock.currency === "JPY"
-                            ? stock.value.toLocaleString("en-US", { maximumFractionDigits: 0 })
-                            : stock.value.toFixed(2)}
+                          {/* Every row is USD — converted in the fetcher before
+                              any figure was derived, so two decimals suit all
+                              of them regardless of what the exchange quotes. */}
+                          ${stock.value.toFixed(2)}
                         </span>
-                        <span
-                          className="ml-1"
-                          style={{
-                            color: "var(--color-text-muted)",
-                            fontFamily: FONT_MONO,
-                            fontSize: "10px",
-                          }}
-                        >
-                          {stock.currency}
-                        </span>
+                        {stock.listingCurrency !== "USD" && (
+                          <span
+                            className="ml-1"
+                            title={`Trades in ${stock.listingCurrency}; converted to USD at the rate on each close`}
+                            style={{
+                              color: "var(--color-text-muted)",
+                              fontFamily: FONT_MONO,
+                              fontSize: "9px",
+                            }}
+                          >
+                            ← {stock.listingCurrency}
+                          </span>
+                        )}
                         <div
                           className={`font-semibold ${getChangeColor(stock.dailyChange)}`}
                           style={{ fontFamily: FONT_MONO, fontSize: "10px" }}
@@ -278,9 +281,12 @@ export default function AIStockTable() {
       >
         Listed for reference, not as recommendations, and not investment advice. Membership is a
         judgement call, not a definition — there is no official &ldquo;AI sector&rdquo;, and most of
-        these companies earn plenty of revenue that has nothing to do with AI. Each row is quoted
-        in its own listing currency — won, yen, New Taiwan dollars and euros alongside the dollar
-        rows — so prices are not comparable across rows. Only the percentage columns are.
+        these companies earn plenty of revenue that has nothing to do with AI. Prices and returns
+        are in <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong> for every
+        row, including the Korean, Japanese, Taiwanese and European listings: each daily close is
+        converted at that day&rsquo;s rate before anything is derived from it, so a return here is
+        what a dollar investor actually earned, currency move included. An arrow marks the currency
+        a row trades in.
       </p>
     </SciFiCard>
   );

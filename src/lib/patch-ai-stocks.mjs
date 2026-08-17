@@ -66,7 +66,7 @@ const stockLiteral = (s) =>
     layer: ${JSON.stringify(s.layer)},
     country: ${JSON.stringify(s.country)},
     flag: ${JSON.stringify(s.flag)},
-    currency: ${JSON.stringify(s.currency)},
+    listingCurrency: ${JSON.stringify(s.listingCurrency)},
     value: ${s.value},
     dailyChange: ${s.dailyChange},
     weekChange: ${s.weekChange},
@@ -87,6 +87,7 @@ const indexLiteral = (s) =>
     name: ${JSON.stringify(s.name)},
     region: ${JSON.stringify(s.region)},
     flag: ${JSON.stringify(s.flag)},
+    listingCurrency: ${JSON.stringify(s.listingCurrency)},
     series: [${s.series.map((v) => (v === null ? "null" : v)).join(", ")}],
   },`;
 

@@ -228,9 +228,9 @@ export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y" | "5Y";
  *  Industrials and Real Estate. Mirrors `layer` in fetch-yahoo.py::AI_STOCKS. */
 export type AIStockLayer = "platform" | "silicon" | "infra" | "systems";
 
-/** Listing currencies across the AI universe. Values are never summed or ranked
- *  across currencies; only rebased percentage returns are compared. */
-export type AICurrency = "USD" | "KRW" | "JPY" | "TWD" | "EUR";
+/** Currencies the /ai universe TRADES in. Recorded for disclosure only —
+ *  every value on the page is already converted to USD. */
+export type AICurrency = "USD" | "KRW" | "JPY" | "TWD" | "EUR" | "GBP" | "CAD" | "CNY" | "HKD" | "INR";
 
 export interface AIStock {
   /** Yahoo symbol — non-US listings carry an exchange suffix (.KS, .T, .TW, .PA). */
@@ -242,7 +242,17 @@ export interface AIStock {
   /** Country of listing, for the flag and the "around the world" framing. */
   country: string;
   flag: string;
-  currency: AICurrency;
+  /**
+   * The currency this stock actually trades in — SHOWN FOR DISCLOSURE, not used
+   * for any figure below. Every numeric field on this type is USD.
+   *
+   * fetch-yahoo.py converts each daily close to USD *before* deriving anything,
+   * so the price, all four % changes, the 52-week range and the sparkline come
+   * from one USD series. Converting only the displayed price would leave dollar
+   * prices sitting next to local-currency returns — worse than not converting.
+   */
+  listingCurrency: AICurrency;
+  /** Latest close, in USD. */
   value: number;
   dailyChange: number;
   weekChange: number;
@@ -281,9 +291,18 @@ export interface AIIndexSeries {
   name: string;
   region: string;
   flag: string;
-  /** 260 weekly closes over the trailing 5 years, in the index's own currency,
-   *  on the same shared weekly grid as AIStock.sparkline. `null` where the
-   *  index has no observation for that week. */
+  /** Currency the index is quoted in. Disclosure only — `series` is USD. */
+  listingCurrency: AICurrency;
+  /**
+   * 260 weekly closes over the trailing 5 years, **restated in USD**, on the
+   * same shared weekly grid as AIStock.sparkline. `null` where the index has no
+   * observation for that week.
+   *
+   * Converting matters more than it looks: over five years the Nikkei returned
+   * ~+149% in yen but ~+63% in dollars, and the NIFTY ~+46% against ~+8%. A
+   * local-currency comparison is really two comparisons at once — the market and
+   * its currency — and the currency is often the larger term.
+   */
   series: (number | null)[];
 }
 

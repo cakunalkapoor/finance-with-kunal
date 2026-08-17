@@ -132,7 +132,8 @@ export default function AIPage() {
               >
                 Memory, not logic, is the tightest link in the chain right now: HBM sells out on
                 multi-quarter agreements, which is what a 76% operating margin at SK hynix is
-                telling you. TSMC&rsquo;s monthly revenue disclosure is the highest-frequency
+                telling you. Figures reported in won and euros are shown in dollars at the rate on
+                the reporting date, with the original alongside. TSMC&rsquo;s monthly revenue disclosure is the highest-frequency
                 public read on AI silicon demand anywhere — it lands weeks before the quarterly
                 numbers.
               </AIFigureSection>

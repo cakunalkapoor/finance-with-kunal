@@ -334,7 +334,7 @@ export default function AIMarketImpact() {
     <SciFiCard glow="cyan">
       <CardHeader
         title="AI stocks vs every global market"
-        subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} global indices, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS)}`}
+        subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} global indices · all in USD, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS)}`}
         action={
           <div className="flex items-center gap-1">
             {CHART_VIEWS.map((v) => (
@@ -509,11 +509,12 @@ export default function AIMarketImpact() {
         equal-weighted at the start and holding returned {signed(buyAndHold)}{" "}
         over this window against the index&rsquo;s {signed(basketReturn)}. Equal rather than cap
         weighting either way, so it answers how the typical AI name did rather than restating the
-        index. All lines are price returns in their own listing currency, excluding dividends and{" "}
-        <strong style={{ color: "var(--color-text-secondary)" }}>without FX conversion</strong>{" "}
-        — so part of the Nikkei&rsquo;s five-year gain is a weaker yen, not Japanese equities beating
-        American ones in your currency. Membership is a judgement call and the basket is not
-        investable.
+        index. Every line is in{" "}
+        <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong> — each daily
+        close converted at that day&rsquo;s rate before anything is derived — so a gap between two
+        lines is a performance gap and not partly a currency move. That matters: the Nikkei returned
+        about +149% in yen over five years but roughly +63% in dollars. Price returns only, so
+        dividends are excluded. Membership is a judgement call and the basket is not investable.
       </p>
     </SciFiCard>
   );
