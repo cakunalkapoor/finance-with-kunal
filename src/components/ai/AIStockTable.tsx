@@ -80,7 +80,11 @@ export default function AIStockTable() {
               {["Company", "Last (USD)", "Change"].map((h) => (
                 <th
                   key={h}
-                  className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase whitespace-nowrap"
+                  className={`px-4 py-2.5 font-semibold tracking-widest uppercase whitespace-nowrap ${
+                    // The price column is right-aligned so its decimals line up;
+                    // the header has to follow it or it floats off to the left.
+                    h === "Last (USD)" ? "text-right" : "text-left"
+                  }`}
                   style={TH_STYLE}
                 >
                   {h}
@@ -210,8 +214,13 @@ export default function AIStockTable() {
                         </div>
                       </td>
 
-                      <td className="px-4 py-3 whitespace-nowrap">
-                        <span
+                      {/* Right-aligned so the decimal points line up down the
+                          column — $8.08 and $1161.03 are meant to be compared at
+                          a glance. That only works if the price sits alone on
+                          its line, so the currency marker moved down beside the
+                          daily change rather than trailing the number. */}
+                      <td className="px-4 py-3 whitespace-nowrap text-right">
+                        <div
                           className="font-bold"
                           style={{
                             fontFamily: FONT_MONO,
@@ -223,25 +232,22 @@ export default function AIStockTable() {
                               any figure was derived, so two decimals suit all
                               of them regardless of what the exchange quotes. */}
                           ${stock.value.toFixed(2)}
-                        </span>
-                        {stock.listingCurrency !== "USD" && (
-                          <span
-                            className="ml-1"
-                            title={`Trades in ${stock.listingCurrency}; converted to USD at the rate on each close`}
-                            style={{
-                              color: "var(--color-text-muted)",
-                              fontFamily: FONT_MONO,
-                              fontSize: "9px",
-                            }}
-                          >
-                            ← {stock.listingCurrency}
-                          </span>
-                        )}
+                        </div>
                         <div
-                          className={`font-semibold ${getChangeColor(stock.dailyChange)}`}
+                          className="flex items-baseline justify-end gap-1.5"
                           style={{ fontFamily: FONT_MONO, fontSize: "10px" }}
                         >
-                          {formatChange(stock.dailyChange)} today
+                          {stock.listingCurrency !== "USD" && (
+                            <span
+                              title={`Trades in ${stock.listingCurrency}; converted to USD at the rate on each close`}
+                              style={{ color: "var(--color-text-muted)", fontSize: "9px" }}
+                            >
+                              ← {stock.listingCurrency}
+                            </span>
+                          )}
+                          <span className={`font-semibold ${getChangeColor(stock.dailyChange)}`}>
+                            {formatChange(stock.dailyChange)} today
+                          </span>
                         </div>
                       </td>
 
@@ -282,8 +288,8 @@ export default function AIStockTable() {
         Listed for reference, not as recommendations, and not investment advice. Membership is a
         judgement call, not a definition — there is no official &ldquo;AI sector&rdquo;, and most of
         these companies earn plenty of revenue that has nothing to do with AI. Prices and returns
-        are in <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong> for every
-        row, including the Korean, Japanese, Taiwanese and European listings: each daily close is
+        are in <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong>{" "}
+        for every row, including the Korean, Japanese, Taiwanese and European listings: each daily close is
         converted at that day&rsquo;s rate before anything is derived from it, so a return here is
         what a dollar investor actually earned, currency move included. An arrow marks the currency
         a row trades in.

@@ -67,15 +67,22 @@ export const AI_REVENUE: AIFigure[] = [
     asOf: "2026-08-14",
   },
   /* REMOVED: "Microsoft AI business, $37B annual run rate" (FY26 Q2, Jan 2026).
-     Microsoft RETIRED the metric — its FY26 Q4 release (quarter ended
-     2026-06-30) discloses no standalone AI revenue figure at all, folding AI
-     into Azure and Microsoft Cloud instead. So the number was 200 days old with
-     no successor to refresh it to.
+     Microsoft RETIRED the metric. Confirmed against the primary source — the
+     FY26 Q4 release of 2026-07-29 (quarter ended 2026-06-30) quantifies Azure,
+     Microsoft Cloud, M365 and Copilot seats, and discloses no standalone AI
+     revenue figure anywhere:
+     https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/
+     So the number was 200 days old with no successor to refresh it to.
 
-     Do NOT substitute "Azure crossed $100B annualised" here. That is the whole
-     cloud business, not AI, and putting it in an AI-revenue card would overstate
-     AI revenue by a wide margin — the exact category error this page exists to
-     avoid. If Microsoft resumes disclosing an AI-specific figure, add it back. */
+     Do NOT substitute Azure here. That release reports "Azure revenue surpassed
+     $100 billion for the first time" — a FULL-YEAR FY2026 figure for the whole
+     cloud business, not an AI run rate and not annualised. Putting it in an
+     AI-revenue card would overstate AI revenue by a wide margin, the exact
+     category error this page exists to avoid.
+
+     The one AI-specific number that release does give is 30M+ paid M365 Copilot
+     seats — a usage figure, not revenue, so it sits in AI_ADOPTION instead.
+     If Microsoft resumes disclosing an AI revenue figure, add it back here. */
   {
     id: "gcp",
     label: "Google Cloud",
@@ -158,6 +165,17 @@ export const AI_CAPEX: AICapexPlan[] = [
     asOf: "2026-07-22",
   },
   {
+    /* STALEST ROW ON THE PAGE, and it feeds the computed aggregate below.
+       Checked 2026-08-17: Microsoft's FY26 Q4 press release (2026-07-29) gives
+       NO capex figure — not for the quarter, not for FY27 — so it cannot
+       refresh this. Don't re-check that source hoping otherwise.
+
+       Public secondary reporting disagrees on the basis: ~$190B for calendar
+       2026, ~$175B after an accounting change that lengthens depreciation
+       lives, and $255–260B for FY2027. Those are three different periods, so
+       picking one at random would be worse than the February figure that at
+       least renders with an honest asOf. Resolve it against the 10-K or the
+       earnings call transcript, then set `raised` accordingly. */
     company: "Microsoft",
     ticker: "MSFT",
     low: 190,
@@ -449,6 +467,22 @@ export const AI_ADOPTION: AIFigure[] = [
     source: "US Census Bureau BTOS",
     sourceUrl: "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html",
     asOf: "2026-05-28",
+  },
+  {
+    /* Microsoft's only AI-specific usage disclosure. A paid-seat count beats a
+       survey response as an adoption signal — someone is being billed for it —
+       but it counts SEATS, not people using them, so it is labelled that way.
+       Note what sits beside it in the same release: Copilot seats and Azure
+       revenue are both quantified while AI revenue is not disclosed at all. */
+    id: "m365-copilot-seats",
+    label: "Microsoft 365 Copilot paid seats",
+    value: "30M+",
+    detail:
+      "Quarter ended Jun 30, 2026 · seats licensed, not necessarily active users · Microsoft's only AI-specific usage figure",
+    source: "Microsoft FY26 Q4 results",
+    sourceUrl:
+      "https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/",
+    asOf: "2026-07-29",
   },
   {
     id: "inference-cost",

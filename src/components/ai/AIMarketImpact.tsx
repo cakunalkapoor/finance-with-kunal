@@ -510,8 +510,8 @@ export default function AIMarketImpact() {
         over this window against the index&rsquo;s {signed(basketReturn)}. Equal rather than cap
         weighting either way, so it answers how the typical AI name did rather than restating the
         index. Every line is in{" "}
-        <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong> — each daily
-        close converted at that day&rsquo;s rate before anything is derived — so a gap between two
+        <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong>{" "}
+        — each daily close converted at that day&rsquo;s rate before anything is derived — so a gap between two
         lines is a performance gap and not partly a currency move. That matters: the Nikkei returned
         about +149% in yen over five years but roughly +63% in dollars. Price returns only, so
         dividends are excluded. Membership is a judgement call and the basket is not investable.
