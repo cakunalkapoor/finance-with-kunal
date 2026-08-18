@@ -13,6 +13,7 @@ import {
 } from "@/lib/chart-window";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
+import ChartViewTabs from "@/components/markets/ChartViewTabs";
 import { ChangeStack } from "@/components/markets/StatStack";
 
 /* Shared table for the single-series asset classes — commodities, currencies
@@ -94,30 +95,7 @@ export default function AssetTable({
                 </th>
               ))}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
-                <div className="flex items-center gap-1">
-                  {views.map((v) => (
-                    <button
-                      key={v}
-                      onClick={() => setChartView(v)}
-                      className="px-1.5 py-0.5 rounded transition-all"
-                      style={{
-                        fontFamily: FONT_MONO,
-                        fontSize: "10px",
-                        letterSpacing: "0.08em",
-                        fontWeight: chartView === v ? 700 : 500,
-                        color:
-                          chartView === v ? "var(--color-neon-cyan)" : "var(--color-text-muted)",
-                        background: chartView === v ? "rgba(167,139,250,0.12)" : "transparent",
-                        border:
-                          chartView === v
-                            ? "1px solid rgba(167,139,250,0.3)"
-                            : "1px solid transparent",
-                      }}
-                    >
-                      {v}
-                    </button>
-                  ))}
-                </div>
+                <ChartViewTabs views={views} value={chartView} onChange={setChartView} />
                 <div
                   style={{
                     fontSize: "9px",
