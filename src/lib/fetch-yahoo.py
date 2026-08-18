@@ -16,6 +16,11 @@ and derive everything from the close column:
   - ytdChange      → latest vs first 2026 close
   - high52w / low52w → over the trailing 1y (252 trading days) only
   - sparkline      → 156 evenly-spaced points across the trailing ~3y window
+  - daily/dailyDates → the last 6 daily closes and their sessions, for the 1W
+                     chart window (a 1W slice of a weekly sparkline is one point)
+
+Prices are stored via `q()`, which scales decimals to magnitude — a flat 2dp
+turns EURUSD into a three-value staircase and corrupts any return taken off it.
 
 Output: src/lib/yahoo-data.json   (consumed via site-data.ts patches)
 
@@ -194,14 +199,36 @@ FOREX = [
 ]
 
 
+def q(v):
+    """Round a price to a precision that survives its own moves.
+
+    A flat 2dp is correct for an index at 7,745 and destructive for EURUSD at
+    1.1550: it leaves THREE distinct values across a whole week, so the line
+    becomes a staircase and the arithmetic off it is wrong. Measured on the
+    2026-08-17 pull, a real +0.34% week in EURUSD read as +0.87% from the
+    rounded series, and USDCAD's -0.46% flattened to exactly 0.00%.
+
+    So the decimals scale with the magnitude. This is a storage precision, not
+    a display one — every table formats at render, so nothing on the page shows
+    more digits than it did before.
+    """
+    v = float(v)
+    a = abs(v)
+    if a >= 100:
+        return round(v, 2)
+    if a >= 1:
+        return round(v, 4)
+    return round(v, 6)
+
+
 def downsample(series, points=52):
     """Return `points` evenly-spaced values from the series."""
     if len(series) == 0:
         return []
     if len(series) <= points:
-        return [round(float(v), 2) for v in series]
+        return [q(v) for v in series]
     step = (len(series) - 1) / (points - 1)
-    return [round(float(series.iloc[round(i * step)]), 2) for i in range(points)]
+    return [q(series.iloc[round(i * step)]) for i in range(points)]
 
 
 def pct(curr, prev):
@@ -261,16 +288,31 @@ def derive(history, year=None):
         realized_vol = round(rv, 2)
 
     return {
-        "value":        round(float(last), 2),
+        "value":        q(last),
         "asOf":         closes_idx[-1].strftime("%Y-%m-%d"),
         "dailyChange":  pct(last, prev_close),
         "weekChange":   pct(last, wk_ago),
         "monthChange":  pct(last, month_ago),
         "ytdChange":    pct(last, ytd_anchor),
-        "high52w":      round(high52w, 2),
-        "low52w":       round(low52w, 2),
+        "high52w":      q(high52w),
+        "low52w":       q(low52w),
         # ~3y weekly sparkline: 156 points across the trailing 756 trading days.
         "sparkline":    downsample(closes.tail(756), 156),
+        # The 1W window, drawn from real daily closes rather than the weekly
+        # sparkline — one week of a weekly series is a single point and renders
+        # no line at all.
+        #
+        # SIX points, not five, and that matters: index 0 is `at_back(5)`, the
+        # very close `weekChange` measures from, so the first→last move on the
+        # 1W chart equals the 1W percentage printed beside it. Emitting five
+        # would silently draw four sessions of a five-session number.
+        #
+        # Real dates ride along because the sparkline's labels are derived by
+        # counting WEEKS back from the last point (see chart-window.ts). That
+        # maths is right for a weekly series and nonsense for a daily one — it
+        # would stamp all six points with the same month.
+        "daily":        [q(v) for v in closes.tail(6)],
+        "dailyDates":   [ts.strftime("%Y-%m-%d") for ts in closes.tail(6).index],
         "realizedVol":  realized_vol,
     }
 
@@ -424,7 +466,59 @@ def series_on_grid(history, grid):
     if first is not None:
         aligned[aligned.index < first] = float("nan")
 
-    return [None if pd.isna(v) else round(float(v), 2) for v in aligned]
+    return [None if pd.isna(v) else q(v) for v in aligned]
+
+
+def daily_closes(history):
+    """Daily closes, tz-naive — the daily twin of `weekly_closes`, and tz-naive
+    for the same reason: Tokyo and Taipei histories arrive in their own zones,
+    and reindexing tz-aware indexes against each other raises."""
+    closes = history["Close"].dropna()
+    if len(closes) == 0:
+        return None
+    idx = closes.index
+    if getattr(idx, "tz", None) is not None:
+        closes = closes.copy()
+        closes.index = idx.tz_localize(None)
+    return closes
+
+
+def daily_grid(history, points=6):
+    """The shared daily date index behind /ai's 1W window.
+
+    Same idea as `weekly_grid`, anchored on the same reference (the S&P 500), so
+    point *i* is the same session in every series on the page. Six points to
+    match `derive()` — see the note there on why six rather than five.
+    """
+    daily = daily_closes(history)
+    if daily is None:
+        return None
+    return daily.index[-points:]
+
+
+def daily_series_on_grid(history, grid):
+    """One series aligned to the shared daily grid.
+
+    The holiday case is the entire reason this exists. The grid is US sessions,
+    and the AI universe spans nine countries: the Tokyo, Taipei, Seoul and
+    European names are shut on days the S&P trades and open on days it doesn't.
+    Reindexing with a forward fill carries a name's last real close onto a grid
+    date its own exchange was closed, drawing a flat segment — which is what
+    actually happened to that holding over the US week.
+
+    Dates before a listing stay `None`, the same rule `series_on_grid` follows,
+    so the basket can treat an entry the way an index treats a new constituent.
+    """
+    daily = daily_closes(history)
+    if daily is None:
+        return []
+
+    aligned = daily.reindex(grid.union(daily.index)).ffill().reindex(grid)
+    first = daily.first_valid_index()
+    if first is not None:
+        aligned[aligned.index < first] = float("nan")
+
+    return [None if pd.isna(v) else q(v) for v in aligned]
 
 
 def derive_bond(history):
@@ -606,6 +700,7 @@ def main():
     ai_out = []
     ai_indices_out = []
     grid = None
+    dgrid = None
     if want("ai"):
         print()
         print("  building shared 5y weekly grid from ^GSPC ", end="", flush=True)
@@ -616,6 +711,13 @@ def main():
         else:
             grid = weekly_grid(ref_hist)
             print(f"✓ {len(grid)} weeks, {grid[0].date()} → {grid[-1].date()}")
+            # The 1W window needs a daily twin of that grid, off the same
+            # reference, so a session lines up across all 40 series.
+            dgrid = daily_grid(ref_hist)
+            print(
+                f"  building shared daily grid from ^GSPC ✓ {len(dgrid)} sessions, "
+                f"{dgrid[0].date()} → {dgrid[-1].date()}"
+            )
 
     # /ai reports everything in USD, so the FX series come first — every price
     # below is converted before any figure is derived from it.
@@ -646,6 +748,12 @@ def main():
         # years, and `None` marks weeks before the listing existed.
         aligned = series_on_grid(usd, grid)
         d["sparkline"] = aligned
+        # Same treatment for the 1W series: `derive` set it from this name's own
+        # sessions, but /ai compares 40 series against each other, so it has to
+        # sit on the shared grid. The per-row dates go with it — they are the
+        # grid's, stored once as aiDailyDates.
+        d["daily"] = daily_series_on_grid(usd, dgrid)
+        d.pop("dailyDates", None)
         live = sum(1 for v in aligned if v is not None)
         note = "" if live == len(aligned) else f"  ⚠ {len(aligned) - live}w pre-listing"
         print(
@@ -688,6 +796,8 @@ def main():
             "listingCurrency": cur,
             # Index level restated in USD so returns are comparable across markets.
             "series": s,
+            # The 1W counterpart, on the shared daily grid.
+            "daily": daily_series_on_grid(usd, dgrid),
         })
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -718,6 +828,14 @@ def main():
             # Section flag is "ai"; the JSON keys are "aiStocks" / "aiIndices".
             "aiStocks":    ai_out if want("ai") else previous.get("aiStocks", []),
             "aiIndices":   ai_indices_out if want("ai") else previous.get("aiIndices", []),
+            # The /ai daily grid is shared by all 40 series, so it is stored once
+            # here rather than repeated on every row (the same reasoning behind
+            # AI_SERIES_POINTS). Carried over on a partial run like the rest.
+            "aiDailyDates": (
+                [ts.strftime("%Y-%m-%d") for ts in dgrid]
+                if want("ai") and dgrid is not None
+                else previous.get("aiDailyDates", [])
+            ),
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
     print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs · {len(ai_out)}/{len(AI_STOCKS)} AI stocks · {len(ai_indices_out)}/{len(INDICES)} AI index series")

@@ -24,6 +24,7 @@ const END = "/* AI_STOCKS:END */";
 const dump = JSON.parse(readFileSync(dumpPath, "utf8"));
 const rows = dump.aiStocks ?? [];
 const indexRows = dump.aiIndices ?? [];
+const dailyDates = dump.aiDailyDates ?? [];
 
 if (rows.length === 0) {
   console.error(
@@ -46,6 +47,23 @@ if (lengths.size > 1) {
       "  Re-run `npm run fetch:ai` so both are rebuilt together.",
   );
   process.exit(1);
+}
+
+/* The 1W window carries the same alignment requirement as the weekly one: if a
+   daily series is a different length from the shared grid, point `i` on one
+   line is a different session from point `i` on another, and the basket
+   silently compares Tuesday against Wednesday. Skipped when the dump predates
+   the daily grid, so an old dump still patches rather than hard-failing. */
+if (dailyDates.length > 0) {
+  const dailyLengths = new Set([...rows, ...indexRows].map((r) => (r.daily ?? []).length));
+  if (dailyLengths.size > 1 || !dailyLengths.has(dailyDates.length)) {
+    console.error(
+      `✗ daily series lengths ${[...dailyLengths].join(", ")} do not all match the ` +
+        `${dailyDates.length}-session shared grid.\n` +
+        "  Re-run `npm run fetch:ai` so the grid and the series are rebuilt together.",
+    );
+    process.exit(1);
+  }
 }
 
 /* Names younger than the window carry leading nulls — that is expected and
@@ -76,6 +94,7 @@ const stockLiteral = (s) =>
     low52w: ${s.low52w},
     realizedVol: ${s.realizedVol ?? "undefined"},
     sparkline: [${s.sparkline.map((v) => (v === null ? "null" : v)).join(", ")}],
+    daily: [${(s.daily ?? []).map((v) => (v === null ? "null" : v)).join(", ")}],
   },`;
 
 // Latest observation date across the universe — what the page shows as "as of".
@@ -89,6 +108,7 @@ const indexLiteral = (s) =>
     flag: ${JSON.stringify(s.flag)},
     listingCurrency: ${JSON.stringify(s.listingCurrency)},
     series: [${s.series.map((v) => (v === null ? "null" : v)).join(", ")}],
+    daily: [${(s.daily ?? []).map((v) => (v === null ? "null" : v)).join(", ")}],
   },`;
 
 const block = `${START}
@@ -109,6 +129,14 @@ export const AI_STOCKS_ASOF = ${JSON.stringify(asOf)};
 /** Weekly points each 5-year series carries — the window maths in
  *  chart-window.ts counts weeks back from the last point. */
 export const AI_SERIES_POINTS = ${rows[0].sparkline.length};
+
+/** Sessions behind the 1W window, shared by all 40 series.
+ *
+ *  Stored once rather than repeated on every row: the daily grid is built from
+ *  one reference (the S&P 500) and every series is aligned to it, so point \`i\`
+ *  is the same session everywhere. Real dates, because the weekly labels are
+ *  derived by counting weeks back and would put all six on one month. */
+export const AI_DAILY_DATES: string[] = ${JSON.stringify(dailyDates)};
 ${END}`;
 
 const src = readFileSync(targetPath, "utf8");

@@ -78,7 +78,14 @@ if (fetchedTimes.length) {
     );
 }
 
-const r = (v) => Array.isArray(v) ? `[${v.join(", ")}]` : String(v);
+/* Strings inside an array are QUOTED. Every array this patched until now held
+   numbers, so a bare join was fine; `dailyDates` is the first array of strings
+   and a bare join would emit [2026-08-11, ...] — an arithmetic expression, not
+   a date, and a TypeScript error at build. */
+const r = (v) =>
+  Array.isArray(v)
+    ? `[${v.map((x) => (typeof x === "string" ? JSON.stringify(x) : String(x))).join(", ")}]`
+    : String(v);
 
 // Patch fields inside the FIRST object that contains `marker` after `marker_anchor`.
 // Value semantics:
@@ -99,7 +106,19 @@ function patchObject(anchorRegex, fields) {
       `(${key}:\\s*)(\\[[\\s\\S]*?\\]|"[^"]*"|[A-Za-z_$][\\w]*\\([^)]*\\)|-?[\\d.]+|null)`,
       "m"
     );
-    body = body.replace(fieldRe, `$1${valStr}`);
+    if (fieldRe.test(body)) {
+      body = body.replace(fieldRe, `$1${valStr}`);
+      continue;
+    }
+    /* Key not present yet — APPEND it rather than doing nothing.
+       `String.replace` with no match is a silent no-op, and this function still
+       reports success, so a genuinely new field used to vanish: the fetcher
+       emitted it, the patcher claimed to write it, and the site rendered
+       without it. That is how `daily`/`dailyDates` would have shipped — the 1W
+       tab simply never appearing, with nothing failing anywhere. */
+    const indent = body.match(/\n([ \t]+)[A-Za-z_$][\w]*:/)?.[1] ?? "    ";
+    const trimmed = body.replace(/\s*$/, "");
+    body = `${trimmed}${trimmed.endsWith(",") ? "" : ","}\n${indent}${key}: ${valStr},`;
   }
   src = src.replace(anchorRegex, body + match[2]);
   return true;
@@ -127,6 +146,7 @@ for (const idx of yahoo.indices || []) {
     value: idx.value, dailyChange: idx.dailyChange, weekChange: idx.weekChange,
     monthChange: idx.monthChange, ytdChange: idx.ytdChange,
     high52w: idx.high52w, low52w: idx.low52w, sparkline: idx.sparkline,
+    daily: idx.daily, dailyDates: idx.dailyDates,
   })) stats.equity++;
 
   if (typeof idx.realizedVol === "number" &&
@@ -140,6 +160,7 @@ for (const c of yahoo.commodities || []) {
   if (patchBySymbol(c.symbol, {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
     monthChange: c.monthChange, ytdChange: c.ytdChange, sparkline: c.sparkline,
+    daily: c.daily, dailyDates: c.dailyDates,
   })) stats.commodity++;
 }
 
@@ -148,6 +169,7 @@ for (const c of yahoo.crypto || []) {
   if (patchBySymbol(c.symbol, {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
     monthChange: c.monthChange, ytdChange: c.ytdChange, sparkline: c.sparkline,
+    daily: c.daily, dailyDates: c.dailyDates,
   })) stats.crypto++;
 }
 
@@ -156,6 +178,7 @@ for (const e of yahoo.etfs || []) {
   if (patchBySymbol(e.symbol, {
     value: e.value, dailyChange: e.dailyChange, weekChange: e.weekChange,
     monthChange: e.monthChange, ytdChange: e.ytdChange, sparkline: e.sparkline,
+    daily: e.daily, dailyDates: e.dailyDates,
   })) stats.etf++;
 }
 
@@ -164,6 +187,7 @@ for (const fx of yahoo.forex || []) {
   if (patchBySymbol(fx.symbol, {
     value: fx.value, dailyChange: fx.dailyChange, weekChange: fx.weekChange,
     monthChange: fx.monthChange, ytdChange: fx.ytdChange, sparkline: fx.sparkline,
+    daily: fx.daily, dailyDates: fx.dailyDates,
   })) stats.forex++;
 }
 

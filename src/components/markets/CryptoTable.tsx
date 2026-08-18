@@ -25,6 +25,8 @@ export default function CryptoTable() {
     monthChange: c.monthChange,
     ytdChange: c.ytdChange,
     sparkline: c.sparkline,
+    daily: c.daily,
+    dailyDates: c.dailyDates,
     href: INVESTING_CRYPTO_URL[c.symbol],
     hrefTitle: `${c.name} on Investing.com`,
   }));

@@ -17,19 +17,33 @@ import type { TimeHorizon } from "@/types";
    were unified; the alias remains so those call sites read naturally. */
 export type ChartView = TimeHorizon;
 
-/** Every chart's tab strip, in order. The single source of truth — EVERY chart
- *  on the site offers exactly these five and nothing else, /ai included. */
-export const CHART_VIEWS: ChartView[] = ["3M", "6M", "YTD", "2Y", "3Y"];
+/** Every chart's tab strip, in order. The single source of truth.
+ *
+ *  This is the MAXIMUM, not a guarantee: a chart offers only the rungs its own
+ *  series can fill. `1W` is the sharpest case — it reads a daily series that
+ *  only the price rows carry, so the monthly economic cards and the bond trends
+ *  drop it automatically. See `viewsFor` and the note on TimeHorizon. */
+export const CHART_VIEWS: ChartView[] = ["1W", "3M", "6M", "YTD", "2Y", "3Y"];
 
 const WEEK_MS = 7 * 86_400_000;
+
+/** Sessions in the daily series behind `1W`. Six, not five — see
+ *  fetch-yahoo.py::derive for why. */
+export const DAILY_POINTS = 6;
 
 /** Fixed-length horizons in months. YTD is absent by design: its length depends
  *  on where in the year the data ends, so it is derived per series instead.
  *
  *  `5Y` is present although no tab strip offers it: /ai's series still carry 260
  *  weekly points (5 years), and `sliceLength` needs the entry to clamp them
- *  correctly. See TimeHorizon. */
+ *  correctly. See TimeHorizon.
+ *
+ *  `1W` is a quarter of a month, which is not a length any of this module's
+ *  month arithmetic can use — `Date.UTC(y, m - 0.25, d)` is not a date. It is
+ *  here only so the SPAN test in `horizonsFor` has a number to compare, and
+ *  every path that builds an actual cutoff special-cases it first. */
 const FIXED_MONTHS: Record<Exclude<TimeHorizon, "YTD">, number> = {
+  "1W": 0.25,
   "3M": 3,
   "6M": 6,
   "2Y": 24,
@@ -64,6 +78,10 @@ function ytdWeeks(): number {
  * five years of history while showing the same 3Y window as everywhere else.
  */
 export function sliceLength(view: ChartView, total: number): number {
+  // 1W is counted in sessions, not weeks. Left to the line below it would ask
+  // for round(0.25 × 4.345) = 1 week, get floored to the 2-point minimum, and
+  // quietly draw two WEEKLY points under a "1W" label — a fortnight, mislabelled.
+  if (view === "1W") return Math.min(total, DAILY_POINTS);
   const weeks =
     view === "YTD" ? ytdWeeks() : Math.round(FIXED_MONTHS[view] * 4.345);
   return Math.min(total, Math.max(2, weeks));
@@ -92,6 +110,73 @@ export function pointLabel(i: number, length: number): string {
   return MONTH_YEAR.format(pointDate(i, length));
 }
 
+/* ── The 1W window ──────────────────────────────────────────────────────────
+   1W is the only rung that reads a DIFFERENT series. Every other view slices
+   the weekly sparkline; 1W reads `daily` — six real sessions carrying their
+   own real dates. The three helpers below are what lets a table stay ignorant
+   of that split: ask for the views, the values and the labels, and the right
+   series comes back either way. */
+
+const DAY_MONTH = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+});
+
+const DAY_MONTH_YEAR = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+/** "Aug 11" from an ISO date, parsed as UTC on both sides — reading an ISO
+ *  date back with LOCAL getters lands it a day west of Greenwich. */
+function dayLabel(iso: string, withYear = false): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return (withYear ? DAY_MONTH_YEAR : DAY_MONTH).format(d);
+}
+
+/** The rungs a price row can actually offer.
+ *
+ *  Drops 1W when the row has no daily series, so a chart never shows a tab it
+ *  cannot draw — the same rule `horizonsFor` applies to dated series. This is
+ *  what makes the feature safe to ship before a refresh has populated `daily`:
+ *  rows without it simply keep the ladder they had. */
+export function viewsFor(
+  daily?: readonly unknown[] | boolean | null
+): ChartView[] {
+  // A table passes a boolean because it must check EVERY row: one tab strip
+  // serves them all, so 1W is offered only when nothing would render blank.
+  const ok =
+    typeof daily === "boolean" ? daily : !!daily && daily.length >= 2;
+  return ok ? CHART_VIEWS : CHART_VIEWS.filter((v) => v !== "1W");
+}
+
+/** The values a view draws: the daily series for 1W, a slice of the weekly one
+ *  otherwise. Generic so it also handles /ai's nullable series. */
+export function seriesFor<T>(
+  view: ChartView,
+  weekly: T[],
+  daily?: readonly T[] | null
+): T[] {
+  if (view === "1W") return daily ? [...daily] : [];
+  return sliceFor(view, weekly);
+}
+
+/** Point labels to match. 1W uses the series' own dates: `pointLabel` counts
+ *  WEEKS back from the last refresh, which would stamp all six sessions with
+ *  the same month and put them on the wrong days besides. */
+export function labelsFor(
+  view: ChartView,
+  length: number,
+  dailyDates?: readonly string[] | null
+): string[] {
+  if (view === "1W") return (dailyDates ?? []).map((d) => dayLabel(d));
+  return Array.from({ length }, (_, i) => pointLabel(i, length));
+}
+
 /* ── Monthly series (bond yield trends) ────────────────────────────────────
    BOND_YIELDS.trend is one point per calendar month ending at that row's own
    `asOf`, which differs per country by a day or two — and by months for the
@@ -118,7 +203,19 @@ export function monthlyWindowLabel(length: number, asOf: string): string {
 
 /** "Jan – Aug 2026" / "Aug 2025 – Aug 2026" — the span the chart column covers,
  *  shown once in the header since every row shares the same window. */
-export function windowLabel(view: ChartView, total = 156): string {
+export function windowLabel(
+  view: ChartView,
+  total = 156,
+  dailyDates?: readonly string[] | null
+): string {
+  // 1W spans real sessions, so it is the one window that can be stated to the
+  // day. Everything below it counts weeks back from the refresh date and is
+  // deliberately only month-accurate — see the note at the top of this file.
+  if (view === "1W") {
+    const days = dailyDates ?? [];
+    if (days.length < 2) return "";
+    return `${dayLabel(days[0])} – ${dayLabel(days[days.length - 1], true)}`;
+  }
   const length = sliceLength(view, total);
   const start = pointDate(0, length);
   const end = pointDate(length - 1, length);
@@ -171,6 +268,9 @@ export function horizonCutoff(
 ): Date {
   const last = lastDate(series) ?? new Date();
   if (horizon === "YTD") return new Date(Date.UTC(last.getUTCFullYear(), 0, 1));
+  // Seven days back, in days — `getUTCMonth() - 0.25` is not a month, and
+  // Date.UTC would take the fraction and hand back an invalid date.
+  if (horizon === "1W") return new Date(last.getTime() - WEEK_MS);
   return new Date(
     Date.UTC(
       last.getUTCFullYear(),

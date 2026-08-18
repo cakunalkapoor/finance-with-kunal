@@ -2,12 +2,17 @@
 
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { AI_STOCKS, AI_INDEX_SERIES, AI_SERIES_POINTS } from "@/lib/ai-data";
+import {
+  AI_STOCKS,
+  AI_INDEX_SERIES,
+  AI_SERIES_POINTS,
+  AI_DAILY_DATES,
+} from "@/lib/ai-data";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
 import {
-  CHART_VIEWS,
-  pointLabel,
-  sliceFor,
+  labelsFor,
+  seriesFor,
+  viewsFor,
   windowLabel,
   type ChartView,
 } from "@/lib/chart-window";
@@ -61,7 +66,7 @@ function rebase(values: (number | null)[]): (number | null)[] {
 }
 
 /**
- * The AI basket: an equal-weighted index, chained off weekly returns.
+ * The AI basket: an equal-weighted index, chained off period returns.
  *
  * Chained rather than "rebase each name to 100 and average", which is what this
  * chart did while every series covered the full window. Three names don't —
@@ -69,10 +74,16 @@ function rebase(values: (number | null)[]): (number | null)[] {
  * averaging rebased levels would drag the basket toward 100 on the week each one
  * appears, inventing a drop that never happened.
  *
- * Chaining sidesteps that: each step averages the weekly returns of the names
- * present in BOTH that week and the previous one, then compounds. A new
- * constituent contributes from its second observation onward and never injects a
- * level discontinuity — the same way an index absorbs an addition.
+ * Chaining sidesteps that: each step averages the returns of the names present
+ * in BOTH that period and the previous one, then compounds. A new constituent
+ * contributes from its second observation onward and never injects a level
+ * discontinuity — the same way an index absorbs an addition.
+ *
+ * Deliberately cadence-agnostic: it compounds the step from one point to the
+ * next and never asks how long a step is. That is what lets the 1W window feed
+ * it daily closes and get a correctly chained daily basket with no second
+ * implementation — the periods are sessions instead of weeks, and the maths is
+ * identical.
  */
 function chainedEqualWeight(slices: (number | null)[][]): number[] {
   const length = slices[0]?.length ?? 0;
@@ -106,14 +117,20 @@ export default function AIMarketImpact() {
   const theme = useTheme();
   const c = CHART_COLORS[theme];
 
+  /* The footnote states the rebalancing cadence, and the 1W window genuinely
+     changes it: the basket is chained off the same points the chart draws, so
+     on that rung it rebalances daily rather than weekly. Saying "weekly" there
+     would misdescribe the number printed beside it. */
+  const cadence = view === "1W" ? "daily" : "weekly";
+
   const { basket, indices, labels, dispersion, ranked, coverage, buyAndHold } = useMemo(() => {
-    const windows = AI_STOCKS.map((s) => sliceFor(view, s.sparkline));
+    const windows = AI_STOCKS.map((s) => seriesFor(view, s.sparkline, s.daily));
     const length = Math.min(...windows.map((s) => s.length));
     const basketSeries = chainedEqualWeight(windows);
 
     const indexSeries = AI_INDEX_SERIES.map((idx) => ({
       ...idx,
-      rebased: rebase(sliceFor(view, idx.series)).slice(-length),
+      rebased: rebase(seriesFor(view, idx.series, idx.daily)).slice(-length),
     }));
 
     /* Dispersion is computed only over names that traded for the WHOLE window.
@@ -158,7 +175,7 @@ export default function AIMarketImpact() {
     return {
       basket: basketSeries,
       indices: indexSeries,
-      labels: Array.from({ length }, (_, i) => pointLabel(i, length)),
+      labels: labelsFor(view, length, AI_DAILY_DATES).slice(-length),
       dispersion: {
         best: stockReturns[0],
         worst: stockReturns[stockReturns.length - 1],
@@ -334,10 +351,10 @@ export default function AIMarketImpact() {
     <SciFiCard glow="cyan">
       <CardHeader
         title="AI stocks vs every global market"
-        subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} global indices · all in USD, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS)}`}
+        subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} global indices · all in USD, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS, AI_DAILY_DATES)}`}
         action={
           <div className="flex items-center gap-1">
-            {CHART_VIEWS.map((v) => (
+            {viewsFor(AI_DAILY_DATES.length >= 2).map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}
@@ -382,7 +399,7 @@ export default function AIMarketImpact() {
                 letterSpacing: "0.1em",
               }}
             >
-              Ranked · {windowLabel(view, AI_SERIES_POINTS)}
+              Ranked · {windowLabel(view, AI_SERIES_POINTS, AI_DAILY_DATES)}
             </p>
             {highlight && (
               <button
@@ -503,8 +520,8 @@ export default function AIMarketImpact() {
             other {coverage.total - coverage.full} listed part-way through it
           </>
         )}
-        . The basket is an equal-weighted index chained off weekly returns, so a constituent that
-        lists mid-window joins without dropping the line. Chaining implies weekly rebalancing,
+        . The basket is an equal-weighted index chained off {cadence} returns, so a constituent that
+        lists mid-window joins without dropping the line. Chaining implies {cadence} rebalancing,
         which on a basket this volatile is worth real percentage points: buying the same names
         equal-weighted at the start and holding returned {signed(buyAndHold)}{" "}
         over this window against the index&rsquo;s {signed(basketReturn)}. Equal rather than cap

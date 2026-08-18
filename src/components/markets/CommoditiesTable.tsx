@@ -20,6 +20,8 @@ export default function CommoditiesTable() {
     monthChange: c.monthChange,
     ytdChange: c.ytdChange,
     sparkline: c.sparkline,
+    daily: c.daily,
+    dailyDates: c.dailyDates,
     href: INVESTING_COMMODITY_URL[c.symbol],
     hrefTitle: `${c.name} on Investing.com`,
   }));

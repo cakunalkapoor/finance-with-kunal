@@ -6,9 +6,9 @@ import { EQUITY_INDICES } from "@/lib/site-data";
 import { INVESTING_INDEX_URL } from "@/lib/external-links";
 import { formatNumber, formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import {
-  CHART_VIEWS,
-  pointLabel,
-  sliceFor,
+  labelsFor,
+  seriesFor,
+  viewsFor,
   windowLabel,
   type ChartView,
 } from "@/lib/chart-window";
@@ -108,6 +108,19 @@ const TH_STYLE = {
 export default function EquityMarketsTable() {
   const [chartView, setChartView] = useState<ChartView>("YTD");
 
+  /* One tab strip serves every row, so 1W is offered only when EVERY row can
+     draw it — otherwise switching to it would blank the rows that came back
+     without a daily series. */
+  const views = viewsFor(
+    EQUITY_INDICES.every((r) => (r.daily?.length ?? 0) >= 2)
+  );
+  /* The span named in the header. For 1W these are one row's real sessions:
+     exchanges keep different calendars, so a Tokyo row's six sessions can end a
+     day either side of New York's. Each row's own tooltip carries its own
+     dates; this is the same order of approximation the weekly labels already
+     make, and it is stated to the day rather than the month. */
+  const headerDays = EQUITY_INDICES[0]?.dailyDates;
+
   return (
     <SciFiCard glow="cyan" cornerAccent>
       <CardHeader
@@ -154,10 +167,10 @@ export default function EquityMarketsTable() {
                 <div style={{ fontSize: "9px", letterSpacing: "0.05em", opacity: 0.7, marginTop: "1px" }}>30d realized</div>
               </th>
 
-              {/* Chart column with the shared 3M / 6M / YTD / 2Y / 3Y toggle */}
+              {/* Chart column with the shared 1W / 3M / 6M / YTD / 2Y / 3Y toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {CHART_VIEWS.map((v) => (
+                  {views.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -186,7 +199,7 @@ export default function EquityMarketsTable() {
                     textTransform: "none",
                   }}
                 >
-                  {windowLabel(chartView)}
+                  {windowLabel(chartView, 156, headerDays)}
                 </div>
               </th>
             </tr>
@@ -264,12 +277,12 @@ export default function EquityMarketsTable() {
                   {/* Chart */}
                   <td className="px-4 py-3">
                     {(() => {
-                      const slice = sliceFor(chartView, idx.sparkline);
+                      const slice = seriesFor(chartView, idx.sparkline, idx.daily);
                       return (
                         <TrendSparkline
                           values={slice}
-                          labels={slice.map((_, j) => pointLabel(j, slice.length))}
-                          ariaLabel={`${idx.name} price, ${windowLabel(chartView)}`}
+                          labels={labelsFor(chartView, slice.length, idx.dailyDates)}
+                          ariaLabel={`${idx.name} price, ${windowLabel(chartView, 156, idx.dailyDates)}`}
                           format={(n) => formatNumber(n, 2)}
                         />
                       );

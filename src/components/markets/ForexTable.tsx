@@ -24,6 +24,8 @@ export default function ForexTable() {
     monthChange: fx.monthChange,
     ytdChange: fx.ytdChange,
     sparkline: fx.sparkline,
+    daily: fx.daily,
+    dailyDates: fx.dailyDates,
     href: INVESTING_FOREX_URL[fx.symbol],
     hrefTitle: `${fx.name} on Investing.com`,
   }));

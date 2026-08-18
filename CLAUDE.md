@@ -144,7 +144,7 @@ index classification defines an "AI sector". Data lives in **`src/lib/ai-data.ts
 
   **These series are 260 weekly points over 5 YEARS, not the 156/3y the rest of
   the site holds** — but /ai still offers only the site-wide `CHART_VIEWS`
-  ladder (3M/6M/YTD/2Y/3Y), same as every other chart. The extra history is kept
+  ladder (1W/3M/6M/YTD/2Y/3Y), same as every other chart. The extra history is kept
   because it costs nothing and makes a 5Y rung a one-line change; `TimeHorizon`
   carries `5Y` so `sliceLength` can clamp these series to a correct 3Y window.
   Two consequences worth knowing before touching them:
@@ -210,7 +210,12 @@ currency this site doesn't define.
 - **No "live / real-time / LIVE DATA"** — weekly cadence; use `Last Updated` / `Next Update`.
 - **Dashboard categories render in `CATEGORIES` array order** (`dashboard/page.tsx`) — to add a section at the top, put it first.
 - **Use color tokens** (`var(--color-*)`) over hardcoded hex, except in ECharts configs (use the hex equivalents).
-- **One chart window ladder site-wide: `3M / 6M / YTD / 2Y / 3Y`.** `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth for it — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.
+- **One chart window ladder site-wide: `1W / 3M / 6M / YTD / 2Y / 3Y`.** `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth for it — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.
+  - **`1W` is the one rung that reads a DIFFERENT series.** Every other view slices the weekly sparkline; one week of a weekly series is a single point and draws no line. So price rows carry a second six-point **daily** array (`daily` + `dailyDates`, `AI_DAILY_DATES` on /ai) emitted by `fetch-yahoo.py`. Use `seriesFor` / `labelsFor` / `viewsFor` rather than `sliceFor` / `pointLabel` / `CHART_VIEWS` in any chart that should offer it.
+    - Six points, not five: point 0 is the close `weekChange` measures from, so the chart's first→last move equals the 1W % printed beside it.
+    - Real dates ride along because `pointLabel` counts *weeks* back from the refresh date — right for a weekly series, nonsense for a daily one.
+    - **Bonds and the macro cards do not get 1W and that is correct** — `BOND_YIELDS.trend` is one point per calendar month and the economic series are monthly/quarterly, so they fail the existing ">= 2 points in the window" test in `horizonsFor` / `monthlyHorizonsFor` and drop the rung automatically. No special-casing.
+    - On /ai all 40 series share one daily grid built from ^GSPC, so a session lines up across the basket. A name whose own exchange was shut that day carries its last close forward (a flat segment); `null` still means only "before this listed".
   - **`TimeHorizon` also carries `5Y`, which is NOT in `CHART_VIEWS` and is offered by no strip.** It exists so `sliceLength` can clamp /ai's 260-point series to a correct 3Y window. Don't add it to `CHART_VIEWS`: tables whose data stops at 3 years would show a 5Y tab that just relabels the same line.
   - `sliceLength` derives every fixed horizon from its month count. It used to short-circuit `3Y` to "return the whole series", which was only right while every sparkline was exactly 156 points — on /ai's 260-point series that silently drew five years under a 3Y label.
 - **Index P/E is optional.** No free provider supplies it, so `pe`/`pe10yAvg` are hand-entered and typed optional; a card without them renders a dash. Never substitute a plausible-looking multiple — a wrong valuation figure is worse than a visibly absent one.

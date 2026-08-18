@@ -5,9 +5,9 @@ import { ArrowUpRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import {
-  CHART_VIEWS,
-  pointLabel,
-  sliceFor,
+  labelsFor,
+  seriesFor,
+  viewsFor,
   windowLabel,
   type ChartView,
 } from "@/lib/chart-window";
@@ -33,6 +33,9 @@ export interface AssetRow {
   monthChange: number;
   ytdChange: number;
   sparkline: number[];
+  /** 1W window — six daily closes and their dates. See IndexQuote.daily. */
+  daily?: number[];
+  dailyDates?: string[];
   /** Outbound quote page, when there is one for this instrument. */
   href?: string;
   hrefTitle?: string;
@@ -57,6 +60,10 @@ export default function AssetTable({
   formatTooltip?: (value: number) => string;
 }) {
   const [chartView, setChartView] = useState<ChartView>("YTD");
+
+  // 1W only when every row can draw it — see EquityMarketsTable.
+  const views = viewsFor(rows.every((r) => (r.daily?.length ?? 0) >= 2));
+  const headerDays = rows[0]?.dailyDates;
 
   return (
     <SciFiCard>
@@ -88,7 +95,7 @@ export default function AssetTable({
               ))}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {CHART_VIEWS.map((v) => (
+                  {views.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -120,7 +127,7 @@ export default function AssetTable({
                     textTransform: "none",
                   }}
                 >
-                  {windowLabel(chartView)}
+                  {windowLabel(chartView, 156, headerDays)}
                 </div>
               </th>
             </tr>
@@ -128,7 +135,7 @@ export default function AssetTable({
 
           <tbody>
             {rows.map((row, i) => {
-              const slice = sliceFor(chartView, row.sparkline);
+              const slice = seriesFor(chartView, row.sparkline, row.daily);
               return (
                 <tr
                   key={row.key}
@@ -212,8 +219,8 @@ export default function AssetTable({
                   <td className="px-4 py-3">
                     <TrendSparkline
                       values={slice}
-                      labels={slice.map((_, j) => pointLabel(j, slice.length))}
-                      ariaLabel={`${row.name}, ${windowLabel(chartView)}`}
+                      labels={labelsFor(chartView, slice.length, row.dailyDates)}
+                      ariaLabel={`${row.name}, ${windowLabel(chartView, 156, row.dailyDates)}`}
                       format={formatTooltip}
                     />
                   </td>

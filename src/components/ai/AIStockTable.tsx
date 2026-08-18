@@ -2,13 +2,19 @@
 
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { AI_STOCKS, AI_STOCKS_ASOF, AI_SERIES_POINTS } from "@/lib/ai-data";
+import {
+  AI_STOCKS,
+  AI_STOCKS_ASOF,
+  AI_SERIES_POINTS,
+  AI_DAILY_DATES,
+} from "@/lib/ai-data";
 import { yahooSymbolUrl } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import {
-  CHART_VIEWS,
+  labelsFor,
   pointLabel,
-  sliceFor,
+  seriesFor,
+  viewsFor,
   windowLabel,
   type ChartView,
 } from "@/lib/chart-window";
@@ -56,6 +62,10 @@ const COLUMN_COUNT = 4;
 export default function AIStockTable() {
   const [chartView, setChartView] = useState<ChartView>("YTD");
 
+  /* All 40 /ai series sit on one shared daily grid, so availability is a single
+     question rather than a per-row one. */
+  const views = viewsFor(AI_DAILY_DATES.length >= 2);
+
   return (
     <SciFiCard glow="cyan" cornerAccent>
       <CardHeader
@@ -91,10 +101,10 @@ export default function AIStockTable() {
                 </th>
               ))}
 
-              {/* The one site-wide ladder: 3M / 6M / YTD / 2Y / 3Y */}
+              {/* The one site-wide ladder: 1W / 3M / 6M / YTD / 2Y / 3Y */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {CHART_VIEWS.map((v) => (
+                  {views.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -125,7 +135,7 @@ export default function AIStockTable() {
                     textTransform: "none",
                   }}
                 >
-                  {windowLabel(chartView, AI_SERIES_POINTS)}
+                  {windowLabel(chartView, AI_SERIES_POINTS, AI_DAILY_DATES)}
                 </div>
               </th>
             </tr>
@@ -164,14 +174,26 @@ export default function AIStockTable() {
                 ...rows.map((stock, i) => {
                   /* Drop the leading nulls of a listing younger than the window
                      (Arm, GE Vernova, Constellation). Nulls only ever lead, so
-                     what's left is contiguous — and passing the SHORTER length
-                     to pointLabel is what makes the axis honest: the labels
-                     then count back from the last close and the sparkline
-                     correctly reads as starting at the IPO, not five years ago. */
-                  const slice = sliceFor(chartView, stock.sparkline).filter(
-                    (v): v is number => v !== null,
-                  );
+                     what's left is contiguous. */
+                  const raw = seriesFor(chartView, stock.sparkline, stock.daily);
+                  const kept = raw
+                    .map((v, j) => j)
+                    .filter((j) => raw[j] !== null);
+                  const slice = kept.map((j) => raw[j] as number);
                   if (slice.length < 2) return null;
+                  /* Two label rules, because the two series carry time
+                     differently. The weekly labels are DERIVED by counting back
+                     from the last close, so they take the SHORTER length — that
+                     is what makes an Arm sparkline read as starting at its IPO
+                     rather than five years ago. The 1W labels are REAL dates off
+                     the shared grid, so they are indexed by original position
+                     instead: renumbering them would slide each point onto the
+                     wrong day. */
+                  const allLabels = labelsFor(chartView, raw.length, AI_DAILY_DATES);
+                  const sliceLabels =
+                    chartView === "1W"
+                      ? kept.map((j) => allLabels[j])
+                      : slice.map((_, j) => pointLabel(j, slice.length));
                   return (
                     <tr
                       key={stock.symbol}
@@ -264,8 +286,8 @@ export default function AIStockTable() {
                       <td className="px-4 py-3">
                         <TrendSparkline
                           values={slice}
-                          labels={slice.map((_, j) => pointLabel(j, slice.length))}
-                          ariaLabel={`${stock.ticker} price, ${windowLabel(chartView, AI_SERIES_POINTS)}`}
+                          labels={sliceLabels}
+                          ariaLabel={`${stock.ticker} price, ${windowLabel(chartView, AI_SERIES_POINTS, AI_DAILY_DATES)}`}
                         />
                       </td>
                     </tr>

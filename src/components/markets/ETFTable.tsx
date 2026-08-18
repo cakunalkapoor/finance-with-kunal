@@ -6,9 +6,9 @@ import { ETFS } from "@/lib/site-data";
 import { yahooEtfUrl } from "@/lib/external-links";
 import { formatChange, getChangeColor, FONT_MONO } from "@/lib/utils";
 import {
-  CHART_VIEWS,
-  pointLabel,
-  sliceFor,
+  labelsFor,
+  seriesFor,
+  viewsFor,
   windowLabel,
   type ChartView,
 } from "@/lib/chart-window";
@@ -36,6 +36,10 @@ const COLUMN_COUNT = 4;
 
 export default function ETFTable() {
   const [chartView, setChartView] = useState<ChartView>("YTD");
+
+  // 1W only when every row can draw it — see EquityMarketsTable.
+  const views = viewsFor(ETFS.every((r) => (r.daily?.length ?? 0) >= 2));
+  const headerDays = ETFS[0]?.dailyDates;
 
   return (
     <SciFiCard glow="cyan" cornerAccent>
@@ -71,10 +75,10 @@ export default function ETFTable() {
                 </th>
               ))}
 
-              {/* Chart column with the shared 3M / 6M / YTD / 2Y / 3Y toggle */}
+              {/* Chart column with the shared 1W / 3M / 6M / YTD / 2Y / 3Y toggle */}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
                 <div className="flex items-center gap-1">
-                  {CHART_VIEWS.map((v) => (
+                  {views.map((v) => (
                     <button
                       key={v}
                       onClick={() => setChartView(v)}
@@ -106,7 +110,7 @@ export default function ETFTable() {
                     textTransform: "none",
                   }}
                 >
-                  {windowLabel(chartView)}
+                  {windowLabel(chartView, 156, headerDays)}
                 </div>
               </th>
             </tr>
@@ -242,12 +246,12 @@ export default function ETFTable() {
 
                     <td className="px-4 py-3">
                       {(() => {
-                        const slice = sliceFor(chartView, etf.sparkline);
+                        const slice = seriesFor(chartView, etf.sparkline, etf.daily);
                         return (
                           <TrendSparkline
                             values={slice}
-                            labels={slice.map((_, j) => pointLabel(j, slice.length))}
-                            ariaLabel={`${etf.ticker} price, ${windowLabel(chartView)}`}
+                            labels={labelsFor(chartView, slice.length, etf.dailyDates)}
+                            ariaLabel={`${etf.ticker} price, ${windowLabel(chartView, 156, etf.dailyDates)}`}
                           />
                         );
                       })()}

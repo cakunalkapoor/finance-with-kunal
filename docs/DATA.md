@@ -176,10 +176,10 @@ the wrong company on those tiles.
 ### `EquityMarketsTable.tsx`
 - 7 columns: Index · Last · 1W · 1M · YTD · **52W Range** · **Chart (YTD/52W toggle)**
 - 52W Range column shows H/L values plus a custom horizontal bar with a glowing violet dot marking current position in the range
-- Chart toggle in the header switches all 10 sparklines simultaneously between YTD (last 22 weeks) and 52W (full series); sparkline color follows the trend of the *visible* window
+- Chart toggle in the header switches all sparklines simultaneously across the site-wide ladder (1W / 3M / YTD / 2Y / 3Y); sparkline color follows the trend of the *visible* window. 1W reads the six-point `daily` series rather than the weekly sparkline — see the ladder notes in CLAUDE.md
 
 ### `EconomicChart.tsx`
-- Per-indicator card with horizon tabs (3M / 6M / 1Y / 3Y / 5Y)
+- Per-indicator card with horizon tabs drawn from the site-wide ladder, filtered by `horizonsFor` to the windows the series can actually fill — monthly macro series therefore show no 1W rung
 - Color (green / red) inverts based on `isPositiveGood` so e.g. falling inflation is shown green
 - Horizon window anchors to the most recent data point (not a hardcoded date)
 - SVG renderer, smooth area chart

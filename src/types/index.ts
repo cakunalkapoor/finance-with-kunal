@@ -11,6 +11,23 @@ export interface IndexQuote {
   high52w: number;
   low52w: number;
   sparkline: number[]; // 52 weekly price points (used for both YTD and 52W chart)
+  /**
+   * The 1W window: the last six DAILY closes and the sessions they fell on.
+   *
+   * Separate from `sparkline` because that series is weekly — one week of it is
+   * a single point, which draws no line. Six values, not five: the first is the
+   * close `weekChange` measures from, so the chart's first→last move equals the
+   * 1W percentage shown next to it.
+   *
+   * Real dates rather than derived ones: the sparkline's labels are computed by
+   * counting weeks back from the last point, which is right for a weekly series
+   * and would stamp all six of these with the same month.
+   *
+   * Optional so a row fetched before this existed still type-checks — and so a
+   * chart can drop the 1W rung rather than draw an empty one.
+   */
+  daily?: number[];
+  dailyDates?: string[];
   // NO P/E FIELDS. `pe`/`pe10yAvg` existed here and were rendered as a
   // "Valuation" column until an audit traced them to the original mock dataset
   // — never fetched, never sourced, and undated beside a weekly-refreshed
@@ -57,6 +74,9 @@ export interface Commodity {
   icon: string;
   /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
   sparkline: number[];
+  /** 1W window — six daily closes and their dates. See IndexQuote.daily. */
+  daily?: number[];
+  dailyDates?: string[];
 }
 
 export interface CryptoAsset {
@@ -70,6 +90,9 @@ export interface CryptoAsset {
   ytdChange: number;
   /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
   sparkline: number[];
+  /** 1W window — six daily closes and their dates. See IndexQuote.daily. */
+  daily?: number[];
+  dailyDates?: string[];
 }
 
 export interface ETF {
@@ -92,6 +115,9 @@ export interface ETF {
   ytdChange: number;
   /** ~156 weekly closes spanning the trailing 3 years, as on IndexQuote. */
   sparkline: number[];
+  /** 1W window — six daily closes and their dates. See IndexQuote.daily. */
+  daily?: number[];
+  dailyDates?: string[];
 }
 
 export interface ForexRate {
@@ -106,6 +132,9 @@ export interface ForexRate {
   ytdChange: number;
   /** ~156 weekly closes across the trailing 3 years, as on IndexQuote. */
   sparkline: number[];
+  /** 1W window — six daily closes and their dates. See IndexQuote.daily. */
+  daily?: number[];
+  dailyDates?: string[];
 }
 
 export interface HeatmapSector {
@@ -201,8 +230,15 @@ export interface WeeklyCommentary {
  * The one time-window vocabulary for every chart on the site — the economic
  * cards, the yield curves, and the sparkline columns in the markets tables.
  *
- * The first five are the strip — `CHART_VIEWS` in `lib/chart-window.ts` — and
- * **every chart on the site offers exactly those five, /ai included.**
+ * The first six are the strip — `CHART_VIEWS` in `lib/chart-window.ts`.
+ *
+ * `1W` is the one rung that does not read the weekly sparkline. One week of a
+ * weekly series is a single point and draws no line, so it reads a separate
+ * six-point DAILY series (`daily` / `dailyDates`, emitted by fetch-yahoo.py).
+ * Only price rows carry that series, which is exactly why a chart offers the
+ * rung only when its data can fill it: the monthly economic cards and the bond
+ * trends have no daily history and are excluded automatically by the existing
+ * span-and-point tests in `horizonsFor` / `monthlyHorizonsFor`.
  *
  * `5Y` exists as a horizon but no tab strip offers it. /ai's stock and index
  * series are fetched at 260 weekly points (five years) rather than the 156/3y
@@ -215,7 +251,7 @@ export interface WeeklyCommentary {
  * year, so how much history it needs depends on when in the year you ask. See
  * `horizonMonths` / `horizonCutoff` in `lib/chart-window.ts`.
  */
-export type TimeHorizon = "3M" | "6M" | "YTD" | "2Y" | "3Y" | "5Y";
+export type TimeHorizon = "1W" | "3M" | "6M" | "YTD" | "2Y" | "3Y" | "5Y";
 
 /* ── AI dashboard (/ai) ─────────────────────────────────────────────────────
    Almost nothing on this page has a free API behind it. Company AI revenue is
@@ -278,6 +314,19 @@ export interface AIStock {
    * as zero.
    */
   sparkline: (number | null)[];
+  /**
+   * The 1W window: six DAILY closes on a shared daily grid, also anchored on
+   * the S&P 500, so a session lines up across all 40 series the page compares.
+   *
+   * `null` follows the same rule as `sparkline` — before this name listed. A
+   * day the name's OWN exchange was shut while the grid's was open is NOT null:
+   * it carries the last real close forward, a flat segment, which is what the
+   * holding actually did that week. The universe spans nine countries, so this
+   * happens most weeks somewhere.
+   *
+   * Dates are not repeated per row — all 40 share `AI_DAILY_DATES`.
+   */
+  daily?: (number | null)[];
   /** Trailing 30-day annualized realized volatility, in percentage points. */
   realizedVol?: number;
 }
@@ -309,6 +358,9 @@ export interface AIIndexSeries {
    * its currency — and the currency is often the larger term.
    */
   series: (number | null)[];
+  /** 1W window — six daily closes on the shared daily grid, USD, dates in
+   *  `AI_DAILY_DATES`. See AIStock.daily. */
+  daily?: (number | null)[];
 }
 
 /**
