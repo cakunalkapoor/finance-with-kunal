@@ -11,6 +11,22 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number; style?: Reac
   mail: Mail,
 };
 
+function renderSummaryText(text: string) {
+  return text.split("**").map((part, index) =>
+    index % 2 === 1 ? (
+      <strong
+        key={`${part}-${index}`}
+        className="font-semibold"
+        style={{ color: "var(--color-text-primary)" }}
+      >
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function ProfileHero({ data }: { data: ProfileData }) {
   const [photoFailed, setPhotoFailed] = useState(false);
   const initials = data.name
@@ -133,7 +149,7 @@ export default function ProfileHero({ data }: { data: ProfileData }) {
             className="text-sm leading-relaxed"
             style={{ color: "var(--color-text-secondary)" }}
           >
-            {para}
+            {renderSummaryText(para)}
           </p>
         ))}
       </div>
