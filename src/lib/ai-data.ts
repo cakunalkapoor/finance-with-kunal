@@ -33,14 +33,15 @@ import type {
  */
 
 /** Date the curated (non-quote) figures on /ai were last reviewed. */
-export const AI_DATA_ASOF = "Aug 17, 2026";
+export const AI_DATA_ASOF = "Aug 22, 2026";
 
 /* ── Company AI revenue ─────────────────────────────────────────────────────
-   Note how few of these are audited segment figures. Microsoft and Amazon give
-   a run rate on the call and nothing in the 10-Q ties to it; Google Cloud and
-   NVIDIA Data Center ARE reported segments; Anthropic and OpenAI are private.
-   The `detail` line says which is which, because a $37B run rate and a $75.2B
-   reported segment are not the same class of number. */
+   Note how few of these are reported segment figures. Amazon gives a run rate
+   on the call and nothing in the 10-Q ties to it; TSMC gives a company-defined
+   revenue share rather than a standalone segment; Google Cloud and NVIDIA Data
+   Center ARE reported segments; Anthropic and OpenAI are private. The `detail`
+   line says which is which, because a run rate, a revenue mix and a reported
+   segment are not the same class of number. */
 export const AI_REVENUE: AIFigure[] = [
   {
     id: "nvda-dc",
@@ -91,6 +92,17 @@ export const AI_REVENUE: AIFigure[] = [
     source: "Alphabet Q2 2026",
     sourceUrl: "https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html",
     asOf: "2026-07-22",
+  },
+  {
+    id: "tsmc-ai-accelerators",
+    label: "TSMC AI accelerator revenue",
+    value: "High-teens %",
+    detail:
+      "Management-reported share of FY2025 total revenue · GPUs, ASICs and HBM controllers for data-center training and inference; CPUs excluded · not a standalone segment",
+    source: "TSMC FY2025 results call",
+    sourceUrl:
+      "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-01/51d09df96cd89ac19d65af39032b038dc2896a24/TSMC%204Q25%20Transcript.pdf",
+    asOf: "2026-01-15",
   },
   {
     /* Previously "~$25B" cited to a Forbes CONTRIBUTOR post that does not
@@ -271,9 +283,10 @@ export const AI_CHIPS: AIFigure[] = [
     id: "tsmc",
     label: "TSMC July revenue",
     value: "+44.7%",
-    detail: "Year on year, monthly revenue disclosure — the cleanest high-frequency read on AI silicon",
-    source: "Reuters via Yahoo Finance",
-    sourceUrl: "https://finance.yahoo.com/technology/ai/articles/tsmc-july-2026-revenue-jumps-110802277.html",
+    detail:
+      "Year on year, unaudited consolidated monthly revenue · a useful but not AI-specific high-frequency foundry-demand proxy",
+    source: "TSMC monthly revenue",
+    sourceUrl: "https://investor.tsmc.com/english/monthly-revenue/2026",
     asOf: "2026-08-10",
   },
   {

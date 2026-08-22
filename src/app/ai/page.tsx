@@ -113,13 +113,13 @@ export default function AIPage() {
                 figures={AI_REVENUE}
                 columns={2}
               >
-                Only NVIDIA Data Center and Google Cloud are reported segments an auditor signed
-                off. Amazon&rsquo;s AI &ldquo;run rate&rdquo; is a figure management chose to say on
-                a call, with no reconciliation in the filings; Anthropic and OpenAI are private and
-                disclose what they wish. Run rate annualises a recent period — it is not revenue
-                earned. Microsoft used to sit here on a $37B AI run rate and no longer does: it
-                stopped disclosing an AI-specific figure after FY26 Q2, which is why the largest
-                seller of enterprise AI is absent from this card.
+                NVIDIA Data Center and Google Cloud are reported segments, though neither is
+                AI-only. TSMC&rsquo;s high-teens share is management&rsquo;s company-defined
+                accelerator revenue mix — GPUs, ASICs and HBM controllers, excluding CPUs — not a
+                standalone segment. Amazon&rsquo;s run rate is call commentary; Anthropic and OpenAI
+                are private. Run rate annualises a recent period — it is not revenue earned.
+                Microsoft stopped disclosing an AI-specific figure after FY26 Q2, which is why it
+                is absent.
               </AIFigureSection>
             </Reveal>
 
@@ -156,9 +156,9 @@ export default function AIPage() {
                 Memory, not logic, is the tightest link in the chain right now: HBM sells out on
                 multi-quarter agreements, which is what a 76% operating margin at SK hynix is
                 telling you. Figures reported in won and euros are shown in dollars at the rate on
-                the reporting date, with the original alongside. TSMC&rsquo;s monthly revenue disclosure is the highest-frequency
-                public read on AI silicon demand anywhere — it lands weeks before the quarterly
-                numbers.
+                the reporting date, with the original alongside. TSMC&rsquo;s monthly disclosure is
+                a useful high-frequency read on foundry demand, but it covers the whole company
+                and is not an AI revenue breakout.
               </AIFigureSection>
             </Reveal>
           </div>
