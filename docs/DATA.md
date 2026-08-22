@@ -130,6 +130,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 |--------|----------------|
 | `EQUITY_INDICES` | The 12 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
 | `BOND_YIELDS` | 10Y govt bonds for US, DE, GB, CA, JP, IN, KR, AU, ZA with daily/1M/1Y moves and a 12-point trend |
+| `POLICY_RATES` | Latest headline central-bank policy rate for the same nine bond-table countries; no history by design |
 | `YIELD_CURVES` | US and Canada long-end curves — two tenors with 36-month history plus the spread in bp. **Regenerated wholesale** by `patch-site-data.mjs`; hand edits are overwritten |
 | `COMMODITIES` | Brent, WTI, Gold, Silver, Copper, Aluminum, Iron Ore, Soybeans, Natural Gas (9 total) |
 | `CRYPTO` | Bitcoin, Ethereum, Solana, BNB spot prices (typed `CryptoAsset[]`, not `Commodity[]`) |

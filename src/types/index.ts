@@ -62,6 +62,18 @@ export interface BondYield {
   cadence: "daily" | "monthly";
 }
 
+/** Latest central-bank benchmark setting for a country. Policy-rate history is
+ *  intentionally excluded: the markets table uses this only as context for the
+ *  sovereign yield shown beside it. */
+export interface PolicyRate {
+  country: string;
+  rate: number;
+  name: string;
+  /** Latest official observation or decision confirmation (YYYY-MM-DD). */
+  asOf: string;
+  source: string;
+}
+
 export interface Commodity {
   symbol: string;
   name: string;

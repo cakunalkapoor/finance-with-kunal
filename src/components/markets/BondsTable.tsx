@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { BOND_YIELDS, DATA_UPDATED_AT } from "@/lib/site-data";
+import { BOND_YIELDS, DATA_UPDATED_AT, POLICY_RATES } from "@/lib/site-data";
 import { INVESTING_BOND_URL } from "@/lib/external-links";
 import {
   monthlyPointLabel,
@@ -24,6 +24,9 @@ import { ChangeStack } from "@/components/markets/StatStack";
 // anything older than a normal monthly publication cycle is called out.
 const STALE_AFTER_DAYS = 45;
 const REFRESHED_AT = new Date(DATA_UPDATED_AT).getTime();
+const POLICY_RATE_BY_COUNTRY = new Map(
+  POLICY_RATES.map((policyRate) => [policyRate.country, policyRate]),
+);
 
 /* Every row used to read "<maturity> Treasury", which is only true of the US
    and Korea. A Bund is not a Treasury and neither is a Gilt or a JGB — on a
@@ -75,17 +78,18 @@ export default function BondsTable() {
     <SciFiCard>
       <CardHeader
         title="Government Bond Yields"
-        subtitle="10-Year Benchmark Rates · each row shows its observation date; ⚠ marks a monthly series still awaiting its next print · click a country for the full curve on Investing.com"
+        subtitle="10-Year sovereign yields + current central-bank policy rates · yield dates are shown per row; ⚠ marks a monthly series still awaiting its next print · click a country for the full curve on Investing.com"
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 440 }}>
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 600 }}>
           {/* Sized to sit two-up. 1D/1M/1Y move into one grouped cell rather
               than being dropped — see StatStack. */}
           <colgroup>
-            <col style={{ width: "31%" }} />
-            <col style={{ width: "20%" }} />
-            <col style={{ width: "17%" }} />
-            <col style={{ width: "32%" }} />
+            <col style={{ width: "26%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "16%" }} />
+            <col style={{ width: "16%" }} />
+            <col style={{ width: "27%" }} />
           </colgroup>
           <thead>
             <tr
@@ -94,10 +98,10 @@ export default function BondsTable() {
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
-              {["Country", "Yield", "Move"].map((h) => (
+              {["Country", "10Y Yield", "Policy Rate", "Move"].map((h) => (
                 <th
                   key={h}
-                  className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase"
+                  className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase whitespace-nowrap"
                   style={{
                     color: "var(--color-text-muted)",
                     fontFamily: FONT_MONO,
@@ -151,6 +155,7 @@ export default function BondsTable() {
           <tbody>
             {BOND_YIELDS.map((bond, i) => {
               const windowed = monthlyHorizonSlice(bond.trend, bond.asOf, view);
+              const policyRate = POLICY_RATE_BY_COUNTRY.get(bond.country);
               return (
               <tr
                 key={bond.country}
@@ -221,6 +226,24 @@ export default function BondsTable() {
                       </div>
                     );
                   })()}
+                </td>
+
+                <td className="px-4 py-3">
+                  <span
+                    className="font-bold"
+                    title={
+                      policyRate
+                        ? `${policyRate.name} · ${policyRate.source} · as of ${formatAsOf(policyRate.asOf)}`
+                        : undefined
+                    }
+                    style={{
+                      fontFamily: FONT_MONO,
+                      color: "var(--color-neon-purple)",
+                      fontSize: "13px",
+                    }}
+                  >
+                    {policyRate ? `${policyRate.rate.toFixed(2)}%` : "—"}
+                  </span>
                 </td>
 
                 <td className="px-4 py-3">

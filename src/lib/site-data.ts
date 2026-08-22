@@ -1,6 +1,7 @@
 import type {
   IndexQuote,
   BondYield,
+  PolicyRate,
   Commodity,
   CryptoAsset,
   ETF,
@@ -228,6 +229,80 @@ export const EQUITY_INDICES: IndexQuote[] = [
     realizedVol: 41.03,
     daily: [44225.91, 44928.76, 45120.72, 45518.07, 46021.48, 45811.01],
     dailyDates: ["2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14"],
+  },
+];
+
+// POLICY_RATES — latest official central-bank benchmark setting for each
+// country in BOND_YIELDS. These are deliberately headline-only snapshots: the
+// markets table needs the policy anchor beside the 10Y yield, not another
+// history chart. Verify against the named central bank after each decision.
+//
+// The US uses the effective federal funds rate so the table can show one
+// percentage (rather than inventing a representative point inside the FOMC's
+// target range) and stays consistent with the US economy dashboard.
+export const POLICY_RATES: PolicyRate[] = [
+  {
+    country: "United States",
+    rate: 3.63,
+    name: "Effective federal funds rate",
+    asOf: "2026-08-17",
+    source: "Federal Reserve via FRED (DFF)",
+  },
+  {
+    country: "Germany",
+    rate: 2.25,
+    name: "ECB deposit facility rate",
+    asOf: "2026-07-23",
+    source: "European Central Bank",
+  },
+  {
+    country: "United Kingdom",
+    rate: 3.75,
+    name: "Bank Rate",
+    asOf: "2026-07-30",
+    source: "Bank of England",
+  },
+  {
+    country: "Canada",
+    rate: 2.25,
+    name: "Target for the overnight rate",
+    asOf: "2026-07-15",
+    source: "Bank of Canada",
+  },
+  {
+    country: "Japan",
+    rate: 1,
+    name: "Uncollateralized overnight call rate target",
+    asOf: "2026-07-31",
+    source: "Bank of Japan",
+  },
+  {
+    country: "India",
+    rate: 5.25,
+    name: "Policy repo rate",
+    asOf: "2026-07-21",
+    source: "Reserve Bank of India",
+  },
+  {
+    country: "South Korea",
+    rate: 2.75,
+    name: "Base Rate",
+    asOf: "2026-07-16",
+    source: "Bank of Korea",
+  },
+  {
+    country: "Australia",
+    rate: 4.35,
+    name: "Cash rate target",
+    asOf: "2026-08-12",
+    source: "Reserve Bank of Australia",
+  },
+  {
+    country: "South Africa",
+    rate: 7,
+    name: "SARB policy rate",
+    asOf: "2026-07-23",
+    source: "South African Reserve Bank",
   },
 ];
 

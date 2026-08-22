@@ -43,6 +43,41 @@ const bonds = [...block.matchAll(
 
 if (bonds.length !== 9) problems.push(`expected 9 bonds, found ${bonds.length}`);
 
+// The table now pairs each sovereign yield with one current central-bank
+// policy rate. Keep this coverage check in the same gate so adding/removing a
+// bond row cannot silently leave a blank or mismatched policy-rate cell.
+const policyBlock = site.match(/export const POLICY_RATES[\s\S]*?\n\];/)?.[0];
+const policyRates = policyBlock ? [...policyBlock.matchAll(
+  /country: "([^"]+)"[\s\S]*?rate: (-?[\d.]+)[\s\S]*?name: "([^"]+)"[\s\S]*?asOf: "([^"]+)"[\s\S]*?source: "([^"]+)"/g
+)].map(m => ({ country: m[1], rate: parseFloat(m[2]), name: m[3], asOf: m[4], source: m[5] })) : [];
+
+if (!policyBlock) problems.push("could not locate POLICY_RATES in site-data.ts");
+if (policyRates.length !== bonds.length) {
+  problems.push(`expected ${bonds.length} policy rates, found ${policyRates.length}`);
+}
+
+for (const b of bonds) {
+  const matches = policyRates.filter((rate) => rate.country === b.country);
+  if (matches.length !== 1) {
+    problems.push(`${b.country}: expected one policy rate, found ${matches.length}`);
+  }
+}
+
+for (const rate of policyRates) {
+  if (!bonds.some((b) => b.country === rate.country)) {
+    problems.push(`${rate.country}: policy rate has no matching BOND_YIELDS row`);
+  }
+  if (!Number.isFinite(rate.rate) || rate.rate < PLAUSIBLE.min || rate.rate > PLAUSIBLE.max) {
+    problems.push(`${rate.country}: implausible policy rate ${rate.rate}%`);
+  }
+  if (!rate.name || !rate.source) {
+    problems.push(`${rate.country}: policy rate is missing its official name or source`);
+  }
+  if (!Number.isFinite(Date.parse(`${rate.asOf}T00:00:00Z`))) {
+    problems.push(`${rate.country}: invalid policy-rate asOf date "${rate.asOf}"`);
+  }
+}
+
 const updatedAt = /DATA_UPDATED_AT = "([^"]+)"/.exec(site)?.[1];
 const refAt = Date.parse(updatedAt ?? "");
 const ageDays = (asOf) => Math.round((refAt - Date.parse(`${asOf}T00:00:00Z`)) / 86_400_000);
@@ -116,4 +151,4 @@ if (problems.length) {
   for (const p of problems) console.log(`  - ${p}`);
   process.exit(1);
 }
-console.log(`\n✓ all ${bonds.length} bonds valid — ${bonds.filter(b => b.cadence === "daily").length} daily`);
+console.log(`\n✓ all ${bonds.length} bonds valid — ${bonds.filter(b => b.cadence === "daily").length} daily · ${policyRates.length} policy rates`);
