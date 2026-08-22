@@ -25,9 +25,11 @@ export default function EconomicChart({ indicator }: Props) {
 
   const filtered = filterByHorizon(indicator.timeSeries, horizon);
   const isUp = indicator.direction === "up";
-  const goodColor = indicator.isPositiveGood
-    ? isUp ? c.up : c.down
-    : isUp ? c.down : c.up;
+  const goodColor = indicator.direction === "neutral"
+    ? c.axisLabel
+    : indicator.isPositiveGood
+      ? isUp ? c.up : c.down
+      : isUp ? c.down : c.up;
   const displayValue = (value: number) =>
     formatEconomicValue(value, indicator.category, indicator.unit);
 

@@ -113,7 +113,8 @@ def main():
 //
 // 11 indices, {total} constituents. Each ticker carries:
 //   - value:  published index weight (%), renormalised over the names carried
-//   - change: WEEKLY change % (last close vs ~5 trading days ago), or null
+//   - change: WEEKLY change % (last close vs the close on or before 7 calendar
+//             days earlier), or null
 //
 // Membership and weights come from data/index-constituents.xlsx; sectors are
 // Yahoo's, mapped to one 11-sector taxonomy shared by every index.

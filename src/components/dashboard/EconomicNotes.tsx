@@ -9,7 +9,7 @@ function generateNote(ind: (typeof ECONOMIC_INDICATORS)[0]): string {
 
   if (direction === "up") {
     if (isPositiveGood) {
-      return `${name} rose to ${display(value)} ${unit} in ${period}, up from ${display(previousValue)} — signalling continued expansion.`;
+      return `${name} improved to ${display(value)} ${unit} in ${period}, up from ${display(previousValue)} — a firmer reading than before.`;
     } else {
       return `${name} climbed to ${display(value)} ${unit} in ${period}, up ${delta} from ${display(previousValue)} — a headwind to watch.`;
     }
@@ -25,7 +25,7 @@ function generateNote(ind: (typeof ECONOMIC_INDICATORS)[0]): string {
 
 export default function EconomicNotes({
   filter,
-  subtitle = "Auto-generated macro notes · Jul 2026",
+  subtitle = "Auto-generated macro notes · latest available data",
 }: {
   filter?: (ind: (typeof ECONOMIC_INDICATORS)[0]) => boolean;
   subtitle?: string;

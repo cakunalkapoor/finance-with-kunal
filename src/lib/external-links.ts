@@ -27,6 +27,7 @@ export const INVESTING_INDEX_URL: Record<string, string> = {
   "^HSI":      "https://www.investing.com/indices/hang-sen-40",
   "^N225":     "https://www.investing.com/indices/japan-ni225",
   "^NSEI":     "https://www.investing.com/indices/s-p-cnx-nifty",
+  "^JKSE":     "https://www.investing.com/indices/idx-composite",
   "^GDAXI":    "https://www.investing.com/indices/germany-30",
   "^FTSE":     "https://www.investing.com/indices/uk-100",
   "^FCHI":     "https://www.investing.com/indices/france-40",

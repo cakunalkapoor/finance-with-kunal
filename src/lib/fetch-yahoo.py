@@ -11,13 +11,13 @@ and derive everything from the close column:
 
   - value          → latest close
   - dailyChange    → latest vs prior-day close
-  - weekChange     → latest vs ~5 trading days back
+  - weekChange     → latest vs the close on or before 7 calendar days earlier
   - monthChange    → latest vs ~21 trading days back
   - ytdChange      → latest vs first 2026 close
   - high52w / low52w → over the trailing 1y (252 trading days) only
   - sparkline      → 156 evenly-spaced points across the trailing ~3y window
-  - daily/dailyDates → the last 6 daily closes and their sessions, for the 1W
-                     chart window (a 1W slice of a weekly sparkline is one point)
+  - daily/dailyDates → closes from that weekly anchor through the latest session,
+                     for the 1W chart window
 
 Prices are stored via `q()`, which scales decimals to magnitude — a flat 2dp
 turns EURUSD into a three-value staircase and corrupts any return taken off it.
@@ -47,6 +47,7 @@ INDICES = [
     ("hsi",    "^HSI",      "Hang Seng",          "Hong Kong",   "🇭🇰"),
     ("nikkei", "^N225",     "Nikkei 225",         "Japan",       "🇯🇵"),
     ("nifty",  "^NSEI",     "NIFTY 50",           "India",       "🇮🇳"),
+    ("jkse",   "^JKSE",     "IDX Composite",      "Indonesia",   "🇮🇩"),
     ("dax",    "^GDAXI",    "DAX",                "Germany",     "🇩🇪"),
     ("ftse",   "^FTSE",     "FTSE 100",           "UK",          "🇬🇧"),
     ("cac",    "^FCHI",     "CAC 40",             "France",      "🇫🇷"),
@@ -54,6 +55,12 @@ INDICES = [
     ("kospi",  "^KS11",     "KOSPI",              "South Korea", "🇰🇷"),
     ("twii",   "^TWII",     "TAIEX",              "Taiwan",      "🇹🇼"),
 ]
+
+# /ai's comparison universe remains the established 12-index set. The IDX
+# Composite was requested for the Markets table; keeping this list explicit
+# prevents a Markets-only addition from silently expanding the /ai dataset and
+# its currency-conversion requirements on the next partial refresh.
+AI_INDICES = [row for row in INDICES if row[0] != "jkse"]
 
 # Realized volatility is computed per-index inside derive() from each index's
 # trailing 30-day daily closes. No separate VOL fetch list needed — free APIs
@@ -237,6 +244,35 @@ def pct(curr, prev):
     return round((float(curr) - float(prev)) / float(prev) * 100, 2)
 
 
+def week_ending_friday(history, collapse_weekend=False):
+    """Anchor continuously quoted series to the site's Friday cutoff.
+
+    Crypto trades seven days a week, while a few Yahoo FX pairs stamp Friday's
+    final session at Saturday midnight. The weekly briefing must not leak a
+    Saturday crypto move into a Friday-ended report, and it must not drop a real
+    Friday FX close just because Yahoo labelled it Saturday. Collapse weekend FX
+    stamps back to Friday, then retain weekday observations through the latest
+    completed Friday. That leaves six points from prior Friday to current Friday,
+    so `derive()` keeps its 1W chart and printed return on the same window.
+    """
+    if history.empty:
+        return history
+
+    out = history.copy()
+    if collapse_weekend:
+        shifts = pd.to_timedelta(
+            [max(0, int(day) - 4) for day in out.index.dayofweek], unit="D"
+        )
+        out.index = out.index - shifts
+        # A provider may emit both a Friday candle and a Saturday-stamped final
+        # candle. The latter is the completed Friday session and must win.
+        out = out.groupby(level=0).last().sort_index()
+
+    latest = out.index[-1]
+    cutoff = latest.normalize() - pd.Timedelta(days=(latest.weekday() - 4) % 7)
+    return out[(out.index.normalize() <= cutoff) & (out.index.dayofweek <= 4)]
+
+
 def derive(history, year=None):
     """history: DataFrame with at minimum a Close column.
 
@@ -256,9 +292,17 @@ def derive(history, year=None):
         idx = len(closes) - 1 - n
         return closes.iloc[idx] if 0 <= idx < len(closes) else None
 
-    prev_close   = at_back(1)
-    wk_ago       = at_back(5)
-    month_ago    = at_back(21)
+    prev_close = at_back(1)
+    month_ago = at_back(21)
+
+    # A weekly close is Friday-to-Friday, not "five rows back". Five rows is
+    # only equivalent in a holiday-free week; Korea's Aug 17, 2026 closure made
+    # the old calculation compare Thursday Aug 13 with Friday Aug 21 and report
+    # +1.46% where the actual Aug 14→21 weekly move was -0.93%.
+    week_target = closes.index[-1] - pd.Timedelta(days=7)
+    week_candidates = closes[closes.index <= week_target]
+    wk_ago = week_candidates.iloc[-1] if len(week_candidates) else closes.iloc[0]
+    week_start = week_candidates.index[-1] if len(week_candidates) else closes.index[0]
 
     # YTD anchor — first close in `year`
     closes_idx = closes.index
@@ -302,17 +346,19 @@ def derive(history, year=None):
         # sparkline — one week of a weekly series is a single point and renders
         # no line at all.
         #
-        # SIX points, not five, and that matters: index 0 is `at_back(5)`, the
-        # very close `weekChange` measures from, so the first→last move on the
-        # 1W chart equals the 1W percentage printed beside it. Emitting five
-        # would silently draw four sessions of a five-session number.
+        # The window begins at the close `weekChange` measures from, so its
+        # first→last move equals the 1W percentage printed beside it. Most
+        # weeks contain six points (prior Friday plus five sessions); holiday
+        # weeks legitimately contain fewer.
         #
         # Real dates ride along because the sparkline's labels are derived by
         # counting WEEKS back from the last point (see chart-window.ts). That
         # maths is right for a weekly series and nonsense for a daily one — it
         # would stamp all six points with the same month.
-        "daily":        [q(v) for v in closes.tail(6)],
-        "dailyDates":   [ts.strftime("%Y-%m-%d") for ts in closes.tail(6).index],
+        "daily":        [q(v) for v in closes[closes.index >= week_start]],
+        "dailyDates":   [
+            ts.strftime("%Y-%m-%d") for ts in closes[closes.index >= week_start].index
+        ],
         "realizedVol":  realized_vol,
     }
 
@@ -367,6 +413,7 @@ def fetch_fx(currencies):
         if err or hist is None:
             print(f"✗ {err}")
             continue
+        hist = week_ending_friday(hist, collapse_weekend=True)
         closes = _naive_daily(hist["Close"].dropna())
         out[cur] = (closes, op)
         print(f"✓ {len(closes)} days, latest {closes.iloc[-1]:.4f}")
@@ -648,6 +695,7 @@ def main():
         if err or hist is None:
             print(f"✗ {err}")
             continue
+        hist = week_ending_friday(hist, collapse_weekend=True)
         d = derive(hist)
         if d is None:
             print("✗ no closes")
@@ -666,6 +714,7 @@ def main():
         if err or hist is None:
             print(f"✗ {err}")
             continue
+        hist = week_ending_friday(hist)
         d = derive(hist)
         if d is None:
             print("✗ no closes")
@@ -774,7 +823,7 @@ def main():
     # because those rows are patched into site-data at 156/3y and the markets
     # tables depend on that length.
     print()
-    for key, sym, name, region, flag in (INDICES if grid is not None else []):
+    for key, sym, name, region, flag in (AI_INDICES if grid is not None else []):
         print(f"  {sym:12} {name:22} ", end="", flush=True)
         hist, err = fetch_one(sym)
         if err or hist is None:
@@ -838,7 +887,7 @@ def main():
             ),
         }, f, indent=2)
     print(f"\n✓ wrote {OUT.relative_to(PROJECT)}")
-    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs · {len(ai_out)}/{len(AI_STOCKS)} AI stocks · {len(ai_indices_out)}/{len(INDICES)} AI index series")
+    print(f"  {len(indices_out)}/{len(INDICES)} indices · {len(bonds_out)}/{len(BOND_RELIABLE)} bonds · {len(commodities_out)}/{len(COMMODITIES)} commodities · {len(forex_out)}/{len(FOREX)} forex · {len(crypto_out)}/{len(CRYPTO)} crypto · {len(etfs_out)}/{len(ETFS)} ETFs · {len(ai_out)}/{len(AI_STOCKS)} AI stocks · {len(ai_indices_out)}/{len(AI_INDICES)} AI index series")
 
 
 if __name__ == "__main__":

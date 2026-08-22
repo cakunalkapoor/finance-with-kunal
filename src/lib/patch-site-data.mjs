@@ -222,19 +222,11 @@ function considerBond(b, fallbackCadence) {
   // one carrying `source`/`cadence` labels for the UI.
   if (prev && prev.asOf > b.asOf) return;
 
-  /* ...but winning the VALUE must not cost us HISTORY. bonds-data.json carries
-     12-point trends for every country; the BoC and FRED dumps carry 36. Since
-     it is applied last and ties on asOf, its 12 points used to overwrite the 36
-     — and the sparkline column offers only the windows EVERY row can fill, so
-     one short row silently capped the whole table at 3M/6M/YTD.
-
-     Eight countries were rescued by accident: the top-up below refills anything
-     short from FRED's monthly series. Canada has no FRED series (BoC Valet is
-     its source), so nothing refilled it and it sat at 12 points, holding 2Y and
-     3Y off the table for all nine rows.
-
-     Keeping whichever trend is longer fixes it at the source. This can only
-     ever retain more real history — it never fabricates a point. */
+  /* Keep the trend from the source that won the headline value. A longer trend
+     from an older candidate may have more points but ends at the wrong yield;
+     that made four sparklines disagree with their own headline. The alignment-
+     aware top-up below prepends older monthly history without replacing this
+     source's current endpoint. */
   const prevTrend = Array.isArray(prev?.trend) ? prev.trend : [];
   const nextTrend = Array.isArray(b.trend) ? b.trend : [];
 
@@ -247,17 +239,25 @@ function considerBond(b, fallbackCadence) {
     dailyMove: b.dailyMove,
     oneMonthMove: b.oneMonthMove,
     oneYearMove: b.oneYearMove,
-    trend: nextTrend.length >= prevTrend.length ? nextTrend : prevTrend,
+    trend: nextTrend.length ? nextTrend : prevTrend,
   };
 }
 for (const b of Object.values(fred.bonds || {})) {
-  if (b?.country && Array.isArray(b.trend)) {
+  if (b?.country && !b.curveOnly && Array.isArray(b.trend)) {
     monthlyTrend[b.country] = b.trend;
     monthlyTrendAsOf[b.country] = b.asOf;
   }
   considerBond(b, "monthly");
 }
-for (const b of Object.values(boc.bonds || {}))   considerBond(b, "daily");
+for (const b of Object.values(boc.bonds || {})) {
+  // Canada has no FRED counterpart; retain BoC's 36-point monthly history so
+  // the shorter cross-provider trend can be extended without losing windows.
+  if (b?.country && !b.curveOnly && Array.isArray(b.trend)) {
+    monthlyTrend[b.country] = b.trend;
+    monthlyTrendAsOf[b.country] = b.asOf;
+  }
+  considerBond(b, "daily");
+}
 for (const b of Object.values(bondsDump.bonds || {})) considerBond(b, "daily");
 
 // Read-and-verify overlay (src/lib/bonds-manual.json) — the UK, India, South
@@ -336,6 +336,12 @@ for (const b of Object.values(bondCandidates)) {
     const older = monthly.slice(0, Math.max(0, monthly.length - have.length + gap));
     const need = BOND_TREND_POINTS - have.length;
     b.trend = [...older.slice(-need), ...have].slice(-BOND_TREND_POINTS);
+  }
+  // The type contract and chart both treat the last point as the current
+  // headline. Pin it exactly so provider rounding cannot create a visible
+  // endpoint mismatch, and let validate-bonds.mjs enforce the invariant.
+  if (Array.isArray(b.trend) && b.trend.length && Number.isFinite(b.value)) {
+    b.trend[b.trend.length - 1] = b.value;
   }
 }
 
@@ -442,7 +448,7 @@ function patchEconomicIndicator(id, macroRec, { weekly = false } = {}) {
     previousValue: macroRec.previousValue,
     change: macroRec.change,
     direction: `"${macroRec.direction}"`,
-    period: `"${asOfToPeriod(macroRec.asOf)}"`,
+    period: `"${weekly ? asOfToFullDate(macroRec.asOf) : asOfToPeriod(macroRec.asOf)}"`,
   }, tsLiteral(timeSeries));
 }
 // Yahoo-backed energy cards (Brent, NatGas): live weekly value + sparkline history.
@@ -455,7 +461,10 @@ function patchCommodityIndicator(id, rec) {
   return patchIndicatorObject(id, {
     value: rec.value,
     previousValue: prev,
-    change: +wk.toFixed(2),
+    // EconomicChart labels `change` in the card's price unit. Store the
+    // absolute move here; the percentage remains available in the prose and
+    // the dedicated commodities table.
+    change: +(rec.value - prev).toFixed(3),
     direction: `"${wk >= 0 ? "up" : "down"}"`,
     period: `"${asOfToFullDate(rec.asOf)}"`,
   }, weeklyTsFromSparkline(rec.sparkline, rec.asOf));

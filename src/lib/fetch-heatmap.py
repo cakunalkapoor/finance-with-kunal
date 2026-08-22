@@ -8,7 +8,8 @@ Writes: src/lib/heatmap-data.json
 The constituent lists and their weights used to be hardcoded here as one dict
 per index. They now come from the published index membership workbook via
 build-catalogue.py, so this script is purely the price leg: batch the symbols
-per index, take last close vs ~5 trading days back.
+per index, then compare the latest close with the close on or before the same
+weekday one calendar week earlier.
 
 Prices come from the batched chart endpoint, which is not subject to the harsh
 per-symbol rate limit that fetch-sectors.py has to work around.
@@ -43,6 +44,15 @@ OUT = PROJECT / "src" / "lib" / "heatmap-data.json"
 SPLIT_SUSPECT_PCT = 30.0
 
 
+def weekly_anchor(closes):
+    """Close on or before seven calendar days prior to the latest close."""
+    target = closes.index[-1] - pd.Timedelta(days=7)
+    candidates = closes[closes.index <= target]
+    if len(candidates):
+        return candidates.index[-1]
+    return closes.index[0]
+
+
 def correct_for_splits(out):
     """Re-derive weekChange for any symbol whose move looks like a split."""
     suspects = [
@@ -66,7 +76,8 @@ def correct_for_splits(out):
         # index, which cannot be compared directly. Strip both to naive.
         idx = closes.index
         idx_naive = idx.tz_localize(None) if getattr(idx, "tz", None) else idx
-        window_start = idx_naive[max(0, len(closes) - 1 - 5)]
+        anchor = weekly_anchor(closes)
+        window_start = anchor.tz_localize(None) if getattr(anchor, "tzinfo", None) else anchor
         adjusted = closes.copy()
         applied = []
         for when, ratio in splits.items():
@@ -78,7 +89,7 @@ def correct_for_splits(out):
         if not applied:
             continue
         last = float(adjusted.iloc[-1])
-        wk_ago = float(adjusted.iloc[max(0, len(adjusted) - 1 - 5)])
+        wk_ago = float(adjusted.loc[anchor])
         before = out[sym]["weekChange"]
         out[sym]["weekChange"] = round(
             ((last - wk_ago) / wk_ago * 100) if wk_ago else 0.0, 2
@@ -103,6 +114,7 @@ def fetch_batch(symbols, label):
         threads=True,
     )
     out = {}
+    missing_final_close = []
     for sym in symbols:
         try:
             df = data[sym] if isinstance(data.columns, pd.MultiIndex) else data
@@ -111,7 +123,7 @@ def fetch_batch(symbols, label):
                 out[sym] = {"ok": False}
                 continue
             last = float(closes.iloc[-1])
-            wk_ago = float(closes.iloc[max(0, len(closes) - 1 - 5)])
+            wk_ago = float(closes.loc[weekly_anchor(closes)])
             out[sym] = {
                 "ok": True,
                 "price": round(last, 2),
@@ -121,8 +133,68 @@ def fetch_batch(symbols, label):
                 # re-downloading the whole batch.
                 "_closes": closes,
             }
+            # Yahoo sometimes publishes the final session's OHLC/volume row
+            # before it fills that row's daily Close. Dropping NaNs then makes
+            # every constituent in an otherwise-open market look one day stale.
+            # Remember only rows with actual trading activity; an hourly batch
+            # below can recover the completed session's last traded price.
+            populated = df.dropna(how="all")
+            if len(populated) and populated.index[-1] > closes.index[-1]:
+                latest_row = populated.iloc[-1]
+                activity = latest_row.reindex(["Open", "High", "Low", "Volume"])
+                if activity.notna().any():
+                    missing_final_close.append(sym)
         except Exception:
             out[sym] = {"ok": False}
+
+    if missing_final_close:
+        try:
+            hourly = yf.download(
+                tickers=" ".join(missing_final_close),
+                period="5d",
+                interval="1h",
+                group_by="ticker",
+                auto_adjust=False,
+                progress=False,
+                threads=True,
+            )
+            recovered = 0
+            for sym in missing_final_close:
+                try:
+                    hdf = hourly[sym] if isinstance(hourly.columns, pd.MultiIndex) else hourly
+                    hcloses = hdf["Close"].dropna()
+                    if not len(hcloses):
+                        continue
+                    as_of = hcloses.index[-1].strftime("%Y-%m-%d")
+                    if as_of <= out[sym]["asOf"]:
+                        continue
+                    closes = out[sym]["_closes"].copy()
+                    closes.loc[pd.Timestamp(as_of)] = float(hcloses.iloc[-1])
+                    closes = closes.sort_index()
+                    last = float(closes.iloc[-1])
+                    wk_ago = float(closes.loc[weekly_anchor(closes)])
+                    out[sym].update({
+                        "price": round(last, 2),
+                        "weekChange": round(
+                            ((last - wk_ago) / wk_ago * 100) if wk_ago else 0.0,
+                            2,
+                        ),
+                        "asOf": as_of,
+                        "_closes": closes,
+                    })
+                    recovered += 1
+                except Exception:
+                    continue
+            if recovered:
+                print(
+                    f"  {label}: recovered {recovered} final close(s) from hourly bars",
+                    flush=True,
+                )
+        except Exception:
+            # Keep the latest completed daily close rather than failing the
+            # whole index when Yahoo's optional hourly endpoint is unavailable.
+            pass
+
     fixed = correct_for_splits(out)
     if fixed:
         print(f"  {label}: split-adjusted {fixed} ticker(s)", flush=True)

@@ -74,7 +74,7 @@ euro-area statistics. FRED remains fine for the ECB policy rates (`ECBDFR`,
   original mock dataset, and no fetcher ever wrote a `pe` field. They were also undated, sitting
   beside a price that refreshes weekly, and drove a "Valuation" column that computed a
   variance-vs-10-year-average from them. Yahoo publishes **no** P/E for an index — verified across
-  all twelve symbols, where `trailingPE`, `forwardPE`, `priceToBook` and `trailingEps` all come
+  all thirteen symbols, where `trailingPE`, `forwardPE`, `priceToBook` and `trailingEps` all come
   back empty — so there was nothing to wire up either. The fields, the 22 values and the column
   are gone; the equity table now shows 30-day realized volatility there, which IS computed from
   real closes. Don't reinstate index multiples without a provider that actually publishes them.
@@ -128,7 +128,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 
 | Export | What it powers |
 |--------|----------------|
-| `EQUITY_INDICES` | The 12 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
+| `EQUITY_INDICES` | The 13 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
 | `BOND_YIELDS` | 10Y govt bonds for US, DE, GB, CA, JP, IN, KR, AU, ZA with daily/1M/1Y moves and a 12-point trend |
 | `POLICY_RATES` | Latest headline central-bank policy rate for the same nine bond-table countries; no history by design |
 | `YIELD_CURVES` | US and Canada long-end curves — two tenors with 36-month history plus the spread in bp. **Regenerated wholesale** by `patch-site-data.mjs`; hand edits are overwritten |

@@ -41,6 +41,13 @@ const bonds = [...block.matchAll(
   /country: "([^"]+)"[\s\S]*?asOf: "([^"]+)"[\s\S]*?source: "([^"]+)"[\s\S]*?cadence: "([^"]+)"[\s\S]*?yield: (-?[\d.]+)/g
 )].map(m => ({ country: m[1], asOf: m[2], source: m[3], cadence: m[4], yield: parseFloat(m[5]) }));
 
+const trendEnds = new Map([...block.matchAll(
+  /country: "([^"]+)"[\s\S]*?yield: (-?[\d.]+)[\s\S]*?trend: \[([^\]]*)\]/g
+)].map((m) => {
+  const values = m[3].split(",").map(Number).filter(Number.isFinite);
+  return [m[1], values.at(-1)];
+}));
+
 if (bonds.length !== 9) problems.push(`expected 9 bonds, found ${bonds.length}`);
 
 // The table now pairs each sovereign yield with one current central-bank
@@ -88,6 +95,10 @@ for (const b of bonds) {
   }
   if (/^(unknown|pending|)$/.test(b.source)) {
     problems.push(`${b.country}: no source label ("${b.source}") — the merge lost provenance`);
+  }
+  const trendEnd = trendEnds.get(b.country);
+  if (!Number.isFinite(trendEnd) || Math.abs(trendEnd - b.yield) > 0.0001) {
+    problems.push(`${b.country}: trend ends at ${trendEnd ?? "missing"}% but headline is ${b.yield}%`);
   }
   if (MUST_BE_DAILY.includes(b.country)) {
     if (b.cadence !== "daily") {

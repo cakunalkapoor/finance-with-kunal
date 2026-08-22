@@ -139,7 +139,7 @@ export default function EquityMarketsTable() {
               There is no valuation column. Index P/E lived here until an audit
               found the figures had never been sourced — they arrived with the
               original mock dataset and no fetcher ever wrote them. Yahoo
-              supplies no P/E for an index (verified across all twelve symbols:
+              supplies no P/E for an index (verified across all thirteen symbols:
               trailingPE, forwardPE, priceToBook and trailingEps all come back
               empty), so there is nothing to wire up. Don't reinstate the column
               without a provider that actually publishes index multiples. */}
