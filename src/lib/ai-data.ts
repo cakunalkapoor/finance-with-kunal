@@ -255,14 +255,40 @@ export const AI_CAPEX_CONTEXT: AIFigure[] = [
   },
 ];
 
-/* ── Chips & supply chain ───────────────────────────────────────────────── */
+/* ── Chips & supply chain ─────────────────────────────────────────────────
+   The page presents every monetary amount in USD. These two issuers report in
+   local currency, so their cards translate the original figures at the official
+   reference rate on the results date and round to the nearest $0.1B.
+
+   SK hynix: ₩79.3T revenue and ₩60.5T operating profit / 1,446.32 KRW per USD.
+   ASML: €43–45B guidance and €9.3B quarterly sales × 1.1406 USD per EUR. */
+export const AI_FX_SOURCES = {
+  skHynix: {
+    label: "Federal Reserve H.10 KRW/USD",
+    url: "https://fred.stlouisfed.org/data/DEXKOUS",
+    asOf: "2026-07-29",
+    krwPerUsd: 1446.32,
+  },
+  asml: {
+    label: "ECB EUR/USD reference rate",
+    url: "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html",
+    asOf: "2026-07-15",
+    usdPerEur: 1.1406,
+  },
+} as const;
+
+const usdBnFromKrwTn = (krwTn: number) =>
+  ((krwTn * 1000) / AI_FX_SOURCES.skHynix.krwPerUsd).toFixed(1);
+const usdBnFromEurBn = (eurBn: number) =>
+  (eurBn * AI_FX_SOURCES.asml.usdPerEur).toFixed(1);
+
 export const AI_CHIPS: AIFigure[] = [
   {
     id: "skhynix",
     label: "SK hynix Q2 2026",
-    value: "₩79.3T",
+    value: `$${usdBnFromKrwTn(79.3)}B`,
     detail:
-      "Preliminary K-IFRS revenue · ₩60.5T operating profit, 76% margin · HBM4 mass shipments began",
+      `Preliminary K-IFRS revenue · $${usdBnFromKrwTn(60.5)}B operating profit, 76% margin · translated at the Jul 29 Federal Reserve rate · HBM4 mass shipments began`,
     source: "SK hynix newsroom",
     sourceUrl: "https://news.skhynix.com/en/q2-2026-business-results/",
     asOf: "2026-07-29",
@@ -280,9 +306,9 @@ export const AI_CHIPS: AIFigure[] = [
   {
     id: "asml",
     label: "ASML 2026 guidance",
-    value: "€43–45B",
+    value: `$${usdBnFromEurBn(43)}–${usdBnFromEurBn(45)}B`,
     detail:
-      "Full-year total net sales guidance, raised · Q2 net sales €9.3B · sole EUV supplier",
+      `Full-year total net sales guidance, raised · Q2 net sales $${usdBnFromEurBn(9.3)}B · translated at the Jul 15 ECB reference rate · sole EUV supplier`,
     source: "ASML Q2 2026 results",
     sourceUrl: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results",
     asOf: "2026-07-15",
@@ -508,10 +534,10 @@ export const AI_ADOPTION: AIFigure[] = [
   },
   {
     id: "chip-price-performance",
-    label: "AI-chip performance per dollar",
+    label: "AI-chip performance per US dollar",
     value: "+49%/yr",
     detail:
-      "Estimated spending-weighted peak throughput of chips sold, Q1 2023–Q4 2025, in constant 2025 dollars · doubles every 1.7 years · not deployed or workload performance",
+      "Estimated spending-weighted peak throughput of chips sold, Q1 2023–Q4 2025, in constant 2025 USD · doubles every 1.7 years · not deployed or workload performance",
     source: "Epoch AI",
     sourceUrl: "https://epoch.ai/data-insights/chip-performance-per-dollar",
     asOf: "2026-08-13",

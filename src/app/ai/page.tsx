@@ -18,6 +18,7 @@ import {
   AI_CAPEX_CONTEXT,
   AI_CHIPS,
   AI_DATA_ASOF,
+  AI_FX_SOURCES,
   AI_LABOUR,
   AI_PRIVATE_CAPITAL,
   AI_REVENUE,
@@ -115,7 +116,7 @@ export default function AIPage() {
             <Reveal delay={100}>
               <AIFigureSection
                 title="What AI actually earns"
-                subtitle="Disclosed AI revenue and run rates · reported segments and call commentary are labelled separately"
+                subtitle="Disclosed AI revenue and run rates · USD · reported segments and call commentary are labelled separately"
                 figures={AI_REVENUE}
                 columns={2}
               >
@@ -156,7 +157,7 @@ export default function AIPage() {
             <Reveal>
               <AIFigureSection
                 title="Hardware constraints"
-                subtitle="Reported memory, foundry and lithography signals · company-wide figures labelled as such"
+                subtitle="Reported memory, foundry and lithography signals · monetary figures in USD"
                 figures={AI_CHIPS}
                 columns={2}
                 glow="purple"
@@ -164,9 +165,26 @@ export default function AIPage() {
                 SK hynix&rsquo;s card pairs company-wide quarterly revenue and operating margin with
                 management&rsquo;s HBM4 shipment commentary; the margin is not an HBM-only measure.
                 TSMC&rsquo;s monthly growth is also company-wide and is shown only as a
-                high-frequency foundry-demand proxy, not an AI revenue breakout. The cards retain
-                SK hynix&rsquo;s reported won and ASML&rsquo;s reported euros rather than introducing
-                an exchange-rate assumption.
+                high-frequency foundry-demand proxy, not an AI revenue breakout. SK hynix and ASML
+                monetary figures are translated to USD using the official report-date{" "}
+                <a
+                  href={AI_FX_SOURCES.skHynix.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline-offset-2 hover:underline"
+                >
+                  Federal Reserve
+                </a>{" "}
+                and{" "}
+                <a
+                  href={AI_FX_SOURCES.asml.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline-offset-2 hover:underline"
+                >
+                  ECB
+                </a>{" "}
+                reference rates and rounded to the nearest $0.1B.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -201,7 +219,7 @@ export default function AIPage() {
             <Reveal delay={100}>
               <AIFigureSection
                 title="Reported private-capital concentration"
-                subtitle="Global venture funding and AI's reported share · Crunchbase snapshots"
+                subtitle="Global venture funding and AI's reported share · USD · Crunchbase snapshots"
                 figures={AI_PRIVATE_CAPITAL}
                 columns={2}
               >
@@ -221,14 +239,14 @@ export default function AIPage() {
           <Reveal delay={100}>
             <AIFigureSection
               title="Adoption and cost-efficiency proxies"
-              subtitle="US employer-business use, paid seats, and estimated AI-chip performance per dollar"
+              subtitle="US employer-business use, paid seats, and estimated AI-chip performance per US dollar"
               figures={AI_ADOPTION}
               columns={2}
             >
               These are separate scale signals, not a conversion funnel or ROI test: global capex
               guidance and venture snapshots, a US nonfarm employer-business survey, paid software
-              seats, and an estimate of peak theoretical chip throughput per dollar cover different
-              populations and periods. The latest Census incidence estimate is{" "}
+              seats, and an estimate of peak theoretical chip throughput per US dollar cover
+              different populations and periods. The latest Census incidence estimate is{" "}
               {percentageRange(AI_ADOPTION_NATIONAL_RANGE)}.
             </AIFigureSection>
           </Reveal>
@@ -247,6 +265,11 @@ export default function AIPage() {
               className="space-y-3 px-4 pb-4 text-[12px] leading-6"
               style={{ color: "var(--color-text-secondary)" }}
             >
+              <p>
+                All monetary amounts are in USD. Figures originally reported in another currency
+                use an official exchange rate from the source date and are marked as translated;
+                rounded conversions should not be read as audited company disclosures.
+              </p>
               <p>
                 Almost nothing here has a free API behind it. There is no &ldquo;AI sector&rdquo; in
                 any index classification, no company reports an audited &ldquo;AI revenue&rdquo;

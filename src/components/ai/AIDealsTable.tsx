@@ -41,7 +41,7 @@ export default function AIDealsTable() {
     <SciFiCard glow="purple">
       <CardHeader
         title="Private capital"
-        subtitle="Global venture funding · Q1 Mar 31 and Q2 Jul 1 snapshots · largest announced AI rounds"
+        subtitle="Global venture funding in USD · Q1 Mar 31 and Q2 Jul 1 snapshots · largest announced AI rounds"
       />
 
       {/* Quarterly split — two bars' worth of data, so rendered as meters
@@ -103,7 +103,7 @@ export default function AIDealsTable() {
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
-              {["Company", "Announced/committed", "Post-money", "Date"].map((h) => (
+              {["Company", "Announced/committed (USD)", "Post-money (USD)", "Date"].map((h) => (
                 <th
                   key={h}
                   className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase whitespace-nowrap"
