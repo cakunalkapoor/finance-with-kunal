@@ -9,13 +9,14 @@ import type { CSSProperties } from "react";
  *
  * Deliberately a short table rather than a long one. Deal databases are paid
  * products, and a scraped "top 50 AI rounds" list would be half-sourced and
- * stale within a fortnight. Two rounds carry the actual point — that a pair of
- * private companies absorbed 43% of all global venture funding in a half-year
- * — better than fifty rows of varying reliability would.
+ * stale within a fortnight. Three rounds carry the actual point — that a pair
+ * of private companies accounted for about 42% of reported global venture
+ * funding in the revised half-year snapshot — better than fifty rows of varying
+ * reliability would.
  *
- * Amounts are as announced. Private valuations are a negotiated price for a
- * small slice of preferred stock with its own liquidation terms, not a market
- * capitalisation, and the footnote says so.
+ * Amounts are announced or committed, which is not always the same as cash
+ * funded at announcement. Private post-money valuations are negotiated prices
+ * for preferred stock, not market capitalisations, and the footnote says so.
  */
 
 const TH_STYLE: CSSProperties = {
@@ -40,45 +41,56 @@ export default function AIDealsTable() {
     <SciFiCard glow="purple">
       <CardHeader
         title="Private capital"
-        subtitle="Global venture funding and where AI took it · largest disclosed AI rounds"
+        subtitle="Global venture funding · Q1 Mar 31 and Q2 Jul 1 snapshots · largest announced AI rounds"
       />
 
       {/* Quarterly split — two bars' worth of data, so rendered as meters
           rather than a chart that would look emptier than the numbers are. */}
       <div className="space-y-3 px-4 pb-4">
-        {AI_FUNDING_QUARTERS.map((q) => (
-          <div key={q.quarter}>
-            <div className="flex items-baseline justify-between">
-              <span
-                className="text-[11px] font-semibold"
-                style={{ color: "var(--color-text-secondary)", fontFamily: FONT_MONO }}
-              >
-                {q.quarter}
-              </span>
-              <span
-                className="text-[11px]"
-                style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}
-              >
-                <strong style={{ color: "var(--color-neon-cyan)" }}>{q.aiSharePct}%</strong> of $
-                {q.totalUsdBn}B went to AI
-              </span>
-            </div>
-            <div
-              className="mt-1.5 h-2 w-full overflow-hidden rounded-full"
-              style={{ background: "var(--color-wash)" }}
-              role="img"
-              aria-label={`${q.aiSharePct}% of ${q.quarter} global venture funding went to AI companies`}
-            >
+        {AI_FUNDING_QUARTERS.map((q) => {
+          const roundedShare = Math.round(q.aiSharePct);
+          const isQ1 = q.quarter.startsWith("Q1");
+          const snapshotLabel = isQ1 ? "Mar 31 snapshot" : "Jul 1 snapshot";
+          const shareLabel = isQ1 ? `≈${roundedShare}%` : `>${Math.floor(q.aiSharePct)}%`;
+          const shareAria = isQ1
+            ? `approximately ${roundedShare} percent`
+            : `more than ${Math.floor(q.aiSharePct)} percent`;
+
+          return (
+            <div key={q.quarter}>
+              <div className="flex items-baseline justify-between gap-3">
+                <span
+                  className="text-[11px] font-semibold"
+                  style={{ color: "var(--color-text-secondary)", fontFamily: FONT_MONO }}
+                >
+                  {q.quarter}
+                </span>
+                <span
+                  className="text-right text-[11px]"
+                  style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}
+                >
+                  {snapshotLabel} ·{" "}
+                  <strong style={{ color: "var(--color-neon-cyan)" }}>{shareLabel}</strong> of $
+                  {q.totalUsdBn}B reported as AI
+                </span>
+              </div>
               <div
-                className="h-full rounded-full"
-                style={{
-                  width: `${q.aiSharePct}%`,
-                  background: "var(--color-neon-cyan)",
-                }}
-              />
+                className="mt-1.5 h-2 w-full overflow-hidden rounded-full"
+                style={{ background: "var(--color-wash)" }}
+                role="img"
+                aria-label={`${shareAria} of ${q.quarter} global venture funding was reported as AI funding in the ${snapshotLabel}`}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    width: `${q.aiSharePct}%`,
+                    background: "var(--color-neon-cyan)",
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="overflow-x-auto">
@@ -91,7 +103,7 @@ export default function AIDealsTable() {
                 borderBottom: "1px solid var(--color-space-border)",
               }}
             >
-              {["Company", "Raised", "Valuation", "Announced"].map((h) => (
+              {["Company", "Announced/committed", "Post-money", "Date"].map((h) => (
                 <th
                   key={h}
                   className="px-4 py-2.5 text-left font-semibold tracking-widest uppercase whitespace-nowrap"
@@ -169,10 +181,12 @@ export default function AIDealsTable() {
           borderColor: "var(--color-space-border)",
         }}
       >
-        A private &ldquo;valuation&rdquo; is the price agreed for a slice of preferred stock, with
-        liquidation preferences and ratchets attached — it is not a market capitalisation and it is
-        not marked daily. Deal terms are as announced by the parties; comprehensive deal data sits
-        behind paid databases, so this is the disclosed headline set rather than a complete league
+        Q1&rsquo;s ≈80% share and total preserve Crunchbase&rsquo;s Mar 31 snapshot; Q2&rsquo;s &gt;70%
+        share and total preserve its Jul 1 snapshot. The later revised H1 total is not backfilled
+        into the quarter view because Crunchbase did not publish a revised split. Deal amounts are
+        announced or committed, not necessarily funded on the announcement date. A post-money
+        valuation is the negotiated price for preferred stock with its own terms, not a daily market
+        capitalisation. This is the reported headline set, not a complete private-market league
         table.
       </p>
     </SciFiCard>

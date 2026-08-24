@@ -11,16 +11,9 @@ const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 /*
  * AI-attributed job cuts.
  *
- * The framing matters more here than anywhere else on the page. Challenger
- * counts the reason an employer PUTS IN ITS OWN ANNOUNCEMENT. So this series
- * measures how willing companies have become to say the word "AI" — which is
- * related to, but emphatically not the same as, how many jobs AI displaced. A
- * restructuring relabelled as an AI efficiency programme moves this line; a
- * quiet hiring freeze that never becomes an announcement does not.
- *
- * June 2026 is missing on purpose — the releases sourced in ai-data.ts give a
- * cumulative half-year figure but not June's own share, and inventing a point
- * to close the gap would be worse than the gap. The chart labels it.
+ * Challenger classifies the reason employers cite in announced job cuts. The
+ * resulting monthly share is an attribution series, not a causal estimate of
+ * jobs displaced by AI; unannounced freezes and role changes are outside it.
  */
 
 const ACCENT = { light: "#37683f", dark: "#b9f227" } as const;
@@ -123,12 +116,11 @@ export default function AILayoffsChart() {
           borderColor: "var(--color-space-border)",
         }}
       >
-        This tracks <strong style={{ color: "var(--color-text-secondary)" }}>attribution, not
-        measurement</strong> — it counts the reason employers give in their own announcements, so it
-        moves when a restructuring gets relabelled as an AI programme, and misses displacement that
-        never becomes a press release. June is absent because the releases cited give a cumulative
-        half-year figure but not that month&rsquo;s own share; the gap is deliberate rather than
-        interpolated. Source: Challenger, Gray &amp; Christmas.
+        This tracks <strong style={{ color: "var(--color-text-secondary)" }}>employer attribution,
+        not independently measured displacement</strong>. Challenger classifies the reason cited in
+        announced US cuts; multiple factors may shape a restructuring, while unannounced hiring
+        freezes and role changes are outside the count. Each monthly percentage uses that
+        month&rsquo;s announced cuts as its denominator. Source: Challenger, Gray &amp; Christmas.
       </p>
     </SciFiCard>
   );

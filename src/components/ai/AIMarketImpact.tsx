@@ -23,9 +23,10 @@ import type { EChartsOption } from "echarts";
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
 /*
- * "How is AI affecting the stock market?" answered with arithmetic rather than
- * assertion — the one section on /ai computed from data the site fetches
- * itself, against every global index the Markets page carries, over five years.
+ * "How are AI-exposed stocks trading against major global markets?" answered
+ * with arithmetic rather than assertion — the one section on /ai computed from
+ * price data the site fetches itself, against selected major indices drawn from
+ * the broader market set used on the Markets page.
  *
  * Method, stated plainly because the method IS the caveat:
  *
@@ -34,24 +35,21 @@ const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
  *   • The basket is EQUAL-weighted, not cap-weighted. Cap weighting would just
  *     redraw the S&P — NVIDIA and Microsoft would be most of it. Equal weight
  *     asks a different question: how did the typical AI name do?
- *   • Returns are PRICE returns in each line's own listing currency. No
- *     dividends, no FX conversion. That last one matters more here than it did
- *     when this chart only held US series: the Nikkei's five-year gain is
- *     partly a weaker yen, and a Canadian reader converting to CAD would see
- *     different numbers. Stated in the footnote rather than silently corrected,
- *     because an FX-adjusted index return needs a stated base currency and this
- *     site doesn't have one.
+ *   • Returns are PRICE returns in US dollars. Non-US closes are converted at
+ *     each observation's exchange rate before the series is rebased; dividends
+ *     are excluded. That makes every line comparable from a USD investor's
+ *     perspective; non-US returns include exchange-rate moves against the dollar.
  *
  * The line chart shows the paths; the ranked list gives each index its identity
- * back, since twelve muted lines are legible as a field but not individually.
+ * back, since many muted lines are legible as a field but not individually.
  * Clicking a row lifts that index out of the field and into the chart.
  */
 
 /** Accent hex per theme — ECharts can't read the CSS vars. Mirrors --color-neon-cyan. */
 const ACCENT = { light: "#37683f", dark: "#b9f227" } as const;
 
-/** The field of indices: one muted colour, not twelve categorical ones. A
- *  12-hue palette is unreadable at 1px and implies distinctions the chart isn't
+/** The field of indices: one muted colour rather than one hue per market. A
+ *  large categorical palette is unreadable at 1px and implies distinctions the chart isn't
  *  making — the comparison is basket-vs-field, with identity in the list. */
 const FIELD = { light: "#9aa091", dark: "#5c6553" } as const;
 
@@ -123,7 +121,16 @@ export default function AIMarketImpact() {
      would misdescribe the number printed beside it. */
   const cadence = view === "1W" ? "daily" : "weekly";
 
-  const { basket, indices, labels, dispersion, ranked, coverage, buyAndHold } = useMemo(() => {
+  const {
+    basket,
+    indices,
+    labels,
+    dispersion,
+    ranked,
+    coverage,
+    buyAndHold,
+    sameUniverseRebalanced,
+  } = useMemo(() => {
     const windows = AI_STOCKS.map((s) => seriesFor(view, s.sparkline, s.daily));
     const length = Math.min(...windows.map((s) => s.length));
     const basketSeries = chainedEqualWeight(windows);
@@ -147,6 +154,7 @@ export default function AIMarketImpact() {
         return { ticker: stock.ticker, flag: stock.flag, pct: (last / first - 1) * 100 };
       })
       .sort((a, b) => b.pct - a.pct);
+    const fullWindowBasket = chainedEqualWeight(fullWindow.map(({ w }) => w));
 
     /** Window return of a rebased series, from its first real point. */
     const pctOf = (series: (number | null)[]) => {
@@ -185,14 +193,16 @@ export default function AIMarketImpact() {
       },
       ranked: rankedRows,
       coverage: { full: fullWindow.length, total: AI_STOCKS.length },
-      /* Chaining weekly returns implies weekly REBALANCING, and on a basket
-         this volatile that assumption is worth real percentage points — the
-         rebalanced index and an equal-weighted buy-and-hold of the same names
-         diverge by tens of points over five years (the diversification return).
-         Neither is more correct; publishing only one without saying which would
-         be. So the buy-and-hold figure is computed here and quoted alongside. */
+      /* Isolate the effect of periodic rebalancing on one fixed universe. The
+         displayed basket can add a newly listed name mid-window, so comparing
+         it directly with a start-date buy-and-hold basket would mix membership
+         and cadence. Both comparators below therefore use only names with data
+         for the full selected window. */
       buyAndHold: stockReturns.length
         ? stockReturns.reduce((a, r) => a + r.pct, 0) / stockReturns.length
+        : 0,
+      sameUniverseRebalanced: fullWindowBasket.length
+        ? fullWindowBasket[fullWindowBasket.length - 1] - 100
         : 0,
     };
   }, [view]);
@@ -202,9 +212,8 @@ export default function AIMarketImpact() {
   const bestIndex = ranked.find((r) => !r.isBasket);
   const worstIndex = [...ranked].reverse().find((r) => !r.isBasket);
 
-  // Zero baseline for the ranked bars: some windows have negative returns
-  // (Hang Seng is roughly flat over five years), so bars grow both ways from a
-  // computed zero rather than from the left edge.
+  // Zero baseline for the ranked bars: some windows include negative returns,
+  // so bars grow both ways from a computed zero rather than from the left edge.
   const pcts = ranked.map((r) => r.pct);
   const minPct = Math.min(0, ...pcts);
   const maxPct = Math.max(0, ...pcts);
@@ -350,8 +359,8 @@ export default function AIMarketImpact() {
   return (
     <SciFiCard glow="cyan">
       <CardHeader
-        title="AI stocks vs every global market"
-        subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} global indices · all in USD, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS, AI_DAILY_DATES)}`}
+        title="AI stocks vs major global markets"
+        subtitle={`Equal-weighted basket of ${AI_STOCKS.length} AI-exposed listings against ${AI_INDEX_SERIES.length} major global indices · all in USD, rebased to 100 · ${windowLabel(view, AI_SERIES_POINTS, AI_DAILY_DATES)}`}
         action={
           <div className="flex items-center gap-1">
             {viewsFor(AI_DAILY_DATES.length >= 2).map((v) => (
@@ -386,7 +395,7 @@ export default function AIMarketImpact() {
           />
         </div>
 
-        {/* Ranked returns. The chart shows twelve indices as one field; this is
+        {/* Ranked returns. The chart shows the indices as one field; this is
             where they get their names back. Rows are buttons: clicking lifts
             that index out of the field and into the chart. */}
         <div className="px-4 pb-2 xl:pr-5 xl:pl-0">
@@ -507,7 +516,7 @@ export default function AIMarketImpact() {
         style={{ color: "var(--color-text-muted)", fontSize: "11px" }}
       >
         Over this window the basket returned {signed(basketReturn)}, ranking {basketRank} of{" "}
-        {ranked.length} against the world&rsquo;s major indices — best of them{" "}
+        {ranked.length} in a field with {AI_INDEX_SERIES.length} selected major indices — best of them{" "}
         {bestIndex?.label} at {bestIndex ? signed(bestIndex.pct) : "—"}, weakest{" "}
         {worstIndex?.label} at {worstIndex ? signed(worstIndex.pct) : "—"}. Inside the basket{" "}
         {dispersion.best.ticker} returned {signed(dispersion.best.pct)} and{" "}
@@ -520,18 +529,18 @@ export default function AIMarketImpact() {
             other {coverage.total - coverage.full} listed part-way through it
           </>
         )}
-        . The basket is an equal-weighted index chained off {cadence} returns, so a constituent that
-        lists mid-window joins without dropping the line. Chaining implies {cadence} rebalancing,
-        which on a basket this volatile is worth real percentage points: buying the same names
-        equal-weighted at the start and holding returned {signed(buyAndHold)}{" "}
-        over this window against the index&rsquo;s {signed(basketReturn)}. Equal rather than cap
-        weighting either way, so it answers how the typical AI name did rather than restating the
-        index. Every line is in{" "}
+        . The displayed basket is an equal-weighted index chained off {cadence} returns, so a
+        constituent that lists mid-window joins without dropping the line. To isolate rebalancing
+        from those membership changes, the {coverage.full} full-window names returned{" "}
+        {signed(sameUniverseRebalanced)} with {cadence} rebalancing versus {signed(buyAndHold)} when
+        bought equal-weighted at the start and held. Equal rather than cap weighting either way, so
+        the basket answers how the typical AI name did rather than restating the index. Every line
+        is in{" "}
         <strong style={{ color: "var(--color-text-secondary)" }}>US dollars</strong>{" "}
-        — each daily close converted at that day&rsquo;s rate before anything is derived — so a gap between two
-        lines is a performance gap and not partly a currency move. That matters: the Nikkei returned
-        about +149% in yen over five years but roughly +63% in dollars. Price returns only, so
-        dividends are excluded. Membership is a judgement call and the basket is not investable.
+        — each daily close converted at that day&rsquo;s rate before anything is derived — so returns for
+        non-US listings and indices include exchange-rate movements against the dollar. Price
+        returns only, so dividends are excluded. Membership is a judgement call and the basket is
+        not investable.
       </p>
     </SciFiCard>
   );

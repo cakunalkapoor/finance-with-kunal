@@ -13,6 +13,7 @@ import { pageMetadata } from "@/lib/seo";
 import type { AIFigure } from "@/types";
 import {
   AI_ADOPTION,
+  AI_ADOPTION_NATIONAL_RANGE,
   AI_STOCKS,
   AI_CAPEX_CONTEXT,
   AI_CHIPS,
@@ -30,7 +31,7 @@ export const metadata = pageMetadata({
   // describing. The nav label stays the short "AI" and the route stays /ai.
   title: "Vantage AI",
   description:
-    "The AI boom in numbers: AI-exposed stocks against the index, hyperscaler capex and power demand, disclosed AI revenue, chip supply chain, AI-attributed job cuts, venture funding, and business adoption — every curated figure sourced and dated.",
+    "The AI boom in numbers: AI-exposed stocks against major global markets, hyperscaler capex and power demand, disclosed AI revenue, hardware constraints, AI-attributed job cuts, venture funding, and business adoption — every curated figure sourced and dated.",
   path: "/ai",
   keywords: [
     "AI stocks",
@@ -71,6 +72,11 @@ function figure(figures: AIFigure[], id: string): string {
   return figures.find((f) => f.id === id)?.value ?? "—";
 }
 
+function percentageRange([low, high]: [number, number]): string {
+  const format = (value: number) => (Number.isInteger(value) ? `${value}` : value.toFixed(1));
+  return low === high ? `${format(high)}%` : `${format(low)}–${format(high)}%`;
+}
+
 export default function AIPage() {
   return (
     <>
@@ -80,15 +86,15 @@ export default function AIPage() {
         <BriefingHero
           eyebrow="AI briefing"
           title="Follow the AI story."
-          description="Capital expenditure, chip orders, power contracts, private rounds, and job cuts in one view—the money AI moves long before it ships as a product, with every figure sourced and dated."
+          description="Capital expenditure, AI revenue, hardware supply signals, electricity demand, private rounds, and job-cut attribution in one view—with every figure sourced and dated."
           accent="emerald"
           // Pulled from ai-data rather than retyped: these three restate figures
           // that already exist (with sources) further down the page, and a
           // literal here would silently drift from them on the next revision.
           stats={[
-            { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Four hyperscalers" },
-            { label: "Q2 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Of global funding" },
-            { label: "Stated cause", value: "#1", detail: "Of US job cuts" },
+            { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Company-wide · four hyperscalers" },
+            { label: "Q2 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Jul 1 global snapshot" },
+            { label: "Stated cause", value: "#1", detail: "Five straight months" },
           ]}
         />
 
@@ -124,19 +130,21 @@ export default function AIPage() {
             </Reveal>
 
             <Reveal delay={100}>
-              <AICapexChart />
+              <div id="hyperscaler-capex">
+                <AICapexChart />
+              </div>
             </Reveal>
 
             <Reveal>
               <AIFigureSection
                 title="The bill behind the buildout"
-                subtitle="Aggregate spend, contracted demand, and the electricity it needs"
+                subtitle="Company-wide capex, two-cloud backlog, and global data-centre electricity demand"
                 figures={AI_CAPEX_CONTEXT}
                 columns={3}
               >
-                Backlog is contracted-but-undelivered cloud revenue — demand booked years ahead of
-                the capacity to serve it, which is why both firms are raising capex rather than
-                harvesting margin.
+                The backlog total combines management-reported Google Cloud and AWS commitments. It
+                is not AI-only, and the two companies&rsquo; definitions and recognition timing
+                differ. The capex total is also company-wide rather than a standalone AI budget.
               </AIFigureSection>
             </Reveal>
 
@@ -147,18 +155,18 @@ export default function AIPage() {
                 last-child rule stretches — see the note by TWO_COL. */}
             <Reveal>
               <AIFigureSection
-                title="The physical bottleneck"
-                subtitle="Chips, memory and lithography — the layer that sets how fast the rest can grow"
+                title="Hardware constraints"
+                subtitle="Reported memory, foundry and lithography signals · company-wide figures labelled as such"
                 figures={AI_CHIPS}
                 columns={2}
                 glow="purple"
               >
-                Memory, not logic, is the tightest link in the chain right now: HBM sells out on
-                multi-quarter agreements, which is what a 76% operating margin at SK hynix is
-                telling you. Figures reported in won and euros are shown in dollars at the rate on
-                the reporting date, with the original alongside. TSMC&rsquo;s monthly disclosure is
-                a useful high-frequency read on foundry demand, but it covers the whole company
-                and is not an AI revenue breakout.
+                SK hynix&rsquo;s card pairs company-wide quarterly revenue and operating margin with
+                management&rsquo;s HBM4 shipment commentary; the margin is not an HBM-only measure.
+                TSMC&rsquo;s monthly growth is also company-wide and is shown only as a
+                high-frequency foundry-demand proxy, not an AI revenue breakout. The cards retain
+                SK hynix&rsquo;s reported won and ASML&rsquo;s reported euros rather than introducing
+                an exchange-rate assumption.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -177,28 +185,30 @@ export default function AIPage() {
                 columns={2}
                 glow="purple"
               >
-                Note the tension in these four numbers: AI-attributed cuts are at a record while
-                total announced cuts hit a two-year low. AI is a growing share of a shrinking
-                number, and it is concentrated in technology rather than spread across the economy.
+                AI was the reason cited most often in recent announcements while total announced
+                cuts hit a two-year low. Challenger tracks stated reasons, not independently
+                measured displacement. Its technology-sector total covers cuts for every stated
+                reason; separately, Challenger says AI-related cutting has been limited outside
+                technology.
               </AIFigureSection>
             </Reveal>
           </div>
 
-          <div className={COL}>
+          <div className={COL} id="private-capital-evidence">
             <Reveal delay={100}>
               <AIDealsTable />
             </Reveal>
             <Reveal delay={100}>
               <AIFigureSection
-                title="Where private capital went"
-                subtitle="Global venture funding and AI's share of it · Crunchbase"
+                title="Reported private-capital concentration"
+                subtitle="Global venture funding and AI's reported share · Crunchbase snapshots"
                 figures={AI_PRIVATE_CAPITAL}
                 columns={2}
               >
-                Concentration at this level is the story: two companies took 43% of all global
-                startup funding in a half-year, and sixteen cheques accounted for over half of Q2.
-                Venture funding totals are estimates that get revised upward for months after a
-                quarter closes, as deals are disclosed late.
+                Combining the announced OpenAI and Anthropic rounds in the deal table with
+                Crunchbase&rsquo;s later revised H1 total gives about 42%. That is a derived,
+                cross-vintage comparison; the Q2 share is a separate July 1 snapshot, and funding
+                totals can be revised as later deals are disclosed.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -210,15 +220,16 @@ export default function AIPage() {
           </Reveal>
           <Reveal delay={100}>
             <AIFigureSection
-              title="Adoption and unit economics"
-              subtitle="Whether the spend is converting into use — and what a unit of capability costs"
+              title="Adoption and cost-efficiency proxies"
+              subtitle="US employer-business use, paid seats, and estimated AI-chip performance per dollar"
               figures={AI_ADOPTION}
               columns={2}
             >
-              The gap between the two halves of this page is the thing worth watching: roughly
-              $725B of capex and 70% of venture funding, against a fifth of US businesses using AI
-              in any business function. Both can stay true for a long time — infrastructure has led
-              adoption before — but the gap is the risk.
+              These are separate scale signals, not a conversion funnel or ROI test: global capex
+              guidance and venture snapshots, a US nonfarm employer-business survey, paid software
+              seats, and an estimate of peak theoretical chip throughput per dollar cover different
+              populations and periods. The latest Census incidence estimate is{" "}
+              {percentageRange(AI_ADOPTION_NATIONAL_RANGE)}.
             </AIFigureSection>
           </Reveal>
         </div>
@@ -250,10 +261,11 @@ export default function AIPage() {
                 site, computed the same way as the Markets page.
               </p>
               <p>
-                Where a figure could not be sourced it is absent rather than estimated — June is
-                missing from the layoffs chart, and the two smallest firm-size bands are missing
-                from the adoption chart, for exactly that reason. Nothing here is investment advice
-                or a recommendation to buy or sell any security.
+                Where a figure cannot be sourced it is absent rather than estimated. Notes beside
+                the charts distinguish employer attribution, announced deal terms, company-wide
+                capex and Census survey estimates so unlike measures are not presented as
+                equivalent. Nothing here is investment advice or a recommendation to buy or sell
+                any security.
               </p>
             </div>
           </SciFiCard>

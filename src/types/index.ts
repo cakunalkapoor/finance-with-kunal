@@ -429,7 +429,7 @@ export interface AIDeal {
   company: string;
   /** Round label as announced, e.g. "Series H". */
   round: string;
-  /** Amount raised, USD billions. */
+  /** Headline amount announced or committed, USD billions. */
   amount: number;
   /** Post-money valuation, USD billions. Omitted where not disclosed. */
   valuation?: number;
@@ -445,7 +445,7 @@ export interface AIFundingQuarter {
   quarter: string;
   /** All global venture funding that quarter, USD billions. */
   totalUsdBn: number;
-  /** Share of it invested in AI-focused companies, %. */
+  /** Reported share attributed to AI-focused companies, %. */
   aiSharePct: number;
 }
 

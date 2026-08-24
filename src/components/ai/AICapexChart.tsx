@@ -11,12 +11,13 @@ import type { EChartsOption } from "echarts";
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
 /*
- * Hyperscaler capex — the number that turns "AI is a big deal" into a cash
- * flow statement.
+ * Company-wide capex at four hyperscalers. These plans are shown on an AI page
+ * because technical infrastructure is the main driver, but none is an AI-only
+ * budget and the companies do not use one common capex definition.
  *
  * Guidance ranges are drawn as a solid bar to the low end plus a hatched
  * extension to the high end, rather than a midpoint: the midpoint is a number
- * nobody published, and for Alphabet the $175–205B range is 30 billion dollars
+ * nobody published, and for Alphabet the $195–205B range is 10 billion dollars
  * of genuine uncertainty that a single bar would hide.
  */
 
@@ -62,13 +63,12 @@ export default function AICapexChart() {
         const plan = AI_CAPEX[idx];
         const range =
           plan.low === plan.high ? `$${plan.low}B` : `$${plan.low}–${plan.high}B`;
-        const growth = Math.round(((plan.low / plan.priorYear) - 1) * 100);
         return `<div style="padding:2px 4px;max-width:230px">
           <div style="font-weight:700;margin-bottom:3px">${plan.company}</div>
           <div style="color:${c.tooltipMuted};font-size:10px">Prior year</div>
           <div>$${plan.priorYear}B</div>
           <div style="color:${c.tooltipMuted};font-size:10px;margin-top:3px">2026 guidance</div>
-          <div>${range} <span style="color:${c.up}">+${growth}%</span></div>
+          <div>${range}</div>
           <div style="color:${c.tooltipMuted};font-size:10px;margin-top:4px;white-space:normal;line-height:1.4">${plan.note}</div>
         </div>`;
       },
@@ -135,8 +135,8 @@ export default function AICapexChart() {
   return (
     <SciFiCard glow="cyan">
       <CardHeader
-        title="What the buildout costs"
-        subtitle="Published 2026 capital expenditure plans vs the prior year · USD billions"
+        title="Company-wide capex at four hyperscalers"
+        subtitle="Latest company-wide 2026 guidance vs prior-year actuals · definitions differ · USD billions"
         action={
           <span
             className="flex items-center gap-1 rounded px-2 py-0.5"
@@ -209,11 +209,13 @@ export default function AICapexChart() {
           borderColor: "var(--color-space-border)",
         }}
       >
-        Combined ${totalLow}–{totalHigh}B against ${totalPrior.toFixed(0)}B the prior year. The
-        2026 bars are each company&rsquo;s most recently published guidance, not a January plan —
-        three of the four raised during the year, and the paler segment is the part of a range
-        still labelled &ldquo;up to&rdquo;. Capex guidance is a forecast a company can revise at
-        will, not a reported result. Prior-year bars come from a single comparable series —{" "}
+        Combined ${totalLow}–{totalHigh}B against ${totalPrior.toFixed(0)}B on the displayed
+        prior-year series. These are company-wide plans, not AI-only budgets, and their definitions
+        differ. Microsoft&rsquo;s current calendar-2026 figure reflects a finance-to-operating lease
+        reclassification, so it is not directly comparable with its lease-inclusive prior-year bar
+        even though management said underlying investment expectations were unchanged. The paler
+        segment marks the portion of a published range still labelled &ldquo;up to&rdquo;.
+        Prior-year bars come from a consistent calendar-quarter series —{" "}
         <a
           href={AI_CAPEX_PRIOR_YEAR_SOURCE.url}
           target="_blank"
@@ -223,9 +225,7 @@ export default function AICapexChart() {
         >
           {AI_CAPEX_PRIOR_YEAR_SOURCE.label}
         </a>
-        , calendar-quarter and inclusive of finance leases, because Microsoft&rsquo;s June
-        fiscal year-end makes headline &ldquo;FY2025&rdquo; capex figures non-comparable across
-        these four.
+        , inclusive of finance leases. Guidance is a revisable forecast, not a reported result.
       </p>
     </SciFiCard>
   );

@@ -51,7 +51,7 @@ export const AI_REVENUE: AIFigure[] = [
     source: "NVIDIA Q1 FY2027 results",
     sourceUrl:
       "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2027",
-    asOf: "2026-05-27",
+    asOf: "2026-05-20",
   },
   {
     /* A reported quarter beats an annualised run rate, so this leads with Q2
@@ -68,10 +68,9 @@ export const AI_REVENUE: AIFigure[] = [
     asOf: "2026-08-14",
   },
   /* REMOVED: "Microsoft AI business, $37B annual run rate" (FY26 Q2, Jan 2026).
-     Microsoft RETIRED the metric. Confirmed against the primary source — the
-     FY26 Q4 release of 2026-07-29 (quarter ended 2026-06-30) quantifies Azure,
-     Microsoft Cloud, M365 and Copilot seats, and discloses no standalone AI
-     revenue figure anywhere:
+     Microsoft RETIRED that standalone revenue metric. The FY26 Q4 release of
+     2026-07-29 (quarter ended 2026-06-30) includes several cloud and AI
+     adoption/usage measures but no successor standalone AI revenue figure:
      https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/
      So the number was 200 days old with no successor to refresh it to.
 
@@ -81,9 +80,9 @@ export const AI_REVENUE: AIFigure[] = [
      AI-revenue card would overstate AI revenue by a wide margin, the exact
      category error this page exists to avoid.
 
-     The one AI-specific number that release does give is 30M+ paid M365 Copilot
-     seats — a usage figure, not revenue, so it sits in AI_ADOPTION instead.
-     If Microsoft resumes disclosing an AI revenue figure, add it back here. */
+     Paid M365 Copilot seats are an adoption measure, not revenue, so that figure
+     sits in AI_ADOPTION instead. If Microsoft resumes disclosing an AI revenue
+     figure, add it back here. */
   {
     id: "gcp",
     label: "Google Cloud",
@@ -138,13 +137,15 @@ export const AI_REVENUE: AIFigure[] = [
 
    `priorYear` is deliberately taken from ONE source for all four companies
    (Epoch AI's hyperscaler tracker, compiled from 10-Q/10-K filings) rather
-   than four separate press reports. Mixing sources here is a trap: Microsoft's
-   fiscal year ends in June, so a "FY2025" capex headline covers a different
-   twelve months than Amazon's, and some outlets count finance leases while
-   others report cash capex only. Epoch's series is calendar-quarter and
-   includes new finance leases throughout, so the four bars are comparable to
-   each other. As a check, they sum to $408.6B against the $410B aggregate the
-   context card cites — the two agree. */
+   than four separate press reports. That keeps the historical comparison on a
+   calendar-quarter basis and inclusive of new finance leases.
+
+   Current guidance still follows each company's own reporting convention:
+   Alphabet guides cash purchases of property and equipment, Meta includes
+   principal payments on finance leases, and Microsoft's July update moved
+   some future data-centre leases from finance to operating leases. The sum is
+   therefore a useful directional spending envelope, not a GAAP-comparable
+   accounting total. */
 export const AI_CAPEX_PRIOR_YEAR_SOURCE = {
   label: "Epoch AI hyperscaler capex tracker (SEC 10-Q/10-K)",
   url: "https://epoch.ai/data-insights/hyperscaler-capex-trend",
@@ -159,57 +160,49 @@ export const AI_CAPEX: AICapexPlan[] = [
     high: 220,
     priorYear: 134.7,
     raised: true,
-    note: "Raised at Q2 on AWS capacity constraints; backlog $496B",
-    source: "Amazon Q2 2026",
-    sourceUrl: "https://www.cnbc.com/2026/07/30/amazon-amzn-q2-earnings-report-2026.html",
+    note: "Raised from $200B at Q2; includes AWS infrastructure plus fulfillment, chips and satellites",
+    source: "Amazon Q2 2026 call",
+    sourceUrl:
+      "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/default.aspx",
     asOf: "2026-07-30",
   },
   {
     company: "Alphabet",
     ticker: "GOOGL",
-    low: 175,
+    low: 195,
     high: 205,
     priorYear: 93.1,
     raised: true,
-    note: "Ceiling lifted to $205B at Q2; the capex hike, not the beat, moved the stock",
-    source: "Alphabet Q2 2026",
-    sourceUrl: "https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html",
+    note: "Q2 call guidance; cash purchases of property and equipment, with leases disclosed separately in the SEC filing",
+    source: "Alphabet Q2 2026 call & SEC 10-Q",
+    sourceUrl:
+      "https://abc.xyz/investor/events/event-details/2026/2026-Q2-Earnings-Call-2026-GgTAq7Is0z/default.aspx",
     asOf: "2026-07-22",
   },
   {
-    /* STALEST ROW ON THE PAGE, and it feeds the computed aggregate below.
-       Checked 2026-08-17: Microsoft's FY26 Q4 press release (2026-07-29) gives
-       NO capex figure — not for the quarter, not for FY27 — so it cannot
-       refresh this. Don't re-check that source hoping otherwise.
-
-       Public secondary reporting disagrees on the basis: ~$190B for calendar
-       2026, ~$175B after an accounting change that lengthens depreciation
-       lives, and $255–260B for FY2027. Those are three different periods, so
-       picking one at random would be worse than the February figure that at
-       least renders with an honest asOf. Resolve it against the 10-K or the
-       earnings call transcript, then set `raised` accordingly. */
     company: "Microsoft",
     ticker: "MSFT",
-    low: 190,
-    high: 190,
+    low: 175,
+    high: 175,
     priorYear: 108.3,
     raised: false,
-    note: "Azure capacity-constrained through the year on management's own account",
-    source: "CNBC",
-    sourceUrl: "https://www.cnbc.com/2026/02/06/google-microsoft-meta-amazon-ai-cash.html",
-    asOf: "2026-02-06",
+    note: "Approximate calendar-2026 reporting-basis figure; underlying plan unchanged, but some future data-centre leases shifted from finance to operating leases",
+    source: "Microsoft FY26 Q4 earnings call",
+    sourceUrl: "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+    asOf: "2026-07-29",
   },
   {
     company: "Meta",
     ticker: "META",
-    low: 125,
+    low: 130,
     high: 145,
     priorYear: 72.5,
     raised: true,
-    note: "Guidance raised twice in 2026, from an initial $115–135B range",
-    source: "CNBC",
-    sourceUrl: "https://www.cnbc.com/2026/07/28/hyperscalers-face-higher-capex-scrutiny-after-alphabet-report-panned.html",
-    asOf: "2026-07-28",
+    note: "Narrowed from $125–145B; includes principal payments on finance leases",
+    source: "Meta Q2 2026 results",
+    sourceUrl:
+      "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx",
+    asOf: "2026-07-29",
   },
 ];
 
@@ -221,41 +214,41 @@ export const AI_CAPEX: AICapexPlan[] = [
    was cited to a February report, before three of the four raised, while the
    chart beside it already showed $710–760B. Summing the sourced parts is both
    self-consistent and independently checkable — every component links to the
-   company's own report in the capex chart. */
+   company's own report in the capex chart. Company definitions differ, as the
+   notes above disclose, so the result is directional rather than a uniform
+   accounting measure. */
 const capexLow = AI_CAPEX.reduce((sum, p) => sum + p.low, 0);
 const capexHigh = AI_CAPEX.reduce((sum, p) => sum + p.high, 0);
 const capexPrior = AI_CAPEX.reduce((sum, p) => sum + p.priorYear, 0);
-const capexGrowth = Math.round((capexLow / capexPrior - 1) * 100);
 
 export const AI_CAPEX_CONTEXT: AIFigure[] = [
   {
     id: "capex-total",
     label: "Combined 2026 capex plans",
     value: `$${capexLow}–${capexHigh}B`,
-    detail: `Four hyperscalers, summed from each company's own guidance · up ~${capexGrowth}% on 2025's $${Math.round(capexPrior)}B · sell-side sees >$1T in 2027`,
-    source: "Company reports · see the capex chart",
-    sourceUrl: "https://www.cnbc.com/2026/07/28/hyperscalers-face-higher-capex-scrutiny-after-alphabet-report-panned.html",
+    detail: `Four hyperscalers, summed from company guidance · displayed 2025 series totals $${Math.round(capexPrior)}B, but current reporting bases differ, especially for leases`,
+    source: "Derived · four issuer links in capex chart",
+    sourceUrl: "#hyperscaler-capex",
     asOf: "2026-07-30",
   },
   {
-    // The IEA publishes a 2024 baseline and a 2030 projection — it does NOT
-    // publish a 2026 figure, so this card states the projection as a
-    // projection. Older "data centres pass 1,000 TWh in 2026" numbers in
-    // circulation come from a superseded 2024 IEA report, not this one.
+    // The IEA publishes a 2025 baseline and a 2030 projection — it does NOT
+    // publish a 2026 demand figure, so this card states the horizon explicitly.
     id: "power",
     label: "Data-centre electricity demand",
-    value: "945 TWh",
+    value: "950 TWh",
     detail:
-      "IEA projection for 2030 — double 2024's 415 TWh (1.5% of world electricity) · AI-accelerated servers +30%/yr",
-    source: "IEA, Energy and AI",
-    sourceUrl: "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai",
-    asOf: "2026-04-10",
+      "IEA projection for 2030 — roughly double 2025's 485 TWh · electricity use by AI-focused data centres triples over the period",
+    source: "IEA, Key Questions on Energy and AI",
+    sourceUrl: "https://www.iea.org/reports/key-questions-on-energy-and-ai/executive-summary",
+    asOf: "2026-04-16",
   },
   {
     id: "backlog",
-    label: "Contracted-but-undelivered cloud",
+    label: "Google Cloud + AWS backlog",
     value: "$1.01T",
-    detail: "Google Cloud $514B + AWS $496B backlog — demand booked years ahead of capacity",
+    detail:
+      "Google Cloud $514B + AWS $496B backlog/RPO · company-wide cloud contract measures, not AI-only and not directly comparable",
     source: "Alphabet & Amazon Q2 2026",
     sourceUrl: "https://www.cnbc.com/2026/07/30/aws-earnings-q2-2026.html",
     asOf: "2026-07-30",
@@ -265,16 +258,11 @@ export const AI_CAPEX_CONTEXT: AIFigure[] = [
 /* ── Chips & supply chain ───────────────────────────────────────────────── */
 export const AI_CHIPS: AIFigure[] = [
   {
-    /* Converted so it reads against the dollar figures beside it. The reported
-       figure and the rate used are both kept in `detail` — a converted number
-       without its rate can't be checked, and the source link lands on a page
-       quoting won. Rate is the USD/KRW print on the release date, not today's,
-       so the figure doesn't drift as the won moves. */
     id: "skhynix",
     label: "SK hynix Q2 2026",
-    value: "$54.6B",
+    value: "₩79.3T",
     detail:
-      "Revenue, with $41.7B operating profit — a 76% operating margin · reported ₩79.3T at ₩1,453/$ · HBM4 mass shipments began",
+      "Preliminary K-IFRS revenue · ₩60.5T operating profit, 76% margin · HBM4 mass shipments began",
     source: "SK hynix newsroom",
     sourceUrl: "https://news.skhynix.com/en/q2-2026-business-results/",
     asOf: "2026-07-29",
@@ -292,22 +280,22 @@ export const AI_CHIPS: AIFigure[] = [
   {
     id: "asml",
     label: "ASML 2026 guidance",
-    value: "$49–51B",
+    value: "€43–45B",
     detail:
-      "Full-year revenue guidance, raised · Q2 net sales $10.6B · reported €43–45B at $1.14/€ · sole EUV supplier",
-    source: "ASML interim report (SEC 6-K)",
-    sourceUrl:
-      "https://www.sec.gov/Archives/edgar/data/0000937966/000162828026048235/statutoryinterimreport20.htm",
+      "Full-year total net sales guidance, raised · Q2 net sales €9.3B · sole EUV supplier",
+    source: "ASML Q2 2026 results",
+    sourceUrl: "https://www.asml.com/en/news/press-releases/2026/q2-2026-financial-results",
     asOf: "2026-07-15",
   },
   {
     id: "hbm",
-    label: "HBM market share",
+    label: "HBM market share estimate",
     value: "58%",
-    detail: "SK hynix share of HBM revenue in Q1 2026, down from 69% a year earlier · Samsung and Micron 21% each",
+    detail:
+      "Counterpoint estimate of SK hynix's HBM revenue share in Q1 2026, down from 69% a year earlier · Samsung and Micron 21% each",
     source: "Counterpoint Research",
     sourceUrl: "https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share",
-    asOf: "2026-06-30",
+    asOf: "2026-06-08",
   },
 ];
 
@@ -315,16 +303,15 @@ export const AI_CHIPS: AIFigure[] = [
    Attribution, not measurement. Challenger counts the reason an employer gives
    in its own announcement — so this tracks how willing companies are to SAY
    "AI", which is not the same as how many jobs AI displaced. The card says so.
-
-   June 2026 is absent on purpose: the reports sourced here give a cumulative
-   H1 figure but not June's own share, and interpolating it would invent a data
-   point. A gap is the honest rendering. */
+   Monthly counts are included where Challenger publishes both the attributed
+   and total cuts; June is reported directly, not interpolated. */
 export const AI_LAYOFF_MONTHS: AILayoffMonth[] = [
   { month: "Jan 2026", aiSharePct: 7 },
   { month: "Feb 2026", aiSharePct: 10 },
   { month: "Mar 2026", aiSharePct: 25 },
   { month: "Apr 2026", aiSharePct: 26 },
   { month: "May 2026", aiSharePct: 40, aiCuts: 38579, totalCuts: 97006 },
+  { month: "Jun 2026", aiSharePct: 31, aiCuts: 14029, totalCuts: 45849 },
   { month: "Jul 2026", aiSharePct: 33, aiCuts: 10970, totalCuts: 33429 },
 ];
 
@@ -332,12 +319,12 @@ export const AI_LABOUR: AIFigure[] = [
   {
     id: "cuts-ytd",
     label: "AI-attributed US job cuts",
-    value: "101,743",
-    detail: "Announced through June 2026 — against 54,836 in all of 2025",
+    value: "112,713",
+    detail: "Employer-announced cuts citing AI through July 2026 — against 54,836 in all of 2025",
     source: "Challenger, Gray & Christmas",
     sourceUrl:
       "https://www.challengergray.com/blog/challenger-report-layoffs-fall-hiring-picks-up-ai-leads-for-fifth-straight-month/",
-    asOf: "2026-07-02",
+    asOf: "2026-08-06",
   },
   {
     id: "leading-reason",
@@ -351,20 +338,20 @@ export const AI_LABOUR: AIFigure[] = [
   },
   {
     id: "concentration",
-    label: "Where the cuts land",
-    value: "Tech",
+    label: "Technology cuts, all reasons",
+    value: "149,023",
     detail:
-      "Cuts stay concentrated in technology (38,242 in May) — displacement is sectoral, not economy-wide",
-    source: "CNBC",
+      "Through July, 31% of all announced cuts · a separate all-reason sector total, not a subset of the 112,713 AI-attributed cuts",
+    source: "Challenger, Gray & Christmas",
     sourceUrl:
-      "https://www.cnbc.com/2026/06/05/ai-is-now-the-leading-reason-companies-give-for-cutting-jobs-says-new-report-what-that-means-for-workers.html",
-    asOf: "2026-06-05",
+      "https://www.challengergray.com/blog/challenger-report-layoffs-fall-hiring-picks-up-ai-leads-for-fifth-straight-month/",
+    asOf: "2026-08-06",
   },
   {
     id: "total-falling",
     label: "Total announced cuts, July",
     value: "33,429",
-    detail: "Lowest monthly total in two years — AI's share is rising while the base shrinks",
+    detail: "Lowest monthly total in two years · AI was the leading stated reason for a fifth consecutive month",
     source: "Challenger, Gray & Christmas",
     sourceUrl:
       "https://www.challengergray.com/blog/challenger-report-layoffs-fall-hiring-picks-up-ai-leads-for-fifth-straight-month/",
@@ -372,9 +359,15 @@ export const AI_LABOUR: AIFigure[] = [
   },
 ];
 
-/* ── Private capital ────────────────────────────────────────────────────── */
+/* ── Private capital ──────────────────────────────────────────────────────
+   Q1 uses Crunchbase's March 31 snapshot: about $242B of a $300B total went
+   to AI, or roughly 80%. Q2 uses the July 1 snapshot: $205B total and "more
+   than 70%" to AI; 70 stores that published floor because the chart type
+   requires a number. These vintages are deliberately retained for the quarter
+   view and do not sum to Crunchbase's later Aug. 3 revision of the H1 total to
+   $515B. */
 export const AI_FUNDING_QUARTERS: AIFundingQuarter[] = [
-  { quarter: "Q1 2026", totalUsdBn: 305, aiSharePct: 80 },
+  { quarter: "Q1 2026", totalUsdBn: 300, aiSharePct: 80 },
   { quarter: "Q2 2026", totalUsdBn: 205, aiSharePct: 70 },
 ];
 
@@ -386,37 +379,53 @@ export const AI_DEALS: AIDeal[] = [
     valuation: 965,
     date: "2026-05-28",
     leadInvestors: "Altimeter, Dragoneer, Greenoaks, Sequoia",
-    source: "CNBC",
-    sourceUrl: "https://www.cnbc.com/2026/05/28/anthropic-open-ai-startup-value.html",
+    source: "Anthropic",
+    sourceUrl: "https://www.anthropic.com/news/series-h",
   },
   {
     company: "OpenAI",
-    round: "Late-stage",
+    round: "Late-stage · committed capital",
     amount: 122,
     valuation: 852,
     date: "2026-03-31",
-    leadInvestors: "Amazon $50B · NVIDIA & SoftBank $30B each",
-    source: "CNBC",
-    sourceUrl: "https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html",
+    leadInvestors: "Amazon, NVIDIA, SoftBank, Microsoft & others",
+    source: "OpenAI",
+    sourceUrl: "https://openai.com/index/accelerating-the-next-phase-ai/",
+  },
+  {
+    company: "Anthropic",
+    round: "Series G",
+    amount: 30,
+    valuation: 380,
+    date: "2026-02-12",
+    leadInvestors: "GIC, Coatue, D. E. Shaw Ventures & others",
+    source: "Anthropic",
+    sourceUrl:
+      "https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation",
   },
 ];
 
+/* Crunchbase revised H1 reported funding from $510B (data as of July 1) to
+   $515B (data as of Aug. 3). The quarter cards above intentionally retain the
+   earlier components because Crunchbase did not publish revised Q1/Q2 splits.
+   The $217B concentration figure combines OpenAI's $122B in committed capital
+   with Anthropic's announced $65B Series H and $30B Series G. */
 export const AI_PRIVATE_CAPITAL: AIFigure[] = [
   {
     id: "h1-total",
-    label: "Global venture funding, H1 2026",
-    value: "$510B",
-    detail: "A record half-year — more than the $440B invested in all of 2025",
+    label: "Reported global venture funding, H1 2026",
+    value: "$515B",
+    detail: "Crunchbase's Aug. 3 revised snapshot · a record half-year, above the $440B reported for all of 2025",
     source: "Crunchbase",
     sourceUrl:
-      "https://news.crunchbase.com/venture/global-startup-exits-ipo-ma-soar-ai-q2-h1-2026/",
-    asOf: "2026-07-02",
+      "https://news.crunchbase.com/venture/data-billion-dollar-rounds-set-global-funding-record-july-2026/",
+    asOf: "2026-08-04",
   },
   {
     id: "ai-share",
     label: "AI share of Q2 funding",
     value: ">70%",
-    detail: "Up from under 50% a year earlier · 88% of AI capital went to US-based firms",
+    detail: "Up from under 50% a year earlier · based on reported rounds in Crunchbase's July 1 snapshot",
     source: "Crunchbase",
     sourceUrl:
       "https://news.crunchbase.com/venture/global-startup-exits-ipo-ma-soar-ai-q2-h1-2026/",
@@ -424,19 +433,20 @@ export const AI_PRIVATE_CAPITAL: AIFigure[] = [
   },
   {
     id: "two-companies",
-    label: "Raised by two companies",
+    label: "Announced by two companies",
     value: "$217B",
-    detail: "OpenAI and Anthropic together — 43% of ALL global startup funding in H1 2026",
-    source: "Crunchbase",
-    sourceUrl:
-      "https://news.crunchbase.com/venture/global-startup-exits-ipo-ma-soar-ai-q2-h1-2026/",
-    asOf: "2026-07-02",
+    detail:
+      "OpenAI committed capital plus Anthropic's two announced rounds · calculated at about 42% of the later revised $515B H1 total",
+    source: "Derived · deal and H1 evidence on page",
+    sourceUrl: "#private-capital-evidence",
+    asOf: "2026-08-04",
   },
   {
     id: "mega-rounds",
     label: "Billion-dollar rounds, Q2",
     value: "16",
-    detail: "Totalling $108.6B — 53% of all second-quarter funding in sixteen cheques",
+    detail:
+      "Sixteen reported billion-dollar rounds totalled $108.6B — 53% of the July 1 Q2 funding snapshot",
     source: "Crunchbase",
     sourceUrl:
       "https://news.crunchbase.com/venture/global-startup-exits-ipo-ma-soar-ai-q2-h1-2026/",
@@ -445,67 +455,66 @@ export const AI_PRIVATE_CAPITAL: AIFigure[] = [
 ];
 
 /* ── Adoption ───────────────────────────────────────────────────────────────
-   The Census Bureau's BTOS is the only nationally representative, regularly
-   published measure of US business AI use — everything else on adoption is a
-   vendor survey with a vendor's incentive. Firm-size cut included because the
-   headline rate hides the real story: adoption is a large-firm phenomenon. */
-/* Only the two large bands are published as point estimates. The Census story
-   characterises firms under 20 employees as "less than 20%" without giving a
-   figure, and does not break out 20–99 at all — so those bands are absent here
-   rather than interpolated, and the chart says why. */
+   The Census Bureau's BTOS is a nationally representative, biweekly measure
+   of US nonfarm employer-business AI use. The Aug. 13 release publishes point
+   estimates for all seven employment-size bands for the July 13–26 reference
+   period, so the chart uses the complete distribution rather than an older
+   two-band summary. */
 export const AI_ADOPTION_BY_SIZE: AISeriesPoint[] = [
-  { label: "100–249 employees", value: 32.0 },
-  { label: "250+ employees", value: 37.0 },
+  { label: "1–4 employees", value: 21.9 },
+  { label: "5–9 employees", value: 20.0 },
+  { label: "10–19 employees", value: 20.2 },
+  { label: "20–49 employees", value: 22.4 },
+  { label: "50–99 employees", value: 27.8 },
+  { label: "100–249 employees", value: 30.3 },
+  { label: "250+ employees", value: 41.5 },
 ];
 
-/** National rate for the same period, drawn as a reference line on the chart. */
-export const AI_ADOPTION_NATIONAL_RANGE: [number, number] = [17, 20];
+/** Latest national point estimate, duplicated for the chart's legacy tuple API. */
+export const AI_ADOPTION_NATIONAL_RANGE: [number, number] = [21.8, 21.8];
 
 export const AI_ADOPTION: AIFigure[] = [
   {
     id: "btos-headline",
-    label: "US firms using AI",
-    value: "17–20%",
+    label: "US employer businesses using AI",
+    value: "21.8%",
     detail:
-      "In a business function · range across BTOS waves, Dec 2025 – May 2026 · adoption is a large-firm story",
+      "Used AI in any business function in the prior two weeks · Jul 13–26 reference period",
     source: "US Census Bureau BTOS",
-    sourceUrl: "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html",
-    asOf: "2026-05-28",
+    sourceUrl: "https://www.census.gov/hfp/btos/data",
+    asOf: "2026-08-13",
   },
   {
     id: "btos-expected",
     label: "Expect to use AI within 6 months",
-    value: "20–23%",
-    detail: "Range across BTOS waves, Dec 2025 – May 2026 · the adoption curve is flattening",
+    value: "25.9%",
+    detail: "National BTOS point estimate · Jul 13–26 reference period",
     source: "US Census Bureau BTOS",
-    sourceUrl: "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html",
-    asOf: "2026-05-28",
+    sourceUrl: "https://www.census.gov/hfp/btos/data",
+    asOf: "2026-08-13",
   },
   {
-    /* Microsoft's only AI-specific usage disclosure. A paid-seat count beats a
-       survey response as an adoption signal — someone is being billed for it —
-       but it counts SEATS, not people using them, so it is labelled that way.
-       Note what sits beside it in the same release: Copilot seats and Azure
-       revenue are both quantified while AI revenue is not disclosed at all. */
+    /* A paid-seat count beats extrapolating a time-limited survey response as an
+       adoption signal — someone is being billed for it — but it counts SEATS,
+       not people using them, so it is labelled that way. */
     id: "m365-copilot-seats",
     label: "Microsoft 365 Copilot paid seats",
     value: "30M+",
-    detail:
-      "Quarter ended Jun 30, 2026 · seats licensed, not necessarily active users · Microsoft's only AI-specific usage figure",
+    detail: "Quarter ended Jun 30, 2026 · seats licensed, not necessarily active users",
     source: "Microsoft FY26 Q4 results",
     sourceUrl:
       "https://news.microsoft.com/source/2026/07/29/microsoft-cloud-and-ai-strength-fuels-fourth-quarter-results-4/",
     asOf: "2026-07-29",
   },
   {
-    id: "inference-cost",
-    label: "Cost per unit of capability",
-    value: "9–900×",
+    id: "chip-price-performance",
+    label: "AI-chip performance per dollar",
+    value: "+49%/yr",
     detail:
-      "Annual rate of per-token price decline for a fixed benchmark score · frontier list prices still rose in 2026",
+      "Estimated spending-weighted peak throughput of chips sold, Q1 2023–Q4 2025, in constant 2025 dollars · doubles every 1.7 years · not deployed or workload performance",
     source: "Epoch AI",
-    sourceUrl: "https://epoch.ai/data-insights/llm-inference-price-trends",
-    asOf: "2026-06-30",
+    sourceUrl: "https://epoch.ai/data-insights/chip-performance-per-dollar",
+    asOf: "2026-08-13",
   },
   /* REMOVED: "Magnificent 7 share of S&P 500, ~32%". No source met this page's
      bar. The four candidates disagreed — 31.5%, 31.7%, 32.24% and "about 34%" —
