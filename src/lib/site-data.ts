@@ -18,7 +18,7 @@ import type {
 // Updated automatically by patch-site-data.mjs from provider fetch timestamps.
 export const DATA_UPDATED_AT = "Aug 22, 2026";
 // Still maintained by patch-site-data.mjs, but no longer displayed anywhere:
-// every surface now shows the single "Week of …" label from lib/briefing.ts.
+// every dated surface shows the single "Last updated: …" label from lib/briefing.ts.
 export const NEXT_BRIEFING_AT = "Aug 23, 2026";
 
 // Build a deterministic 52-point weekly sparkline

@@ -191,12 +191,10 @@ the wrong company on those tiles.
 
 ### Briefing status (was `PageHeader.tsx`)
 - `PageHeader.tsx` has been **deleted** — no page had used it for some time.
-- `BriefingHero` is the standard page header. It takes a `status` prop and renders one of two
-  site-wide labels from `lib/briefing.ts`, both derived from `DATA_UPDATED_AT` (maintained by
+- `BriefingHero` is the standard page header. It takes a `status` prop and renders the
+  site-wide update label from `lib/briefing.ts`, derived from `DATA_UPDATED_AT` (maintained by
   `patch-site-data.mjs`). There is no per-page date prop and no "next briefing" date.
-  - `status="week"` → `Week of <Mon> – <Fri>, <year>` — Markets and AI, whose data is a week of closes.
-  - `status="updated"` → `Last updated: <date>` — Economy, US and Canada, whose series are monthly
-    and quarterly. A CPI or GDP print has no trading week, so the weekly label would misstate the cadence.
+  - `status="updated"` (default) → `Last updated: <date>` — all data-driven pages.
   - `status="none"` → nothing — About and Blog.
 
 ---

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Quote } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { WEEKLY_COMMENTARY } from "@/lib/site-data";
-import { BRIEFING_WEEK_LABEL } from "@/lib/briefing";
+import { LAST_UPDATED_LABEL } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
 
 export default function WeeklyCommentary() {
@@ -23,7 +23,7 @@ export default function WeeklyCommentary() {
               decoded.
             </h2>
             <div className="mt-7 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: "var(--color-neon-cyan)", fontFamily: FONT_MONO }}>
-              {BRIEFING_WEEK_LABEL}
+              {LAST_UPDATED_LABEL}
             </div>
             <div className="mt-8 border-l pl-5" style={{ borderColor: "var(--color-neon-cyan)" }}>
               <Quote size={18} className="mb-4" style={{ color: "var(--color-neon-cyan)" }} />

@@ -18,12 +18,8 @@ interface BriefingHeroProps {
   /** Omit to render the hero without the lede paragraph. */
   description?: string;
   /**
-   * Which briefing label to show. The text is site-wide — a page picks the
-   * KIND, never the date:
-   *   "week"    → "Week of Aug 10 – Aug 14, 2026"  (Markets, AI — weekly closes)
-   *   "updated" → "Last updated: Aug 15, 2026"     (Economy/US/Canada — monthly
-   *               and quarterly series, which have no trading week)
-   *   "none"    → nothing (About, Blog)
+   * Whether to show the site-wide update label. The date is always sourced from
+   * DATA_UPDATED_AT; non-data pages can opt out with "none".
    */
   status?: BriefingStatus;
   accent?: "violet" | "indigo" | "emerald";
@@ -56,7 +52,7 @@ export default function BriefingHero({
   eyebrow,
   title,
   description,
-  status = "week",
+  status = "updated",
   accent = "violet",
   stats = [],
 }: BriefingHeroProps) {

@@ -4,7 +4,7 @@
 
 **Dev URL:** http://localhost:3001 · **Owner:** Kunal Kapoor (kunalkapoor.jnj@gmail.com) · **Repo:** `/Users/kunalkapoor/Projects/finance-with-kunal`
 
-A light, professional personal-finance blog + global-markets dashboard with a "Bloomberg terminal" feel. Static site, hosted on GitHub Pages. Curated **weekly cadence** — never use "live / real-time" language. Every page shows one shared label, `Week of <Mon> – <Fri>, <year>`, from `lib/briefing.ts`.
+A light, professional personal-finance blog + global-markets dashboard with a "Bloomberg terminal" feel. Static site, hosted on GitHub Pages. Curated **weekly cadence** — never use "live / real-time" language. Every dated surface shows one shared label, `Last updated: <date>`, from `lib/briefing.ts`.
 
 > **Deep reference** — data providers, dataset inventory, economic indicators, per-component behavior, and roadmap — lives in **[`docs/DATA.md`](docs/DATA.md)**. This file is the quick overview; open DATA.md when touching data or a specific component.
 
@@ -47,14 +47,13 @@ Warm editorial palette — paper, ink, and signal green. **Two themes**: light i
 
 The `--color-neon-*` names are kept for back-compat and no longer describe the actual hues. Market up/down/neutral also differ per theme. ECharts configs can't read CSS vars — use hex equivalents there.
 
-Reusable UI: `BriefingHero` (page hero + briefing week + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections.
+Reusable UI: `BriefingHero` (page hero + update label + stat tiles) is the standard page header; `SciFiCard` (card wrapper + `CardHeader`) for sections.
 
-**The briefing label is never hardcoded or passed per page — a page picks the KIND, not the date.** `lib/briefing.ts` derives both strings from `DATA_UPDATED_AT`, which `patch-site-data.mjs` maintains on every refresh, so they follow automatically. `BriefingHero` takes `status`:
+**The briefing label is never hardcoded or passed per page.** `lib/briefing.ts` derives it from `DATA_UPDATED_AT`, which `patch-site-data.mjs` maintains on every refresh. `BriefingHero` takes `status`:
 
 | `status` | Renders | Used by | Why |
 |---|---|---|---|
-| `"week"` (default) | `Week of Aug 10 – Aug 14, 2026` | Markets, AI, homepage eyebrow, weekly-commentary card | Their data really is a week of closes |
-| `"updated"` | `Last updated: Aug 15, 2026` | Economy, US, Canada | CPI, GDP, PMI and unemployment are monthly/quarterly — a GDP print doesn't belong to a trading week, so claiming one would misstate the cadence |
+| `"updated"` (default) | `Last updated: Aug 15, 2026` | Markets, AI, Economy, US, Canada, homepage eyebrow, weekly-commentary card | One consistent freshness label across every dated surface |
 | `"none"` | nothing | About, Blog | Not data-driven |
 
 `NEXT_BRIEFING_AT` is still patched but displayed nowhere — the next-briefing date was dropped.
@@ -207,7 +206,7 @@ currency this site doesn't define.
 
 - **SVG renderer for every ECharts chart** (`opts={{ renderer: "svg" }}`) — canvas + web font = invisible labels on first paint.
 - **No mock or fabricated figures anywhere.** Every number rendered on the site is either fetched from a provider or hand-curated from a named source. Where a figure can't be sourced it is left absent and rendered as a dash — see index P/E and the `/ai` gaps. A synthetic `generateSparkline()` helper used to live in `lib/utils.ts`; it was unused and has been deleted, so there is no generator to reach for. If a visual genuinely needs generated values, seed them deterministically (string hash / index) — raw `Math.random()` also causes hydration mismatches — and never present them as data.
-- **No "live / real-time / LIVE DATA"** — weekly cadence; use `Last Updated` / `Next Update`.
+- **No "live / real-time / LIVE DATA"** — weekly cadence; use the shared `Last updated: <date>` label from `lib/briefing.ts`.
 - **Dashboard categories render in `CATEGORIES` array order** (`dashboard/page.tsx`) — to add a section at the top, put it first.
 - **Use color tokens** (`var(--color-*)`) over hardcoded hex, except in ECharts configs (use the hex equivalents).
 - **One chart window ladder site-wide: `1W / 3M / 6M / YTD / 2Y / 3Y`.** `CHART_VIEWS` (lib/chart-window.ts) is the single source of truth for it — the markets tables' old `YTD/52W/3Y` vocabulary is now an alias onto it. Each chart offers only the rungs its own series can fill (`horizonsFor`), so the PMI cards show 3M/6M and a 36-point macro series shows up to 3Y. A quarterly series needs >= 13 points to reach 3Y.

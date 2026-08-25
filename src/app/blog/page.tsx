@@ -25,8 +25,8 @@ export default function BlogPage() {
         title="Ideas that outlive the news cycle."
         description="Long-form commentary on the forces moving markets and economies—written to stay useful after the headline has moved on."
         accent="violet"
-        // Posts aren't tied to the weekly data refresh, so the briefing week
-        // would be labelling this page with something it doesn't show.
+        // Posts aren't tied to the data refresh, so the update label would be
+        // describing data this page doesn't show.
         status="none"
         stats={
           posts.length === 0
