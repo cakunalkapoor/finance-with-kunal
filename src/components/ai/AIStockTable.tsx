@@ -247,7 +247,7 @@ export default function AIStockTable() {
                             </span>
                           )}
                           <span className={`font-semibold ${getChangeColor(stock.dailyChange)}`}>
-                            {formatChange(stock.dailyChange)} today
+                            {formatChange(stock.dailyChange)} 1D
                           </span>
                         </div>
                       </td>

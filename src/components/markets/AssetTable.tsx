@@ -180,7 +180,7 @@ export default function AssetTable({
                       className={`font-semibold ${getChangeColor(row.dailyChange)}`}
                       style={{ fontFamily: FONT_MONO, fontSize: "10px" }}
                     >
-                      {formatChange(row.dailyChange)} today
+                      {formatChange(row.dailyChange)} 1D
                     </div>
                   </td>
 

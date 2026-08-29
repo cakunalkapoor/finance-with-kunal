@@ -209,7 +209,7 @@ export default function ETFTable() {
                         className={`font-semibold ${getChangeColor(etf.dailyChange)}`}
                         style={{ fontFamily: FONT_MONO, fontSize: "10px" }}
                       >
-                        {formatChange(etf.dailyChange)} today
+                        {formatChange(etf.dailyChange)} 1D
                       </div>
                     </td>
 

@@ -231,7 +231,7 @@ export default function EquityMarketsTable() {
                       {formatNumber(idx.value, idx.value > 10000 ? 0 : 2)}
                     </div>
                     <div className={getChangeColor(idx.dailyChange)} style={{ fontSize: "10px", fontFamily: FONT_MONO }}>
-                      {formatChange(idx.dailyChange)} today
+                      {formatChange(idx.dailyChange)} 1D
                     </div>
                     <div className="mt-1.5">
                       <RangeBar value={idx.value} low={idx.low52w} high={idx.high52w} />
