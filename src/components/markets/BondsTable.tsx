@@ -19,9 +19,9 @@ import { ChangeStack } from "@/components/markets/StatStack";
 // Sources differ per row and so does their lag: five countries have an
 // automated daily feed, while the UK, India, South Korea and Australia are read
 // from a published page each refresh (their HISTORY still comes from FRED's
-// monthly series, which is why they carry no 1D figure). Rather than let a
-// stale number pass as current, every row shows its own observation date, and
-// anything older than a normal monthly publication cycle is called out.
+// monthly series, which is why they carry no exact 1D/1M/1Y figures). Rather
+// than let a stale number pass as current, every row shows its own observation
+// date, and anything older than a normal monthly publication cycle is called out.
 const STALE_AFTER_DAYS = 45;
 const REFRESHED_AT = new Date(DATA_UPDATED_AT).getTime();
 const POLICY_RATE_BY_COUNTRY = new Map(

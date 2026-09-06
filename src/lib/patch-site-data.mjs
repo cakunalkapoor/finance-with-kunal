@@ -25,7 +25,6 @@ try { bondsDump = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-data.json
 let bondsManual = { bonds: {} };
 try { bondsManual = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-manual.json"), "utf8")); } catch { /* absent */ }
 
-const round3 = (n) => Math.round(n * 1000) / 1000;
 let src = readFileSync(dataPath, "utf8");
 
 const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt, bondsDump.fetchedAt]
@@ -263,16 +262,17 @@ for (const b of Object.values(bondsDump.bonds || {})) considerBond(b, "daily");
 // Read-and-verify overlay (src/lib/bonds-manual.json) — the UK, India, South
 // Korea and Australia have no free machine-readable daily feed, so those values
 // are read from published pages during the refresh and cross-checked against a
-// second provider. Only the headline value is taken by hand; the 12-point
-// sparkline stays on the FRED monthly series and the 1M/1Y moves are recomputed
-// against it, so no history has to be transcribed.
+// second provider. Only the headline value is taken by hand; the sparkline
+// stays on the lagging FRED monthly series. Period moves are unavailable because
+// comparing a September headline with (for example) a June monthly observation
+// would publish a three-month gap under a 1M label.
 for (const m of Object.values(bondsManual.bonds || {})) {
   const base = bondCandidates[m.country];
   if (!base || m.value == null || !m.asOf) continue;
   if (base.asOf >= m.asOf) continue;             // an automated feed is fresher — keep it
   const monthly = Array.isArray(base.trend) ? base.trend : [];
-  // Append the fresh reading as the newest monthly point so the sparkline ends
-  // at the value actually shown, and measure 1M/1Y against that same series.
+  // Append the fresh reading as the newest point so the sparkline ends at the
+  // value actually shown. It provides context, not exact period-return inputs.
   const trend = monthly.length ? [...monthly.slice(1), m.value] : undefined;
   bondCandidates[m.country] = {
     ...base,
@@ -289,15 +289,10 @@ for (const m of Object.values(bondsManual.bonds || {})) {
        sitting one above the other. There is no daily history to compute from, so
        the honest answer is no figure; the table renders a dash. */
     dailyMove: null,
-    /* Index from the END of the series, not the start. `monthly[len - 1]` is
-       last month and `m.value` is this month, so a year back is `len - 12`.
-       This read `monthly[0]`, which was the same point only while the array was
-       exactly 12 long — once the trend grew to 36 points that silently became a
-       THREE-year move published under a 1Y label. */
-    oneMonthMove: monthly.length ? round3(m.value - monthly[monthly.length - 1]) : base.oneMonthMove,
-    oneYearMove:  monthly.length >= 12
-      ? round3(m.value - monthly[monthly.length - 12])
-      : base.oneYearMove,
+    // The monthly fallback currently lags the manual reading by several months,
+    // so neither 1M nor 1Y can be labelled honestly from this mixed series.
+    oneMonthMove: null,
+    oneYearMove: null,
   };
 }
 
@@ -351,8 +346,8 @@ for (const b of Object.values(bondCandidates)) {
     // patchObject skips null/undefined so a missing field can't blank a good
     // one — but here the ABSENCE is the fact to publish, so write it literally.
     dailyMove: b.dailyMove ?? "null",
-    oneMonthMove: b.oneMonthMove,
-    oneYearMove: b.oneYearMove,
+    oneMonthMove: b.oneMonthMove ?? "null",
+    oneYearMove: b.oneYearMove ?? "null",
     trend: b.trend,
     // patchObject passes strings through verbatim — quote them here.
     asOf: `"${b.asOf}"`,

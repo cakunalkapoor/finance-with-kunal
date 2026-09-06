@@ -11,50 +11,50 @@
     "value forward without re-reading it -- a stale number here is worse than the",
     "monthly FRED fallback, because this tier overrides it and claims to be daily.",
     "",
-    "Only the headline `value` comes from here. The 12-point sparkline stays on the",
-    "FRED monthly series, and 1M/1Y moves are recomputed against it in",
-    "patch-site-data.mjs, so no history has to be transcribed by hand."
+    "Only the headline `value` comes from here. The 36-point sparkline stays on the",
+    "lagging FRED monthly series for context. Exact 1D/1M/1Y moves are unavailable",
+    "for these rows, so the table renders dashes instead of mislabelled periods."
   ],
-  "readAt": "2026-08-29",
+  "readAt": "2026-09-05",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.0695,
-      "asOf": "2026-08-28",
+      "value": 5.1345,
+      "asOf": "2026-09-04",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
         "source": "Trading Economics UK 10Y",
-        "value": 5.0695
+        "value": 5.1345
       }
     },
     "in10y": {
       "country": "India",
-      "value": 6.913,
-      "asOf": "2026-08-28",
+      "value": 6.961,
+      "asOf": "2026-09-04",
       "source": "Investing.com India 10Y",
       "crossCheck": {
         "source": "Trading Economics India 10Y",
-        "value": 6.912
+        "value": 6.971
       }
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 4.274,
-      "asOf": "2026-08-28",
+      "value": 4.361,
+      "asOf": "2026-09-04",
       "source": "Investing.com South Korea 10Y",
       "crossCheck": {
         "source": "Trading Economics South Korea 10Y",
-        "value": 4.274
+        "value": 4.361
       }
     },
     "au10y": {
       "country": "Australia",
-      "value": 5.088,
-      "asOf": "2026-08-28",
+      "value": 5.152,
+      "asOf": "2026-09-04",
       "source": "Investing.com Australia 10Y",
       "crossCheck": {
         "source": "Trading Economics Australia 10Y",
-        "value": 5.088
+        "value": 5.194
       }
     }
   }

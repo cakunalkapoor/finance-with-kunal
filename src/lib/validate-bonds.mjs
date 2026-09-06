@@ -48,6 +48,11 @@ const trendEnds = new Map([...block.matchAll(
   return [m[1], values.at(-1)];
 }));
 
+const parseMove = (value) => value === "null" ? null : Number(value);
+const moves = new Map([...block.matchAll(
+  /country: "([^"]+)"[\s\S]*?dailyMove: (null|-?[\d.]+),[\s\S]*?oneMonthMove: (null|-?[\d.]+),[\s\S]*?oneYearMove: (null|-?[\d.]+),/g
+)].map((m) => [m[1], [parseMove(m[2]), parseMove(m[3]), parseMove(m[4])]]));
+
 if (bonds.length !== 9) problems.push(`expected 9 bonds, found ${bonds.length}`);
 
 // The table now pairs each sovereign yield with one current central-bank
@@ -145,6 +150,10 @@ for (const key of Object.keys(manual.bonds ?? {})) {
 for (const c of MANUAL_TIER) {
   if (!Object.values(manual.bonds ?? {}).some(m => m.country === c)) {
     problems.push(`${c}: missing from bonds-manual.json — it has no automated daily feed`);
+  }
+  const rowMoves = moves.get(c);
+  if (!rowMoves || rowMoves.some((value) => value !== null)) {
+    problems.push(`${c}: 1D/1M/1Y moves must be null — the fallback history cannot substantiate those labelled periods`);
   }
 }
 
