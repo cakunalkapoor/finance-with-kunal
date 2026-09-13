@@ -15,46 +15,46 @@
     "lagging FRED monthly series for context. Exact 1D/1M/1Y moves are unavailable",
     "for these rows, so the table renders dashes instead of mislabelled periods."
   ],
-  "readAt": "2026-09-05",
+  "readAt": "2026-09-12",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.1345,
-      "asOf": "2026-09-04",
+      "value": 5.3453,
+      "asOf": "2026-09-11",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
         "source": "Trading Economics UK 10Y",
-        "value": 5.1345
+        "value": 5.36
       }
     },
     "in10y": {
       "country": "India",
-      "value": 6.961,
-      "asOf": "2026-09-04",
+      "value": 7.021,
+      "asOf": "2026-09-11",
       "source": "Investing.com India 10Y",
       "crossCheck": {
         "source": "Trading Economics India 10Y",
-        "value": 6.971
+        "value": 7.01
       }
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 4.361,
-      "asOf": "2026-09-04",
+      "value": 4.571,
+      "asOf": "2026-09-11",
       "source": "Investing.com South Korea 10Y",
       "crossCheck": {
         "source": "Trading Economics South Korea 10Y",
-        "value": 4.361
+        "value": 4.571
       }
     },
     "au10y": {
       "country": "Australia",
-      "value": 5.152,
-      "asOf": "2026-09-04",
+      "value": 5.363,
+      "asOf": "2026-09-11",
       "source": "Investing.com Australia 10Y",
       "crossCheck": {
         "source": "Trading Economics Australia 10Y",
-        "value": 5.194
+        "value": 5.38
       }
     }
   }
