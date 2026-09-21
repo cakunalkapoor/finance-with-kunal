@@ -18,7 +18,7 @@ import type {
  *      cadence. GENERATED: `npm run fetch:ai && npm run patch:ai` rewrites the
  *      marked block below. Don't hand-edit it.
  *
- *   2. Everything else — hand-curated, because no free provider publishes it.
+ *   2. Research figures — verified against company, agency and research releases.
  *      "AI revenue" is a run-rate a CFO chose to say out loud on a call, not a
  *      reported segment; layoff attribution is one outplacement firm's monthly
  *      press release; private deal terms are whatever the parties announced.
@@ -26,14 +26,15 @@ import type {
  *      UI renders all three. If a number can't be sourced it doesn't go on the
  *      page — same rule as index P/E on the markets tables.
  *
- * MAINTENANCE: the curated blocks below go stale on a quarterly earnings
- * rhythm, not a weekly one. `AI_DATA_ASOF` is the honest "curated as of" date
+ * MAINTENANCE: research releases follow different schedules: quarterly earnings,
+ * monthly layoffs and biweekly Census data (also available through its public API).
+ * `AI_DATA_ASOF` is the honest research review date
  * shown on the page — bump it whenever you revise the curated figures, and
  * leave it alone when only the stock quotes refresh.
  */
 
 /** Date the curated (non-quote) figures on /ai were last reviewed. */
-export const AI_DATA_ASOF = "Sep 12, 2026";
+export const AI_DATA_ASOF = "Sep 21, 2026";
 
 /* ── Company AI revenue ─────────────────────────────────────────────────────
    Note how few of these are reported segment figures. Amazon gives a run rate
@@ -54,18 +55,15 @@ export const AI_REVENUE: AIFigure[] = [
     asOf: "2026-08-26",
   },
   {
-    /* A reported quarter beats an annualised run rate, so this leads with Q2
-       revenue and keeps the run rate as context. Flagged preliminary because
-       Bloomberg says the figures could still be revised. */
     id: "anthropic",
     label: "Anthropic",
-    value: "$11.5B",
+    value: ">$100B",
     detail:
-      "Q2 2026 revenue, up from $787M a year earlier · preliminary · run rate exceeded $65B by end-July · private company",
-    source: "Bloomberg via Axios",
+      "Reported annualized revenue pace · private company; not full-year revenue",
+    source: "New York Times via Axios",
     sourceUrl:
-      "https://www.axios.com/2026/08/17/anthropic-revenue-run-rate-ipo-openai",
-    asOf: "2026-08-17",
+      "https://www.axios.com/2026/09/18/anthropic-100-billion-revenue",
+    asOf: "2026-09-18",
   },
   /* REMOVED: "Microsoft AI business, $37B annual run rate" (FY26 Q2, Jan 2026).
      Microsoft RETIRED that standalone revenue metric. The FY26 Q4 release of
@@ -161,9 +159,9 @@ export const AI_CAPEX: AICapexPlan[] = [
     priorYear: 134.7,
     raised: true,
     note: "Raised from $200B at Q2; includes AWS infrastructure plus fulfillment, chips and satellites",
-    source: "Amazon Q2 2026 call",
+    source: "Amazon Q2 2026 call via AP",
     sourceUrl:
-      "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/default.aspx",
+      "https://apnews.com/article/b4ce02b4666a35b8975823c5c22072ee",
     asOf: "2026-07-30",
   },
   {
@@ -400,6 +398,38 @@ export const AI_FUNDING_QUARTERS: AIFundingQuarter[] = [
 
 export const AI_DEALS: AIDeal[] = [
   {
+    company: "Crusoe",
+    round: "Series F · initial close; anticipated total",
+    amount: 3.9,
+    valuation: 30.9,
+    date: "2026-09-17",
+    leadInvestors: "Atreides, Mubadala Capital, Valor Equity Partners",
+    source: "Crusoe",
+    sourceUrl: "https://www.crusoe.ai/resources/newsroom/crusoe-announces-series-f-funding",
+  },
+  {
+    company: "Profound",
+    round: "Series D",
+    amount: 0.18,
+    valuation: 1.8,
+    date: "2026-09-15",
+    leadInvestors: "Sequoia, Kleiner Perkins",
+    source: "Profound",
+    sourceUrl:
+      "https://www.tryprofound.com/newsroom/profound-raises-usd180m-series-d-at-usd1-8b-valuation-to-build-the-ai-platform-for-marketing-teams",
+  },
+  {
+    company: "Databricks",
+    round: "Growth funding",
+    amount: 5,
+    valuation: 190,
+    date: "2026-08-13",
+    leadInvestors: "Coatue, Blackstone, MGX, T. Rowe Price, Sixth Street Growth",
+    source: "Reuters",
+    sourceUrl:
+      "https://www.investing.com/news/stock-market-news/databricks-valued-at-190-billion-in-latest-funding-round-4858466",
+  },
+  {
     company: "Anthropic",
     round: "Series H",
     amount: 65,
@@ -469,15 +499,15 @@ export const AI_PRIVATE_CAPITAL: AIFigure[] = [
     asOf: "2026-08-04",
   },
   {
-    id: "mega-rounds",
-    label: "Billion-dollar rounds, Q2",
-    value: "16",
+    id: "latest-month",
+    label: "Global venture funding, August",
+    value: "$42B",
     detail:
-      "Sixteen reported billion-dollar rounds totalled $108.6B — 53% of the July 1 Q2 funding snapshot",
+      "All sectors, not AI alone · down 25% from July's $56B · seven billion-dollar rounds · Sep 2 snapshot",
     source: "Crunchbase",
     sourceUrl:
-      "https://news.crunchbase.com/venture/global-startup-exits-ipo-ma-soar-ai-q2-h1-2026/",
-    asOf: "2026-07-02",
+      "https://news.crunchbase.com/venture/global-funding-billion-dollar-deals-august-2026/",
+    asOf: "2026-09-03",
   },
 ];
 
@@ -487,6 +517,9 @@ export const AI_PRIVATE_CAPITAL: AIFigure[] = [
    estimates for all seven employment-size bands for the Aug. 24–Sep. 6 reference
    period, so the chart uses the complete distribution rather than an older
    two-band summary. */
+export const AI_ADOPTION_PERIOD = "Aug 24–Sep 6, 2026";
+export const AI_ADOPTION_RELEASE = "Sep 10, 2026";
+
 export const AI_ADOPTION_BY_SIZE: AISeriesPoint[] = [
   { label: "1–4 employees", value: 23.6 },
   { label: "5–9 employees", value: 21.0 },
@@ -506,7 +539,7 @@ export const AI_ADOPTION: AIFigure[] = [
     label: "US employer businesses using AI",
     value: "23.2%",
     detail:
-      "Used AI in any business function in the prior two weeks · Aug 24–Sep 6 reference period",
+      `Used AI in any business function in the prior two weeks · ${AI_ADOPTION_PERIOD} reference period`,
     source: "US Census Bureau BTOS",
     sourceUrl: "https://www.census.gov/hfp/btos/data",
     asOf: "2026-09-10",
@@ -515,7 +548,7 @@ export const AI_ADOPTION: AIFigure[] = [
     id: "btos-expected",
     label: "Expect to use AI within 6 months",
     value: "27.3%",
-    detail: "National BTOS point estimate · Aug 24–Sep 6 reference period",
+    detail: `National BTOS point estimate · ${AI_ADOPTION_PERIOD} reference period`,
     source: "US Census Bureau BTOS",
     sourceUrl: "https://www.census.gov/hfp/btos/data",
     asOf: "2026-09-10",

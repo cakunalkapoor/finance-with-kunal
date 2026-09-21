@@ -7,12 +7,9 @@ import type { CSSProperties } from "react";
 /*
  * Private-market AI capital.
  *
- * Deliberately a short table rather than a long one. Deal databases are paid
- * products, and a scraped "top 50 AI rounds" list would be half-sourced and
- * stale within a fortnight. Three rounds carry the actual point — that a pair
- * of private companies accounted for about 42% of reported global venture
- * funding in the revised half-year snapshot — better than fifty rows of varying
- * reliability would.
+ * Selected sourced rounds, newest first. The three H1 OpenAI/Anthropic rounds
+ * support the separate H1 concentration calculation; later deals are excluded
+ * from that denominator and numerator.
  *
  * Amounts are announced or committed, which is not always the same as cash
  * funded at announcement. Private post-money valuations are negotiated prices
@@ -41,7 +38,7 @@ export default function AIDealsTable() {
     <SciFiCard glow="purple">
       <CardHeader
         title="Private capital"
-        subtitle="Global venture funding in USD · Q1 Mar 31 and Q2 Jul 1 snapshots · largest announced AI rounds"
+        subtitle="Global venture funding in USD · Q1 Mar 31 and Q2 Jul 1 snapshots · selected announced AI rounds"
       />
 
       {/* Quarterly split — two bars' worth of data, so rendered as meters
@@ -184,7 +181,9 @@ export default function AIDealsTable() {
         Q1&rsquo;s ≈80% share and total preserve Crunchbase&rsquo;s Mar 31 snapshot; Q2&rsquo;s &gt;70%
         share and total preserve its Jul 1 snapshot. The later revised H1 total is not backfilled
         into the quarter view because Crunchbase did not publish a revised split. Deal amounts are
-        announced or committed, not necessarily funded on the announcement date. A post-money
+        announced or committed, not necessarily funded on the announcement date. Crusoe&rsquo;s
+        amount is the anticipated full round at its initial close. August and September deals
+        are excluded from the H1 concentration calculation. A post-money
         valuation is the negotiated price for preferred stock with its own terms, not a daily market
         capitalisation. This is the reported headline set, not a complete private-market league
         table.

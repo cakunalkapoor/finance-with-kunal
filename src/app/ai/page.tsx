@@ -95,7 +95,7 @@ export default function AIPage() {
           stats={[
             { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Company-wide · four hyperscalers" },
             { label: "Q2 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Jul 1 global snapshot" },
-            { label: "Stated cause", value: "#1", detail: "Five straight months" },
+            { label: "AI rank", value: figure(AI_LABOUR, "leading-reason"), detail: "August layoff reasons" },
           ]}
         />
 
@@ -203,11 +203,10 @@ export default function AIPage() {
                 columns={2}
                 glow="purple"
               >
-                AI was the reason cited most often in recent announcements while total announced
-                cuts hit a two-year low. Challenger tracks stated reasons, not independently
-                measured displacement. Its technology-sector total covers cuts for every stated
-                reason; separately, Challenger says AI-related cutting has been limited outside
-                technology.
+                AI ranked fourth among stated reasons in August, while remaining the leading
+                reason year to date. Total announced cuts rose 58% from July to 52,881.
+                Challenger tracks employer attribution, not independently measured displacement.
+                Its technology-sector total covers cuts for every stated reason.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -223,7 +222,7 @@ export default function AIPage() {
                 figures={AI_PRIVATE_CAPITAL}
                 columns={2}
               >
-                Combining the announced OpenAI and Anthropic rounds in the deal table with
+                Combining the three H1 OpenAI and Anthropic rounds in the deal table with
                 Crunchbase&rsquo;s later revised H1 total gives about 42%. That is a derived,
                 cross-vintage comparison; the Q2 share is a separate July 1 snapshot, and funding
                 totals can be revised as later deals are disclosed.
@@ -259,7 +258,7 @@ export default function AIPage() {
           <SciFiCard>
             <CardHeader
               title="How to read this page"
-              subtitle={`Curated figures reviewed ${AI_DATA_ASOF} · stock quotes refresh weekly`}
+              subtitle={`Research reviewed ${AI_DATA_ASOF} · stock quotes refresh weekly`}
             />
             <div
               className="space-y-3 px-4 pb-4 text-[12px] leading-6"
@@ -271,15 +270,15 @@ export default function AIPage() {
                 rounded conversions should not be read as audited company disclosures.
               </p>
               <p>
-                Almost nothing here has a free API behind it. There is no &ldquo;AI sector&rdquo; in
-                any index classification, no company reports an audited &ldquo;AI revenue&rdquo;
-                line, layoff attribution comes from one outplacement firm reading employers&rsquo;
-                own announcements, and private deal terms are whatever the parties chose to
-                announce. So every curated number on this page carries its source and the date it
-                was reported, and the tile itself is the link — click through and check.
+                Research figures come from company disclosures, Census survey data, funding
+                announcements and published research. Census also provides a public API.
+                Each source follows its own release schedule, so the review date can be newer
+                than the reporting period. Every research figure links to its source and retains
+                its publication date; annualized revenue, reported segments and company-wide
+                spending plans are labelled separately.
               </p>
               <p>
-                The one exception is the price data. The {AI_STOCKS.length} listings in the stack table and the
+                The {AI_STOCKS.length} listings in the stack table and the
                 basket chart are Yahoo Finance closes on the same weekly cadence as the rest of the
                 site, computed the same way as the Markets page.
               </p>

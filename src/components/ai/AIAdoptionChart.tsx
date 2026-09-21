@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { AI_ADOPTION_BY_SIZE, AI_ADOPTION_NATIONAL_RANGE } from "@/lib/ai-data";
+import { AI_ADOPTION_BY_SIZE, AI_ADOPTION_NATIONAL_RANGE, AI_ADOPTION_PERIOD, AI_ADOPTION_RELEASE } from "@/lib/ai-data";
 import { useTheme, CHART_COLORS } from "@/lib/use-theme";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import type { EChartsOption } from "echarts";
@@ -121,7 +121,7 @@ export default function AIAdoptionChart() {
     <SciFiCard glow="purple">
       <CardHeader
         title="Which US employer businesses are using AI"
-        subtitle="Nonfarm employer businesses · share using AI in any business function · by employment size · Jul 13–26, 2026"
+        subtitle={`Nonfarm employer businesses · share using AI in any business function · by employment size · ${AI_ADOPTION_PERIOD}`}
       />
 
       <div className="px-2">
@@ -142,8 +142,8 @@ export default function AIAdoptionChart() {
         }}
       >
         The national estimate is {nationalLabel}. All {AI_ADOPTION_BY_SIZE.length} bars reproduce
-        Census-published employment-size estimates for US nonfarm employer businesses in the Jul
-        13–26 reference period, released Aug 13; they are survey estimates rather than
+        Census-published employment-size estimates for US nonfarm employer businesses in the{" "}
+        {AI_ADOPTION_PERIOD} reference period, released {AI_ADOPTION_RELEASE}; they are survey estimates rather than
         administrative counts. The size comparison is descriptive and does not by itself measure
         AI&rsquo;s effect on output or employment. Source: US Census Bureau Business Trends and
         Outlook Survey.
