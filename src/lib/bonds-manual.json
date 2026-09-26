@@ -15,57 +15,57 @@
     "lagging FRED monthly series for context. Exact 1D/1M/1Y moves are unavailable",
     "for these rows, so the table renders dashes instead of mislabelled periods."
   ],
-  "readAt": "2026-09-20",
+  "readAt": "2026-09-26",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.2843,
-      "asOf": "2026-09-18",
+      "value": 5.3603,
+      "asOf": "2026-09-25",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
-        "source": "CountryEconomy UK 10Y",
-        "value": 5.3,
+        "source": "CountryEconomy 10Y",
+        "value": 5.36,
         "sourceUrl": "https://countryeconomy.com/bonds",
-        "asOf": "2026-09-18"
+        "asOf": "2026-09-25"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield-historical-data"
     },
     "in10y": {
       "country": "India",
-      "value": 7.067,
-      "asOf": "2026-09-18",
+      "value": 7.12,
+      "asOf": "2026-09-25",
       "source": "Investing.com India 10Y",
       "crossCheck": {
-        "source": "Trading Economics India 10Y",
-        "value": 7.06,
-        "sourceUrl": "https://tradingeconomics.com/india/government-bond-yield",
-        "asOf": "2026-09-18"
+        "source": "CountryEconomy 10Y",
+        "value": 7.12,
+        "sourceUrl": "https://countryeconomy.com/bonds",
+        "asOf": "2026-09-25"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data"
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 4.46,
-      "asOf": "2026-09-18",
+      "value": 4.409,
+      "asOf": "2026-09-23",
       "source": "Investing.com South Korea 10Y",
       "crossCheck": {
         "source": "Yonhap / Korea Financial Investment Association",
-        "value": 4.466,
-        "sourceUrl": "https://en.yna.co.kr/view/AEN20260918009200320",
-        "asOf": "2026-09-18"
+        "value": 4.392,
+        "sourceUrl": "https://en.yna.co.kr/view/AEN20260923008900320",
+        "asOf": "2026-09-23"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield-historical-data"
     },
     "au10y": {
       "country": "Australia",
-      "value": 5.273,
-      "asOf": "2026-09-18",
+      "value": 5.368,
+      "asOf": "2026-09-25",
       "source": "Investing.com Australia 10Y",
       "crossCheck": {
-        "source": "CountryEconomy Australia 10Y",
-        "value": 5.27,
+        "source": "CountryEconomy 10Y",
+        "value": 5.37,
         "sourceUrl": "https://countryeconomy.com/bonds",
-        "asOf": "2026-09-18"
+        "asOf": "2026-09-25"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/australia-10-year-bond-yield-historical-data"
     }
