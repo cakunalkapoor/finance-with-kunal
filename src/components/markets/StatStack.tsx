@@ -34,7 +34,7 @@ export function ChangeStack({
             {label}
           </span>
           <span
-            className={`font-semibold ${
+            className={`font-semibold whitespace-nowrap ${
               value == null ? "" : getChangeColor(value, !raw)
             }`}
             style={{

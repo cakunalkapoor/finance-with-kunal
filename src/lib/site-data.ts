@@ -16,6 +16,7 @@ import type {
 } from "@/types";
 
 // Updated automatically by patch-site-data.mjs from provider fetch timestamps.
+export const BOND_UPDATED_AT = "Sep 28, 2026";
 export const DATA_UPDATED_AT = "Sep 26, 2026";
 // Still maintained by patch-site-data.mjs, but no longer displayed anywhere:
 // every dated surface shows the single "Last updated: …" label from lib/briefing.ts.
@@ -323,138 +324,127 @@ export const POLICY_RATES: PolicyRate[] = [
   },
 ];
 
-// BOND_YIELDS — all nine 10Y yields are daily, in two tiers. Refresh with
-// `npm run fetch:bonds`, then `node src/lib/patch-site-data.mjs`.
-//
-//   Automated  — US (Yahoo ^TNX), Canada (BoC Valet), Germany (ECB euro-area
-//                AAA), Japan (MoF JGB CSV), South Africa (SARB).
-//   Read-and-verify — UK, India, South Korea, Australia have no free
-//                machine-readable daily feed, so the headline value is read
-//                from a published page each refresh into the COMMITTED
-//                src/lib/bonds-manual.json and cross-checked against a second
-//                provider. History still comes from FRED's monthly series.
-//
-// Quandl is NOT used anywhere in this pipeline and no VPN is required; the
-// per-row `source` and `cadence` fields below are patched by the script and are
-// the authoritative record of where each number came from.
-// `node src/lib/validate-bonds.mjs` gates the push — exit 1 means do not push.
+// Government 10Y yields: automated daily feeds plus verified published closes
+// in bonds-manual.json. Historical monthly averages/last observations retain
+// their calendar months; period moves require same-source daily anchors.
+// Refresh: fetch:bonds, patch-site-data.mjs, validate-bonds.mjs.
 export const BOND_YIELDS: BondYield[] = [
   {
     country: "United States",
     flag: "🇺🇸",
     maturity: "10Y",
-    asOf: "2026-09-25",
+    asOf: "2026-09-28",
     source: "Yahoo Finance ^TNX",
     cadence: "daily",
-    yield: 5.184,
-    dailyMove: 0.022,
-    oneMonthMove: 0.52,
-    oneYearMove: 1.012,
-    trend: [4.33, 4.91, 4.45, 3.93, 4.11, 4.33, 4.22, 4.65, 4.46, 4.32, 4.17, 3.83, 3.75, 4.28, 4.19, 4.6, 4.52, 4.32, 4.15, 4.37, 4.49, 4.43, 4.29, 4.01, 4.10099983215332, 4.017000198364258, 4.163000106811523, 4.241000175476074, 3.9619998931884766, 4.310999870300293, 4.389999866485596, 4.453000068664551, 4.418000221252441, 4.744999885559082, 4.757999897003174, 5.184],
+    yield: 5.238,
+    dailyMove: 0.054,
+    oneMonthMove: 0.518,
+    oneYearMove: 1.051,
+    trend: [4.875, 4.3520002365112305, 3.865999937057495, 3.9670000076293945, 4.251999855041504, 4.205999851226807, 4.685999870300293, 4.513999938964844, 4.3429999351501465, 4.109000205993652, 3.9110000133514404, 3.802000045776367, 4.283999919891357, 4.177999973297119, 4.572999954223633, 4.568999767303467, 4.230999946594238, 4.245999813079834, 4.177000045776367, 4.415999889373779, 4.230000019073486, 4.360000133514404, 4.2270002365112305, 4.1479997634887695, 4.10099983215332, 4.017000198364258, 4.163000106811523, 4.241000175476074, 3.9619998931884766, 4.310999870300293, 4.389999866485596, 4.453000068664551, 4.418000221252441, 4.744999885559082, 4.757999897003174, 5.238],
   },
   {
     country: "Germany",
     flag: "🇩🇪",
     maturity: "10Y",
-    asOf: "2026-09-24",
-    source: "ECB euro-area AAA 10Y",
+    asOf: "2026-09-28",
+    source: "Investing.com Germany 10Y",
     cadence: "daily",
-    yield: 3.566,
-    dailyMove: 0.043,
-    oneMonthMove: 0.318,
-    oneYearMove: 0.78,
-    trend: [2.82, 2.6, 2.1, 2.17, 2.33, 2.35, 2.45, 2.52, 2.48, 2.46, 2.21, 2.17, 2.23, 2.31, 2.18, 2.48, 2.41, 2.74, 2.51, 2.56, 2.52, 2.63, 2.67, 2.69, 2.721602685, 2.7737857403, 2.9480486243, 2.9033834533, 2.7266574195, 3.0729993471, 3.0939583349, 3.016587454, 2.9244927445, 3.2273140986, 3.3395935506, 3.566],
+    yield: 3.6301,
+    dailyMove: 0.0091,
+    oneMonthMove: 0.3568,
+    oneYearMove: null,
+    trend: [2.82, 2.6, 2.1, 2.17454545454545, 2.3319047619, 2.3495, 2.4457142857, 2.5195454545, 2.4845, 2.4582608696, 2.2077272727, 2.1671428571, 2.2295652174, 2.3057142857, 2.1788888889, 2.4836363636, 2.4055, 2.7414285714, 2.5105, 2.5628571429, 2.519047619, 2.6313043478, 2.6733333333, 2.6931818182, 2.617826087, 2.6575, 2.8142105263, 2.8066666667, 2.745, 2.91, 3.001, 3.0465, 2.96409090909091, 3.0704347826087, 3.3238, 3.6301],
   },
   {
     country: "United Kingdom",
     flag: "🇬🇧",
     maturity: "10Y",
-    asOf: "2026-09-25",
+    asOf: "2026-09-28",
     source: "Investing.com UK 10Y",
     cadence: "daily",
-    yield: 5.3603,
-    dailyMove: null,
-    oneMonthMove: null,
+    yield: 5.4297,
+    dailyMove: 0.0694,
+    oneMonthMove: 0.3521,
     oneYearMove: null,
-    trend: [4.57, 4.27, 3.86, 3.93, 4.12, 4.03, 4.22, 4.22, 4.16, 4.14, 3.94, 3.91, 4.2, 4.42, 4.43, 4.66, 4.51, 4.64, 4.58, 4.6, 4.52, 4.59, 4.64, 4.69, 4.5721, 4.4985, 4.4826, 4.451, 4.4324, 4.7007, 4.8207, 4.9416, 4.796, 4.9318, 4.9886, 5.3603],
+    trend: [4.57, 4.27, 3.86, 3.9319, 4.123, 4.033, 4.2172, 4.2229, 4.1644, 4.1386, 3.9444, 3.9053, 4.1993, 4.4164, 4.4345, 4.6627, 4.5063, 4.6448, 4.5762, 4.6004, 4.5248, 4.5924, 4.6369, 4.6885, 4.5721, 4.4985, 4.4826, 4.451, 4.4324, 4.7007, 4.8207, 4.9416, 4.796, 4.9318, 5.0776, 5.4297],
   },
   {
     country: "Canada",
     flag: "🇨🇦",
     maturity: "10Y",
-    asOf: "2026-09-24",
-    source: "BoC Valet BD.CDN.10YR.DQ.YLD",
+    asOf: "2026-09-28",
+    source: "Investing.com Canada 10Y",
     cadence: "daily",
-    yield: 3.97,
-    dailyMove: 0.01,
-    oneMonthMove: 0.35,
-    oneYearMove: 0.77,
-    trend: [4.05, 3.56, 3.1, 3.35, 3.48, 3.45, 3.82, 3.62, 3.5, 3.18, 3.16, 2.95, 3.22, 3.07, 3.23, 3.07, 2.9, 2.97, 3.07, 3.2, 3.28, 3.45, 3.38, 3.17, 3.12, 3.14, 3.42, 3.42, 3.13, 3.46, 3.56, 3.41, 3.38, 3.65, 3.73, 3.97],
+    yield: 3.965,
+    dailyMove: 0.04,
+    oneMonthMove: 0.239,
+    oneYearMove: null,
+    trend: [4.05, 3.56, 3.1, 3.35, 3.48, 3.45, 3.82, 3.62, 3.5, 3.18, 3.16, 2.95, 3.22, 3.07, 3.23, 3.07, 2.9, 2.97, 3.07, 3.2, 3.28, 3.45, 3.38, 3.17, 3.12, 3.14, 3.42, 3.42, 3.13, 3.46, 3.56, 3.41, 3.38, 3.65, 3.739, 3.965],
   },
   {
     country: "Japan",
     flag: "🇯🇵",
     maturity: "10Y",
-    asOf: "2026-09-24",
+    asOf: "2026-09-25",
     source: "Japan MoF JGB 10Y",
     cadence: "daily",
-    yield: 3.073,
-    dailyMove: 0.092,
-    oneMonthMove: 0.191,
-    oneYearMove: 1.487,
-    trend: [0.95, 0.66, 0.62, 0.73, 0.71, 0.73, 0.87, 1.07, 1.05, 1.05, 0.89, 0.86, 0.94, 1.05, 1.09, 1.25, 1.37, 1.49, 1.31, 1.5, 1.42, 1.55, 1.6, 1.65, 1.67, 1.812, 2.066, 2.247, 2.132, 2.366, 2.52, 2.657, 2.69, 2.801, 2.943, 3.073],
+    yield: 3.071,
+    dailyMove: -0.002,
+    oneMonthMove: 0.174,
+    oneYearMove: 1.412,
+    trend: [0.95, 0.66, 0.62, 0.73, 0.71, 0.73, 0.87, 1.07, 1.05, 1.05, 0.89, 0.86, 0.94, 1.05, 1.09, 1.25, 1.378, 1.497, 1.33, 1.518, 1.462, 1.559, 1.613, 1.662, 1.67, 1.812, 2.066, 2.247, 2.132, 2.366, 2.52, 2.657, 2.69, 2.801, 2.943, 3.071],
   },
   {
     country: "India",
     flag: "🇮🇳",
     maturity: "10Y",
-    asOf: "2026-09-25",
+    asOf: "2026-09-28",
     source: "Investing.com India 10Y",
     cadence: "daily",
-    yield: 7.12,
-    dailyMove: null,
-    oneMonthMove: null,
+    yield: 7.183,
+    dailyMove: 0.063,
+    oneMonthMove: 0.27,
     oneYearMove: null,
-    trend: [7.35, 7.27, 7.22, 7.2, 7.09, 7.07, 7.15, 7.05, 7.02, 7.01, 6.91, 6.83, 6.79, 6.81, 6.78, 6.76, 6.73, 6.68, 6.46, 6.27, 6.31, 6.35, 6.52, 6.59, 6.585, 6.482, 6.5375, 6.6325, 6.732, 6.77, 6.84, 7.05, 7.02, 6.89, 6.78, 7.12],
+    trend: [7.35, 7.27, 7.22, 7.2025, 7.09, 7.068, 7.15, 7.054, 7.0225, 7.0075, 6.91, 6.8325, 6.785, 6.812, 6.7775, 6.758, 6.7325, 6.6825, 6.455, 6.272, 6.3075, 6.35, 6.522, 6.585, 6.482, 6.5375, 6.6325, 6.732, 6.77, 6.84, 7.05, 7.02, 6.89, 6.78, 6.947, 7.183],
   },
   {
     country: "South Korea",
     flag: "🇰🇷",
     maturity: "10Y",
-    asOf: "2026-09-23",
+    asOf: "2026-09-28",
     source: "Investing.com South Korea 10Y",
     cadence: "daily",
-    yield: 4.409,
-    dailyMove: null,
-    oneMonthMove: null,
+    yield: 4.539,
+    dailyMove: 0.13,
+    oneMonthMove: 0.265,
     oneYearMove: null,
-    trend: [4.27, 3.89, 3.42, 3.35, 3.43, 3.39, 3.57, 3.53, 3.34, 3.17, 3, 3.01, 3.07, 3.01, 2.77, 2.82, 2.83, 2.8, 2.66, 2.71, 2.84, 2.84, 2.82, 2.85, 2.933, 3.248, 3.366, 3.485, 3.612, 3.728, 3.737, 4.075, 4.181, 4.286, 4.286, 4.409],
+    trend: [4.27, 3.89, 3.42, 3.353, 3.429, 3.39, 3.567, 3.527, 3.337, 3.171, 2.999, 3.011, 3.07, 3.006, 2.771, 2.821, 2.83, 2.795, 2.658, 2.71, 2.842, 2.84, 2.815, 2.849, 2.933, 3.248, 3.366, 3.485, 3.612, 3.728, 3.737, 4.075, 4.181, 4.286, 4.313, 4.539],
   },
   {
     country: "Australia",
     flag: "🇦🇺",
     maturity: "10Y",
-    asOf: "2026-09-25",
+    asOf: "2026-09-28",
     source: "Investing.com Australia 10Y",
     cadence: "daily",
-    yield: 5.368,
-    dailyMove: null,
-    oneMonthMove: null,
+    yield: 5.421,
+    dailyMove: 0.036,
+    oneMonthMove: 0.333,
     oneYearMove: null,
-    trend: [4.63, 4.58, 4.19, 4.15, 4.14, 4.05, 4.27, 4.33, 4.24, 4.33, 3.98, 3.92, 4.27, 4.54, 4.31, 4.48, 4.42, 4.42, 4.27, 4.35, 4.21, 4.29, 4.28, 4.3, 4.234, 4.416, 4.719, 4.75, 4.758, 4.926, 4.969, 4.982, 4.831, 4.919, 5.015, 5.368],
+    trend: [4.63, 4.58, 4.19, 4.148, 4.141, 4.045, 4.268, 4.325, 4.242, 4.326, 3.976, 3.922, 4.267, 4.544, 4.313, 4.481, 4.423, 4.421, 4.267, 4.35, 4.208, 4.291, 4.275, 4.298, 4.234, 4.416, 4.719, 4.75, 4.758, 4.926, 4.969, 4.982, 4.831, 4.919, 5.076, 5.421],
   },
   {
     country: "South Africa",
     flag: "🇿🇦",
     maturity: "10Y",
-    asOf: "2026-09-23",
+    asOf: "2026-09-25",
     source: "SARB R209 closing yield",
     cadence: "daily",
-    yield: 8.855,
-    dailyMove: 0.14,
-    oneMonthMove: 0.255,
-    oneYearMove: 0.155,
-    trend: [12.36, 11.79, 11.49, 11.42, 11.61, 11.9, 12.27, 12.04, 11.68, 11.02, 10.7, 10.3, 10.46, 10.37, 10.25, 10.42, 10.5, 11, 11.38, 11.07, 10.58, 10.4, 10.15, 9.87, 8.71521739130435, 8.75, 8.385, 8.14, 8.13, 9.305, 8.93, 8.575, 8.425, 8.74, 8.735, 8.855],
+    yield: 8.925,
+    dailyMove: 0.07,
+    oneMonthMove: 0.325,
+    oneYearMove: null,
+    trend: [12.36, 11.79, 11.49, 11.4204545455, 11.6095238095, 11.9026315789, 12.2747619048, 12.0419047619, 11.6789473684, 11.0217391304, 10.7, 10.301, 10.4643478261, 10.3680952381, 10.2521052632, 10.4195454545, 10.497, 10.998, 11.3847368421, 11.0652380952, 10.5795, 10.3960869565, 10.1452380952, 9.8719047619, 9.5343478261, 9.1245, 8.385, 8.14, 8.13, 9.305, 8.93, 8.575, 8.425, 8.74, 8.735, 8.925],
   },
 ];
 
@@ -5224,7 +5214,7 @@ export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
       "id": "bonds",
       "title": "Bond Market",
       "icon": "📉",
-      "body": "The displayed US 10-year close was 5.184% on September 25. Verified same-day readings were UK 5.3603%, India 7.120% and Australia 5.368%. September 24 official feeds put Canada at 3.970%, the ECB AAA euro-area proxy at 3.566% and Japan at 3.073%. South Korea’s September 23 reading was 4.409%. Japan’s 1.25% policy target took effect September 24; South Africa’s 7.25% rate took effect September 25."
+      "body": "The displayed US 10-year close was 5.184% on September 25. Verified September 25 readings were Germany 3.621%, Canada 3.925%, UK 5.3603%, India 7.120% and Australia 5.368%. Japan’s September 24 official observation was 3.073%. South Korea’s September 23 reading was 4.409%. Japan’s 1.25% policy target took effect September 24; South Africa’s 7.25% rate took effect September 25."
     },
     {
       "id": "commodities",

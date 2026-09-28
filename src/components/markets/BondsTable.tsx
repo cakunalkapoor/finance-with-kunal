@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { BOND_YIELDS, DATA_UPDATED_AT, POLICY_RATES } from "@/lib/site-data";
+import { BOND_YIELDS, BOND_UPDATED_AT, POLICY_RATES } from "@/lib/site-data";
 import { INVESTING_BOND_URL } from "@/lib/external-links";
 import {
   monthlyPointLabel,
@@ -16,14 +16,11 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import { ChangeStack } from "@/components/markets/StatStack";
 
-// Sources differ per row and so does their lag: five countries have an
-// automated daily feed, while the UK, India, South Korea and Australia are read
-// from a published page each refresh (their HISTORY still comes from FRED's
-// monthly series, which is why they carry no exact 1D/1M/1Y figures). Rather
-// than let a stale number pass as current, every row shows its own observation
-// date, and anything older than a normal monthly publication cycle is called out.
-const STALE_AFTER_DAYS = 45;
-const REFRESHED_AT = new Date(DATA_UPDATED_AT).getTime();
+// Every row carries its own observation date. A daily source older than ten
+// days needs attention even if the rest of the site was refreshed today.
+const STALE_AFTER_DAYS = 10;
+const REFRESHED_AT = new Date(BOND_UPDATED_AT).getTime();
+const YIELD_FORMAT = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const POLICY_RATE_BY_COUNTRY = new Map(
   POLICY_RATES.map((policyRate) => [policyRate.country, policyRate]),
 );
@@ -78,7 +75,7 @@ export default function BondsTable() {
     <SciFiCard>
       <CardHeader
         title="Government Bond Yields"
-        subtitle="10-Year sovereign yields + current central-bank policy rates · yield dates are shown per row; ⚠ marks a monthly series still awaiting its next print · click a country for the full curve on Investing.com"
+        subtitle={`Refreshed ${BOND_UPDATED_AT} · latest observations, including intraday quotes · moves in basis points (bp); — means unavailable · monthly trends include historical averages`}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 600 }}>
@@ -207,7 +204,7 @@ export default function BondsTable() {
                       fontSize: "13px",
                     }}
                   >
-                    {bond.yield.toFixed(2)}%
+                    {YIELD_FORMAT.format(bond.yield)}%
                   </span>
                   {(() => {
                     const age = asOfAgeDays(bond.asOf);
@@ -251,10 +248,12 @@ export default function BondsTable() {
                       the friendly direction — hence raw + inverted colouring. */}
                   <ChangeStack
                     raw
+                    digits={1}
+                    suffix=" bp"
                     items={[
-                      { label: "1D", value: bond.dailyMove },
-                      { label: "1M", value: bond.oneMonthMove },
-                      { label: "1Y", value: bond.oneYearMove },
+                      { label: "1D", value: bond.dailyMove == null ? null : bond.dailyMove * 100 },
+                      { label: "1M", value: bond.oneMonthMove == null ? null : bond.oneMonthMove * 100 },
+                      { label: "1Y", value: bond.oneYearMove == null ? null : bond.oneYearMove * 100 },
                     ]}
                   />
                 </td>
@@ -270,7 +269,7 @@ export default function BondsTable() {
                       monthlyPointLabel(j, windowed.length, bond.asOf),
                     )}
                     ariaLabel={`${bond.country} 10Y yield, ${monthlyWindowLabel(windowed.length, bond.asOf)}`}
-                    format={(n) => `${n.toFixed(2)}%`}
+                    format={(n) => `${YIELD_FORMAT.format(n)}%`}
                     // A falling yield is the "good" direction for bond prices.
                     positiveIsUp={false}
                   />

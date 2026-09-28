@@ -1,13 +1,15 @@
 #!/usr/bin/env node
+import { monthlyHistory, mergeMonthlyHistory, periodMoves } from "./bond-history.mjs";
 /**
  * Fetch sovereign 10Y bond yields — daily where a free source exists.
  *
  * Sources, all keyless except the FRED fallback:
  *   US    Yahoo Finance ^TNX            daily
  *   CA    Bank of Canada Valet          daily
- *   DE    ECB Data Warehouse            daily (euro-area AAA 10Y par yield)
+ *   DE    FRED German sovereign series  monthly; verified Bund close overlay
  *   JP    Japan MoF JGB CSV             daily
- *   UK/IN/KR/AU/ZA  FRED (OECD)         MONTHLY — see note below
+ *   ZA    SARB R209                     daily
+ *   UK/IN/KR/AU FRED (OECD)             monthly; verified close overlays
  *
  * Nasdaq Data Link (Quandl) was the original first choice for every country but
  * now returns nothing for all nine — its WAF blocks us and several of the
@@ -61,10 +63,11 @@ async function mofJapan10Y() {
   // Two files: the all-history archive is only refreshed monthly, so on its own
   // it lags by up to a month. jgbcm.csv carries the CURRENT month, updated daily.
   // Fetch both and let the current-month rows win.
-  const [current, archive] = await Promise.all([
+  const results = await Promise.allSettled([
     mofCsv("https://www.mof.go.jp/jgbs/reference/interest_rate/jgbcm.csv"),
     mofCsv("https://www.mof.go.jp/jgbs/reference/interest_rate/data/jgbcm_all.csv"),
   ]);
+  const [current, archive] = results.map(r => r.status === "fulfilled" ? r.value : null);
   if (!current && !archive) return null;
 
   const byDate = new Map();
@@ -137,7 +140,7 @@ async function bocCanada10Y() {
 
 // ── Yahoo Finance internal chart API ─────────────────────────────────────────
 async function yahoo(symbol) {
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=1y`;
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=5y`;
   const res  = await fetch(url, {
     signal: AbortSignal.timeout(10000),
     headers: { "User-Agent": "Mozilla/5.0" },
@@ -158,46 +161,12 @@ async function yahoo(symbol) {
   return rows.length ? rows : null;
 }
 
-// ── ECB Statistical Data Warehouse ───────────────────────────────────────────
-// Euro-area AAA sovereign 10Y par yield — best daily proxy for German Bund
-async function ecbEuroArea10Y() {
-  const url = "https://data-api.ecb.europa.eu/service/data/YC/B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y?lastNObservations=300&format=jsondata";
-  const res  = await fetch(url, { signal: AbortSignal.timeout(10000) });
-  if (!res.ok) return null;
-  const json    = await res.json();
-  const series  = json?.dataSets?.[0]?.series;
-  const periods = json?.structure?.dimensions?.observation?.[0]?.values;
-  if (!series || !periods) return null;
-  const obs = Object.values(series)[0]?.observations ?? {};
-  return Object.entries(obs)
-    .map(([i, v]) => ({ date: periods[parseInt(i)]?.id, value: v[0] }))
-    .filter(r => r.date && r.value != null)
-    .sort((a, b) => b.date.localeCompare(a.date));
-}
-
 // ── Build bond object ─────────────────────────────────────────────────────────
 function round3(n) { return Math.round(n * 1000) / 1000; }
 
 function buildBond(rows, country, flag, source, cadence = "daily") {
-  // Row spacing depends on the series: ~21 trading days per month for a daily
-  // feed, but exactly 1 row per month for FRED's monthly OECD series. Using the
-  // daily offsets on a monthly series silently reported a 21-MONTH change as
-  // the 1-month move (Australia read +0.909 that way).
-  const perMonth = cadence === "monthly" ? 1  : 21;
-  const perYear  = cadence === "monthly" ? 12 : 252;
-
-  const latest  = rows[0];
-  const day1    = rows[1]  ?? latest;
-  const month1  = rows[Math.min(perMonth, rows.length - 1)];
-  const year1   = rows[Math.min(perYear,  rows.length - 1)];
-
-  // 12-point monthly trend: last value per calendar month
-  const byMonth = {};
-  for (const r of rows) {
-    const ym = r.date.slice(0, 7);
-    if (!byMonth[ym]) byMonth[ym] = r.value;
-  }
-  const trend = Object.values(byMonth).slice(0, 12).reverse();
+  const latest = rows[0];
+  const trend = mergeMonthlyHistory(latest.date, rows);
 
   return {
     country,
@@ -207,9 +176,7 @@ function buildBond(rows, country, flag, source, cadence = "daily") {
     cadence,
     yield:        round3(latest.value),
     asOf:         latest.date,
-    dailyMove:    round3(latest.value - day1.value),
-    oneMonthMove: round3(latest.value - month1.value),
-    oneYearMove:  round3(latest.value - year1.value),
+    ...periodMoves(rows, cadence),
     trend,
   };
 }
@@ -230,9 +197,9 @@ const COUNTRIES = [
     ],
   },
   {
-    key: "de10y", country: "Germany", flag: "🇩🇪", cadence: "daily",
+    key: "de10y", country: "Germany", flag: "🇩🇪", cadence: "monthly",
     sources: [
-      { label: "ECB euro-area AAA 10Y",       fn: () => ecbEuroArea10Y() },
+      { label: "FRED IRLTLT01DEM156N", fn: () => fred("IRLTLT01DEM156N") },
     ],
   },
   {
@@ -265,33 +232,21 @@ const COUNTRIES = [
       { label: "SARB R209 closing yield",    fn: () => sarbSouthAfrica10Y() },
       { label: "FRED IRLTLT01ZAM156N",       fn: () => fred("IRLTLT01ZAM156N") },
     ],
-    // SARB's API caps at ~163 observations (~8 months), which is only 9 monthly
-    // points. FRED carries no ZA series in fred-data.json, so there is nothing
-    // downstream to pad from — backfill the older months here instead.
     trendFallback: () => fred("IRLTLT01ZAM156N"),
   },
 ];
 
-// Fill a short sparkline with older monthly points from a fallback series.
 async function padTrend(bond, fallbackFn) {
-  if (!fallbackFn || bond.trend.length >= 12) return bond;
+  if (!fallbackFn) return bond;
   try {
     const rows = await fallbackFn();
-    if (!rows?.length) return bond;
-    const byMonth = {};
-    for (const r of rows) {
-      const ym = r.date.slice(0, 7);
-      if (!byMonth[ym]) byMonth[ym] = r.value;
-    }
-    const older = Object.values(byMonth).slice(0, 24).reverse();
-    const need = 12 - bond.trend.length;
-    bond.trend = [...older.slice(Math.max(0, older.length - need)), ...bond.trend].slice(-12);
-  } catch { /* keep the short trend */ }
+    bond.trend = mergeMonthlyHistory(bond.asOf, rows || [], monthlyHistory(bond.trend, bond.asOf));
+  } catch { /* preserve gaps when older history is unavailable */ }
   return bond;
 }
 
 async function main() {
-  console.log("Fetching sovereign 10Y bond yields (Yahoo · BoC · ECB · MoF · FRED)...\n");
+  console.log("Fetching sovereign 10Y bond yields (Yahoo · BoC · MoF · FRED)...\n");
   const bonds = {};
   const failed = [];
 
@@ -302,9 +257,9 @@ async function main() {
       try {
         const rows = await fn();
         if (rows?.length) {
-          const bond = await padTrend(buildBond(rows, country, flag, label, cadence), trendFallback);
+          const bond = await padTrend(buildBond(rows, country, flag, label, /IRLTLT/.test(label) ? "monthly" : cadence), trendFallback);
           bonds[key] = bond;
-          process.stdout.write(`✓ ${cadence.padEnd(7)} [${label}]  ${bond.yield.toFixed(3)}%  (${bond.asOf})\n`);
+          process.stdout.write(`✓ ${bond.cadence.padEnd(7)} [${label}]  ${bond.yield.toFixed(3)}%  (${bond.asOf})\n`);
           found = true;
           break;
         }

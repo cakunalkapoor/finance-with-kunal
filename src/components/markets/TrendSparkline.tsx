@@ -25,18 +25,19 @@ export default function TrendSparkline({
   positiveIsUp = true,
   height = SPARKLINE_HEIGHT,
 }: {
-  values: number[];
+  values: (number | null)[];
   labels: string[];
   ariaLabel: string;
   format?: (value: number) => string;
   positiveIsUp?: boolean;
   height?: number;
 }) {
-  const min = Math.min(...values);
-  const max = Math.max(...values);
+  const observed = values.filter((n): n is number => n !== null && Number.isFinite(n));
+  const min = observed.length ? Math.min(...observed) : 0;
+  const max = observed.length ? Math.max(...observed) : 1;
   // Colour follows the trend of the *visible* window, so it stays truthful
   // when the reader switches YTD / 52W / 3Y.
-  const rising = values[values.length - 1] >= values[0];
+  const rising = observed[observed.length - 1] >= observed[0];
   const good = positiveIsUp ? rising : !rising;
   const color = good ? "#34d399" : "#fb7185";
   const wash = good ? "rgba(52,211,153,0.16)" : "rgba(251,113,133,0.16)";
@@ -54,7 +55,7 @@ export default function TrendSparkline({
       textStyle: { color: "#f2f1eb", fontSize: 11 },
       formatter: (params) => {
         const p = Array.isArray(params) ? params[0] : params;
-        return `${p.name}<br/><strong>${format(Number(p.value))}</strong>`;
+        return `${p.name}<br/><strong>${p.value == null ? "Unavailable" : format(Number(p.value))}</strong>`;
       },
     },
     xAxis: {

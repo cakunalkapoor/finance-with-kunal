@@ -11,6 +11,7 @@
  * Exit code 0 = safe to push, 1 = do not push.
  */
 
+import { periodMoves, monthlyHistory } from "./bond-history.mjs";
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,9 +21,9 @@ const site = readFileSync(resolve(root, "src/lib/site-data.ts"), "utf8");
 
 // Countries that MUST come from an automated daily feed. If one of these ever
 // reports `monthly`, fetch:bonds failed or was skipped.
-const MUST_BE_DAILY = ["United States", "Canada", "Germany", "Japan", "South Africa"];
+const MUST_BE_DAILY = ["United States", "Canada", "Japan", "South Africa"];
 // Countries served by the read-and-verify tier (bonds-manual.json).
-const MANUAL_TIER   = ["United Kingdom", "India", "South Korea", "Australia"];
+const MANUAL_TIER   = ["Germany", "United Kingdom", "India", "South Korea", "Australia"];
 
 const MAX_CROSSCHECK_GAP_BP = 25;   // two providers disagreeing more than this = suspect
 const MAX_AGE_DAYS          = 10;   // a "daily" series older than this is stale
@@ -52,6 +53,8 @@ const parseMove = (value) => value === "null" ? null : Number(value);
 const moves = new Map([...block.matchAll(
   /country: "([^"]+)"[\s\S]*?dailyMove: (null|-?[\d.]+),[\s\S]*?oneMonthMove: (null|-?[\d.]+),[\s\S]*?oneYearMove: (null|-?[\d.]+),/g
 )].map((m) => [m[1], [parseMove(m[2]), parseMove(m[3]), parseMove(m[4])]]));
+
+if (bonds.some(b => b.country === "Germany" && /ECB|euro-area/.test(b.source))) problems.push("Germany must use a Bund series, not the euro-area AAA proxy");
 
 if (bonds.length !== 9) problems.push(`expected 9 bonds, found ${bonds.length}`);
 
@@ -90,7 +93,7 @@ for (const rate of policyRates) {
   }
 }
 
-const updatedAt = /DATA_UPDATED_AT = "([^"]+)"/.exec(site)?.[1];
+const updatedAt = /BOND_UPDATED_AT = "([^"]+)"/.exec(site)?.[1];
 const refAt = Date.parse(updatedAt ?? "");
 const ageDays = (asOf) => Math.round((refAt - Date.parse(`${asOf}T00:00:00Z`)) / 86_400_000);
 
@@ -138,6 +141,19 @@ for (const key of Object.keys(manual.bonds ?? {})) {
     }
   }
 
+  if (live.source !== m.source || live.asOf !== m.asOf) continue; // a newer automated feed can win
+  const expectedMoves = Object.values(periodMoves([...(m.observations || []), { date: m.asOf, value: m.value }]));
+  if (JSON.stringify(moves.get(m.country)) !== JSON.stringify(expectedMoves)) {
+    problems.push(`${m.country}: moves disagree with verified same-source historical closes`);
+  }
+  const trendMatch = block.match(new RegExp(`country: "${m.country}"[\\s\\S]*?trend: \\[([^\\]]*)\\]`));
+  const history = trendMatch ? monthlyHistory(JSON.parse(`[${trendMatch[1]}]`), live.asOf) : [];
+  const lastInMonth = new Map([...(m.observations || [])].sort((a,b) => a.date.localeCompare(b.date)).map(o => [o.date.slice(0,7), o]));
+  for (const observation of lastInMonth.values()) {
+    if (observation.date.slice(0, 7) === m.asOf.slice(0, 7)) continue;
+    const point = history.find(p => p.date.slice(0, 7) === observation.date.slice(0, 7));
+    if (!point || point.value !== observation.value) problems.push(`${m.country}: historical close shifted into the wrong month`);
+  }
   const age = ageDays(m.asOf);
   if (Number.isFinite(age) && age > MAX_AGE_DAYS) {
     problems.push(`${m.country}: manual reading dated ${m.asOf} is ${age}d old — re-read it, do not carry it forward`);
@@ -151,10 +167,7 @@ for (const c of MANUAL_TIER) {
   if (!Object.values(manual.bonds ?? {}).some(m => m.country === c)) {
     problems.push(`${c}: missing from bonds-manual.json — it has no automated daily feed`);
   }
-  const rowMoves = moves.get(c);
-  if (!rowMoves || rowMoves.some((value) => value !== null)) {
-    problems.push(`${c}: 1D/1M/1Y moves must be null — the fallback history cannot substantiate those labelled periods`);
-  }
+
 }
 
 console.log("Sovereign bond validation\n");

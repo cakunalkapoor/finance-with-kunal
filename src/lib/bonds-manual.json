@@ -1,73 +1,199 @@
 {
   "_README": [
-    "Read-and-verify tier for sovereign 10Y yields. UNLIKE the other *-data.json",
-    "dumps this file is COMMITTED, not gitignored: no script can regenerate it.",
-    "It is written by Claude during the weekly refresh for the countries that have",
-    "no free machine-readable daily feed (see fetch-bonds.mjs header for why).",
-    "",
-    "Each entry needs a `source` actually read this run and a `crossCheck` from a",
-    "DIFFERENT provider. validate-bonds.mjs rejects the run if the two disagree by",
-    "more than 25bp, if asOf is stale, or if a value is implausible. Never copy a",
-    "value forward without re-reading it -- a stale number here is worse than the",
-    "monthly FRED fallback, because this tier overrides it and claims to be daily.",
-    "",
-    "Only the headline `value` comes from here. The 36-point sparkline stays on the",
-    "lagging FRED monthly series for context. Exact 1D/1M/1Y moves are unavailable",
-    "for these rows, so the table renders dashes instead of mislabelled periods."
+    "Verified published 10Y closes supplement lagging automated feeds.",
+    "Re-read sourceUrl each refresh and cross-check the headline with a different provider.",
+    "observations contains dated historical closes from the SAME sourceUrl as the headline.",
+    "1D uses the previous session; 1M/1Y require an observation on or before the calendar anniversary (within seven days).",
+    "Monthly history is merged by date. Missing months and unsupported moves stay unavailable."
   ],
-  "readAt": "2026-09-26",
+  "readAt": "2026-09-28",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.3603,
-      "asOf": "2026-09-25",
+      "value": 5.4297,
+      "asOf": "2026-09-28",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 5.36,
+        "value": 5.42,
         "sourceUrl": "https://countryeconomy.com/bonds",
-        "asOf": "2026-09-25"
+        "asOf": "2026-09-28"
       },
-      "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield-historical-data"
+      "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield-historical-data",
+      "observations": [
+        {
+          "date": "2026-08-28",
+          "value": 5.0776
+        },
+        {
+          "date": "2026-09-24",
+          "value": 5.3487
+        },
+        {
+          "date": "2026-09-25",
+          "value": 5.3603
+        }
+      ]
     },
     "in10y": {
       "country": "India",
-      "value": 7.12,
-      "asOf": "2026-09-25",
+      "value": 7.183,
+      "asOf": "2026-09-28",
       "source": "Investing.com India 10Y",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 7.12,
+        "value": 7.18,
         "sourceUrl": "https://countryeconomy.com/bonds",
-        "asOf": "2026-09-25"
+        "asOf": "2026-09-28"
       },
-      "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data"
+      "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data",
+      "observations": [
+        {
+          "date": "2026-08-28",
+          "value": 6.913
+        },
+        {
+          "date": "2026-08-31",
+          "value": 6.947
+        },
+        {
+          "date": "2026-09-24",
+          "value": 7.111
+        },
+        {
+          "date": "2026-09-25",
+          "value": 7.12
+        }
+      ]
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 4.409,
-      "asOf": "2026-09-23",
+      "value": 4.539,
+      "asOf": "2026-09-28",
       "source": "Investing.com South Korea 10Y",
       "crossCheck": {
-        "source": "Yonhap / Korea Financial Investment Association",
-        "value": 4.392,
-        "sourceUrl": "https://en.yna.co.kr/view/AEN20260923008900320",
-        "asOf": "2026-09-23"
+        "source": "Aju Press / Korean bond market close",
+        "value": 4.539,
+        "sourceUrl": "https://m.ajupress.com/amp/20260928173331691",
+        "asOf": "2026-09-28"
       },
-      "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield-historical-data"
+      "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield-historical-data",
+      "observations": [
+        {
+          "date": "2026-08-28",
+          "value": 4.274
+        },
+        {
+          "date": "2026-08-31",
+          "value": 4.313
+        },
+        {
+          "date": "2026-09-22",
+          "value": 4.464
+        },
+        {
+          "date": "2026-09-23",
+          "value": 4.409
+        }
+      ]
     },
     "au10y": {
       "country": "Australia",
-      "value": 5.368,
-      "asOf": "2026-09-25",
+      "value": 5.421,
+      "asOf": "2026-09-28",
       "source": "Investing.com Australia 10Y",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 5.37,
+        "value": 5.43,
         "sourceUrl": "https://countryeconomy.com/bonds",
-        "asOf": "2026-09-25"
+        "asOf": "2026-09-28"
       },
-      "sourceUrl": "https://www.investing.com/rates-bonds/australia-10-year-bond-yield-historical-data"
+      "sourceUrl": "https://www.investing.com/rates-bonds/australia-10-year-bond-yield-historical-data",
+      "observations": [
+        {
+          "date": "2026-08-28",
+          "value": 5.088
+        },
+        {
+          "date": "2026-08-31",
+          "value": 5.076
+        },
+        {
+          "date": "2026-09-24",
+          "value": 5.371
+        },
+        {
+          "date": "2026-09-25",
+          "value": 5.368
+        },
+        {
+          "date": "2026-09-26",
+          "value": 5.385
+        }
+      ]
+    },
+    "de10y": {
+      "country": "Germany",
+      "value": 3.6301,
+      "asOf": "2026-09-28",
+      "source": "Investing.com Germany 10Y",
+      "sourceUrl": "https://www.investing.com/rates-bonds/germany-10-year-bond-yield-historical-data",
+      "crossCheck": {
+        "source": "CountryEconomy 10Y",
+        "value": 3.64,
+        "asOf": "2026-09-28",
+        "sourceUrl": "https://countryeconomy.com/bonds"
+      },
+      "observations": [
+        {
+          "date": "2026-08-28",
+          "value": 3.2733
+        },
+        {
+          "date": "2026-08-31",
+          "value": 3.3238
+        },
+        {
+          "date": "2026-09-24",
+          "value": 3.6114
+        },
+        {
+          "date": "2026-09-25",
+          "value": 3.621
+        }
+      ]
+    },
+    "ca10y": {
+      "country": "Canada",
+      "value": 3.965,
+      "asOf": "2026-09-28",
+      "source": "Investing.com Canada 10Y",
+      "sourceUrl": "https://www.investing.com/rates-bonds/canada-10-year-bond-yield-historical-data",
+      "crossCheck": {
+        "source": "CountryEconomy 10Y",
+        "value": 3.99,
+        "asOf": "2026-09-28",
+        "sourceUrl": "https://countryeconomy.com/bonds"
+      },
+      "observations": [
+        {
+          "date": "2026-08-28",
+          "value": 3.726
+        },
+        {
+          "date": "2026-08-31",
+          "value": 3.739
+        },
+        {
+          "date": "2026-09-24",
+          "value": 3.998
+        },
+        {
+          "date": "2026-09-25",
+          "value": 3.925
+        }
+      ]
     }
-  }
+  },
+  "snapshotNote": "September 28 observations include intraday quotes, not uniform closing prices."
 }

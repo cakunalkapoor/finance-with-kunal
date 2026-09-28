@@ -40,22 +40,14 @@ export interface BondYield {
   flag: string;
   maturity: string;
   yield: number;
-  /** One-day change in percentage points, or `null` where no daily history
-   *  exists. The read-and-verify countries (UK, India, South Korea, Australia)
-   *  sit on a lagging monthly FRED series for history, so period moves for them
-   *  cannot be calculated against the freshly read headline without changing
-   *  the period being measured. The table renders a dash instead — an absent
-   *  figure beats a mislabelled one. */
+  /** Changes in percentage points against same-source daily observations.
+   * Unavailable calendar-period anchors remain null. */
   dailyMove: number | null;
   oneMonthMove: number | null;
   oneYearMove: number | null;
-  /** 36 monthly points ending at `asOf`, so the trend column can offer the same
-   *  window ladder as every other chart. Kept at 36 by patch-site-data.mjs. */
-  trend: number[];
-  /** Observation date of `yield` (YYYY-MM-DD). Surfaced in the UI: the UK, India
-   *  and South Korea have no free daily feed and sit on a monthly OECD series,
-   *  so a reader needs to see how old a number is. Kept current by
-   *  patch-site-data.mjs from the freshest available dump. */
+  /** One slot per calendar month ending at asOf; null denotes missing data. */
+  trend: (number | null)[];
+  /** Actual observation date, independent of the site's refresh date. */
   asOf: string;
   /** Provider label, e.g. "Japan MoF JGB 10Y". */
   source: string;

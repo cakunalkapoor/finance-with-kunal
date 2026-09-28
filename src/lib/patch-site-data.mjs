@@ -6,6 +6,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { monthlyHistory, mergeMonthlyHistory, periodMoves } from "./bond-history.mjs";
+
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..");
 const dataPath = resolve(root, "src/lib/site-data.ts");
@@ -26,6 +28,7 @@ let bondsManual = { bonds: {} };
 try { bondsManual = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-manual.json"), "utf8")); } catch { /* absent */ }
 
 let src = readFileSync(dataPath, "utf8");
+const originalSrc = src;
 
 const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt, bondsDump.fetchedAt]
   .map((value) => Date.parse(value))
@@ -214,7 +217,7 @@ function considerBond(b, fallbackCadence) {
   // They carry the same country and asOf as that country's 10Y, so without
   // this guard the last one considered wins the merge and BOND_YIELDS — a
   // table headed "10-Year Benchmark Rates" — publishes the 30-year yield.
-  if (b.curveOnly) return;
+  if (b.curveOnly || (b.country === "Germany" && /ECB|euro-area/.test(b.source || ""))) return;
   const prev = bondCandidates[b.country];
   // ISO dates compare lexically. Strict `>` so that on an equal vintage the
   // LAST dump considered wins — bonds-data.json is applied last and is the only
@@ -259,85 +262,27 @@ for (const b of Object.values(boc.bonds || {})) {
 }
 for (const b of Object.values(bondsDump.bonds || {})) considerBond(b, "daily");
 
-// Read-and-verify overlay (src/lib/bonds-manual.json) — the UK, India, South
-// Korea and Australia have no free machine-readable daily feed, so those values
-// are read from published pages during the refresh and cross-checked against a
-// second provider. Only the headline value is taken by hand; the sparkline
-// stays on the lagging FRED monthly series. Period moves are unavailable because
-// comparing a September headline with (for example) a June monthly observation
-// would publish a three-month gap under a 1M label.
+// Join history by calendar month before replacing any headline date. Never
+// append a September close to a July series and relabel July as August.
+for (const b of Object.values(bondCandidates)) {
+  b.trend = mergeMonthlyHistory(b.asOf,
+    monthlyHistory(monthlyTrend[b.country], monthlyTrendAsOf[b.country]),
+    monthlyHistory(b.trend, b.asOf),
+    [{ date: b.asOf, value: b.value }]);
+}
+
+// Verified published closes supplement lagging feeds. Period changes use only
+// observations from this same benchmark/provider, never the fallback history.
 for (const m of Object.values(bondsManual.bonds || {})) {
   const base = bondCandidates[m.country];
-  if (!base || m.value == null || !m.asOf) continue;
-  if (base.asOf >= m.asOf) continue;             // an automated feed is fresher — keep it
-  const monthly = Array.isArray(base.trend) ? base.trend : [];
-  // Append the fresh reading as the newest point so the sparkline ends at the
-  // value actually shown. It provides context, not exact period-return inputs.
-  const trend = monthly.length ? [...monthly.slice(1), m.value] : undefined;
+  if (!base || m.value == null || !m.asOf || base.asOf > m.asOf) continue;
+  const observations = [...(m.observations || []), { date: m.asOf, value: m.value }];
   bondCandidates[m.country] = {
-    ...base,
-    value: m.value,
-    asOf: m.asOf,
-    source: m.source || base.source,
+    ...base, value: m.value, asOf: m.asOf, source: m.source,
     cadence: "daily",
-    trend,
-    /* NOT base.dailyMove. These four countries have no free daily feed, so
-       `base` is FRED's MONTHLY series, where the fetcher's "dailyMove" is just
-       the month-over-month change (it equals oneMonthMove in the dump). Carrying
-       it through published a monthly delta in a column labelled 1D — the UK read
-       -0.146 there while its recomputed 1M read +0.244, two different periods
-       sitting one above the other. There is no daily history to compute from, so
-       the honest answer is no figure; the table renders a dash. */
-    dailyMove: null,
-    // The monthly fallback currently lags the manual reading by several months,
-    // so neither 1M nor 1Y can be labelled honestly from this mixed series.
-    oneMonthMove: null,
-    oneYearMove: null,
+    trend: mergeMonthlyHistory(m.asOf, monthlyHistory(base.trend, base.asOf), observations),
+    ...periodMoves(observations),
   };
-}
-
-// Bond trends carry 36 monthly points so the table can offer the same window
-// ladder as every other chart (3M/6M/YTD/2Y/3Y). This was 12, which capped the
-// column at a single fixed window even though every fetcher already returns 36.
-// Top up anything shorter from the older monthly history, so a daily feed with
-// a short window doesn't render a stub chart.
-const BOND_TREND_POINTS = 36;
-
-/** Whole months from ISO date `a` to ISO date `b`; positive when `b` is later. */
-function monthsBetween(a, b) {
-  const [ay, am] = String(a).split("-").map(Number);
-  const [by, bm] = String(b).split("-").map(Number);
-  return (by - ay) * 12 + (bm - am);
-}
-
-for (const b of Object.values(bondCandidates)) {
-  const have = Array.isArray(b.trend) ? b.trend : [];
-  const monthly = monthlyTrend[b.country] ?? [];
-  if (have.length < BOND_TREND_POINTS && monthly.length) {
-    /* The two series OVERLAP — both run up to (roughly) the current month, so
-       the newest `have.length` points of `monthly` describe the same months
-       `have` already covers, at coarser precision. Splicing the NEWEST points
-       of `monthly` in front of `have` therefore replayed a year of history:
-       the sparkline climbed to today's yield, fell a year backwards in one
-       step, then climbed again. Every row showed that phantom cliff, and the
-       2Y/3Y windows sliced straight into the duplicated stretch.
-
-       Take the points that PRECEDE `have`'s window instead. `gap` is how far
-       the daily series runs past the end of the monthly one, so a lagging FRED
-       series (India sits ~3 months behind) still lines up. */
-    const gap = monthlyTrendAsOf[b.country] && b.asOf
-      ? Math.max(0, monthsBetween(monthlyTrendAsOf[b.country], b.asOf))
-      : 0;
-    const older = monthly.slice(0, Math.max(0, monthly.length - have.length + gap));
-    const need = BOND_TREND_POINTS - have.length;
-    b.trend = [...older.slice(-need), ...have].slice(-BOND_TREND_POINTS);
-  }
-  // The type contract and chart both treat the last point as the current
-  // headline. Pin it exactly so provider rounding cannot create a visible
-  // endpoint mismatch, and let validate-bonds.mjs enforce the invariant.
-  if (Array.isArray(b.trend) && b.trend.length && Number.isFinite(b.value)) {
-    b.trend[b.trend.length - 1] = b.value;
-  }
 }
 
 for (const b of Object.values(bondCandidates)) {
@@ -585,5 +530,14 @@ if (curveBlocks.length) {
   );
 }
 
+if (process.argv.includes("--bonds-only")) {
+  const pattern = /export const BOND_YIELDS[\s\S]*?\n\];/;
+  src = originalSrc.replace(pattern, src.match(pattern)[0]);
+}
+const bondRefresh = new Date(bondsDump.fetchedAt || bondsManual.readAt);
+if (Number.isFinite(bondRefresh.getTime())) {
+  const label = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/Vancouver" }).format(bondRefresh);
+  src = src.replace(/export const BOND_UPDATED_AT = "[^"]+";/, `export const BOND_UPDATED_AT = "${label}";`);
+}
 writeFileSync(dataPath, src);
 console.log("patched site-data.ts:", stats);
