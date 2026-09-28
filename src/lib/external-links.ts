@@ -38,6 +38,11 @@ export const INVESTING_INDEX_URL: Record<string, string> = {
 
 /** Investing.com 10Y government bond pages, keyed by `BondYield.country`. */
 export const INVESTING_BOND_URL: Record<string, string> = {
+  "Taiwan": "https://www.investing.com/rates-bonds/taiwan-10-year-bond-yield-historical-data",
+  "France": "https://www.investing.com/rates-bonds/france-10-year-bond-yield-historical-data",
+  "Indonesia": "https://www.investing.com/rates-bonds/indonesia-10-year-bond-yield-historical-data",
+  "Hong Kong": "https://www.investing.com/rates-bonds/hong-kong-10-year-bond-yield-historical-data",
+  "China": "https://www.investing.com/rates-bonds/china-10-year-bond-yield-historical-data",
   "United States":  "https://www.investing.com/rates-bonds/u.s.-10-year-bond-yield",
   "Germany":        "https://www.investing.com/rates-bonds/germany-10-year-bond-yield",
   "United Kingdom": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield",

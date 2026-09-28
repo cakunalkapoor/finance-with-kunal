@@ -274,8 +274,8 @@ for (const b of Object.values(bondCandidates)) {
 // Verified published closes supplement lagging feeds. Period changes use only
 // observations from this same benchmark/provider, never the fallback history.
 for (const m of Object.values(bondsManual.bonds || {})) {
-  const base = bondCandidates[m.country];
-  if (!base || m.value == null || !m.asOf || base.asOf > m.asOf) continue;
+  const base = bondCandidates[m.country] ?? { country: m.country, trend: [], asOf: m.asOf };
+  if (m.value == null || !m.asOf || base.asOf > m.asOf) continue;
   const observations = [...(m.observations || []), { date: m.asOf, value: m.value }];
   bondCandidates[m.country] = {
     ...base, value: m.value, asOf: m.asOf, source: m.source,

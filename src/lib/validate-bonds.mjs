@@ -23,7 +23,7 @@ const site = readFileSync(resolve(root, "src/lib/site-data.ts"), "utf8");
 // reports `monthly`, fetch:bonds failed or was skipped.
 const MUST_BE_DAILY = ["United States", "Canada", "Japan", "South Africa"];
 // Countries served by the read-and-verify tier (bonds-manual.json).
-const MANUAL_TIER   = ["Germany", "United Kingdom", "India", "South Korea", "Australia"];
+const MANUAL_TIER   = ["Germany", "United Kingdom", "India", "South Korea", "Australia", "China", "Hong Kong", "Indonesia", "France", "Taiwan"];
 
 const MAX_CROSSCHECK_GAP_BP = 25;   // two providers disagreeing more than this = suspect
 const MAX_AGE_DAYS          = 10;   // a "daily" series older than this is stale
@@ -56,7 +56,15 @@ const moves = new Map([...block.matchAll(
 
 if (bonds.some(b => b.country === "Germany" && /ECB|euro-area/.test(b.source))) problems.push("Germany must use a Bund series, not the euro-area AAA proxy");
 
-if (bonds.length !== 9) problems.push(`expected 9 bonds, found ${bonds.length}`);
+const equityBlock = site.match(/export const EQUITY_INDICES[\s\S]*?\n\];/)?.[0];
+if (!equityBlock) problems.push("could not locate EQUITY_INDICES");
+const aliases = { USA: "United States", UK: "United Kingdom" };
+const equityMarkets = new Set([...equityBlock?.matchAll(/region: "([^"]+)"/g) ?? []].map(m => aliases[m[1]] ?? m[1]));
+const bondMarkets = new Set(bonds.map(b => b.country));
+if (bondMarkets.size !== bonds.length) problems.push("duplicate bond markets");
+for (const country of equityMarkets) {
+  if (!bondMarkets.has(country)) problems.push(`${country}: equity market has no government bond yield`);
+}
 
 // The table now pairs each sovereign yield with one current central-bank
 // policy rate. Keep this coverage check in the same gate so adding/removing a

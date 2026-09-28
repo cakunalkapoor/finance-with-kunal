@@ -32,6 +32,11 @@ const INSTRUMENT: Record<string, string> = {
   "United States": "Treasury",
   "United Kingdom": "Gilt",
   Germany: "Bund",
+  France: "OAT",
+  China: "CGB",
+  "Hong Kong": "HKSAR Govt Bond",
+  Indonesia: "Govt Bond",
+  Taiwan: "Govt Bond",
   Japan: "JGB",
   Canada: "GoC Bond",
   India: "G-Sec",
@@ -151,7 +156,9 @@ export default function BondsTable() {
           </thead>
           <tbody>
             {BOND_YIELDS.map((bond, i) => {
-              const windowed = monthlyHorizonSlice(bond.trend, bond.asOf, view);
+              const requested = monthlyHorizonSlice(bond.trend, bond.asOf, view);
+              const firstAvailable = requested.findIndex(value => value !== null);
+              const windowed = firstAvailable < 0 ? [] : requested.slice(firstAvailable);
               const policyRate = POLICY_RATE_BY_COUNTRY.get(bond.country);
               return (
               <tr
@@ -263,6 +270,7 @@ export default function BondsTable() {
                       couple of days across sources — and by months for the
                       OECD series — so both the window and its labels are
                       computed from the row, not the site-wide refresh date. */}
+                  {firstAvailable > 0 && <div className="text-[9px] text-[var(--color-text-muted)]">Limited history</div>}
                   <TrendSparkline
                     values={windowed}
                     labels={windowed.map((_, j) =>
