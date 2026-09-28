@@ -66,10 +66,14 @@ function formatAsOf(asOf: string): string {
   });
 }
 
+const SORTED_BOND_YIELDS = [...BOND_YIELDS].sort((a, b) =>
+  a.country.localeCompare(b.country, "en"),
+);
+
 export default function BondsTable() {
   // Rows end at different asOf dates, so each computes its own window; the
   // shared strip offers only what EVERY row can draw.
-  const perRow = BOND_YIELDS.map((b) => monthlyHorizonsFor(b.trend.length, b.asOf));
+  const perRow = SORTED_BOND_YIELDS.map((b) => monthlyHorizonsFor(b.trend.length, b.asOf));
   const views = perRow.length
     ? perRow.reduce((acc, hs) => acc.filter((h) => hs.includes(h)))
     : [];
@@ -155,7 +159,7 @@ export default function BondsTable() {
             </tr>
           </thead>
           <tbody>
-            {BOND_YIELDS.map((bond, i) => {
+            {SORTED_BOND_YIELDS.map((bond, i) => {
               const requested = monthlyHorizonSlice(bond.trend, bond.asOf, view);
               const firstAvailable = requested.findIndex(value => value !== null);
               const windowed = firstAvailable < 0 ? [] : requested.slice(firstAvailable);
@@ -165,7 +169,7 @@ export default function BondsTable() {
                 key={bond.country}
                 style={{
                   borderBottom:
-                    i < BOND_YIELDS.length - 1
+                    i < SORTED_BOND_YIELDS.length - 1
                       ? "1px solid rgba(44,38,72,0.7)"
                       : "none",
                 }}

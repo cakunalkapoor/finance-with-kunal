@@ -106,6 +106,12 @@ const TH_STYLE = {
   letterSpacing: "0.1em",
 };
 
+const marketName = (region: string) =>
+  ({ USA: "United States", UK: "United Kingdom" }[region] ?? region);
+const SORTED_EQUITY_INDICES = [...EQUITY_INDICES].sort((a, b) =>
+  marketName(a.region).localeCompare(marketName(b.region), "en"),
+);
+
 export default function EquityMarketsTable() {
   const [chartView, setChartView] = useState<ChartView>("YTD");
 
@@ -113,14 +119,14 @@ export default function EquityMarketsTable() {
      draw it — otherwise switching to it would blank the rows that came back
      without a daily series. */
   const views = viewsFor(
-    EQUITY_INDICES.every((r) => (r.daily?.length ?? 0) >= 2)
+    SORTED_EQUITY_INDICES.every((r) => (r.daily?.length ?? 0) >= 2)
   );
   /* The span named in the header. For 1W these are one row's real sessions:
      exchanges keep different calendars, so a Tokyo row's six sessions can end a
      day either side of New York's. Each row's own tooltip carries its own
      dates; this is the same order of approximation the weekly labels already
      make, and it is stated to the day rather than the month. */
-  const headerDays = EQUITY_INDICES[0]?.dailyDates;
+  const headerDays = SORTED_EQUITY_INDICES[0]?.dailyDates;
 
   return (
     <SciFiCard glow="cyan" cornerAccent>
@@ -128,7 +134,7 @@ export default function EquityMarketsTable() {
         title="Global Equity Markets"
         // Counted from the data, not written out — the hardcoded "11" went
         // stale the moment an index was added.
-        subtitle={`${EQUITY_INDICES.length} Major Indices · 30d realized volatility · click an index for full detail on Investing.com`}
+        subtitle={`${SORTED_EQUITY_INDICES.length} Major Indices · 30d realized volatility · click an index for full detail on Investing.com`}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 560 }}>
@@ -188,12 +194,12 @@ export default function EquityMarketsTable() {
           </thead>
 
           <tbody>
-            {EQUITY_INDICES.map((idx, i) => {
+            {SORTED_EQUITY_INDICES.map((idx, i) => {
               return (
                 <tr
                   key={idx.symbol}
                   style={{
-                    borderBottom: i < EQUITY_INDICES.length - 1
+                    borderBottom: i < SORTED_EQUITY_INDICES.length - 1
                       ? "1px solid rgba(44,38,72,0.7)"
                       : "none",
                   }}
