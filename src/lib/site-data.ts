@@ -3531,7 +3531,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     direction: "up",
     isPositiveGood: true,
     period: "Apr 2026",
-    description: "Euro-area real GDP grew 0.6% quarter over quarter in Q2 2026 after a flat Q1, in the September 25 Eurostat update. This rate is not annualised, unlike the US GDP measure. Source: Eurostat (namq_10_gdp, chain-linked volumes, seasonally and calendar adjusted, EA21).",
+    description: "Euro-area real GDP grew 0.6% quarter over quarter in Q2 2026 after a flat Q1, in the September 28 Eurostat update. This rate is not annualised, unlike the US GDP measure. Source: Eurostat (namq_10_gdp, chain-linked volumes, seasonally and calendar adjusted, EA21).",
     timeSeries: [
       { date: "2021-07", value: 1.8 },
       { date: "2021-10", value: 0.7 },
@@ -5273,44 +5273,44 @@ export const MACRO_SNAPSHOT: MacroSnapshot = {
 };
 
 export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
-  "weekRange": "Sep 21 – 25, 2026 · refreshed Sep 26",
-  "lead": "US equities advanced this week: the S&P 500 gained 1.21% and the Nasdaq 100 rose 3.25%, while the US 10-year yield reached 5.184% in the displayed Yahoo Finance close. September flash PMIs pointed to faster US activity. Japan’s 1.25% policy target is now effective, and South Africa raised its policy rate to 7.25%.",
+  "weekRange": "Through Sep 28, 2026 · rolling weekly comparisons",
+  "lead": "Through September 28, the S&P 500 returned -1.04% and the Nasdaq 100 -0.67% over their rolling weekly windows. The displayed US 10-year Treasury yield was 5.24%. Read the equity moves alongside government yields and currencies; monthly economic releases retain their own reporting periods.",
   "sections": [
     {
       "id": "heatmap",
       "title": "Sector Heatmap",
       "icon": "🟦",
-      "body": "Technology gained 3.06% in the tracked S&P 500 sample, while Communication rose 1.94% and Healthcare 1.32%. Utilities fell 3.03%, Energy 2.95% and Financials 1.57%. These are index-weighted returns within the tracked sample, not official sector-index returns."
+      "body": "Technology -0.05%; Financials -3.02%; Consumer Disc. -3.73%; Consumer Staples +1.25%; Communication -3.28%; Healthcare +0.99%; Industrials -0.38%; Energy +0.06%; Materials +0.23%; Utilities -3.44%; Real Estate -2.63%. These are index-weighted rolling weekly returns within the tracked S&P 500 sample, not official sector-index returns."
     },
     {
       "id": "flow",
       "title": "Relative Performance",
       "icon": "💸",
-      "body": "The latest rolling weekly crypto changes were Bitcoin +3.87%, Ethereum +3.03%, Solana +8.36% and BNB +2.07%. Crypto trades through the weekend, so its September 26 snapshot differs from Friday equity closes. Price returns do not establish investment-fund inflows or outflows."
+      "body": "Bitcoin +4.09%; Ethereum +1.66%; Solana +9.83%; BNB +0.85%. These rolling weekly price changes use the latest available observations through September 28. Crypto trades seven days a week; its observation window can differ from equities. Price changes do not establish fund inflows or outflows."
     },
     {
       "id": "indices",
       "title": "Indices Movement",
       "icon": "📊",
-      "body": "The S&P 500 closed at 7,743.41 and the Nasdaq 100 at 30,608.13 on September 25. Rolling weekly changes included Nikkei +2.07%, TAIEX +3.75%, DAX +0.41%, FTSE 100 +0.34%, TSX -0.02% and Hang Seng -0.97%. KOSPI rose 5.40% through its latest available September 23 session; market holidays can shift the comparison window."
+      "body": "The September 28 closes were 7,683.69 for the S&P 500 and 30,276.81 for the Nasdaq 100. Rolling weekly changes: Shanghai Composite -3.20%; Hang Seng -1.60%; Nikkei 225 +1.32%; NIFTY 50 -2.71%; IDX Composite -3.71%; DAX -0.78%; FTSE 100 -0.50%; CAC 40 -0.74%; S&P/TSX Composite -1.44%; KOSPI -1.68%; TAIEX +3.75%. Holidays can leave individual markets on an earlier session."
     },
     {
       "id": "bonds",
       "title": "Bond Market",
       "icon": "📉",
-      "body": "The displayed US 10-year close was 5.184% on September 25. Verified September 25 readings were Germany 3.621%, Canada 3.925%, UK 5.3603%, India 7.120% and Australia 5.368%. Japan’s September 24 official observation was 3.073%. South Korea’s September 23 reading was 4.409%. Japan’s 1.25% policy target took effect September 24; South Africa’s 7.25% rate took effect September 25."
+      "body": "Latest 10-year government yields in the September 28 refresh: United States 5.24% (09-28); China 1.67% (09-28); Hong Kong 4.10% (09-28); Japan 3.08% (09-28); India 7.18% (09-28); Indonesia 7.20% (09-28); Germany 3.64% (09-28); United Kingdom 5.40% (09-28); France 4.78% (09-28); Canada 3.97% (09-28); South Korea 4.54% (09-28); Taiwan 1.94% (09-28); South Africa 8.93% (09-25). Observation dates differ across sources. Yield changes in the table are in basis points; policy rates are separate central-bank benchmarks."
     },
     {
       "id": "commodities",
       "title": "Commodities",
       "icon": "🛢️",
-      "body": "September 25 futures closes put Brent at $104.32/bbl (+0.43% weekly) and WTI at $92.41/bbl (-7.87%). Gold fell 2.34% to $4,321.20/oz, silver fell 3.47% and copper rose 1.22%. Natural gas gained 9.75% to $3.196/MMBtu. Returns follow each quoted futures contract and its weekly anchor."
+      "body": "Brent Crude 105.28 USD/bbl (+4.92% rolling weekly); WTI Crude 92.60 USD/bbl (-3.32% rolling weekly); Gold 4,321.20 USD/oz (-2.34% rolling weekly); Silver 61.22 USD/oz (-7.00% rolling weekly); Copper 6.566 USD/lb (-1.80% rolling weekly); Aluminum 3,385.75 USD/ton (-1.16% rolling weekly); Iron Ore 96.92 USD/ton (-0.61% rolling weekly); Soybeans 1,288.25 US¢/bu (-2.99% rolling weekly); Natural Gas 3.000 USD/MMBtu (+5.78% rolling weekly). Prices and returns follow the quoted futures contracts and their own observation dates through September 28."
     },
     {
       "id": "currencies",
       "title": "Currencies",
       "icon": "💱",
-      "body": "September 25 readings put the dollar index at 100.97 (+0.75% weekly). EUR/USD was 1.1401 (-0.65%) and GBP/USD 1.3246 (-0.84%). USD/JPY rose 0.68% to 157.18, USD/CAD 1.08% to 1.4141 and USD/INR 0.02% to 95.82. Higher USD/foreign-currency quotes indicate a stronger dollar."
+      "body": "DXY 101.20 (+0.77% rolling weekly); EUR/USD 1.1378 (-0.89% rolling weekly); GBP/USD 1.3229 (-1.19% rolling weekly); USD/JPY 157.46 (+0.27% rolling weekly); USD/CAD 1.4155 (+1.15% rolling weekly); USD/INR 95.79 (-0.23% rolling weekly). Higher USD/foreign-currency quotes indicate a stronger dollar; higher foreign-currency/USD quotes indicate a weaker dollar."
     }
   ]
 };
