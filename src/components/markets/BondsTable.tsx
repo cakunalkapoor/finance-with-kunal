@@ -41,7 +41,6 @@ const INSTRUMENT: Record<string, string> = {
   Canada: "GoC Bond",
   India: "G-Sec",
   "South Korea": "KTB",
-  Australia: "ACGB",
   "South Africa": "Govt Bond",
 };
 

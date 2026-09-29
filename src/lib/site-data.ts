@@ -309,13 +309,6 @@ export const POLICY_RATES: PolicyRate[] = [
     source: "Bank of Korea",
   },
   {
-    country: "Australia",
-    rate: 4.35,
-    name: "Cash rate target",
-    asOf: "2026-08-12",
-    source: "Reserve Bank of Australia",
-  },
-  {
     country: "South Africa",
     rate: 7.25,
     name: "SARB policy rate",
@@ -523,19 +516,6 @@ export const BOND_YIELDS: BondYield[] = [
     oneMonthMove: 0.04,
     oneYearMove: null,
     trend: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1.89, 1.94],
-  },
-  {
-    country: "Australia",
-    flag: "🇦🇺",
-    maturity: "10Y",
-    asOf: "2026-09-28",
-    source: "Investing.com Australia 10Y",
-    cadence: "daily",
-    yield: 5.435,
-    dailyMove: 0.05,
-    oneMonthMove: 0.347,
-    oneYearMove: null,
-    trend: [4.63, 4.58, 4.19, 4.148, 4.141, 4.045, 4.268, 4.325, 4.242, 4.326, 3.976, 3.922, 4.267, 4.544, 4.313, 4.481, 4.423, 4.421, 4.267, 4.35, 4.208, 4.291, 4.275, 4.298, 4.234, 4.416, 4.719, 4.75, 4.758, 4.926, 4.969, 4.982, 4.831, 4.919, 5.076, 5.435],
   },
   {
     country: "South Africa",

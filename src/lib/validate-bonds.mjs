@@ -23,7 +23,7 @@ const site = readFileSync(resolve(root, "src/lib/site-data.ts"), "utf8");
 // reports `monthly`, fetch:bonds failed or was skipped.
 const MUST_BE_DAILY = ["United States", "Canada", "Japan", "South Africa"];
 // Countries served by the read-and-verify tier (bonds-manual.json).
-const MANUAL_TIER   = ["Germany", "United Kingdom", "India", "South Korea", "Australia", "China", "Hong Kong", "Indonesia", "France", "Taiwan"];
+const MANUAL_TIER   = ["Germany", "United Kingdom", "India", "South Korea", "China", "Hong Kong", "Indonesia", "France", "Taiwan"];
 
 const MAX_CROSSCHECK_GAP_BP = 25;   // two providers disagreeing more than this = suspect
 const MAX_AGE_DAYS          = 10;   // a "daily" series older than this is stale
@@ -131,7 +131,7 @@ for (const b of bonds) {
 // agree with an independent provider.
 let manual = { bonds: {} };
 try { manual = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-manual.json"), "utf8")); }
-catch { problems.push("bonds-manual.json missing — UK/India/Korea/Australia will silently fall back to stale monthly data"); }
+catch { problems.push("bonds-manual.json missing — manually verified markets will silently fall back to stale monthly data"); }
 
 for (const key of Object.keys(manual.bonds ?? {})) {
   const m = manual.bonds[key];

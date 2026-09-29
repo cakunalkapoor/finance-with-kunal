@@ -50,7 +50,6 @@ export const INVESTING_BOND_URL: Record<string, string> = {
   "Japan":          "https://www.investing.com/rates-bonds/japan-10-year-bond-yield",
   "India":          "https://www.investing.com/rates-bonds/india-10-year-bond-yield",
   "South Korea":    "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield",
-  "Australia":      "https://www.investing.com/rates-bonds/australia-10-year-bond-yield",
   "South Africa":   "https://www.investing.com/rates-bonds/south-africa-10-year-bond-yield",
 };
 

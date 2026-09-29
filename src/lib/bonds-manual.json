@@ -97,41 +97,6 @@
         }
       ]
     },
-    "au10y": {
-      "country": "Australia",
-      "value": 5.435,
-      "asOf": "2026-09-28",
-      "source": "Investing.com Australia 10Y",
-      "crossCheck": {
-        "source": "CountryEconomy 10Y",
-        "value": 5.43,
-        "sourceUrl": "https://countryeconomy.com/bonds",
-        "asOf": "2026-09-28"
-      },
-      "sourceUrl": "https://www.investing.com/rates-bonds/australia-10-year-bond-yield-historical-data",
-      "observations": [
-        {
-          "date": "2026-08-28",
-          "value": 5.088
-        },
-        {
-          "date": "2026-08-31",
-          "value": 5.076
-        },
-        {
-          "date": "2026-09-24",
-          "value": 5.371
-        },
-        {
-          "date": "2026-09-25",
-          "value": 5.368
-        },
-        {
-          "date": "2026-09-26",
-          "value": 5.385
-        }
-      ]
-    },
     "de10y": {
       "country": "Germany",
       "value": 3.6434,
