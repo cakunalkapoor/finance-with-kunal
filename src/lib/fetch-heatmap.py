@@ -18,11 +18,17 @@ Run: npm run fetch:heatmap
 """
 
 import json
+import os
 import time
 from pathlib import Path
 
 import pandas as pd
 import yfinance as yf
+
+# Optional inclusive exchange-session cutoff for dated refreshes.
+REFRESH_AS_OF = os.environ.get("REFRESH_AS_OF")
+if REFRESH_AS_OF:
+    pd.Timestamp(REFRESH_AS_OF)  # Reject invalid dates before fetching.
 
 PROJECT = Path(__file__).resolve().parent.parent.parent
 CATALOGUE = PROJECT / "src" / "lib" / "heatmap-catalogue.json"
@@ -118,6 +124,8 @@ def fetch_batch(symbols, label):
     for sym in symbols:
         try:
             df = data[sym] if isinstance(data.columns, pd.MultiIndex) else data
+            if REFRESH_AS_OF:
+                df = df[df.index.strftime("%Y-%m-%d") <= REFRESH_AS_OF]
             closes = df["Close"].dropna()
             if len(closes) < 2:
                 out[sym] = {"ok": False}
@@ -162,6 +170,8 @@ def fetch_batch(symbols, label):
             for sym in missing_final_close:
                 try:
                     hdf = hourly[sym] if isinstance(hourly.columns, pd.MultiIndex) else hourly
+                    if REFRESH_AS_OF:
+                        hdf = hdf[hdf.index.strftime("%Y-%m-%d") <= REFRESH_AS_OF]
                     hcloses = hdf["Close"].dropna()
                     if not len(hcloses):
                         continue

@@ -29,12 +29,18 @@ or:    npm run fetch:yahoo
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 import time
 
 import yfinance as yf
 import pandas as pd
+
+# Optional inclusive exchange-session cutoff for dated refreshes.
+REFRESH_AS_OF = os.environ.get("REFRESH_AS_OF")
+if REFRESH_AS_OF:
+    pd.Timestamp(REFRESH_AS_OF)  # Reject invalid dates before fetching.
 
 PROJECT = Path(__file__).resolve().parent.parent.parent
 OUT = PROJECT / "src" / "lib" / "yahoo-data.json"
@@ -267,6 +273,9 @@ def week_ending_friday(history, collapse_weekend=False):
         # A provider may emit both a Friday candle and a Saturday-stamped final
         # candle. The latter is the completed Friday session and must win.
         out = out.groupby(level=0).last().sort_index()
+
+    if REFRESH_AS_OF:
+        return out[out.index.strftime("%Y-%m-%d") <= REFRESH_AS_OF]
 
     latest = out.index[-1]
     cutoff = latest.normalize() - pd.Timedelta(days=(latest.weekday() - 4) % 7)
@@ -608,6 +617,8 @@ def fetch_one(symbol, retries=3):
         try:
             t = yf.Ticker(symbol)
             hist = t.history(period="5y", interval="1d", auto_adjust=False)
+            if REFRESH_AS_OF:
+                hist = hist[hist.index.strftime("%Y-%m-%d") <= REFRESH_AS_OF]
             if len(hist) == 0:
                 raise RuntimeError("empty history")
             return hist, None

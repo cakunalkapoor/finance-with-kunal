@@ -10,12 +10,12 @@
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.4297,
+      "value": 5.4017,
       "asOf": "2026-09-28",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 5.42,
+        "value": 5.4,
         "sourceUrl": "https://countryeconomy.com/bonds",
         "asOf": "2026-09-28"
       },
@@ -99,7 +99,7 @@
     },
     "au10y": {
       "country": "Australia",
-      "value": 5.421,
+      "value": 5.435,
       "asOf": "2026-09-28",
       "source": "Investing.com Australia 10Y",
       "crossCheck": {
@@ -134,13 +134,13 @@
     },
     "de10y": {
       "country": "Germany",
-      "value": 3.6301,
+      "value": 3.6434,
       "asOf": "2026-09-28",
       "source": "Investing.com Germany 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/germany-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 3.64,
+        "value": 3.63,
         "asOf": "2026-09-28",
         "sourceUrl": "https://countryeconomy.com/bonds"
       },
@@ -165,13 +165,13 @@
     },
     "ca10y": {
       "country": "Canada",
-      "value": 3.965,
+      "value": 3.967,
       "asOf": "2026-09-28",
       "source": "Investing.com Canada 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/canada-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 3.99,
+        "value": 3.97,
         "asOf": "2026-09-28",
         "sourceUrl": "https://countryeconomy.com/bonds"
       },
@@ -250,7 +250,7 @@
     },
     "id10y": {
       "country": "Indonesia",
-      "value": 7.136,
+      "value": 7.196,
       "asOf": "2026-09-28",
       "source": "Investing.com Indonesia 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/indonesia-10-year-bond-yield-historical-data",
@@ -277,13 +277,13 @@
     },
     "fr10y": {
       "country": "France",
-      "value": 4.77,
+      "value": 4.78,
       "asOf": "2026-09-28",
       "source": "Investing.com France 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/france-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "CountryEconomy 10Y",
-        "value": 4.77,
+        "value": 4.78,
         "asOf": "2026-09-28",
         "sourceUrl": "https://countryeconomy.com/bonds"
       },
@@ -305,7 +305,7 @@
     "tw10y": {
       "country": "Taiwan",
       "value": 1.94,
-      "asOf": "2026-09-25",
+      "asOf": "2026-09-28",
       "source": "Investing.com Taiwan 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/taiwan-10-year-bond-yield-historical-data",
       "crossCheck": {
@@ -322,10 +322,14 @@
         {
           "date": "2026-08-31",
           "value": 1.89
+        },
+        {
+          "date": "2026-09-25",
+          "value": 1.94
         }
       ],
-      "note": "Uncorroborated September 24 spike omitted; insufficient same-source anchors for daily and monthly moves."
+      "note": "Uncorroborated September 24 spike omitted; September 28 and September 25 both published at 1.940%."
     }
   },
-  "snapshotNote": "September 28 observations include intraday quotes, not uniform closing prices."
+  "snapshotNote": "Reviewed through September 28, 2026; later sessions excluded. Historical provider rows replace earlier intraday snapshots where available."
 }

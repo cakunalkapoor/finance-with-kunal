@@ -407,6 +407,7 @@ function patchCommodityIndicator(id, rec) {
     change: +(rec.value - prev).toFixed(3),
     direction: `"${wk >= 0 ? "up" : "down"}"`,
     period: `"${asOfToFullDate(rec.asOf)}"`,
+    description: JSON.stringify(`The ${asOfToFullDate(rec.asOf)} observation was $${rec.value}/${rec.symbol === "BZ=F" ? "bbl" : "MMBtu"}, with a ${wk >= 0 ? "+" : ""}${wk.toFixed(2)}% move against the prior weekly anchor. Source: Yahoo Finance (${rec.symbol}); futures-contract prices.`),
   }, weeklyTsFromSparkline(rec.sparkline, rec.asOf));
 }
 if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
