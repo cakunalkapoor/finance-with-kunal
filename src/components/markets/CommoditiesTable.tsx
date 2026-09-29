@@ -8,7 +8,7 @@ import { formatNumber } from "@/lib/utils";
 import AssetTable, { type AssetRow } from "@/components/markets/AssetTable";
 
 export default function CommoditiesTable() {
-  const rows: AssetRow[] = COMMODITIES.map((c) => ({
+  const rows: AssetRow[] = [...COMMODITIES].sort((a, b) => a.name.localeCompare(b.name, "en")).map((c) => ({
     key: c.symbol,
     icon: c.icon,
     name: c.name,

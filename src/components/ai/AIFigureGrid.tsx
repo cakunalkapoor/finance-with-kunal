@@ -41,7 +41,7 @@ export default function AIFigureGrid({
 
   return (
     <div className={`grid grid-cols-1 gap-3 px-4 pb-4 sm:grid-cols-2 ${wide}`}>
-      {figures.map((figure) => (
+      {[...figures].sort((a, b) => a.label.localeCompare(b.label, "en")).map((figure) => (
         <a
           key={figure.id}
           href={figure.sourceUrl}

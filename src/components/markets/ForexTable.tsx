@@ -13,7 +13,7 @@ function formatRate(value: number, pair: string): string {
 }
 
 export default function ForexTable() {
-  const rows: AssetRow[] = FOREX_RATES.map((fx) => ({
+  const rows: AssetRow[] = [...FOREX_RATES].sort((a, b) => a.name.localeCompare(b.name, "en")).map((fx) => ({
     key: fx.symbol,
     icon: fx.icon,
     name: fx.name,

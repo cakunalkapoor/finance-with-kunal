@@ -112,7 +112,7 @@ export default function AIDealsTable() {
             </tr>
           </thead>
           <tbody>
-            {AI_DEALS.map((deal, i) => (
+            {[...AI_DEALS].sort((a, b) => a.company.localeCompare(b.company, "en")).map((deal, i) => (
               <tr
                 key={`${deal.company}-${deal.date}`}
                 style={{

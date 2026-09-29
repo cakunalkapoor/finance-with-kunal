@@ -26,7 +26,7 @@ const TH_STYLE: CSSProperties = {
   letterSpacing: "0.1em",
 };
 
-/* Grouped by where the fund is listed, then ordered by exposure inside each
+/* Grouped by where the fund is listed, then ordered alphabetically by ticker inside each
    group — never by return, since a ranked fund list reads as a recommendation. */
 const GROUPS: { listing: ETF["listing"]; label: string; flag: string }[] = [
   { listing: "Canada", label: "Listed in Canada", flag: "🇨🇦" },
@@ -97,7 +97,7 @@ export default function ETFTable() {
 
           <tbody>
             {GROUPS.map(({ listing, label, flag }) => {
-              const rows = ETFS.filter((e) => e.listing === listing);
+              const rows = ETFS.filter((e) => e.listing === listing).sort((a, b) => a.ticker.localeCompare(b.ticker, "en"));
               if (rows.length === 0) return null;
 
               return [

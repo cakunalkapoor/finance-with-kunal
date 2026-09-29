@@ -23,15 +23,17 @@ const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
 const ACCENT = { light: "#37683f", dark: "#b9f227" } as const;
 
+const SORTED_CAPEX = [...AI_CAPEX].sort((a, b) => a.company.localeCompare(b.company, "en"));
+
 export default function AICapexChart() {
   const theme = useTheme();
   const c = CHART_COLORS[theme];
   const accent = ACCENT[theme];
 
-  const companies = AI_CAPEX.map((p) => p.company);
-  const priorYear = AI_CAPEX.map((p) => p.priorYear);
-  const guidanceLow = AI_CAPEX.map((p) => p.low);
-  const guidanceRange = AI_CAPEX.map((p) => Math.round((p.high - p.low) * 10) / 10);
+  const companies = SORTED_CAPEX.map((p) => p.company);
+  const priorYear = SORTED_CAPEX.map((p) => p.priorYear);
+  const guidanceLow = SORTED_CAPEX.map((p) => p.low);
+  const guidanceRange = SORTED_CAPEX.map((p) => Math.round((p.high - p.low) * 10) / 10);
 
   const totalLow = AI_CAPEX.reduce((sum, p) => sum + p.low, 0);
   const totalHigh = AI_CAPEX.reduce((sum, p) => sum + p.high, 0);
@@ -163,7 +165,7 @@ export default function AICapexChart() {
       </div>
 
       <div className="grid grid-cols-1 gap-2 px-4 pb-3 sm:grid-cols-2">
-        {AI_CAPEX.map((plan) => (
+        {SORTED_CAPEX.map((plan) => (
           <a
             key={plan.ticker}
             href={plan.sourceUrl}

@@ -408,7 +408,7 @@ export default function AIMarketImpact() {
                 letterSpacing: "0.1em",
               }}
             >
-              Ranked · {windowLabel(view, AI_SERIES_POINTS, AI_DAILY_DATES)}
+              A–Z · {windowLabel(view, AI_SERIES_POINTS, AI_DAILY_DATES)}
             </p>
             {highlight && (
               <button
@@ -422,7 +422,7 @@ export default function AIMarketImpact() {
           </div>
 
           <div className="space-y-1">
-            {ranked.map((row) => {
+            {[...ranked].sort((a, b) => a.label.localeCompare(b.label, "en")).map((row) => {
               const active = highlight === row.id;
               const width = (Math.abs(row.pct) / span) * 100;
               const positive = row.pct >= 0;

@@ -225,7 +225,7 @@ export default function MarketHeatmap() {
 
       {/* Index selector */}
       <div className="px-4 sm:px-5 pb-1 flex items-center gap-2 flex-wrap">
-        {HEATMAP_INDICES.map((idx) => {
+        {[...HEATMAP_INDICES].sort((a, b) => a.name.localeCompare(b.name, "en")).map((idx) => {
           const active = idx.id === activeId;
           return (
             <button
@@ -271,7 +271,7 @@ export default function MarketHeatmap() {
 
       {/* Sector legend */}
       <div className="px-4 pb-4 flex flex-wrap gap-2">
-        {sectors.map((s) => {
+        {[...sectors].sort((a, b) => a.name.localeCompare(b.name, "en")).map((s) => {
           const pos = s.change >= 0;
           return (
             <div

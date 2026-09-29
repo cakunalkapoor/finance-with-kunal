@@ -13,7 +13,7 @@ export default function MarketTicker() {
       value: `$${formatNumber(c.value, c.symbol === "GC=F" ? 0 : 2)}`,
       change: c.dailyChange,
     })),
-  ];
+  ].sort((a, b) => a.label.localeCompare(b.label, "en"));
 
   // Double for seamless loop
   const doubled = [...items, ...items];

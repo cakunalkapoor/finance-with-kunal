@@ -14,7 +14,7 @@ function formatPrice(value: number): string {
 }
 
 export default function CryptoTable() {
-  const rows: AssetRow[] = CRYPTO.map((c) => ({
+  const rows: AssetRow[] = [...CRYPTO].sort((a, b) => a.name.localeCompare(b.name, "en")).map((c) => ({
     key: c.symbol,
     icon: c.icon,
     name: c.name,

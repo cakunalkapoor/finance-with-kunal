@@ -32,9 +32,7 @@ const TH_STYLE: CSSProperties = {
   letterSpacing: "0.1em",
 };
 
-/* Grouped by position in the AI stack, and ordered within a group by nothing
-   more meaningful than where they sit in the chain — never by return, since a
-   ranked list of stocks reads as a recommendation. Same rule as ETFTable. */
+/* Keep AI-stack groups, with groups and companies ordered alphabetically. */
 const GROUPS: { layer: AIStockLayer; label: string; blurb: string }[] = [
   {
     layer: "platform",
@@ -121,8 +119,8 @@ export default function AIStockTable() {
           </thead>
 
           <tbody>
-            {GROUPS.map(({ layer, label, blurb }) => {
-              const rows = AI_STOCKS.filter((s) => s.layer === layer);
+            {[...GROUPS].sort((a, b) => a.label.localeCompare(b.label, "en")).map(({ layer, label, blurb }) => {
+              const rows = AI_STOCKS.filter((s) => s.layer === layer).sort((a, b) => a.company.localeCompare(b.company, "en"));
               if (rows.length === 0) return null;
 
               return [
