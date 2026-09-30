@@ -3828,29 +3828,30 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     ],
   },
   {
-    // Source reviewed Sep 12, 2026: https://www.stats.gov.cn/english/PressRelease/202609/t20260901_1965170.html
+    // September NBS reading supplied by Kunal, Sep 30, 2026.
     id: "china-mfg-pmi",
     name: "China Manufacturing PMI",
     category: "pmi",
     country: "China",
     flag: "🇨🇳",
-    value: 49.8,
+    value: 50.1,
     unit: "Index",
-    previousValue: 49.2,
-    change: 0.6,
+    previousValue: 49.8,
+    change: 0.3,
     direction: "up",
     isPositiveGood: true,
-    period: "Aug 2026",
-    description: "NBS official manufacturing PMI registered 49.8 in August versus 49.2 in July. A reading above 50 signals expansion and below 50 contraction. Source: National Bureau of Statistics of China.",
+    period: "Sep 2026",
+    description: "NBS official manufacturing PMI rose to 50.1 in September from 49.8 in August, moving above the 50 expansion threshold. A reading above 50 signals expansion and below 50 contraction. Source: National Bureau of Statistics of China.",
     timeSeries: [
       { date: "2026-01", value: 49.3 }, { date: "2026-02", value: 49.0 }, { date: "2026-03", value: 50.4 },
       { date: "2026-04", value: 50.3 }, { date: "2026-05", value: 50.0 }, { date: "2026-06", value: 50.3 },
       { date: "2026-07", value: 49.2 },
       { date: "2026-08", value: 49.8 },
+      { date: "2026-09", value: 50.1 },
     ],
   },
   {
-    // Source reviewed Sep 26, 2026: https://www.fxstreet.com/news/indias-hsbc-manufacturing-pmi-climbs-to-557-in-september-202609230501
+    // August comparison corrected to 52.9 per Kunal’s supplied PMI table, Sep 30, 2026.
     id: "india-mfg-pmi",
     name: "India Manufacturing PMI",
     category: "pmi",
@@ -3858,17 +3859,17 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     flag: "🇮🇳",
     value: 55.7,
     unit: "Index",
-    previousValue: 52.8,
-    change: 2.9,
+    previousValue: 52.9,
+    change: 2.8,
     direction: "up",
     isPositiveGood: true,
     period: "Sep 2026 (flash)",
-    description: "S&P Global India Manufacturing PMI flash estimate rose to 55.7 in September from 52.8 in August. Preliminary release, subject to revision; above 50 indicates expansion. Source: S&P Global via FXStreet, September 23, 2026.",
+    description: "S&P Global India Manufacturing PMI flash estimate rose to 55.7 in September from 52.9 in August. Preliminary release, subject to revision; above 50 indicates expansion. Source: S&P Global / HSBC flash PMI.",
     timeSeries: [
       { date: "2026-01", value: 55.4 }, { date: "2026-02", value: 56.9 }, { date: "2026-03", value: 53.9 },
       { date: "2026-04", value: 54.7 }, { date: "2026-05", value: 55.0 }, { date: "2026-06", value: 54.2 },
       { date: "2026-07", value: 53.5 },
-      { date: "2026-08", value: 52.8 },
+      { date: "2026-08", value: 52.9 },
           { date: "2026-09", value: 55.7 },
     ],
   },
@@ -5260,12 +5261,12 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
 // FRED + Yahoo by patch-site-data.mjs. PMI remains manually curated.
 export const MACRO_SNAPSHOT: MacroSnapshot = {
   gdp: { value: 1.5, trend: "down" },
-  // China NBS official manufacturing PMI, Aug 2026 (49.2 → 49.8), released Aug 31.
+  // China NBS official manufacturing PMI, Sep 2026 (49.8 → 50.1).
   // Replaced the J.P.Morgan Global Composite PMI, which is a licensed S&P Global
   // series: no free feed, and the press release is not publicly retrievable, so the
   // figure could be neither refreshed automatically nor independently checked. The
   // NBS series is published free and monthly, so this tile is now verifiable.
-  pmi: { value: 49.8, trend: "up" },
+  pmi: { value: 50.1, trend: "up" },
   inflation: { value: 3.71, trend: "down" },
   jobs: { value: 4.1, trend: "neutral" },
   claims: { value: 197, trend: "up" },
