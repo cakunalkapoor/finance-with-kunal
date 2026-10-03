@@ -127,7 +127,7 @@ export default function AIAdoptionChart() {
       <div className="px-2">
         <ReactECharts
           option={option}
-          style={{ height: Math.max(220, AI_ADOPTION_BY_SIZE.length * 36 + 48), width: "100%" }}
+          style={{ height: 320, width: "100%" }}
           opts={{ renderer: "svg" }}
           notMerge
         />

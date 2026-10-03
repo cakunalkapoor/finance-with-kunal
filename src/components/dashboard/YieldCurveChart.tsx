@@ -188,7 +188,7 @@ export default function YieldCurveChart({ curve }: Props) {
 
   return (
     <div
-      className="rounded-lg overflow-hidden"
+      className="flex h-[400px] flex-col rounded-lg overflow-hidden"
       style={{
         background: "var(--color-space-card)",
         border: "1px solid var(--color-space-border)",
@@ -253,12 +253,12 @@ export default function YieldCurveChart({ curve }: Props) {
         ))}
       </div>
 
-      <div className="px-2 pb-3">
+      <div className="shrink-0 px-2 pb-3">
         <ReactECharts option={option} style={{ height: 160 }} opts={{ renderer: "svg" }} notMerge />
       </div>
 
       <div
-        className="px-4 pb-3 text-xs leading-relaxed"
+        className="min-h-0 flex-1 overflow-y-auto px-4 pb-3 text-xs leading-relaxed"
         style={{
           color: "var(--color-text-muted)",
           borderTop: "1px solid var(--color-space-border)",

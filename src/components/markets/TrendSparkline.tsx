@@ -100,7 +100,7 @@ export default function TrendSparkline({
   return (
     <ReactECharts
       option={option}
-      style={{ height, width: "100%", minWidth: 96 }}
+      style={{ height, width: 160, minWidth: 160 }}
       opts={{ renderer: "svg" }}
       aria-label={ariaLabel}
     />

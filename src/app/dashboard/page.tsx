@@ -95,11 +95,7 @@ export default function DashboardPage() {
               </Reveal>
 
               <div
-                className={`grid gap-4 ${
-                  indicators.length === 1
-                    ? "grid-cols-1 max-w-xl"
-                    : "grid-cols-1 lg:grid-cols-2"
-                }`}
+                className="grid grid-cols-1 gap-4 lg:grid-cols-2"
               >
                 {indicators.map((ind, index) => (
                   <Reveal key={ind.id} delay={(index % 2) * 100}>

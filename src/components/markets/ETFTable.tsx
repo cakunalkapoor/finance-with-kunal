@@ -49,7 +49,7 @@ export default function ETFTable() {
         subtitle="16 funds · grouped by exposure, not ranked · hover a chart for the value at that point · click a ticker for the full quote on Yahoo Finance"
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 500 }}>
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>
           {/* Sized to sit two-up with the equity table. Exposure moves into the
               fund cell and the three periods share one cell, so a half-width
               card fits without losing anything. */}
@@ -57,7 +57,7 @@ export default function ETFTable() {
             <col style={{ width: "34%" }} />
             <col style={{ width: "19%" }} />
             <col style={{ width: "17%" }} />
-            <col style={{ width: "30%" }} />
+            <col style={{ width: 192 }} />
           </colgroup>
           <thead>
             <tr

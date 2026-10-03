@@ -385,11 +385,11 @@ export default function AIMarketImpact() {
         }
       />
 
-      <div className="grid grid-cols-1 gap-2 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,1fr)]">
+      <div className="mx-px grid grid-cols-1 gap-5 xl:grid-cols-2">
         <div className="px-2">
           <ReactECharts
             option={option}
-            style={{ height: 340, width: "100%" }}
+            style={{ height: 320, width: "100%" }}
             opts={{ renderer: "svg" }}
             notMerge
           />

@@ -123,14 +123,14 @@ export default function EconomicChart({ indicator }: Props) {
 
   return (
     <div
-      className="rounded-lg overflow-hidden"
+      className="flex h-[400px] flex-col rounded-lg overflow-hidden"
       style={{
         background: "var(--color-space-card)",
         border: "1px solid var(--color-space-border)",
       }}
     >
       {/* Header */}
-      <div className="flex items-start justify-between p-4 pb-2">
+      <div className="flex min-h-[76px] shrink-0 items-start justify-between p-4 pb-2">
         <div className="flex items-center gap-3">
           <span className="text-xl">{indicator.flag}</span>
           <div>
@@ -171,7 +171,7 @@ export default function EconomicChart({ indicator }: Props) {
       </div>
 
       {/* Time horizon tabs */}
-      <div className="flex items-center gap-1 px-4 pb-2">
+      <div className="flex min-h-8 shrink-0 items-center gap-1 px-4 pb-2">
         {horizons.map((h) => (
           <button
             key={h}
@@ -191,13 +191,13 @@ export default function EconomicChart({ indicator }: Props) {
       </div>
 
       {/* Chart */}
-      <div className="px-2 pb-3">
+      <div className="shrink-0 px-2 pb-3">
         <ReactECharts option={option} style={{ height: 160 }} opts={{ renderer: "svg" }} notMerge />
       </div>
 
       {/* Description */}
       <div
-        className="px-4 pb-3 text-xs leading-relaxed"
+        className="min-h-0 flex-1 overflow-y-auto px-4 pb-3 text-xs leading-relaxed"
         style={{
           color: "var(--color-text-muted)",
           borderTop: "1px solid var(--color-space-border)",

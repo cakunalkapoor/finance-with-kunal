@@ -137,7 +137,7 @@ export default function EquityMarketsTable() {
         subtitle={`${SORTED_EQUITY_INDICES.length} Major Indices · 30d realized volatility · click an index for full detail on Investing.com`}
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 560 }}>
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>
           {/* Sized to sit two-up with the ETF table. Nine columns don't fit a
               half-width card, so related metrics share a cell instead of being
               dropped: periods in "Change" and the 52W range under the price.
@@ -154,7 +154,7 @@ export default function EquityMarketsTable() {
             <col style={{ width: "21%" }} />
             <col style={{ width: "15%" }} />
             <col style={{ width: "16%" }} />
-            <col style={{ width: "27%" }} />
+            <col style={{ width: 192 }} />
           </colgroup>
           <thead>
             <tr

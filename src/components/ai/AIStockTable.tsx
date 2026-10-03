@@ -72,12 +72,12 @@ export default function AIStockTable() {
         subtitle={`${AI_STOCKS.length} listings · all prices and returns in USD · grouped by layer, not sector · not ranked · hover a chart for the value at that point · close of ${AI_STOCKS_ASOF}`}
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 560 }}>
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>
           <colgroup>
             <col style={{ width: "32%" }} />
             <col style={{ width: "20%" }} />
             <col style={{ width: "17%" }} />
-            <col style={{ width: "31%" }} />
+            <col style={{ width: 192 }} />
           </colgroup>
           <thead>
             <tr

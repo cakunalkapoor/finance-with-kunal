@@ -86,7 +86,7 @@ export default function BondsTable() {
         subtitle={`Refreshed ${BOND_UPDATED_AT} · latest observations, including intraday quotes · moves in basis points (bp); — means unavailable · monthly trends include historical averages`}
       />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 600 }}>
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>
           {/* Sized to sit two-up. 1D/1M/1Y move into one grouped cell rather
               than being dropped — see StatStack. */}
           <colgroup>
@@ -94,7 +94,7 @@ export default function BondsTable() {
             <col style={{ width: "15%" }} />
             <col style={{ width: "16%" }} />
             <col style={{ width: "16%" }} />
-            <col style={{ width: "27%" }} />
+            <col style={{ width: 192 }} />
           </colgroup>
           <thead>
             <tr

@@ -95,9 +95,6 @@ export default function CountryEconomy({
         {categoriesShown.map(({ id, label, icon }) => {
           const inCategory = indicators.filter((ind) => ind.category === id);
           const curveHere = id === "rates" ? curve : undefined;
-          // The curve occupies a grid cell, so it counts toward the one-vs-many
-          // decision that picks the single-column layout.
-          const cellCount = inCategory.length + (curveHere ? 1 : 0);
           return (
             <section key={id}>
               <Reveal className="flex items-center gap-3 mb-4">
@@ -116,9 +113,7 @@ export default function CountryEconomy({
               </Reveal>
 
               <div
-                className={`grid gap-4 ${
-                  cellCount === 1 ? "grid-cols-1 max-w-xl" : "grid-cols-1 lg:grid-cols-2"
-                }`}
+                className="grid grid-cols-1 gap-4 lg:grid-cols-2"
               >
                 {curveHere && (
                   <Reveal>

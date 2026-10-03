@@ -73,13 +73,13 @@ export default function AssetTable({
     <SciFiCard>
       <CardHeader title={title} subtitle={subtitle} />
       <div className="overflow-x-auto">
-        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 440 }}>
-          {/* Sized to sit two-up: at 1280px wide each card gets ~590px. */}
+        <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>
+          {/* Keep trend charts the same size; narrow tables scroll horizontally. */}
           <colgroup>
             <col style={{ width: "31%" }} />
             <col style={{ width: "20%" }} />
             <col style={{ width: "17%" }} />
-            <col style={{ width: "32%" }} />
+            <col style={{ width: 192 }} />
           </colgroup>
           <thead>
             <tr

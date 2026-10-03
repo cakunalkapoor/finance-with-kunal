@@ -102,7 +102,7 @@ export default function AILayoffsChart() {
       <div className="px-2">
         <ReactECharts
           option={option}
-          style={{ height: 210, width: "100%" }}
+          style={{ height: 320, width: "100%" }}
           opts={{ renderer: "svg" }}
           notMerge
         />

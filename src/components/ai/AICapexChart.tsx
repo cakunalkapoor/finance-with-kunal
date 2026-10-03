@@ -158,7 +158,7 @@ export default function AICapexChart() {
       <div className="px-2">
         <ReactECharts
           option={option}
-          style={{ height: 260, width: "100%" }}
+          style={{ height: 320, width: "100%" }}
           opts={{ renderer: "svg" }}
           notMerge
         />
