@@ -95,7 +95,7 @@ export default function AIPage() {
           stats={[
             { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Company-wide · four hyperscalers" },
             { label: "Q2 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Jul 1 global snapshot" },
-            { label: "AI rank", value: figure(AI_LABOUR, "leading-reason"), detail: "August layoff reasons" },
+            { label: "AI rank", value: figure(AI_LABOUR, "leading-reason"), detail: "September layoff reasons" },
           ]}
         />
 
@@ -203,8 +203,8 @@ export default function AIPage() {
                 columns={2}
                 glow="purple"
               >
-                AI ranked fourth among stated reasons in August, while remaining the leading
-                reason year to date. Total announced cuts rose 58% from July to 52,881.
+                AI ranked fifth among stated reasons in September, while remaining the leading
+                reason year to date. Total announced cuts fell 18% from August to 43,281.
                 Challenger tracks employer attribution, not independently measured displacement.
                 Its technology-sector total covers cuts for every stated reason.
               </AIFigureSection>
