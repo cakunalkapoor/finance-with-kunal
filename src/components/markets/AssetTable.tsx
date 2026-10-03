@@ -9,6 +9,7 @@ import {
   seriesFor,
   viewsFor,
   windowLabel,
+  filterByHorizon,
   type ChartView,
 } from "@/lib/chart-window";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
@@ -29,11 +30,13 @@ export interface AssetRow {
   sub: string;
   /** Preformatted, because $84.62, 1.3421 and 99.66 all want different rules. */
   price: string;
-  dailyChange: number;
-  weekChange: number;
+  dailyChange: number | null;
+  weekChange: number | null;
   monthChange: number;
   ytdChange: number;
   sparkline: number[];
+  /** Actual dated observations for assets with a different history cadence. */
+  datedHistory?: { date: string; value: number }[];
   /** 1W window — six daily closes and their dates. See IndexQuote.daily. */
   daily?: number[];
   dailyDates?: string[];
@@ -63,7 +66,7 @@ export default function AssetTable({
   const [chartView, setChartView] = useState<ChartView>("YTD");
 
   // 1W only when every row can draw it — see EquityMarketsTable.
-  const views = viewsFor(rows.every((r) => (r.daily?.length ?? 0) >= 2));
+  const views = viewsFor(rows.filter((r) => !r.datedHistory).every((r) => (r.daily?.length ?? 0) >= 2));
   const headerDays = rows[0]?.dailyDates;
 
   return (
@@ -113,7 +116,8 @@ export default function AssetTable({
 
           <tbody>
             {rows.map((row, i) => {
-              const slice = seriesFor(chartView, row.sparkline, row.daily);
+              const dated = row.datedHistory ? filterByHorizon(row.datedHistory, chartView) : undefined;
+              const slice = dated ? dated.map((point) => point.value) : seriesFor(chartView, row.sparkline, row.daily);
               return (
                 <tr
                   key={row.key}
@@ -177,10 +181,10 @@ export default function AssetTable({
                       {row.price}
                     </span>
                     <div
-                      className={`font-semibold ${getChangeColor(row.dailyChange)}`}
+                      className={`font-semibold ${row.dailyChange == null ? "" : getChangeColor(row.dailyChange)}`}
                       style={{ fontFamily: FONT_MONO, fontSize: "10px" }}
                     >
-                      {formatChange(row.dailyChange)} 1D
+                      {row.dailyChange == null ? "—" : formatChange(row.dailyChange)} 1D
                     </div>
                   </td>
 
@@ -195,12 +199,14 @@ export default function AssetTable({
                   </td>
 
                   <td className="px-4 py-3">
-                    <TrendSparkline
+                    {dated && dated.length < 2 ? (
+                      <span style={{ color: "var(--color-text-muted)" }}>Monthly history</span>
+                    ) : <TrendSparkline
                       values={slice}
-                      labels={labelsFor(chartView, slice.length, row.dailyDates)}
-                      ariaLabel={`${row.name}, ${windowLabel(chartView, 156, row.dailyDates)}`}
+                      labels={dated ? dated.map((point) => point.date) : labelsFor(chartView, slice.length, row.dailyDates)}
+                      ariaLabel={`${row.name}, ${dated ? `${dated[0].date} to ${dated.at(-1)!.date}` : windowLabel(chartView, 156, row.dailyDates)}`}
                       format={formatTooltip}
-                    />
+                    />}
                   </td>
                 </tr>
               );
