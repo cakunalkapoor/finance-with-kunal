@@ -1,3 +1,4 @@
+import opecData from "./opec-data.json";
 import type {
   IndexQuote,
   BondYield,
@@ -3482,6 +3483,22 @@ export const HEATMAP_DATA: HeatmapSector[] = SP500_SECTORS;
 
 // Generate time series for economic indicators
 export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
+  {
+    id: "opec-basket",
+    name: "OPEC Reference Basket",
+    category: "energy",
+    country: "OPEC",
+    flag: "🛢️",
+    value: opecData.timeSeries.at(-1)!.value,
+    unit: "USD/bbl",
+    previousValue: opecData.timeSeries.at(-2)!.value,
+    change: Number((opecData.timeSeries.at(-1)!.value - opecData.timeSeries.at(-2)!.value).toFixed(2)),
+    direction: opecData.timeSeries.at(-1)!.value > opecData.timeSeries.at(-2)!.value ? "up" : opecData.timeSeries.at(-1)!.value < opecData.timeSeries.at(-2)!.value ? "down" : "neutral",
+    isPositiveGood: false,
+    period: opecData.timeSeries.at(-1)!.date,
+    timeSeries: opecData.timeSeries,
+    description: `OPEC's basket combines 12 physical crude grades. History shows the last available published daily quote in each month, not monthly averages. The change compares with the preceding month's last quote. Source: OPEC official chart archive${opecData.supplement ? "; latest quote supplemented by Dataful's OPEC-sourced dataset" : ""}. These are physical basket prices, unlike the Brent futures prices shown alongside. Reviewed ${opecData.reviewedAt}.`,
+  },
   {
     // LIVE from FRED A191RL1Q225SBEA — Real GDP Q/Q annualised
     id: "us-gdp",

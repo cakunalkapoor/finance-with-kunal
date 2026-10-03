@@ -12,6 +12,7 @@
     "fetch:yahoo:setup": "python3 -m venv .venv && ./.venv/bin/pip install yfinance pandas openpyxl",
     "fetch:bonds": "node src/lib/fetch-bonds.mjs",
     "fetch:fred": "node src/lib/fetch-fred.mjs",
+    "fetch:opec": "node src/lib/fetch-opec.mjs",
     "fetch:boc": "node src/lib/fetch-boc.mjs",
     "fetch:statcan": "node src/lib/fetch-statcan.mjs",
     "fetch:eurostat": "node src/lib/fetch-eurostat.mjs",
