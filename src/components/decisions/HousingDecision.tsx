@@ -19,11 +19,11 @@ const groups: { title: string; fields: { key: NumericKey; label: string; unit: s
     { key: "mortgageRate", label: "Starting mortgage interest rate", unit: "%", step: 0.1, hint: "Annual quoted loan rate, not APR. Applies from year 1 until your first rate change. Drag the rate chart or enter renewal rates below; without changes it stays constant." },
     { key: "amortization", label: "Mortgage tenure (full repayment)", unit: "years", step: 1, hint: "Independent of how long you stay. Mortgage payments stop after payoff." },
   ] },
-  { title: "Inflation & investment assumptions", fields: [
+  { title: "Expense inflation", fields: [
     { key: "rentInflation", label: "Annual rent inflation", unit: "%/yr", step: 0.1, hint: "Compounded at each anniversary. At 2.5%, monthly rent of 3,000 becomes 3,075, then 3,151.88." },
     { key: "ownerInflation", label: "Ownership expense inflation", unit: "%/yr", step: 0.1, hint: "Annual compound increase for taxes, repairs, insurance, condo/HOA fees and other ownership costs. Excludes mortgage payments and mortgage insurance." },
     { key: "renterInflation", label: "Other rental expense inflation", unit: "%/yr", step: 0.1, hint: "Annual compound increase for renter insurance, other rental costs and the price of future moves. Rent uses its own inflation rate." },
-    { key: "appreciation", label: "Home price growth", unit: "%/yr", step: 0.5, hint: "Assumed annual change in resale value. Compounds yearly; a negative rate models falling prices." },
+    { key: "appreciation", label: "Home price appreciation", unit: "%/yr", step: 0.5, hint: "Assumed annual change in resale value. Compounds yearly; a negative rate models falling prices." },
     { key: "investmentReturn", label: "Investment return, after fees & tax", unit: "%/yr", step: 0.5, hint: "Annual return on invested starting cash and housing savings, after fees and tax. Compounds at the equivalent monthly rate; not a guaranteed return." },
   ] },
   { title: "Ownership expenses · annual amounts", fields: [
@@ -73,6 +73,8 @@ export default function HousingDecision() {
   const [scenario, setScenario] = useState("Your scenario");
   const [exportVisible, setExportVisible] = useState(false);
   const [projection, setProjection] = useState<"wealth" | "cost">("wealth");
+  const basicFactorKeys: NumericKey[] = ["rentInflation", "investmentReturn", inputs.propertyType === "house" ? "propertyTax" : "hoa", "appreciation"];
+  const basicFactors = basicFactorKeys.map(key => groups.flatMap(group => group.fields).find(field => field.key === key)!);
   const theme = useTheme();
   const colors = CHART_COLORS[theme];
   const errors = validateHousing(inputs);
@@ -203,17 +205,20 @@ export default function HousingDecision() {
         </div>
         <div className="space-y-4 border-b border-space-border p-5">
           {groups[0].fields.map(renderField)}
-          {inputs.propertyType === "condo" && renderField(groups[2].fields.find(field => field.key === "hoa")!)}
           <label className="block text-xs text-text-secondary">Time in the house · {inputs.years} years
             <input aria-label="Time in the house in years" type="range" min="1" max="100" value={inputs.years} onChange={e => set("years", e.target.value)} className="mt-2 block w-full accent-neon-cyan" />
             <span className="mt-1 flex justify-between text-[11px] text-text-muted"><span>1 year</span><span>100 years</span></span>
           </label><p className="text-[11px] leading-relaxed text-text-muted">Sets the projection length. Mortgage repayment is separate and stops at payoff.</p>
         </div>
+        <div className="space-y-4 border-b border-space-border p-5">
+          <h3 className="text-sm font-semibold">Key factors</h3>
+          {basicFactors.map(renderField)}
+        </div>
         <div className="border-b border-space-border bg-space-void p-5">
           <h3 className="text-xs font-semibold">Assumptions in use</h3>
           <p className="mt-2 text-[11px] leading-relaxed text-text-secondary">Home growth {inputs.appreciation}% · Investment return {inputs.investmentReturn}% · Rent inflation {inputs.rentInflation}%.</p>
           <p className="mt-1 text-[11px] leading-relaxed text-text-secondary">Year-one costs: owning {result ? money(result.points[0].ownerExpenses) : "—"}/yr beyond the mortgage; renting {result ? money(result.points[0].renterExpenses) : "—"}/yr beyond rent.</p>
-          <p className="mt-2 text-[11px] text-text-muted">Advanced amounts and percentages start at zero on every page load or refresh. Add costs, inflation, growth, moving and fees below to include them. Utilities are assumed equal and excluded.</p>
+          <p className="mt-2 text-[11px] text-text-muted">Growth, inflation and extra cost inputs start at zero on every page load or refresh. Enter your key factors above and add other costs under advanced assumptions. Utilities are assumed equal and excluded.</p>
         </div>
         <details className="border-b border-space-border">
           <summary className="flex cursor-pointer list-none items-center justify-between p-5 text-sm font-semibold">Advanced assumptions<ChevronDown size={15} /></summary>
@@ -227,7 +232,7 @@ export default function HousingDecision() {
             </div>)}
             <a href="https://www.cmhc-schl.gc.ca/consumers/home-buying/buying-guides/condominium/condominium-purchase-and-recurring-costs" target="_blank" rel="noopener noreferrer" className="mt-3 block text-[11px] underline underline-offset-2">CMHC condo cost guide</a>
           </div>}
-          <div className="space-y-4 px-5 pb-5">{(index === 0 ? [] : group.fields).filter(field => !(inputs.propertyType === "condo" && ((field.key === "propertyTax" && inputs.condoTaxIncluded) || (field.key === "homeInsurance" && inputs.condoInsuranceIncluded) || field.key === "hoa"))).map(renderField)}
+          <div className="space-y-4 px-5 pb-5">{(index === 0 ? [] : group.fields).filter(field => !basicFactorKeys.includes(field.key) && !(inputs.propertyType === "condo" && ((field.key === "propertyTax" && inputs.condoTaxIncluded) || (field.key === "homeInsurance" && inputs.condoInsuranceIncluded)))).map(renderField)}
           {index === 0 && <div><label htmlFor="compounding" className="mb-1.5 block text-xs text-text-secondary">Mortgage compounding</label>
             <select id="compounding" value={inputs.compounding} onChange={e => setInputs(p => ({ ...p, compounding: e.target.value as HousingInputs["compounding"] }))} className="w-full rounded-md border border-space-border bg-space-void p-2 text-sm">
               <option value="semiannual">Semiannual nominal (Canada fixed)</option><option value="monthly">Monthly nominal</option>
