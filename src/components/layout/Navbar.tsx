@@ -7,18 +7,15 @@ import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
 
-/* The desktop strip switches on at `lg` (1024px), not `md` (768px).
-   Seven items plus the wordmark and theme toggle don't fit in 768px: "About Me"
-   already wrapped to two lines there before "Vantage AI" was added, and the
-   longer label pushed the nav to a second row outright. Below 1024px the
-   hamburger menu carries the same links, so nothing is lost. Re-check this if
-   an item is added or renamed. */
+/* Eight links plus the wordmark fit from xl (1280px). Smaller viewports use
+   the same links in the mobile menu so navigation never wraps. */
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
   { href: "/ai", label: "Vantage AI" },
   { href: "/dashboard", label: "Economy" },
   { href: "/us-economy", label: "US" },
   { href: "/canada-economy", label: "Canada" },
+  { href: "/decisions", label: "Decision Studio" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About Me" },
 ];
@@ -54,7 +51,7 @@ export default function Navbar() {
         {/* Right cluster: nav links · theme toggle · mobile menu button */}
         <div className="flex items-center gap-2">
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden xl:flex items-center gap-1">
           {NAV_LINKS.map((link) => {
             const active = pathname?.startsWith(link.href);
             return (
@@ -76,7 +73,7 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <button
-            className="rounded-full p-2 lg:hidden"
+            className="rounded-full p-2 xl:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
@@ -99,7 +96,7 @@ export default function Navbar() {
       {menuOpen && (
         <div
           id="mobile-menu"
-          className="animate-menu-drop lg:hidden border-t px-4 py-3 flex flex-col gap-1"
+          className="animate-menu-drop xl:hidden border-t px-4 py-3 flex flex-col gap-1"
           style={{
             background: "var(--color-nav-bg-solid)",
             borderColor: "var(--color-space-border)",

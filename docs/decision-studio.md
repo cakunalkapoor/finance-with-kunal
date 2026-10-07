@@ -1,0 +1,43 @@
+# Decision Studio
+
+Route: `/decisions/`. User approved publication to `kunalkapoor.fyi` on October 7, 2026. Navigation, page metadata and sitemap use Decision Studio as the public page name.
+
+## Inputs and projection
+
+Time in the house (1–100 years) sets the projection horizon. Mortgage tenure is an independent full amortization (1–40 years); payments stop at payoff even if the stay continues. It is not the shorter contractual term before renewal. The starting mortgage rate applies until the first entered renewal. Optional rate changes take effect at the start of a whole year (2–40), each continuing until the next change. The monthly payment is recalculated on the outstanding balance over the remaining original amortization; the payoff date does not restart. Changes after payoff or beyond the selected stay have no effect. Duplicate years, incomplete values and rates outside 0–100% are rejected. Entry order does not matter.
+
+Property type selects house or condo. Switching preserves entered amounts rather than loading example budgets. All advanced numeric assumptions, including inflation, growth, returns, expenses, moving frequency and transaction costs, start at zero on every page load or refresh. Condo fees also start at zero. Reset restores these zero defaults; opening or closing advanced sections preserves user input. Mortgage compounding retains its valid semiannual convention, condo inclusion flags start unchecked and future rate changes start empty. Condo fees are an annual cash amount; tax and personal insurance remain separate by default. Inclusion flags suppress their separate charges only for condos, preventing double counting. They do not automatically add the excluded cost to fees: the entered fee amount must already include it. Building insurance is not assumed to replace unit/contents/liability cover. All controls have explanatory notes, with a CMHC link for condo cost scope.
+
+Expenses, closing/selling costs and down payments remain cash amounts. Rent inflation, ownership expense inflation and other rental expense inflation are annual percentages compounded at each anniversary. Future rental moving-event prices also grow with rental expense inflation. Mortgage payments are fixed between entered renewals; annual mortgage insurance and cash closing/selling estimates remain fixed. Home appreciation, investment return and mortgage interest remain percentage assumptions.
+
+The renter pays an initial moving cost at time zero, then repeats moves at the start of years `1 + movingFrequency`, `1 + 2*movingFrequency`, etc. Zero frequency means the initial move only. Movers, setup costs, overlapping rent and similar one-off costs can be included in the cash amount. Other recurring expenses are annual inputs. Utilities are assumed equal in both paths and omitted entirely from cash outflows, invested savings, net worth and thresholds. There are no utility inputs or inflation adjustments. If rent or condo fees bundle utilities, users must remove that utility portion before entering the amount; the tool cannot identify it automatically. Cash-flow charts show comparison costs rather than a full household budget.
+
+## Net worth comparison
+
+Both paths start with the same cash: the greater of the buyer's down payment + closing costs + initial move, and the renter's initial move. Each pays its initial costs and invests the remaining balance. They use equal monthly budgets. Each month the cheaper path invests its savings after recurring expenses and any actual scheduled move, with contributions at month-end after compounding existing investments.
+
+Buy net worth = home value + owner investments − mortgage balance − entered selling costs. Rent net worth = renter investments. Mortgage principal builds equity and is not expensed again in net worth. Selling costs are a fixed cash estimate, hypothetically deducted at each year-end; the home is not actually sold each year. Negative net worth is preserved.
+
+The two charts show years 1 through the selected stay: year-end housing-related net worth, and annual housing cash outflows. Cash outflows include upfront costs in year 1 and mortgage principal, but exclude investment transfers and hypothetical sale proceeds. The annual table and CSV use the same figures. No monthly charts or year-zero projection points are shown.
+
+## Thresholds and examples
+
+Solve final-year net-worth equality while changing one input at a time. Starting monthly rent is searched from 0 to 100,000; starting mortgage interest rate from 0% to 25%, holding future renewal rates fixed. Bisection uses monotonic net-worth advantage over those ranges. UI distinguishes no crossing from a valid threshold; a cash purchase has no rate threshold. Higher starting rent favours buying; lower mortgage rates favour buying, with all other assumptions fixed. These are wealth thresholds, not affordability or lending-eligibility tests.
+
+Clickable examples use rents 500 below/above the threshold and rates 1 percentage point below/above the threshold, within valid bounds. If no threshold is found, examples centre on the entered value. Display currency changes labels only.
+
+Examples are hypothetical and are not current city prices, rate quotes or forecasts. Tax deductions, home-sale taxes, refundable rent deposits, special assessments, financed insurance, within-year rate changes, fixed-payment variable-rate mortgages, renewal fees/refinancing and prepayment penalties are excluded. Monthly mortgage amortization and effective monthly investment compounding are used internally. No inputs are persisted or transmitted by the calculator.
+
+## Checks
+
+Run `node --test tests/housing-model.test.mjs`, targeted ESLint, and `npm run build`. Browser checks cover percentage inflation, house/condo selection and inclusion flags, tenure changes, moving costs, threshold example application, validation, yearly charts, annual export, utility exclusion, rate-change editing, renewal payment jumps, scenario application and schedule validation.
+
+## Mortgage rate scenarios
+
+The local UI provides hold/rise/fall examples preserving all non-rate assumptions. Hold removes future changes; rise/fall changes the starting rate by +/-1.5 percentage points at year 6 (or the last repayment year if earlier), with rates clamped to valid bounds. These are hypothetical paths, not forecasts. User-defined schedules support multiple increases/decreases. A payment timeline summarizes the selected path; annual data and CSV include rates, monthly payments, yearly interest and principal. The rate timeline is an interactive 320px SVG line chart replacing the period table, in addition to the two 320px yearly outcome charts. Users can drag rates and renewal years, click empty years to add points, remove a selected renewal, and use keyboard arrows/Delete. Rates stay flat between renewal points; there is no interpolation. Points snap to whole years and 0.1 percentage points, cannot cross other renewals, and stay within the full mortgage tenure, independently of time in the house. The editor calculates payments over the full tenure, including renewal points beyond the comparison stay. The wealth/cash-flow comparison still stops at the selected stay. Changes after the mortgage tenure are preserved in exact inputs outside the chart and ignored. Exact numeric inputs remain available. Forty named currencies are available; amounts are not converted and mortgage conventions remain user-selected. The CSV exports individual rate-change assumptions as scalar rows.
+
+## Simpler default view
+
+PWL's public rent-versus-buy page was used as a UX benchmark for collapsed assumption groups and switching chart views, not to claim numerical/model parity. The default form exposes home price, comparable rent, down payment, starting mortgage rate, full repayment tenure and time in the home, alongside property type/currency. Condo fees are additionally exposed for condos. Inflation, growth, insurance, tax, repairs, moving and transaction costs remain editable behind a closed Advanced assumptions section. A visible summary reports the actual growth/return/rent inflation assumptions and first-year recurring budgets, so hidden inputs are not silently ignored.
+
+The yearly net-worth and cash-flow views share a 320px chart panel with accessible tabs. The rate editor, calculation explanation, numerical export, threshold examples and detailed method are optional disclosures. Opening/closing sections and changing chart tabs does not reset any assumptions. The compact header puts the result and projection ahead of detailed explanations. All currency options and the 100-year stay limit are retained.

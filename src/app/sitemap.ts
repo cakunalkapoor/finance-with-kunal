@@ -20,6 +20,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "mon
   { path: "/dashboard", priority: 0.9, changeFrequency: "weekly" },
   { path: "/us-economy", priority: 0.8, changeFrequency: "weekly" },
   { path: "/canada-economy", priority: 0.8, changeFrequency: "weekly" },
+  { path: "/decisions", priority: 0.8, changeFrequency: "monthly" },
   { path: "/blog", priority: 0.7, changeFrequency: "weekly" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" },
 ];
