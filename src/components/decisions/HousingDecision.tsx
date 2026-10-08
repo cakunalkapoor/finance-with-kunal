@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useMemo, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import MortgageRateEditor from "./MortgageRateEditor";
@@ -170,6 +172,7 @@ export default function HousingDecision() {
   }
 
   return <div className="section-shell py-8">
+    <Link href="/decisions" className="mb-6 inline-flex text-sm text-text-secondary hover:text-neon-cyan">← All comparisons</Link>
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-space-border pb-5">
       <div><p className="mb-2 text-xs uppercase tracking-widest text-neon-cyan">Decision Studio</p><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Buy or rent?</h1><p className="mt-2 text-sm text-text-secondary">Compare the costs today and the wealth you could build over time.</p></div>
       <div className="w-full sm:w-64">          <label className="block text-xs font-semibold" htmlFor="currency">Currency</label>
