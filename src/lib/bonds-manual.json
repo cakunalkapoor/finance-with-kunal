@@ -4,6 +4,7 @@
     "Re-read sourceUrl each refresh and cross-check the headline with a different provider.",
     "observations contains dated historical closes from the SAME sourceUrl as the headline.",
     "1D uses the previous session; 1M/1Y require an observation on or before the calendar anniversary (within seven days).",
+    "When advancing a headline date, also retrieve both anniversary anchors from sourceUrl; recent-session observations alone leave 1M/1Y blank.",
     "Monthly history is merged by date. Missing months and unsupported moves stay unavailable."
   ],
   "readAt": "2026-10-13",
@@ -21,6 +22,8 @@
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield-historical-data",
       "observations": [
+        { "date": "2025-10-10", "value": 4.673 },
+        { "date": "2026-09-11", "value": 5.3474 },
         {
           "date": "2026-08-28",
           "value": 5.0776
@@ -69,6 +72,8 @@
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data",
       "observations": [
+        { "date": "2025-10-10", "value": 6.531 },
+        { "date": "2026-09-11", "value": 7.021 },
         {
           "date": "2026-08-28",
           "value": 6.913
@@ -121,6 +126,8 @@
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield-historical-data",
       "observations": [
+        { "date": "2025-10-10", "value": 2.958 },
+        { "date": "2026-09-11", "value": 4.571 },
         {
           "date": "2026-08-28",
           "value": 4.274
@@ -173,6 +180,8 @@
         "asOf": "2026-10-13"
       },
       "observations": [
+        { "date": "2025-10-10", "value": 2.634 },
+        { "date": "2026-09-11", "value": 3.5029 },
         {
           "date": "2026-08-28",
           "value": 3.2733
@@ -225,6 +234,8 @@
         "asOf": "2026-10-13"
       },
       "observations": [
+        { "date": "2025-10-09", "value": 3.212 },
+        { "date": "2026-09-09", "value": 3.848 },
         {
           "date": "2026-08-28",
           "value": 3.726
@@ -273,6 +284,8 @@
         "asOf": "2026-10-13"
       },
       "observations": [
+        { "date": "2025-10-11", "value": 1.857 },
+        { "date": "2026-09-11", "value": 1.689 },
         {
           "date": "2026-08-28",
           "value": 1.7
@@ -317,6 +330,8 @@
         "asOf": "2026-10-13"
       },
       "observations": [
+        { "date": "2025-10-10", "value": 3.024 },
+        { "date": "2026-09-11", "value": 3.805 },
         {
           "date": "2026-08-28",
           "value": 3.597
@@ -365,6 +380,8 @@
         "asOf": "2026-10-13"
       },
       "observations": [
+        { "date": "2025-10-10", "value": 6.139 },
+        { "date": "2026-09-11", "value": 7.156 },
         {
           "date": "2026-08-28",
           "value": 6.96
@@ -413,6 +430,8 @@
         "asOf": "2026-10-13"
       },
       "observations": [
+        { "date": "2025-10-10", "value": 3.478 },
+        { "date": "2026-09-11", "value": 4.448 },
         {
           "date": "2026-08-28",
           "value": 4.127

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { monthlyHistory, mergeMonthlyHistory, periodMoves } from './bond-history.mjs';
 
 test('a September headline does not shift July history into August', () => {
@@ -18,4 +19,19 @@ test('weekends use the preceding close, while monthly averages never become dail
   const rows = [{date:'2026-09-23',value:4.409},{date:'2026-09-22',value:4.464},{date:'2026-08-21',value:4}];
   assert.deepEqual(periodMoves(rows), {dailyMove:-0.055,oneMonthMove:0.409,oneYearMove:null});
   assert.deepEqual(periodMoves(rows, 'monthly'), {dailyMove:null,oneMonthMove:null,oneYearMove:null});
+});
+
+test('verified manual bond histories cover the month and year comparison dates', () => {
+  const { bonds } = JSON.parse(readFileSync(new URL('./bonds-manual.json', import.meta.url), 'utf8'));
+  for (const bond of Object.values(bonds)) {
+    if (!bond.source.startsWith('Investing.com')) continue;
+    const moves = periodMoves([...bond.observations, { date: bond.asOf, value: bond.value }]);
+    for (const period of ['dailyMove', 'oneMonthMove', 'oneYearMove']) {
+      assert.notEqual(moves[period], null, `${bond.country}: missing ${period} historical anchor`);
+    }
+  }
+  const india = bonds.in10y;
+  assert.deepEqual(periodMoves([...india.observations, { date: india.asOf, value: india.value }]), {
+    dailyMove: 0.08, oneMonthMove: 0.361, oneYearMove: 0.851,
+  });
 });

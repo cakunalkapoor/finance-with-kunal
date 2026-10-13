@@ -11,17 +11,19 @@ export function ChangeStack({
   suffix = "%",
   /** Bond moves are already in percentage POINTS, so they're signed but not "%". */
   raw = false,
+  missingLabel = "—",
 }: {
   /** A `null` value renders as a dash — some rows genuinely have no figure for
    *  a period, and showing nothing is better than showing the wrong period's. */
-  items: { label: string; value: number | null | undefined }[];
+  items: { label: string; value: number | null | undefined; title?: string }[];
   digits?: number;
   suffix?: string;
   raw?: boolean;
+  missingLabel?: string;
 }) {
   return (
     <div className="flex flex-col gap-0.5">
-      {items.map(({ label, value }) => (
+      {items.map(({ label, value, title }) => (
         <div key={label} className="flex items-baseline justify-between gap-2">
           <span
             style={{
@@ -34,6 +36,7 @@ export function ChangeStack({
             {label}
           </span>
           <span
+            title={title}
             className={`font-semibold whitespace-nowrap ${
               value == null ? "" : getChangeColor(value, !raw)
             }`}
@@ -44,7 +47,7 @@ export function ChangeStack({
             }}
           >
             {value == null
-              ? "—"
+              ? missingLabel
               : raw
                 ? `${value >= 0 ? "+" : ""}${value.toFixed(digits)}${suffix}`
                 : formatChange(value)}

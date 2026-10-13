@@ -83,7 +83,7 @@ export default function BondsTable() {
     <SciFiCard>
       <CardHeader
         title="Government Bond Yields"
-        subtitle={`Refreshed ${BOND_UPDATED_AT} · latest observations, including intraday quotes · moves in basis points (bp); — means unavailable · monthly trends include historical averages`}
+        subtitle={`Refreshed ${BOND_UPDATED_AT} · latest observations, including intraday quotes · moves in basis points (bp); N/A means unavailable · monthly trends include historical averages`}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>
@@ -260,10 +260,11 @@ export default function BondsTable() {
                     raw
                     digits={1}
                     suffix=" bp"
+                    missingLabel="N/A"
                     items={[
-                      { label: "1D", value: bond.dailyMove == null ? null : bond.dailyMove * 100 },
-                      { label: "1M", value: bond.oneMonthMove == null ? null : bond.oneMonthMove * 100 },
-                      { label: "1Y", value: bond.oneYearMove == null ? null : bond.oneYearMove * 100 },
+                      { label: "1D", value: bond.dailyMove == null ? null : bond.dailyMove * 100, title: bond.dailyMove == null ? "Previous-session yield unavailable from this source." : undefined },
+                      { label: "1M", value: bond.oneMonthMove == null ? null : bond.oneMonthMove * 100, title: bond.oneMonthMove == null ? "Same-source yield unavailable on or within seven days before the one-month comparison date." : undefined },
+                      { label: "1Y", value: bond.oneYearMove == null ? null : bond.oneYearMove * 100, title: bond.oneYearMove == null ? "Same-source yield unavailable on or within seven days before the one-year comparison date." : undefined },
                     ]}
                   />
                 </td>
