@@ -23,6 +23,8 @@ const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "mon
   { path: "/decisions", priority: 0.8, changeFrequency: "monthly" },
   { path: "/decisions/buy-vs-rent", priority: 0.8, changeFrequency: "monthly" },
   { path: "/decisions/buy-vs-lease", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/decisions/gas-hybrid-electric", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/decisions/debt-vs-invest", priority: 0.8, changeFrequency: "monthly" },
   { path: "/blog", priority: 0.7, changeFrequency: "weekly" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" },
 ];

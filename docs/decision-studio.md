@@ -63,3 +63,23 @@ Break-even lease payment (0–100,000/month) and net resale (0–100 million) so
 “How long will you drive the car?” sets the independent comparison horizon. Duration shortcuts select one to four complete lease terms, within 30 years. Buying retains the original car for that entire duration. Leasing repeats the quoted payment, non-refundable upfront cash, annual allowance, excess-km price and return-fee assumptions. No new upfront charge is paid after the last return. Running-cost inflation continues across lease changes. The entered resale value must describe the original purchased car at the selected horizon; changing duration preserves it for the user to revise. Incomplete final leases are rejected instead of silently omitting outstanding obligations or inventing early-termination charges.
 
 Expected annual kilometres and the annual allowance appear only under leasing. They affect only lease penalties; buying has no mileage cap or excess-kilometre charge. Users should reflect actual use in purchase resale and running-cost estimates. Tests cover repeat upfront/return events, payoff, equal-budget reconciliation across multiple leases, mileage independence of purchase costs and 30-year horizons.
+
+## Additional comparisons
+
+Two independent routes extend the landing page to four comparisons:
+- `/decisions/gas-hybrid-electric/`: cash-purchase costs for gas, conventional non-plug-in hybrid and electric cars. Same duration and distance; tax-inclusive prices, confirmed rebates, energy consumption, weighted home/public electricity prices, optional charging setup, maintenance, insurance and net resale. No financing, opportunity-cost investments or inflation. Intermediate car values are explicitly illustrative straight-line estimates.
+- `/decisions/debt-vs-invest/`: fixed regular payment plus monthly surplus; apply surplus to principal or investments. Both invest freed budgets after payoff. Nominal debt rate compounds monthly; effective after-tax investment returns compound at the equivalent monthly rate. Reject non-amortizing regular payments.
+
+All expose yearly results, methods, editable currency labels and CSV containing assumptions and model data. Optional numeric costs and investment return start at zero. Example prices and energy rates are hypothetical. Tests in `tests/expansion-models.test.mjs` cover budgets, payoff, compounding, units and charging shares.
+
+## Vehicle insurance, maintenance presets and battery/range inputs
+
+Distance, fuel consumption, and EV range/battery inputs remain in the basic form. Insurance, routine maintenance, and battery replacement reserves are grouped in a collapsed Advanced estimates section. Insurance remains user-quoted, with zero defaults and a visible prompt to enter amounts. Routine scheduled maintenance now defaults from Argonne ANL/ESD-21/4 (2021), Figure 3.28: US$0.101/mile ICE, $0.094 conventional HEV, $0.061 BEV. For 15,000 km, convert distance by 1.609344 km/mile and use an explicitly illustrative selected-currency/USD multiplier of 1.35. No inflation adjustment or live FX claim. Reload recalculates routine amounts at current mileage/multiplier; edits remain until reset/reload.
+
+Hybrid/EV battery reserves are separate to avoid counting replacement in scheduled servicing. Initial replacement budgets are selected planning examples: US$3,500 hybrid (4,725 at the illustrative multiplier) and US$10,500 EV (14,175), the midpoint of Recurrent's December 2024 US$5,000–16,000 range. Fifteen-year reserve funding is an editable planning horizon, not observed life or failure probability. Annual cost = budget/funding years, included as a planning allowance; set budget to zero to exclude. This allowance is not actual cash repair spending. Warranty coverage should reduce out-of-pocket budgeting. Historical estimates are not generic fleet forecasts. Sources are linked in the method disclosure.
+
+EV energy uses usable battery kWh, range per full charge, and wall-to-battery charging efficiency. Wall kWh/km = usable kWh / range / efficiency fraction. Gas and non-plug-in hybrids retain L/100 km. The result labels planning cost because annual battery reserves are included.
+
+## Extra EMI schedule
+
+Debt vs invest defaults to one extra EMI per comparison year, paid in month 12. Users can edit the EMI count and month (relative to projection start), or switch to a monthly surplus. Extra EMI amount tracks the regular payment. Both paths have identical cash budgets and timing; the invest path invests the extra at month-end, and all unused payments are invested after payoff. Annual budgets continue after payoff. Prepayment penalties are excluded. Interest savings and payoff comparisons appear in results, with savings limited to the selected horizon.
