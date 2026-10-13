@@ -301,21 +301,30 @@ for (const b of Object.values(bondCandidates)) {
   })) stats.bond++;
 }
 
-// MACRO_SNAPSHOT — only update `value` fields; leave trend strings alone.
-function patchMacro(key, value) {
-  if (value == null) return false;
-  const re = new RegExp(`(${key}:\\s*\\{\\s*value:\\s*)(-?[\\d.]+)`, "m");
-  if (!re.test(src)) return false;
-  src = src.replace(re, `$1${value}`);
+// MACRO_SNAPSHOT — handle both TypeScript keys and JSON-formatted quoted keys.
+// Restrict replacements to this export so indicator cards cannot be matched.
+function patchMacro(key, value, trend) {
+  if (!Number.isFinite(value)) return false;
+  const start = src.indexOf("export const MACRO_SNAPSHOT:");
+  const end = src.indexOf("\n};", start) + 3;
+  if (start < 0 || end < start) return false;
+  let block = src.slice(start, end);
+  const re = new RegExp(`("?${key}"?:\\s*\\{\\s*"?value"?:\\s*)(-?[\\d.]+)`, "m");
+  if (!re.test(block)) return false;
+  block = block.replace(re, `$1${value}`);
+  if (["up", "down", "neutral"].includes(trend)) {
+    const trendRe = new RegExp(`("?${key}"?:\\s*\\{[^}]*"?trend"?:\\s*)"[^" ]+"`, "m");
+    block = block.replace(trendRe, `$1"${trend}"`);
+  }
+  src = src.slice(0, start) + block + src.slice(end);
   return true;
 }
 const m = fred.macro || {};
-if (patchMacro("gdp", m.us_gdp_growth?.value)) stats.macro++;
-if (patchMacro("inflation", m.us_cpi?.value)) stats.macro++;
-if (patchMacro("jobs", m.us_unemployment?.value)) stats.macro++;
-if (patchMacro("claims", m.us_jobless?.value)) stats.macro++;
+for (const [key, series] of [["gdp", m.us_gdp_growth], ["inflation", m.us_cpi], ["jobs", m.us_unemployment], ["claims", m.us_jobless]]) {
+  if (patchMacro(key, series?.value, series?.direction)) stats.macro++;
+}
 const brent = (yahoo.commodities || []).find((c) => c.symbol === "BZ=F");
-if (brent && patchMacro("oil", brent.value)) stats.macro++;
+if (brent && patchMacro("oil", brent.value, brent.weekChange > 0 ? "up" : brent.weekChange < 0 ? "down" : "neutral")) stats.macro++;
 
 // ECONOMIC_INDICATORS — patch individual indicator cards by id.
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

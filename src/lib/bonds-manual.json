@@ -6,18 +6,18 @@
     "1D uses the previous session; 1M/1Y require an observation on or before the calendar anniversary (within seven days).",
     "Monthly history is merged by date. Missing months and unsupported moves stay unavailable."
   ],
-  "readAt": "2026-10-03",
+  "readAt": "2026-10-13",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.3786,
-      "asOf": "2026-10-02",
+      "value": 5.4433,
+      "asOf": "2026-10-12",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/united-kingdom/government-bond-yield",
-        "value": 5.38,
-        "asOf": "2026-10-02"
+        "value": 5.452,
+        "asOf": "2026-10-13"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield-historical-data",
       "observations": [
@@ -44,19 +44,28 @@
         {
           "date": "2026-10-01",
           "value": 5.3923
+        },
+        {
+          "date": "2026-10-02",
+          "value": 5.3786
+        },
+        {
+          "date": "2026-10-09",
+          "value": 5.4391
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "in10y": {
       "country": "India",
-      "value": 7.209,
-      "asOf": "2026-10-02",
+      "value": 7.382,
+      "asOf": "2026-10-12",
       "source": "Investing.com India 10Y",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/india/government-bond-yield",
-        "value": 7.21,
-        "asOf": "2026-10-01"
+        "value": 7.36,
+        "asOf": "2026-10-13"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data",
       "observations": [
@@ -87,19 +96,28 @@
         {
           "date": "2026-10-01",
           "value": 7.209
+        },
+        {
+          "date": "2026-10-02",
+          "value": 7.209
+        },
+        {
+          "date": "2026-10-09",
+          "value": 7.302
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 4.386,
-      "asOf": "2026-10-02",
+      "value": 4.319,
+      "asOf": "2026-10-12",
       "source": "Investing.com South Korea 10Y",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/south-korea/government-bond-yield",
-        "value": 4.35,
-        "asOf": "2026-10-02"
+        "value": 4.23,
+        "asOf": "2026-10-13"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield-historical-data",
       "observations": [
@@ -130,20 +148,29 @@
         {
           "date": "2026-10-01",
           "value": 4.439
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4.386
+        },
+        {
+          "date": "2026-10-08",
+          "value": 4.394
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "de10y": {
       "country": "Germany",
-      "value": 3.4545,
-      "asOf": "2026-10-02",
+      "value": 3.4752,
+      "asOf": "2026-10-12",
       "source": "Investing.com Germany 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/germany-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/germany/government-bond-yield",
-        "value": 3.46,
-        "asOf": "2026-10-02"
+        "value": 3.47,
+        "asOf": "2026-10-13"
       },
       "observations": [
         {
@@ -173,20 +200,29 @@
         {
           "date": "2026-10-01",
           "value": 3.5202
+        },
+        {
+          "date": "2026-10-02",
+          "value": 3.4545
+        },
+        {
+          "date": "2026-10-09",
+          "value": 3.486
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "ca10y": {
       "country": "Canada",
-      "value": 3.945,
-      "asOf": "2026-10-02",
+      "value": 3.878,
+      "asOf": "2026-10-09",
       "source": "Investing.com Canada 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/canada-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/canada/government-bond-yield",
-        "value": 3.95,
-        "asOf": "2026-10-02"
+        "value": 3.885,
+        "asOf": "2026-10-13"
       },
       "observations": [
         {
@@ -212,20 +248,29 @@
         {
           "date": "2026-10-01",
           "value": 3.931
+        },
+        {
+          "date": "2026-10-02",
+          "value": 3.945
+        },
+        {
+          "date": "2026-10-08",
+          "value": 3.932
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "cn10y": {
       "country": "China",
-      "value": 1.683,
-      "asOf": "2026-09-30",
+      "value": 1.667,
+      "asOf": "2026-10-12",
       "source": "Investing.com China 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/china-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/china/government-bond-yield",
-        "value": 1.7,
-        "asOf": "2026-10-01"
+        "value": 1.6735,
+        "asOf": "2026-10-13"
       },
       "observations": [
         {
@@ -247,20 +292,29 @@
         {
           "date": "2026-09-29",
           "value": 1.668
+        },
+        {
+          "date": "2026-09-30",
+          "value": 1.683
+        },
+        {
+          "date": "2026-10-09",
+          "value": 1.72
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "hk10y": {
       "country": "Hong Kong",
-      "value": 4.129,
-      "asOf": "2026-10-02",
+      "value": 4.118,
+      "asOf": "2026-10-12",
       "source": "Investing.com Hong Kong 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/hong-kong-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/hong-kong/government-bond-yield",
-        "value": 4.13,
-        "asOf": "2026-10-02"
+        "value": 4.075,
+        "asOf": "2026-10-13"
       },
       "observations": [
         {
@@ -286,20 +340,29 @@
         {
           "date": "2026-10-01",
           "value": 4.09
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4.129
+        },
+        {
+          "date": "2026-10-09",
+          "value": 4.128
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "id10y": {
       "country": "Indonesia",
-      "value": 7.159,
-      "asOf": "2026-10-02",
+      "value": 7.199,
+      "asOf": "2026-10-12",
       "source": "Investing.com Indonesia 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/indonesia-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/indonesia/government-bond-yield",
-        "value": 7.16,
-        "asOf": "2026-10-02"
+        "value": 7.169,
+        "asOf": "2026-10-13"
       },
       "observations": [
         {
@@ -325,20 +388,29 @@
         {
           "date": "2026-10-01",
           "value": 7.159
+        },
+        {
+          "date": "2026-10-02",
+          "value": 7.159
+        },
+        {
+          "date": "2026-10-09",
+          "value": 7.237
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "fr10y": {
       "country": "France",
-      "value": 4.859,
-      "asOf": "2026-10-02",
+      "value": 4.896,
+      "asOf": "2026-10-12",
       "source": "Investing.com France 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/france-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/france/government-bond-yield",
-        "value": 4.87,
-        "asOf": "2026-10-02"
+        "value": 4.836,
+        "asOf": "2026-10-13"
       },
       "observations": [
         {
@@ -364,8 +436,17 @@
         {
           "date": "2026-10-01",
           "value": 4.924
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4.859
+        },
+        {
+          "date": "2026-10-09",
+          "value": 4.858
         }
-      ]
+      ],
+      "note": "Headline uses the latest verified completed Investing.com session; Trading Economics cross-check is a separate October 13 quote, so levels may differ."
     },
     "tw10y": {
       "country": "Taiwan",
@@ -385,8 +466,8 @@
           "value": 1.97
         }
       ],
-      "note": "October 2 Trading Economics observation corroborated by GuruFocus / Taipei Exchange. Prior-provider history is excluded from period moves."
+      "note": "Reviewed October 13: Trading Economics reports a newer 2.05% quote, but the independent Taipei Exchange/GuruFocus series could not corroborate that date. Retained last corroborated headline; no new period move inferred."
     }
   },
-  "snapshotNote": "Reviewed through October 3, 2026 using the latest available published observations. Historical provider rows replace earlier intraday snapshots where available."
+  "snapshotNote": "Reviewed October 13, 2026. Investing.com completed-session closes are cross-checked against separately dated Trading Economics quotes. Taiwan retains its last corroborated observation."
 }

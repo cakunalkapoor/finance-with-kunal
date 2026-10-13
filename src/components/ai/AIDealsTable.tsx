@@ -38,7 +38,7 @@ export default function AIDealsTable() {
     <SciFiCard glow="purple">
       <CardHeader
         title="Private capital"
-        subtitle="Global venture funding in USD · Q1 Mar 31 and Q2 Jul 1 snapshots · selected announced AI rounds"
+        subtitle="Global venture funding in USD · Q1–Q3 2026 snapshots · selected announced AI rounds"
       />
 
       {/* Quarterly split — two bars' worth of data, so rendered as meters
@@ -47,11 +47,12 @@ export default function AIDealsTable() {
         {AI_FUNDING_QUARTERS.map((q) => {
           const roundedShare = Math.round(q.aiSharePct);
           const isQ1 = q.quarter.startsWith("Q1");
-          const snapshotLabel = isQ1 ? "Mar 31 snapshot" : "Jul 1 snapshot";
-          const shareLabel = isQ1 ? `≈${roundedShare}%` : `>${Math.floor(q.aiSharePct)}%`;
+          const isQ3 = q.quarter.startsWith("Q3");
+          const snapshotLabel = isQ1 ? "Mar 31 snapshot" : isQ3 ? "Oct 2 snapshot" : "Jul 1 snapshot";
+          const shareLabel = isQ1 ? `≈${roundedShare}%` : isQ3 ? `${roundedShare}%` : `>${Math.floor(q.aiSharePct)}%`;
           const shareAria = isQ1
             ? `approximately ${roundedShare} percent`
-            : `more than ${Math.floor(q.aiSharePct)} percent`;
+            : isQ3 ? `${roundedShare} percent` : `more than ${Math.floor(q.aiSharePct)} percent`;
 
           return (
             <div key={q.quarter}>
@@ -180,7 +181,9 @@ export default function AIDealsTable() {
       >
         Q1&rsquo;s ≈80% share and total preserve Crunchbase&rsquo;s Mar 31 snapshot; Q2&rsquo;s &gt;70%
         share and total preserve its Jul 1 snapshot. The later revised H1 total is not backfilled
-        into the quarter view because Crunchbase did not publish a revised split. Deal amounts are
+        into the quarter view because Crunchbase did not publish a revised split. Q3 uses the
+        Oct 2 snapshot, published Oct 5; that release revised Q2 total funding to $212B.
+        Quarter bars retain their original reporting vintages. Deal amounts are
         announced or committed, not necessarily funded on the announcement date. Crusoe&rsquo;s
         amount is the anticipated full round at its initial close. August and September deals
         are excluded from the H1 concentration calculation. A post-money
