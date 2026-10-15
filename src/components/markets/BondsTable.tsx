@@ -24,6 +24,7 @@ const YIELD_FORMAT = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, 
 const POLICY_RATE_BY_COUNTRY = new Map(
   POLICY_RATES.map((policyRate) => [policyRate.country, policyRate]),
 );
+const WEEKLY_HISTORY_COUNTRIES = new Set(["Taiwan", "China", "France", "Hong Kong", "Indonesia"]);
 
 /* Every row used to read "<maturity> Treasury", which is only true of the US
    and Korea. A Bund is not a Treasury and neither is a Gilt or a JGB — on a
@@ -221,7 +222,7 @@ export default function BondsTable() {
                     const stale = age > STALE_AFTER_DAYS;
                     return (
                       <div
-                        title={`${bond.source} · ${bond.cadence} series · observed ${formatAsOf(bond.asOf)}${bond.country === "Taiwan" ? " · trend includes weekly Investing.com history supplied as CSV" : ""}`}
+                        title={`${bond.source} · ${bond.cadence} series · observed ${formatAsOf(bond.asOf)}${WEEKLY_HISTORY_COUNTRIES.has(bond.country) ? " · trend includes weekly Investing.com history supplied as CSV" : ""}`}
                         style={{
                           color: stale ? "#d97706" : "var(--color-text-muted)",
                           fontFamily: FONT_MONO,

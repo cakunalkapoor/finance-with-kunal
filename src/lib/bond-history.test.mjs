@@ -47,3 +47,28 @@ test('Taiwan weekly history fills the chart without replacing the verified headl
   assert.equal(trend.at(-2), september.value);
   assert.notEqual(trend.at(-1), observations.at(-1).value);
 });
+
+test('imported weekly histories fill all four country charts with dated monthly values', () => {
+  const histories = JSON.parse(readFileSync(new URL('./bond-chart-histories.json', import.meta.url), 'utf8'));
+  const { bonds } = JSON.parse(readFileSync(new URL('./bonds-manual.json', import.meta.url), 'utf8'));
+  for (const country of ['China', 'France', 'Hong Kong', 'Indonesia']) {
+    const history = histories[country];
+    const bond = Object.values(bonds).find(b => b.country === country);
+    assert.equal(history.cadence, 'weekly');
+    assert.equal(new Set(history.observations.map(p => p.date)).size, history.observations.length);
+    const headline = { date: bond.asOf, value: bond.value };
+    const trend = mergeMonthlyHistory(bond.asOf, history.observations, bond.observations, [headline]);
+    assert.equal(trend.length, 36, country);
+    assert.ok(trend.every(Number.isFinite), `${country}: gaps remain`);
+    assert.equal(trend.at(-1), bond.value, `${country}: headline changed`);
+    const monthly = monthlyHistory(trend, bond.asOf);
+    const julyClose = history.observations.filter(p => p.date.startsWith('2026-07')).at(-1);
+    const july = monthly.find(p => p.date.startsWith('2026-07'));
+    assert.equal(july.value, julyClose.value, `${country}: weekly history shifted months`);
+    const augustClose = bond.observations.filter(p => p.date.startsWith('2026-08')).at(-1);
+    assert.equal(monthly.find(p => p.date.startsWith('2026-08')).value, augustClose.value,
+      `${country}: verified daily close must take precedence over weekly history`);
+    // A newer automated headline must retain the supplemental history too.
+    assert.ok(mergeMonthlyHistory('2026-10-14', history.observations, [{date:'2026-10-14',value:bond.value}]).every(Number.isFinite));
+  }
+});

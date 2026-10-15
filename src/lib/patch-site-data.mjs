@@ -9,6 +9,10 @@ import { fileURLToPath } from "node:url";
 import { monthlyHistory, mergeMonthlyHistory, periodMoves } from "./bond-history.mjs";
 
 const taiwanHistory = JSON.parse(readFileSync(new URL("./taiwan-bond-history.json", import.meta.url), "utf8"));
+const bondChartHistories = {
+  ...JSON.parse(readFileSync(new URL("./bond-chart-histories.json", import.meta.url), "utf8")),
+  Taiwan: taiwanHistory,
+};
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..");
@@ -268,6 +272,7 @@ for (const b of Object.values(bondsDump.bonds || {})) considerBond(b, "daily");
 // append a September close to a July series and relabel July as August.
 for (const b of Object.values(bondCandidates)) {
   b.trend = mergeMonthlyHistory(b.asOf,
+    bondChartHistories[b.country]?.observations ?? [],
     monthlyHistory(monthlyTrend[b.country], monthlyTrendAsOf[b.country]),
     monthlyHistory(b.trend, b.asOf),
     [{ date: b.asOf, value: b.value }]);
@@ -284,7 +289,7 @@ for (const m of Object.values(bondsManual.bonds || {})) {
     cadence: "daily",
     trend: mergeMonthlyHistory(m.asOf,
       monthlyHistory(base.trend, base.asOf),
-      m.country === "Taiwan" ? taiwanHistory.observations : [],
+      bondChartHistories[m.country]?.observations ?? [],
       observations),
     ...periodMoves(observations),
   };

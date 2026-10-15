@@ -386,7 +386,7 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.053,
     oneMonthMove: -0.022,
     oneYearMove: -0.19,
-    trend: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1.857, null, null, null, null, null, null, null, null, null, 1.691, 1.683, 1.667],
+    trend: [2.684, 2.56, 2.43, 2.384, 2.293, 2.309, 2.32, 2.262, 2.118, 2.183, 2.16, 2.12, 2.04, 1.6, 1.64, 1.77, 1.79, 1.62, 1.7, 1.644, 1.71, 1.766, 1.878, 1.857, 1.858, 1.862, 1.803, 1.829, 1.819, 1.753, 1.759, 1.741, 1.709, 1.691, 1.683, 1.667],
   },
   {
     country: "Hong Kong",
@@ -399,7 +399,7 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.01,
     oneMonthMove: 0.313,
     oneYearMove: 1.094,
-    trend: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 3.024, null, null, null, null, null, null, null, null, null, 3.611, 4.09, 4.118],
+    trend: [3.825, 3.528, 3.461, 3.863, 3.824, 3.974, 3.896, 3.569, 3.025, 2.953, 2.911, 3.131, 3.267, 3.715, 3.681, 3.48, 3.224, 3.162, 2.946, 3, 3.074, 3.053, 3.055, 3.024, 2.945, 3.178, 3.192, 2.818, 2.942, 3.003, 3.31, 3.363, 3.508, 3.611, 4.09, 4.118],
   },
   {
     country: "Japan",
@@ -438,7 +438,7 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.038,
     oneMonthMove: 0.043,
     oneYearMove: 1.06,
-    trend: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 6.139, null, null, null, null, null, null, null, null, null, 6.99, 7.106, 7.199],
+    trend: [6.602, 6.649, 6.519, 6.627, 6.643, 6.99, 6.93, 7.046, 6.841, 6.625, 6.643, 6.774, 6.872, 7.041, 6.984, 6.913, 6.964, 6.853, 6.821, 6.603, 6.582, 6.402, 6.327, 6.139, 6.19, 6.119, 6.346, 6.411, 6.624, 6.829, 6.902, 7.153, 7.337, 6.99, 7.106, 7.199],
   },
   {
     country: "Germany",
@@ -477,7 +477,7 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: 0.038,
     oneMonthMove: 0.448,
     oneYearMove: 1.418,
-    trend: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 3.478, null, null, null, null, null, null, null, null, null, 4.174, 4.862, 4.896],
+    trend: [2.929, 2.68, 2.74, 2.909, 2.912, 2.999, 3.148, 3.212, 2.957, 3.012, 2.988, 3.161, 2.892, 3.287, 3.201, 3.14, 3.325, 3.24, 3.164, 3.28, 3.35, 3.449, 3.511, 3.478, 3.529, 3.611, 3.425, 3.218, 3.678, 3.697, 3.695, 3.726, 4.001, 4.174, 4.862, 4.896],
   },
   {
     country: "Canada",
