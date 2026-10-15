@@ -35,3 +35,15 @@ test('verified manual bond histories cover the month and year comparison dates',
     dailyMove: 0.08, oneMonthMove: 0.361, oneYearMove: 0.851,
   });
 });
+
+test('Taiwan weekly history fills the chart without replacing the verified headline', () => {
+  const { observations } = JSON.parse(readFileSync(new URL('./taiwan-bond-history.json', import.meta.url), 'utf8'));
+  const headline = { date: '2026-10-02', value: 1.94 };
+  const trend = mergeMonthlyHistory(headline.date, observations, [headline]);
+  assert.equal(trend.length, 36);
+  assert.ok(trend.every(Number.isFinite));
+  assert.equal(trend.at(-1), headline.value);
+  const september = observations.filter(p => p.date.startsWith('2026-09')).at(-1);
+  assert.equal(trend.at(-2), september.value);
+  assert.notEqual(trend.at(-1), observations.at(-1).value);
+});

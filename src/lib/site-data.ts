@@ -516,7 +516,7 @@ export const BOND_YIELDS: BondYield[] = [
     dailyMove: -0.03,
     oneMonthMove: null,
     oneYearMove: null,
-    trend: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1.94],
+    trend: [1.285, 1.274, 1.2, 1.234, 1.5, 1.725, 1.62, 1.76, 1.59, 1.57, 1.52, 1.5, 1.56, 1.682, 1.6, 1.62, 1.61, 1.56, 1.58, 1.4, 1.4, 1.385, 1.36, 1.27, 1.35, 1.41, 1.422, 1.42, 1.52, 1.53, 1.72, 1.71, 1.91, 1.91, 1.94, 1.94],
   },
   {
     country: "South Africa",

@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 
 import { monthlyHistory, mergeMonthlyHistory, periodMoves } from "./bond-history.mjs";
 
+const taiwanHistory = JSON.parse(readFileSync(new URL("./taiwan-bond-history.json", import.meta.url), "utf8"));
+
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..", "..");
 const dataPath = resolve(root, "src/lib/site-data.ts");
@@ -280,7 +282,10 @@ for (const m of Object.values(bondsManual.bonds || {})) {
   bondCandidates[m.country] = {
     ...base, value: m.value, asOf: m.asOf, source: m.source,
     cadence: "daily",
-    trend: mergeMonthlyHistory(m.asOf, monthlyHistory(base.trend, base.asOf), observations),
+    trend: mergeMonthlyHistory(m.asOf,
+      monthlyHistory(base.trend, base.asOf),
+      m.country === "Taiwan" ? taiwanHistory.observations : [],
+      observations),
     ...periodMoves(observations),
   };
 }

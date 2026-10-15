@@ -33,6 +33,18 @@ export default function TrendSparkline({
   height?: number;
 }) {
   const observed = values.filter((n): n is number => n !== null && Number.isFinite(n));
+  if (observed.length < 2) {
+    return (
+      <div
+        role="img"
+        aria-label={`${ariaLabel}: insufficient history`}
+        className="flex items-center justify-center text-[10px] text-[var(--color-text-muted)]"
+        style={{ height, width: 160, minWidth: 160 }}
+      >
+        Insufficient history
+      </div>
+    );
+  }
   const min = observed.length ? Math.min(...observed) : 0;
   const max = observed.length ? Math.max(...observed) : 1;
   // Colour follows the trend of the *visible* window, so it stays truthful

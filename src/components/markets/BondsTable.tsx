@@ -221,7 +221,7 @@ export default function BondsTable() {
                     const stale = age > STALE_AFTER_DAYS;
                     return (
                       <div
-                        title={`${bond.source} · ${bond.cadence} series · observed ${formatAsOf(bond.asOf)}`}
+                        title={`${bond.source} · ${bond.cadence} series · observed ${formatAsOf(bond.asOf)}${bond.country === "Taiwan" ? " · trend includes weekly Investing.com history supplied as CSV" : ""}`}
                         style={{
                           color: stale ? "#d97706" : "var(--color-text-muted)",
                           fontFamily: FONT_MONO,
