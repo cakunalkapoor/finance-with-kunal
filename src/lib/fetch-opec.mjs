@@ -19,5 +19,5 @@ if (observations.length < 500) throw new Error("OPEC feed has insufficient histo
 if (observations.at(-1).date < current.timeSeries.at(-1).date) throw new Error("OPEC feed is older than the saved snapshot; saved prices unchanged");
 const months = new Map();
 for (const point of observations) months.set(point.date.slice(0, 7), point);
-await writeFile(path, JSON.stringify({ ...current, supplement: null, reviewedAt: asOf, timeSeries: [...months.values()] }, null, 2) + "\n");
+await writeFile(path, JSON.stringify({ ...current, supplement: null, refreshNote: null, reviewedAt: asOf, timeSeries: [...months.values()] }, null, 2) + "\n");
 console.log(`OPEC: ${months.size} monthly snapshots through ${observations.at(-1).date}`);

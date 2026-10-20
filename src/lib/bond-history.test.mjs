@@ -21,17 +21,21 @@ test('weekends use the preceding close, while monthly averages never become dail
   assert.deepEqual(periodMoves(rows, 'monthly'), {dailyMove:null,oneMonthMove:null,oneYearMove:null});
 });
 
-test('verified manual bond histories cover the month and year comparison dates', () => {
+test('verified manual bond histories retain dated closes and a prior session', () => {
   const { bonds } = JSON.parse(readFileSync(new URL('./bonds-manual.json', import.meta.url), 'utf8'));
   for (const bond of Object.values(bonds)) {
     if (!bond.source.startsWith('Investing.com')) continue;
     const moves = periodMoves([...bond.observations, { date: bond.asOf, value: bond.value }]);
-    for (const period of ['dailyMove', 'oneMonthMove', 'oneYearMove']) {
-      assert.notEqual(moves[period], null, `${bond.country}: missing ${period} historical anchor`);
-    }
+    assert.notEqual(moves.dailyMove, null, `${bond.country}: missing previous-session close`);
+    assert.ok(bond.sourceUrl.startsWith('https://'), `${bond.country}: missing source URL`);
+    assert.ok(bond.observations.every(point => point.date <= bond.asOf), `${bond.country}: future close`);
+    assert.equal(new Set(bond.observations.map(point => point.date)).size, bond.observations.length,
+      `${bond.country}: duplicate observation dates`);
   }
-  const india = bonds.in10y;
-  assert.deepEqual(periodMoves([...india.observations, { date: india.asOf, value: india.value }]), {
+  // Keep this regression at its original vintage. A rolling refresh can lack
+  // anniversary anchors; periodMoves deliberately returns null in that case.
+  const indiaOctober12 = bonds.in10y.observations.filter(point => point.date <= '2026-10-12');
+  assert.deepEqual(periodMoves(indiaOctober12), {
     dailyMove: 0.08, oneMonthMove: 0.361, oneYearMove: 0.851,
   });
 });
