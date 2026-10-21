@@ -42,6 +42,12 @@ links. `BLOG_POSTS` is derived from it. The new article route uses Next.js 16 pr
 params and `generateStaticParams` for GitHub Pages, with unknown slugs excluded from generation.
 The listing, canonical URL, article schema and sitemap use the same article slug and date.
 
+Vantage AI also presents these cases in `AIIPOSetbacks.tsx`, directly after the market-impact
+chart. It reads the same case evidence, reporting date and source links from `blog-data.ts`,
+adds a concise financing interpretation, and links to the full article. The AI page's method
+note identifies the IPO section's original currencies, including Korean won, as an exception
+to the page's usual USD convention.
+
 ## Validation
 
 Production static export and all 71 existing tests passed. Static HTML checks confirmed the

@@ -1,5 +1,6 @@
 import AIStockTable from "@/components/ai/AIStockTable";
 import AIMarketImpact from "@/components/ai/AIMarketImpact";
+import AIIPOSetbacks from "@/components/ai/AIIPOSetbacks";
 import AICapexChart from "@/components/ai/AICapexChart";
 import AILayoffsChart from "@/components/ai/AILayoffsChart";
 import AIDealsTable from "@/components/ai/AIDealsTable";
@@ -34,7 +35,7 @@ export const metadata = pageMetadata({
   // describing. The nav label stays the short "AI" and the route stays /ai.
   title: "Vantage AI",
   description:
-    "The AI boom in numbers: AI-exposed stocks against major global markets, hyperscaler capex and power demand, disclosed AI revenue, hardware constraints, AI-attributed job cuts, venture funding, and business adoption — every curated figure sourced and dated.",
+    "The AI boom in numbers: AI-exposed stocks, infrastructure IPO setbacks, hyperscaler capex and power demand, disclosed AI revenue, hardware constraints, AI-attributed job cuts, venture funding, and business adoption — every curated figure sourced and dated.",
   path: "/ai",
   keywords: [
     "AI stocks",
@@ -42,6 +43,7 @@ export const metadata = pageMetadata({
     "AI revenue",
     "AI job losses",
     "AI venture capital funding",
+    "AI data center IPO setbacks",
     "NVIDIA data center revenue",
     "AI market concentration",
     "AI adoption rate",
@@ -89,7 +91,7 @@ export default function AIPage() {
         <BriefingHero
           eyebrow="AI briefing"
           title="Follow the AI story."
-          description="Capital expenditure, AI revenue, hardware supply signals, electricity demand, private rounds, and job-cut attribution in one view—with every figure sourced and dated."
+          description="Capital expenditure, AI revenue, hardware supply signals, electricity demand, private rounds, IPO setbacks, and job-cut attribution in one view—with every figure sourced and dated."
           accent="emerald"
           // Pulled from ai-data rather than retyped: these three restate figures
           // that already exist (with sources) further down the page, and a
@@ -105,6 +107,10 @@ export default function AIPage() {
             with, and it's the only section computed rather than curated. */}
         <Reveal>
           <AIMarketImpact />
+        </Reveal>
+
+        <Reveal>
+          <AIIPOSetbacks />
         </Reveal>
 
         <div className={TWO_COL}>
@@ -272,13 +278,16 @@ export default function AIPage() {
               style={{ color: "var(--color-text-secondary)" }}
             >
               <p>
-                All monetary amounts are in USD. Figures originally reported in another currency
+                Monetary figures use USD except the IPO case studies, which retain explicitly
+                labelled original currencies. Other figures originally reported in another currency
                 use the named exchange-rate source from the results date and are marked as translated;
                 rounded conversions should not be read as audited company disclosures.
               </p>
               <p>
                 Research figures come from company disclosures, Census survey data, funding
-                announcements and published research. Census also provides a public API.
+                announcements and published research. IPO case studies link to dated reporting
+                and distinguish withdrawals, reported postponements and completed offerings.
+                Census also provides a public API.
                 Each source follows its own release schedule, so the review date can be newer
                 than the reporting period. Every research figure links to its source and retains
                 its publication date; annualized revenue, reported segments and company-wide
