@@ -6,7 +6,7 @@ import { LAST_UPDATED_LABEL } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
 
 export default function WeeklyCommentary() {
-  const { lead, sections } = WEEKLY_COMMENTARY;
+  const { lead, sections, weekRange } = WEEKLY_COMMENTARY;
 
   return (
     <section className="py-16 sm:py-24">
@@ -25,6 +25,9 @@ export default function WeeklyCommentary() {
             <div className="mt-7 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: "var(--color-neon-cyan)", fontFamily: FONT_MONO }}>
               {LAST_UPDATED_LABEL}
             </div>
+            <p className="mt-2 text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>
+              {weekRange}
+            </p>
             <div className="mt-8 border-l pl-5" style={{ borderColor: "var(--color-neon-cyan)" }}>
               <Quote size={18} className="mb-4" style={{ color: "var(--color-neon-cyan)" }} />
               <p className="text-base leading-7 sm:text-lg" style={{ color: "var(--color-text-secondary)" }}>

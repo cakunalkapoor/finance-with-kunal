@@ -133,7 +133,7 @@ export default function CountryEconomy({
         <Reveal>
           <EconomicNotes
             filter={onPage}
-            subtitle={`Auto-generated ${eyebrow} macro notes · latest available data`}
+            subtitle={`${eyebrow} macro interpretation · sourced observations and reporting periods`}
           />
         </Reveal>
       </div>

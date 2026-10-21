@@ -180,6 +180,12 @@ the wrong company on those tiles.
 - Chart toggle in the header switches all sparklines simultaneously across the site-wide ladder (1W / 3M / YTD / 2Y / 3Y); sparkline color follows the trend of the *visible* window. 1W reads the six-point `daily` series rather than the weekly sparkline — see the ladder notes in CLAUDE.md
 
 ### `EconomicChart.tsx`
+
+Economic chart notes and the Economic Commentary section share `economicCommentary()` in
+`src/lib/commentary.ts`: the indicator's sourced observation followed by its reviewed interpretation.
+Review all `ECONOMIC_CONTEXT` entries and `COMMENTARY_REVIEWED_AT` when changing the narrative.
+The editorial review date is separate from `DATA_UPDATED_AT`; a commentary-only edit must not
+advance the date of the market snapshot.
 - Per-indicator card with horizon tabs drawn from the site-wide ladder, filtered by `horizonsFor` to the windows the series can actually fill — monthly macro series therefore show no 1W rung
 - Color (green / red) inverts based on `isPositiveGood` so e.g. falling inflation is shown green
 - Horizon window anchors to the most recent data point (not a hardcoded date)

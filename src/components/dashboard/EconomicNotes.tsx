@@ -1,31 +1,11 @@
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
-import { formatEconomicValue, FONT_MONO } from "@/lib/utils";
-
-function generateNote(ind: (typeof ECONOMIC_INDICATORS)[0]): string {
-  const { name, value, previousValue, direction, unit, period, isPositiveGood } = ind;
-  const display = (number: number) => formatEconomicValue(number, ind.category, unit);
-  const delta = display(Math.abs(value - previousValue));
-
-  if (direction === "up") {
-    if (isPositiveGood) {
-      return `${name} improved to ${display(value)} ${unit} in ${period}, up from ${display(previousValue)} — a firmer reading than before.`;
-    } else {
-      return `${name} climbed to ${display(value)} ${unit} in ${period}, up ${delta} from ${display(previousValue)} — a headwind to watch.`;
-    }
-  } else if (direction === "down") {
-    if (!isPositiveGood) {
-      return `${name} declined to ${display(value)} ${unit} in ${period}, easing from ${display(previousValue)} — a positive macro development.`;
-    } else {
-      return `${name} softened to ${display(value)} ${unit} in ${period}, retreating from ${display(previousValue)} — momentum warranted monitoring.`;
-    }
-  }
-  return `${name} held steady at ${display(value)} ${unit} in ${period}.`;
-}
+import { FONT_MONO } from "@/lib/utils";
+import { COMMENTARY_REVIEWED_AT, economicCommentary } from "@/lib/commentary";
 
 export default function EconomicNotes({
   filter,
-  subtitle = "Auto-generated macro notes · latest available data",
+  subtitle = "Global macro interpretation · sourced observations and reporting periods",
 }: {
   filter?: (ind: (typeof ECONOMIC_INDICATORS)[0]) => boolean;
   subtitle?: string;
@@ -35,7 +15,7 @@ export default function EconomicNotes({
     name: ind.name,
     flag: ind.flag,
     category: ind.category,
-    note: generateNote(ind),
+    note: economicCommentary(ind),
     direction: ind.direction,
     isPositiveGood: ind.isPositiveGood,
   }));
@@ -56,7 +36,7 @@ export default function EconomicNotes({
               letterSpacing: "0.06em",
             }}
           >
-            AUTO
+            REVIEWED
           </span>
         }
       />
@@ -89,7 +69,8 @@ export default function EconomicNotes({
             letterSpacing: "0.04em",
           }}
         >
-          Commentary is auto-generated from data. Replace with your own analysis in the Blog section.
+          Commentary reviewed {COMMENTARY_REVIEWED_AT}. Observations retain their own reporting
+          periods; the interpretation does not establish the cause of a market move.
         </p>
       </div>
     </SciFiCard>

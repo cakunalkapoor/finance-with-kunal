@@ -271,7 +271,9 @@ export default function YieldCurveChart({ curve }: Props) {
         {inverted
           ? " — the long end yields less than the 10-year, an inversion."
           : ", so the curve slopes upward across the long end."}{" "}
-        {curve.source}
+        This compares two long maturities. The slope alone cannot identify how much of the
+        difference reflects expected policy rates, inflation or compensation for holding longer
+        bonds. {curve.source}
       </div>
     </div>
   );

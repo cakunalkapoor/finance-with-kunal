@@ -212,8 +212,10 @@ export default function AICapexChart() {
         }}
       >
         Combined ${totalLow}–{totalHigh}B against ${totalPrior.toFixed(0)}B on the displayed
-        prior-year series. These are company-wide plans, not AI-only budgets, and their definitions
-        differ. Microsoft&rsquo;s current calendar-2026 figure reflects a finance-to-operating lease
+        prior-year series. The scale of planned spending raises the importance of utilisation,
+        revenue conversion and eventual returns; the plans alone cannot demonstrate any of them.
+        These are company-wide budgets with different definitions. Microsoft&rsquo;s current
+        calendar-2026 figure reflects a finance-to-operating lease
         reclassification, so it is not directly comparable with its lease-inclusive prior-year bar
         even though management said underlying investment expectations were unchanged. The paler
         segment marks the portion of a published range still labelled &ldquo;up to&rdquo;.

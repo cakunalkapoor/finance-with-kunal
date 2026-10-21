@@ -13,6 +13,8 @@ import { pageMetadata } from "@/lib/seo";
 import type { AIFigure } from "@/types";
 import {
   AI_ADOPTION,
+  AI_ADOPTION_PERIOD,
+  AI_ADOPTION_RELEASE,
   AI_ADOPTION_NATIONAL_RANGE,
   AI_STOCKS,
   AI_CAPEX_CONTEXT,
@@ -94,7 +96,7 @@ export default function AIPage() {
           // literal here would silently drift from them on the next revision.
           stats={[
             { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Company-wide · four hyperscalers" },
-            { label: "Q2 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Jul 1 global snapshot" },
+            { label: "Q3 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Oct 2 global snapshot" },
             { label: "AI rank", value: figure(AI_LABOUR, "leading-reason"), detail: "September layoff reasons" },
           ]}
         />
@@ -120,13 +122,12 @@ export default function AIPage() {
                 figures={AI_REVENUE}
                 columns={2}
               >
-                NVIDIA Data Center and Google Cloud are reported segments, though neither is
-                AI-only. TSMC&rsquo;s high-teens share is management&rsquo;s company-defined
-                accelerator revenue mix — GPUs, ASICs and HBM controllers, excluding CPUs — not a
-                standalone segment. Amazon&rsquo;s run rate is call commentary; Anthropic and OpenAI
-                are private. Run rate annualises a recent period — it is not revenue earned.
-                Microsoft stopped disclosing an AI-specific figure after FY26 Q2, which is why it
-                is absent.
+                The revenue evidence spans different parts of the AI stack. NVIDIA Data Center
+                and Google Cloud report quarterly segment revenue; the private-company figures
+                and AWS disclosure annualise recent activity. These measures cannot be summed
+                into one AI market total. TSMC&rsquo;s high-teens accelerator share refers to
+                FY2025 and excludes CPUs, so the newer company-wide Q3 results below do not
+                replace it. Microsoft&rsquo;s retired AI-specific metric remains absent.
               </AIFigureSection>
             </Reveal>
 
@@ -143,9 +144,11 @@ export default function AIPage() {
                 figures={AI_CAPEX_CONTEXT}
                 columns={3}
               >
-                The backlog total combines management-reported Google Cloud and AWS commitments. It
-                is not AI-only, and the two companies&rsquo; definitions and recognition timing
-                differ. The capex total is also company-wide rather than a standalone AI budget.
+                The spending plans show the scale of infrastructure commitments, while the
+                cloud backlog offers a separate view of contracted demand. Backlog converts to
+                revenue over time; it does not establish the return on that spending. The four
+                capex plans include businesses beyond AI and use different lease conventions.
+                The electricity figure is an IEA projection for 2030, not observed 2026 demand.
               </AIFigureSection>
             </Reveal>
 
@@ -162,11 +165,11 @@ export default function AIPage() {
                 columns={2}
                 glow="purple"
               >
-                SK hynix&rsquo;s card pairs company-wide quarterly revenue and operating margin with
-                management&rsquo;s HBM4 shipment commentary; the margin is not an HBM-only measure.
-                TSMC&rsquo;s monthly growth is also company-wide and is shown only as a
-                high-frequency foundry-demand proxy, not an AI revenue breakout. SK hynix and ASML
-                monetary figures are translated to USD using the official report-date{" "}
+                TSMC&rsquo;s Q3 US-dollar revenue rose 41.2% year over year, and ASML lifted the
+                floor of its annual sales guidance to €44B. Those releases support a picture of
+                strong foundry and equipment demand, while SK hynix&rsquo;s card still refers to
+                Q2 company-wide results. None isolates AI-only revenue or margin. SK hynix and
+                ASML figures are translated at the results-date{" "}
                 <a
                   href={AI_FX_SOURCES.skHynix.url}
                   target="_blank"
@@ -182,9 +185,9 @@ export default function AIPage() {
                   rel="noopener noreferrer"
                   className="font-semibold underline-offset-2 hover:underline"
                 >
-                  ECB
+                  Yahoo EUR/USD
                 </a>{" "}
-                reference rates and rounded to the nearest $0.1B.
+                exchange rates, respectively, and rounded to the nearest $0.1B.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -203,10 +206,11 @@ export default function AIPage() {
                 columns={2}
                 glow="purple"
               >
-                AI ranked fifth among stated reasons in September, while remaining the leading
-                reason year to date. Total announced cuts fell 18% from August to 43,281.
-                Challenger tracks employer attribution, not independently measured displacement.
-                Its technology-sector total covers cuts for every stated reason.
+                September&rsquo;s lower total cuts and roughly 9% AI-attributed share show that
+                the monthly pattern differs from the cumulative AI story. The 120,136
+                AI-attributed cuts through September are employer-announced plans; the data do
+                not establish how many jobs AI independently displaced. Technology-sector cuts
+                include every stated reason, so that total should not be added to AI cuts.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -222,10 +226,12 @@ export default function AIPage() {
                 figures={AI_PRIVATE_CAPITAL}
                 columns={2}
               >
-                Combining the three H1 OpenAI and Anthropic rounds in the deal table with
-                Crunchbase&rsquo;s later revised H1 total gives about 42%. That is a derived,
-                cross-vintage comparison; the Q2 share is a separate July 1 snapshot, and funding
-                totals can be revised as later deals are disclosed.
+                AI accounted for $102B of $159B in reported Q3 venture funding, about 64%.
+                That remains a large concentration even though it is below the earlier Q1
+                and Q2 snapshots. The three H1 OpenAI and Anthropic announcements sum to $217B,
+                about 42% of the later $515B H1 total. These figures mix announced or committed
+                rounds with funding-database snapshots, so they do not measure cash deployed
+                or investment returns. Quarter vintages and later revisions remain labelled.
               </AIFigureSection>
             </Reveal>
           </div>
@@ -242,11 +248,12 @@ export default function AIPage() {
               figures={AI_ADOPTION}
               columns={2}
             >
-              These are separate scale signals, not a conversion funnel or ROI test: global capex
-              guidance and venture snapshots, a US nonfarm employer-business survey, paid software
-              seats, and an estimate of peak theoretical chip throughput per US dollar cover
-              different populations and periods. The latest Census incidence estimate is{" "}
-              {percentageRange(AI_ADOPTION_NATIONAL_RANGE)}.
+              The latest displayed Census estimate puts AI use at{" "}
+              {percentageRange(AI_ADOPTION_NATIONAL_RANGE)} of US nonfarm employer businesses
+              for {AI_ADOPTION_PERIOD}, released {AI_ADOPTION_RELEASE}. Adoption therefore remains far from
+              universal in this survey, despite the scale of infrastructure spending. Paid
+              Copilot seats and chip throughput per dollar add distribution and cost context;
+              they do not measure active use, productivity gains or returns on AI investment.
             </AIFigureSection>
           </Reveal>
         </div>
@@ -266,7 +273,7 @@ export default function AIPage() {
             >
               <p>
                 All monetary amounts are in USD. Figures originally reported in another currency
-                use an official exchange rate from the source date and are marked as translated;
+                use the named exchange-rate source from the results date and are marked as translated;
                 rounded conversions should not be read as audited company disclosures.
               </p>
               <p>
@@ -279,8 +286,10 @@ export default function AIPage() {
               </p>
               <p>
                 The {AI_STOCKS.length} listings in the stack table and the
-                basket chart are Yahoo Finance closes on the same weekly cadence as the rest of the
-                site, computed the same way as the Markets page.
+                basket chart use Yahoo Finance observations on the site&rsquo;s weekly cadence.
+                The AI comparison converts each daily close to USD before computing returns;
+                Markets retains each instrument&rsquo;s quoted currency. Different date windows,
+                currency bases and equal-weighting can therefore produce different comparisons.
               </p>
               <p>
                 Where a figure cannot be sourced it is absent rather than estimated. Notes beside

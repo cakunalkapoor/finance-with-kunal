@@ -179,13 +179,15 @@ export default function AIDealsTable() {
           borderColor: "var(--color-space-border)",
         }}
       >
-        Q1&rsquo;s ≈80% share and total preserve Crunchbase&rsquo;s Mar 31 snapshot; Q2&rsquo;s &gt;70%
+        Q3&rsquo;s reported AI funding share is 64%, keeping AI central to the venture picture.
+        Quarter-to-quarter comparisons require care: Q1&rsquo;s ≈80% share and total preserve
+        Crunchbase&rsquo;s Mar 31 snapshot; Q2&rsquo;s &gt;70%
         share and total preserve its Jul 1 snapshot. The later revised H1 total is not backfilled
         into the quarter view because Crunchbase did not publish a revised split. Q3 uses the
         Oct 2 snapshot, published Oct 5; that release revised Q2 total funding to $212B.
         Quarter bars retain their original reporting vintages. Deal amounts are
         announced or committed, not necessarily funded on the announcement date. Crusoe&rsquo;s
-        amount is the anticipated full round at its initial close. August and September deals
+        amount is the anticipated full round at its initial close. Deals dated after June
         are excluded from the H1 concentration calculation. A post-money
         valuation is the negotiated price for preferred stock with its own terms, not a daily market
         capitalisation. This is the reported headline set, not a complete private-market league

@@ -144,7 +144,9 @@ export default function AIAdoptionChart() {
         The national estimate is {nationalLabel}. All {AI_ADOPTION_BY_SIZE.length} bars reproduce
         Census-published employment-size estimates for US nonfarm employer businesses in the{" "}
         {AI_ADOPTION_PERIOD} reference period, released {AI_ADOPTION_RELEASE}; they are survey estimates rather than
-        administrative counts. The size comparison is descriptive and does not by itself measure
+        administrative counts. Larger firms report higher use than the smallest employers in
+        this snapshot, indicating uneven adoption across firm sizes. The comparison is descriptive
+        and does not by itself measure
         AI&rsquo;s effect on output or employment. Source: US Census Bureau Business Trends and
         Outlook Survey.
       </p>

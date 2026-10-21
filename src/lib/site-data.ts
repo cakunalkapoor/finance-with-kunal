@@ -333,12 +333,12 @@ export const POLICY_RATES: PolicyRate[] = [
     source: "Hong Kong Monetary Authority",
   },
   {
-    // https://www.bi.go.id/en/publikasi/ruang-media/news-release/Pages/sp_2819326.aspx
+    // https://www.bi.go.id/en/publikasi/ruang-media/news-release/Pages/sp_2823326.aspx
     country: "Indonesia",
     rate: 5.75,
     name: "BI-Rate",
-    asOf: "2026-09-23",
-    source: "Bank Indonesia",
+    asOf: "2026-10-21",
+    source: "Bank Indonesia · October 21 decision",
   },
   {
     country: "France",
@@ -5309,49 +5309,59 @@ export const MACRO_SNAPSHOT: MacroSnapshot = {
 };
 
 export const WEEKLY_COMMENTARY: import("../types").WeeklyCommentary = {
-  "weekRange": "Through Oct 20, 2026 · rolling weekly comparisons",
-  "lead": "Latest available observations through October 20 put the S&P 500 at 7,690.73 (-1.49% rolling weekly) and the Nasdaq 100 at 29,529.35 (-3.70%). Brent was $110.28/bbl (+4.34%). Newly published releases put Canada's September headline inflation at 3.1% and China's Q3 GDP growth at 4.5% year over year. Market dates and economic reporting periods differ.",
+  "weekRange": "Commentary reviewed Oct 21, 2026 · market snapshot through Oct 20",
+  "lead": "The October 20 snapshot shows uneven risk appetite: the S&P 500 fell 1.49% over its rolling week and the Nasdaq 100 lost 3.70%, while Brent rose 4.34%. Softer September hiring and higher headline inflation in the US and Canada create a difficult growth-and-prices backdrop. The figures describe that tension; they do not establish what caused each market move.",
   "sections": [
     {
       "id": "heatmap",
       "title": "Sector Heatmap",
       "icon": "🟦",
-      "body": "Technology -4.45%; Financials -0.18%; Consumer Disc. +1.60%; Consumer Staples +3.49%; Communication -2.27%; Healthcare +2.13%; Industrials -1.61%; Energy +2.79%; Materials +1.34%; Utilities -0.91%; Real Estate -1.41%. Index-weighted rolling weekly returns within the tracked S&P 500 sample; these are not official sector-index returns. Missing quotes are excluded."
+      "body": "Leadership favored staples, energy and healthcare over technology in the tracked S&P 500 sample. Staples gained 3.49%, energy 2.79% and healthcare 2.13%, while technology lost 4.45%. Consumer discretionary still rose 1.60%, so the pattern was selective rather than a uniform retreat from cyclicals. These are index-weighted sample returns with unavailable quotes excluded."
     },
     {
       "id": "flow",
       "title": "Relative Performance",
       "icon": "💸",
-      "body": "Bitcoin -1.87%; Ethereum -4.23%; Solana -2.21%; BNB -1.69%. Rolling weekly price changes use available provider observations dated 2026-10-20. Crypto trades seven days a week. Price returns do not establish fund flows."
+      "body": "All four tracked cryptocurrencies were below their weekly anchors. Ethereum fell 4.23%, compared with Bitcoin’s 1.87% decline; Solana and BNB also weakened. That is consistent with softer prices across this small crypto sample, but returns alone cannot establish investor flows or explain the selling. These continuously traded assets use October 20 observations."
     },
     {
       "id": "indices",
       "title": "Indices Movement",
       "icon": "📊",
-      "body": "S&P 500 -1.49%; NASDAQ 100 -3.70%; Shanghai Composite -1.72%; Hang Seng -1.67%; Nikkei 225 -5.46%; NIFTY 50 +2.35%; IDX Composite -12.98%; DAX -0.38%; FTSE 100 +0.80%; CAC 40 +0.33%; S&P/TSX Composite +0.74%; KOSPI -8.00%; TAIEX -4.24%. Rolling comparisons use each market's latest available observation, dated 2026-10-19–2026-10-20; holidays and trading hours can leave markets on different dates."
+      "body": "Nine of the 13 tracked equity indices fell over their rolling weeks. Indonesia (-12.98%), South Korea (-8.00%) and Japan (-5.46%) were weakest; India (+2.35%), the UK (+0.80%) and Canada (+0.74%) held up better. China’s newer Q3 GDP release reports an acceleration to 4.5% YoY, but its release and these market windows do not establish a causal link. Exchange observations span October 19–20."
     },
     {
       "id": "bonds",
       "title": "Bond Market",
       "icon": "📉",
-      "body": "Latest verified 10-year government yields: United States 5.14% (2026-10-19); China 1.65% (2026-10-19); Hong Kong 4.00% (2026-10-19); Japan 2.94% (2026-10-19); India 7.40% (2026-10-19); Indonesia 7.17% (2026-10-19); Germany 3.45% (2026-10-19); United Kingdom 5.45% (2026-10-19); France 4.92% (2026-10-19); Canada 3.96% (2026-10-19); South Korea 4.20% (2026-10-19); Taiwan 2.02% (2026-10-19); South Africa 8.84% (2026-10-16). Observation dates differ. Changes are in basis points; policy rates are separate benchmarks. Unsupported anniversary comparisons remain unavailable."
+      "link": { "href": "https://www.bi.go.id/en/publikasi/ruang-media/news-release/Pages/sp_2823326.aspx", "label": "October 21 policy decision" },
+      "body": "Verified October 19 ten-year yields of 5.14% in the US, 5.45% in the UK and 3.96% in Canada keep borrowing costs central to the market picture. Yield levels alone do not show whether a market rallied or sold off; unavailable anniversary moves remain blank. On October 21, Bank Indonesia held its BI-Rate at 5.75% and raised its deposit-facility rate to 5.00%. Those policy settings are distinct from sovereign yields."
     },
     {
       "id": "commodities",
       "title": "Commodities",
       "icon": "🛢️",
-      "body": "Brent Crude 110.28 USD/bbl (+4.34%); WTI Crude 99.12 USD/bbl (+5.29%); Gold 4149.2 USD/oz (-0.67%); Silver 57.65 USD/oz (-2.55%); Copper 6.5945 USD/lb (-1.25%); Aluminum 3111.75 USD/ton (-0.51%); Iron Ore 90.95 USD/ton (+0.13%); Soybeans 1255.25 US¢/bu (-2.22%); Natural Gas 3.008 USD/MMBtu (-8.38%). Futures-contract prices and rolling weekly moves use observations dated 2026-10-19–2026-10-20."
+      "body": "Energy moved in different directions: Brent rose 4.34% to $110.28/bbl and WTI gained 5.29%, while Henry Hub gas fell 8.38%. Copper (-1.25%) and silver (-2.55%) also weakened, so the snapshot does not support a broad commodity upswing. Higher crude prices add to the cost backdrop, but this short futures window is not a forecast of consumer inflation. Observations span October 19–20."
     },
     {
       "id": "currencies",
       "title": "Currencies",
       "icon": "💱",
-      "body": "US Dollar Index -0.40%; Euro +0.68%; Pound Sterling +1.06%; Japanese Yen -0.26%; Canadian Dollar -1.50%; Indian Rupee -0.89%. Rolling weekly comparisons use observations dated 2026-10-20. Higher USD/foreign-currency quotes indicate a stronger dollar; higher foreign-currency/USD quotes indicate a weaker dollar."
+      "body": "The Dollar Index fell 0.40%, while EUR/USD rose 0.68% and GBP/USD gained 1.06%. USD/CAD fell 1.50%, USD/INR 0.89% and USD/JPY 0.26%: these declines indicate stronger counterpart currencies against the dollar. Currency translation therefore matters when comparing local-market returns with the AI page’s USD returns. All figures use the October 20 snapshot."
     }
   ]
 };
 
 export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
+  {
+    id: "bi-policy-oct21-2026",
+    title: "Bank Indonesia holds BI-Rate at 5.75%",
+    excerpt: "The October 21 decision kept the lending-facility rate at 6.50% and raised the deposit-facility rate to 5.00%. The headline policy rate is unchanged.",
+    source: "Bank Indonesia",
+    sourceUrl: "https://www.bi.go.id/en/publikasi/ruang-media/news-release/Pages/sp_2823326.aspx",
+    date: "2026-10-21",
+    category: "Economy",
+  },
   {
     "id": "china-gdp-oct19-2026",
     "title": "China Q3 GDP growth picks up to 4.5%",

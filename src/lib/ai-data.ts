@@ -34,7 +34,7 @@ import type {
  */
 
 /** Date the curated (non-quote) figures on /ai were last reviewed. */
-export const AI_DATA_ASOF = "Oct 20, 2026";
+export const AI_DATA_ASOF = "Oct 21, 2026";
 
 /* ── Company AI revenue ─────────────────────────────────────────────────────
    Note how few of these are reported segment figures. Amazon gives a run rate

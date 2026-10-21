@@ -6,6 +6,7 @@ import type { EconomicIndicator, TimeHorizon } from "@/types";
 import { formatEconomicValue, getChangeColor, FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
 import { horizonsFor, defaultHorizon, filterByHorizon } from "@/lib/chart-window";
+import { economicCommentary } from "@/lib/commentary";
 import type { EChartsOption } from "echarts";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
@@ -204,7 +205,7 @@ export default function EconomicChart({ indicator }: Props) {
           paddingTop: "8px",
         }}
       >
-        {indicator.description}
+        {economicCommentary(indicator)}
       </div>
     </div>
   );
