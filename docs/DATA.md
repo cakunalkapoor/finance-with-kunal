@@ -139,7 +139,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 | `ECONOMIC_INDICATORS` | All economic-dashboard cards. Categories: `pmi`, `growth`, `employment`, `inflation`, `energy` |
 | `MACRO_SNAPSHOT` | The 6 hero tiles on /dashboard top (also reused on the homepage) |
 | `EXTERNAL_COMMENTARY` | 6 curated external headlines on the homepage, linking to Reuters/Bloomberg/FT/WSJ/Economist/MarketWatch |
-| `BLOG_POSTS` | Sample posts (unused — blog is Coming Soon) |
+| `BLOG_POSTS` | Published article metadata, derived from `BLOG_ARTICLES` in `src/lib/blog-data.ts` and re-exported by `site-data.ts` |
 
 ### Economic indicators currently present
 - **PMI:** US Composite PMI, China Manufacturing PMI, India Manufacturing PMI, Taiwan Manufacturing PMI, South Korea Manufacturing PMI, India Services PMI
@@ -214,14 +214,15 @@ advance the date of the market snapshot.
 - Eleven-index market heatmap with company-name tooltips and quote-coverage status
 - 52W range column and YTD/52W chart toggle in the equity table
 - PMI section + regional PMIs (China, India, Taiwan, South Korea) in the Economy dashboard
-- Blog page set to Coming Soon; individual post routes still exist but are not linked
+- Blog lists published articles; `/blog/[slug]` exports each article with inline citations,
+  a source list, article metadata and JSON-LD. Article URLs are included in the sitemap.
 - Branded OG/social card (`opengraph-image.tsx`) + full `openGraph`/`twitter` metadata
 - GitHub Pages workflow (`.github/workflows/deploy.yml`); `next.config.ts` supports optional `NEXT_PUBLIC_BASE_PATH` for project-page hosting
 - Static export build passes cleanly
 
 **Not yet built:**
 - Real API integration layer — `src/lib/api/` is empty (fetchers patch into `site-data.ts` instead)
-- Blog post markdown/MDX content pipeline — current posts are just metadata in `BLOG_POSTS`
+- Optional markdown/MDX content pipeline — current articles use typed content in `src/lib/blog-data.ts`
 - Custom domain (set `NEXT_PUBLIC_SITE_URL` for OG absolute URLs once chosen)
 - Search, RSS, newsletter signup
 - Mobile polish on the heatmap (treemap labels get tight on narrow screens)

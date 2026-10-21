@@ -33,12 +33,12 @@ export default function BlogPage() {
             ? [
                 { label: "Status", value: "Soon", detail: "First piece in progress" },
                 { label: "Format", value: "Long", detail: "Deep reads" },
-                { label: "Focus", value: "Macro", detail: "Global context" },
+                { label: "Focus", value: "Markets", detail: "AI, capital and macro" },
               ]
             : [
                 { label: "Pieces", value: String(posts.length), detail: "Published" },
                 { label: "Format", value: "Long", detail: "Deep reads" },
-                { label: "Focus", value: "Macro", detail: "Global context" },
+                { label: "Focus", value: "Markets", detail: "AI, capital and macro" },
               ]
         }
       />

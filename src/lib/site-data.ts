@@ -11,7 +11,6 @@ import type {
   HeatmapIndex,
   EconomicIndicator,
   MacroSnapshot,
-  BlogPost,
   ProfileData,
   YieldCurve,
 } from "@/types";
@@ -5519,7 +5518,7 @@ export const EXTERNAL_COMMENTARY: import("../types").ExternalCommentary[] = [
 
 // Placeholder posts removed — the Blog page shows a "coming soon" state while
 // this array is empty, and starts listing normally as soon as a real post lands.
-export const BLOG_POSTS: BlogPost[] = [];
+export { BLOG_POSTS } from "./blog-data";
 
 export const PROFILE_DATA: ProfileData = {
   name: "Kunal Kapoor",

@@ -78,3 +78,18 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; path: strin
     />
   );
 }
+
+export function ArticleJsonLd({ post }: { post: { title: string; excerpt: string; slug: string; date: string } }) {
+  return <JsonLd data={{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR_NAME },
+    publisher: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR_NAME },
+    inLanguage: "en",
+  }} />;
+}

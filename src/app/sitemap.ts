@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
-import { DATA_UPDATED_AT } from "@/lib/site-data";
+import { BLOG_POSTS, DATA_UPDATED_AT } from "@/lib/site-data";
 
 // Emitted as a static /sitemap.xml at build time (works with output: "export").
 export const dynamic = "force-static";
@@ -32,10 +32,16 @@ const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "mon
 export default function sitemap(): MetadataRoute.Sitemap {
   const updated = lastModified();
 
-  return ROUTES.map(({ path, priority, changeFrequency }) => ({
+  const pages: MetadataRoute.Sitemap = ROUTES.map(({ path, priority, changeFrequency }) => ({
     url: absoluteUrl(path),
     lastModified: updated,
     changeFrequency,
     priority,
   }));
+  return [...pages, ...BLOG_POSTS.map((post) => ({
+    url: absoluteUrl(`/blog/${post.slug}`),
+    lastModified: new Date(`${post.date}T00:00:00Z`),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }))];
 }
