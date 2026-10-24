@@ -128,12 +128,14 @@ export default function AIPage() {
                 figures={AI_REVENUE}
                 columns={2}
               >
-                The revenue evidence spans different parts of the AI stack. NVIDIA Data Center
-                and Google Cloud report quarterly segment revenue; the private-company figures
-                and AWS disclosure annualise recent activity. These measures cannot be summed
-                into one AI market total. TSMC&rsquo;s high-teens accelerator share refers to
-                FY2025 and excludes CPUs, so the newer company-wide Q3 results below do not
-                replace it. Microsoft&rsquo;s retired AI-specific metric remains absent.
+                The revenue evidence mixes periods and accounting bases. Anthropic&rsquo;s
+                $16.8B is reported Q3 revenue shared with investors; OpenAI&rsquo;s roughly
+                $50B is an annualized pace, net of partner shares. The earlier $70B comparison
+                is superseded, and the $70B year-end figure in the newer report is a forecast.
+                Neither is directly comparable with quarterly NVIDIA Data Center or Google
+                Cloud segment revenue. These figures cannot be summed into one AI market
+                total. TSMC&rsquo;s FY2025 accelerator share and Microsoft&rsquo;s retired
+                standalone metric retain their separate treatment.
               </AIFigureSection>
             </Reveal>
 
@@ -173,8 +175,13 @@ export default function AIPage() {
               >
                 TSMC&rsquo;s Q3 US-dollar revenue rose 41.2% year over year, and ASML lifted the
                 floor of its annual sales guidance to €44B. Those releases support a picture of
-                strong foundry and equipment demand, while SK hynix&rsquo;s card still refers to
-                Q2 company-wide results. None isolates AI-only revenue or margin. SK hynix and
+                strong foundry and equipment demand. SK hynix&rsquo;s card retains Q2 results;
+                its{" "}
+                <a href="https://news.skhynix.com/en/q3-2026-earnings-conference-call-invitation/"
+                  target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-2 hover:underline">
+                  Q3 release is scheduled for October 28
+                </a>, after this review. None isolates
+                AI-only revenue or margin. SK hynix and
                 ASML figures are translated at the results-date{" "}
                 <a
                   href={AI_FX_SOURCES.skHynix.url}
@@ -238,6 +245,17 @@ export default function AIPage() {
                 about 42% of the later $515B H1 total. These figures mix announced or committed
                 rounds with funding-database snapshots, so they do not measure cash deployed
                 or investment returns. Quarter vintages and later revisions remain labelled.
+                Reuters&rsquo; October 19 report describes talks for another roughly $30B
+                OpenAI round; those prospective terms are excluded from the announced-round
+                table and totals.{" "}
+                <a
+                  href="https://live.euronext.com/en/financial-news/exclusive-openai-seeks-accelerate-fundraising-ahead-anthropic-ipo-sources-say"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline-offset-2 hover:underline"
+                >
+                  Reported financing talks
+                </a>
               </AIFigureSection>
             </Reveal>
           </div>

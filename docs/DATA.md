@@ -3,6 +3,59 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Week ending October 24, 2026
+
+The market snapshot was refreshed October 24 in America/Vancouver time. Exchange quotes
+mostly end October 23; Taiwan's latest equity observation is October 22 and crypto observations
+extend to October 24. All five macro providers, the bond feeds, the AI quote patch and the
+1,618-constituent heatmap were refreshed. Seven missing constituent quotes remain null.
+
+New reviewed releases and transformations:
+
+- [DOL October 22 claims](https://www.dol.gov/sites/dolgov/files/OPA/newsreleases/ui-claims/20261613.pdf):
+  194K initial claims for October 17; the prior week was revised to 200K.
+- [Statistics Canada October 23 retail release](https://www150.statcan.gc.ca/n1/daily-quotidien/261023/dq261023a-eng.htm):
+  August sales increased 1.2% MoM in both nominal and volume terms. The existing card uses
+  5.4% nominal YoY from WDS, after 5.1% in July; September's advance estimate is not a final observation.
+- October 23 flash PMI: US manufacturing 56.0 and services 57.9; India manufacturing 54.9
+  and services 56.2. Added October history points without overwriting September finals.
+  Sources: [S&P Global US commentary](https://www.spglobal.com/market-intelligence/en/news-insights/research/2026/10/us-flash-pmi-signals-sustained-strong-growth-but-also-further-inflation-uplift-in-october),
+  [US manufacturing](https://tradingeconomics.com/united-states/manufacturing-pmi),
+  [US services](https://tradingeconomics.com/united-states/services-pmi), and
+  [Reuters India survey report](https://www.marketscreener.com/news/india-october-business-growth-hits-4-month-high-hiring-stalls-pmi-shows-ce785cded189fe23).
+- [Census national workbook](https://www.census.gov/hfp/btos/downloads/National.xlsx) and
+  [employment-size workbook](https://www.census.gov/hfp/btos/downloads/Employment%20Size%20Class.xlsx):
+  `Response Estimates`, column `202621`; question 7 / answer 1 supplies current use and
+  question 24 / answer 1 supplies expected use. National values are 24.6% and 28.6%.
+  Employment-size A–G current estimates are 24.3, 22.6, 24.6, 26.0, 29.0, 35.3 and 43.6%.
+  `Collection and Reference Dates` gives September 21–October 4 reference dates, October 5–18
+  collection dates, and October 22 publication. The workbook's current wording is SI,
+  formerly AI; the chart discloses this instead of implying a newly verified comparable trend.
+- [Reuters October 19 report via Euronext](https://live.euronext.com/en/financial-news/exclusive-openai-seeks-accelerate-fundraising-ahead-anthropic-ipo-sources-say):
+  replaced the earlier OpenAI ~$70B figure with ~$50B annualized revenue, net of partner shares;
+  the newer $70B year-end number is a forecast. Anthropic's card now uses reported Q3 revenue
+  of $16.8B, not the older annualized headline. Prospective OpenAI funding talks are excluded
+  from announced-round totals. SK hynix Q3 is scheduled for October 28; Q2 remains displayed.
+- [Bank of Korea October 22 decision](https://www.bok.or.kr/eng/bbs/E0000627/view.do?nttId=11065824&menuNo=400022):
+  3.00% unchanged. [FRED DFF](https://fred.stlouisfed.org/series/DFF) confirms the separate daily
+  US effective rate of 3.88% for October 22; the economic card retains its September monthly average.
+
+`bonds-manual.json` records October 23 historical-table closes and independent Trading Economics
+checks. Newly read rows supersede revised provider history where applicable; period moves still
+require same-source dated anchors, and missing annual comparisons remain unavailable. US and
+Canada country curves use paired official October 22 observations, distinct from October 23
+Markets quotes. The South African daily feed fell back to monthly data, so a verified October 23
+close supplements it. OPEC returned HTTP 403; September 29 remains its latest verified quote,
+with an October 24 review and an explicit unavailable-source note.
+
+Validation: provider-to-display reconciliation, 35 unique dated economic histories, aligned AI
+daily/weekly grids, weighted sector returns and missing coverage, 13 sovereign yields/policy
+rates, TypeScript, all 71 existing tests, scoped lint and production static export passed.
+Rendered review covered the homepage, Markets, Vantage AI, global Economy, US and Canada.
+The heatmap, Census size chart, US services PMI, India manufacturing PMI and Canadian retail
+chart rendered with the new values. The India chart's 3M control retained the October flash
+endpoint; no page overflow or runtime errors were observed in the inspected views.
+
 ---
 
 ## Data architecture

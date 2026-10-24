@@ -2,22 +2,20 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import { BLOG_ARTICLES } from "@/lib/blog-data";
+import { AI_DATA_ASOF } from "@/lib/ai-data";
 import { FONT_MONO } from "@/lib/utils";
 
 /** Reuse the article's dated evidence so the briefing and full analysis agree. */
 export default function AIIPOSetbacks() {
   const article = BLOG_ARTICLES.find((post) => post.slug === "ai-data-center-ipo-setbacks");
   if (!article) throw new Error("Missing AI IPO source article");
-  const reviewed = new Intl.DateTimeFormat("en-US", {
-    month: "short", day: "numeric", year: "numeric", timeZone: "UTC",
-  }).format(new Date(`${article.date}T00:00:00Z`));
 
   return (
     <section id="ai-ipo-setbacks" className="scroll-mt-24" aria-label="AI infrastructure IPO setbacks">
       <SciFiCard glow="purple">
         <CardHeader
           title="AI infrastructure IPO setbacks"
-          subtitle={`Selected cases · reporting reviewed ${reviewed} · original currencies retained`}
+          subtitle={`Selected cases · reporting reviewed ${AI_DATA_ASOF} · original currencies retained`}
         />
         <p className="px-4 pb-4 text-xs leading-6 sm:px-5" style={{ color: "var(--color-text-secondary)" }}>
           Public-market funding is testing the AI buildout. A withdrawn offering, a reported

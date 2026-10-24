@@ -120,7 +120,7 @@ export default function AIAdoptionChart() {
   return (
     <SciFiCard glow="purple">
       <CardHeader
-        title="Which US employer businesses are using AI"
+        title="Which US employer businesses are using AI/SI"
         subtitle={`Nonfarm employer businesses · share using AI in any business function · by employment size · ${AI_ADOPTION_PERIOD}`}
       />
 
@@ -144,11 +144,16 @@ export default function AIAdoptionChart() {
         The national estimate is {nationalLabel}. All {AI_ADOPTION_BY_SIZE.length} bars reproduce
         Census-published employment-size estimates for US nonfarm employer businesses in the{" "}
         {AI_ADOPTION_PERIOD} reference period, released {AI_ADOPTION_RELEASE}; they are survey estimates rather than
-        administrative counts. Larger firms report higher use than the smallest employers in
+        administrative counts. The current workbooks call the technology &ldquo;Super Intelligence
+        (SI), formerly AI&rdquo;; the labels here retain both terms. Larger firms report higher use than the smallest employers in
         this snapshot, indicating uneven adoption across firm sizes. The comparison is descriptive
         and does not by itself measure
         AI&rsquo;s effect on output or employment. Source: US Census Bureau Business Trends and
-        Outlook Survey.
+        Outlook Survey.{" "}
+        <a href="https://www.census.gov/hfp/btos/downloads/Employment%20Size%20Class.xlsx"
+          target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+          Employment-size source workbook
+        </a>
       </p>
     </SciFiCard>
   );

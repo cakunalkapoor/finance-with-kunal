@@ -1,8 +1,8 @@
 {
   "source": "https://www.opec.org/basket/basketDay.json",
   "supplement": "https://dataful.in/datasets/327/",
-  "reviewedAt": "2026-10-20",
-  "refreshNote": "The source was unavailable during the October 20 review. The latest verified observation remains September 29, 2026.",
+  "reviewedAt": "2026-10-24",
+  "refreshNote": "The official source was unavailable during the October 24 review. The latest verified observation remains September 29, 2026.",
   "frequency": "Last available published daily quote in each month; not monthly averages",
   "timeSeries": [
     {
