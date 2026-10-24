@@ -19,6 +19,8 @@ export default function CryptoTable() {
     icon: c.icon,
     name: c.name,
     sub: c.symbol,
+    value: c.value,
+    range52w: c,
     price: `$${formatPrice(c.value)}`,
     dailyChange: c.dailyChange,
     weekChange: c.weekChange,

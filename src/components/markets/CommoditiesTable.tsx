@@ -14,6 +14,8 @@ export default function CommoditiesTable() {
     icon: c.icon,
     name: c.name,
     sub: c.unit,
+    value: c.value,
+    range52w: c,
     // Gold and iron ore run to four figures; soybeans and copper don't.
     price: c.value >= 1000 ? `$${formatNumber(c.value, 0)}` : `$${formatNumber(c.value)}`,
     dailyChange: c.dailyChange,
@@ -34,6 +36,8 @@ export default function CommoditiesTable() {
     key: "opec-basket",
     icon: "🛢️",
     name: "OPEC Reference Basket",
+    value: latest.value,
+    rangeUnavailableReason: "Only month-end snapshots are available for OPEC; they cannot establish the daily 52-week high and low.",
     sub: `USD/bbl · ${latest.date} · monthly history`,
     price: `$${formatNumber(latest.value)}`,
     dailyChange: null,

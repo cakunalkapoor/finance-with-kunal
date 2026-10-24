@@ -35,6 +35,7 @@ try { bondsManual = JSON.parse(readFileSync(resolve(root, "src/lib/bonds-manual.
 
 let src = readFileSync(dataPath, "utf8");
 const originalSrc = src;
+const bondRanges = JSON.parse(readFileSync(resolve(root, "src/lib/bond-ranges52w.json"), "utf8"));
 
 const fetchedTimes = [yahoo.fetchedAt, fred.fetchedAt, boc.fetchedAt, statcan.fetchedAt, bondsDump.fetchedAt]
   .map((value) => Date.parse(value))
@@ -146,6 +147,47 @@ function patchBondByCountry(country, fields) {
   return patchObject(re, fields);
 }
 
+function quoteRangeFields(rec) {
+  return {
+    high52w: rec.high52w ?? "null", low52w: rec.low52w ?? "null",
+    range52wAsOf: JSON.stringify(rec.range52wAsOf ?? ""),
+    range52wBasis: JSON.stringify("daily-closes"),
+    range52wSource: JSON.stringify("Yahoo Finance · daily closes"),
+    range52wSourceUrl: JSON.stringify(`https://finance.yahoo.com/quote/${encodeURIComponent(rec.symbol)}/history/`),
+  };
+}
+
+function bondRangeFields(bond) {
+  const range = bondRanges.bonds[bond.country];
+  const gap = range ? (Date.parse(range.asOf) - Date.parse(bond.asOf)) / 86400000 : NaN;
+  // Never silently reuse a range ending before a newer quote. A lagging
+  // official benchmark can use the current published range with its own date.
+  const available = range && gap >= 0 && gap <= 7 && range.low <= bond.value && bond.value <= range.high;
+  return {
+    high52w: available ? range.high : "null", low52w: available ? range.low : "null",
+    range52wAsOf: JSON.stringify(available ? range.asOf : ""),
+    range52wBasis: JSON.stringify("published-yield-range"),
+    range52wSource: JSON.stringify("Investing.com · benchmark yields"),
+    range52wSourceUrl: JSON.stringify(available ? range.sourceUrl : ""),
+  };
+}
+
+if (process.argv.includes("--ranges-only")) {
+  // Keep the published weekly snapshot and commentary intact for a UI-only
+  // range addition; these fields come from separately retrieved daily history.
+  src = originalSrc;
+  for (const rec of [...yahoo.indices, ...yahoo.etfs, ...yahoo.commodities, ...yahoo.crypto, ...yahoo.forex]) {
+    patchBySymbol(rec.symbol, quoteRangeFields(rec));
+  }
+  const block = src.match(/export const BOND_YIELDS[\s\S]*?\n\];/)?.[0] ?? "";
+  for (const match of block.matchAll(/country: "([^"]+)"[\s\S]*?asOf: "([^"]+)"[\s\S]*?yield: (-?[\d.]+)/g)) {
+    patchBondByCountry(match[1], bondRangeFields({ country: match[1], asOf: match[2], value: Number(match[3]) }));
+  }
+  writeFileSync(dataPath, src);
+  console.log("Patched 52-week ranges only; published snapshot unchanged.");
+  process.exit(0);
+}
+
 const stats = { equity: 0, realizedVol: 0, commodity: 0, crypto: 0, etf: 0, forex: 0, bond: 0, macro: 0 };
 
 // EQUITY INDICES — base fields + realized vol
@@ -153,7 +195,7 @@ for (const idx of yahoo.indices || []) {
   if (patchBySymbol(idx.symbol, {
     value: idx.value, dailyChange: idx.dailyChange, weekChange: idx.weekChange,
     monthChange: idx.monthChange, ytdChange: idx.ytdChange,
-    high52w: idx.high52w, low52w: idx.low52w, sparkline: idx.sparkline,
+    ...quoteRangeFields(idx), sparkline: idx.sparkline,
     daily: idx.daily, dailyDates: idx.dailyDates,
   })) stats.equity++;
 
@@ -169,6 +211,7 @@ for (const c of yahoo.commodities || []) {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
     monthChange: c.monthChange, ytdChange: c.ytdChange, sparkline: c.sparkline,
     daily: c.daily, dailyDates: c.dailyDates,
+    ...quoteRangeFields(c),
   })) stats.commodity++;
 }
 
@@ -178,6 +221,7 @@ for (const c of yahoo.crypto || []) {
     value: c.value, dailyChange: c.dailyChange, weekChange: c.weekChange,
     monthChange: c.monthChange, ytdChange: c.ytdChange, sparkline: c.sparkline,
     daily: c.daily, dailyDates: c.dailyDates,
+    ...quoteRangeFields(c),
   })) stats.crypto++;
 }
 
@@ -187,6 +231,7 @@ for (const e of yahoo.etfs || []) {
     value: e.value, dailyChange: e.dailyChange, weekChange: e.weekChange,
     monthChange: e.monthChange, ytdChange: e.ytdChange, sparkline: e.sparkline,
     daily: e.daily, dailyDates: e.dailyDates,
+    ...quoteRangeFields(e),
   })) stats.etf++;
 }
 
@@ -196,6 +241,7 @@ for (const fx of yahoo.forex || []) {
     value: fx.value, dailyChange: fx.dailyChange, weekChange: fx.weekChange,
     monthChange: fx.monthChange, ytdChange: fx.ytdChange, sparkline: fx.sparkline,
     daily: fx.daily, dailyDates: fx.dailyDates,
+    ...quoteRangeFields(fx),
   })) stats.forex++;
 }
 
@@ -298,6 +344,7 @@ for (const m of Object.values(bondsManual.bonds || {})) {
 for (const b of Object.values(bondCandidates)) {
   if (patchBondByCountry(b.country, {
     yield: b.value,
+    ...bondRangeFields(b),
     // patchObject skips null/undefined so a missing field can't blank a good
     // one — but here the ABSENCE is the fact to publish, so write it literally.
     dailyMove: b.dailyMove ?? "null",

@@ -16,6 +16,7 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import ChartViewTabs from "@/components/markets/ChartViewTabs";
 import { ChangeStack } from "@/components/markets/StatStack";
+import RangeBar from "@/components/markets/RangeBar";
 import type { CSSProperties } from "react";
 import type { ETF } from "@/types";
 
@@ -73,6 +74,7 @@ export default function ETFTable() {
                   style={TH_STYLE}
                 >
                   {h}
+                  {h === "Last" && <div className="mt-0.5 text-[9px] tracking-normal opacity-70">52W range</div>}
                 </th>
               ))}
 
@@ -211,6 +213,7 @@ export default function ETFTable() {
                       >
                         {formatChange(etf.dailyChange)} 1D
                       </div>
+                      <RangeBar value={etf.value} range={etf} label={`${etf.ticker} (${etf.currency})`} format={(n) => n.toFixed(2)} />
                     </td>
 
                     <td className="px-4 py-3">
@@ -254,6 +257,7 @@ export default function ETFTable() {
         Listed for reference, not as recommendations, and not investment advice. Canadian and US
         funds are quoted in their own listing currency and are not directly comparable: VSP hedges
         the CAD/USD move that VFV leaves in, which is most of the gap between their returns.
+        {" "}52W bars show daily closing highs and lows over 52 calendar weeks, in each fund&rsquo;s quoted currency. Source: Yahoo Finance.
       </p>
     </SciFiCard>
   );

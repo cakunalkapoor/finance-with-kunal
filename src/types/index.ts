@@ -1,4 +1,14 @@
-export interface IndexQuote {
+/** Daily closing extremes, or an explicitly attributed published yield range. */
+export interface MarketRange52w {
+  high52w?: number | null;
+  low52w?: number | null;
+  range52wAsOf?: string;
+  range52wBasis?: "daily-closes" | "published-yield-range";
+  range52wSource?: string;
+  range52wSourceUrl?: string;
+}
+
+export interface IndexQuote extends MarketRange52w {
   symbol: string;
   name: string;
   region: string;
@@ -8,8 +18,8 @@ export interface IndexQuote {
   monthChange: number;
   ytdChange: number;
   dailyChange: number;
-  high52w: number;
-  low52w: number;
+  high52w: number | null;
+  low52w: number | null;
   sparkline: number[]; // 52 weekly price points (used for both YTD and 52W chart)
   /**
    * The 1W window: the last six DAILY closes and the sessions they fell on.
@@ -35,7 +45,7 @@ export interface IndexQuote {
   realizedVol?: number; // Trailing 30-day annualized realized volatility, in percentage points (e.g. 15.5 = ~15.5%). Computed in fetch-yahoo.py from daily log-returns.
 }
 
-export interface BondYield {
+export interface BondYield extends MarketRange52w {
   country: string;
   flag: string;
   maturity: string;
@@ -67,7 +77,7 @@ export interface PolicyRate {
   source: string;
 }
 
-export interface Commodity {
+export interface Commodity extends MarketRange52w {
   symbol: string;
   name: string;
   unit: string;
@@ -84,7 +94,7 @@ export interface Commodity {
   dailyDates?: string[];
 }
 
-export interface CryptoAsset {
+export interface CryptoAsset extends MarketRange52w {
   symbol: string;
   name: string;
   icon: string;
@@ -100,7 +110,7 @@ export interface CryptoAsset {
   dailyDates?: string[];
 }
 
-export interface ETF {
+export interface ETF extends MarketRange52w {
   /** Yahoo symbol — TSX listings carry the .TO suffix. */
   symbol: string;
   /** Exchange ticker as a reader would type it (XEQT, SPY). */
@@ -125,7 +135,7 @@ export interface ETF {
   dailyDates?: string[];
 }
 
-export interface ForexRate {
+export interface ForexRate extends MarketRange52w {
   symbol: string;
   name: string;
   pair: string;

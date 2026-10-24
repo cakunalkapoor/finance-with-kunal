@@ -16,6 +16,8 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import ChartViewTabs from "@/components/markets/ChartViewTabs";
 import { ChangeStack } from "@/components/markets/StatStack";
+import RangeBar from "@/components/markets/RangeBar";
+import type { MarketRange52w } from "@/types";
 
 /* Shared table for the single-series asset classes — commodities, currencies
    and crypto. They differ only in what the secondary label says (unit, pair,
@@ -30,6 +32,9 @@ export interface AssetRow {
   sub: string;
   /** Preformatted, because $84.62, 1.3421 and 99.66 all want different rules. */
   price: string;
+  value: number;
+  range52w?: MarketRange52w;
+  rangeUnavailableReason?: string;
   dailyChange: number | null;
   weekChange: number | null;
   monthChange: number;
@@ -95,6 +100,7 @@ export default function AssetTable({
                   style={TH_STYLE}
                 >
                   {h}
+                  {h === "Last" && <div className="mt-0.5 text-[9px] tracking-normal opacity-70">52W range</div>}
                 </th>
               ))}
               <th className="px-4 py-2.5 text-left" style={TH_STYLE}>
@@ -186,6 +192,8 @@ export default function AssetTable({
                     >
                       {row.dailyChange == null ? "—" : formatChange(row.dailyChange)} 1D
                     </div>
+                    <RangeBar value={row.value} range={row.range52w ?? {}} label={`${row.name} (${row.sub})`}
+                      format={formatTooltip} missingReason={row.rangeUnavailableReason} />
                   </td>
 
                   <td className="px-4 py-3">
@@ -214,6 +222,10 @@ export default function AssetTable({
           </tbody>
         </table>
       </div>
+      <p className="border-t px-4 py-3 text-[10px] leading-5" style={{ color: "var(--color-text-muted)", borderColor: "var(--color-space-border)" }}>
+        52W bars show daily closing highs and lows over 52 calendar weeks, in the row&rsquo;s quoted units. Source: Yahoo Finance.
+        Monthly snapshots do not establish daily extremes; a full range is shown as unavailable when it cannot be verified.
+      </p>
     </SciFiCard>
   );
 }

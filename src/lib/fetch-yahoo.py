@@ -14,7 +14,7 @@ and derive everything from the close column:
   - weekChange     → latest vs the close on or before 7 calendar days earlier
   - monthChange    → latest vs ~21 trading days back
   - ytdChange      → latest vs first 2026 close
-  - high52w / low52w → over the trailing 1y (252 trading days) only
+  - high52w / low52w → daily closing extremes over 52 calendar weeks
   - sparkline      → 156 evenly-spaced points across the trailing ~3y window
   - daily/dailyDates → closes from that weekly anchor through the latest session,
                      for the 1W chart window
@@ -36,6 +36,7 @@ import time
 
 import yfinance as yf
 import pandas as pd
+from market_ranges import closing_range_52w
 
 # Optional inclusive exchange-session cutoff for dated refreshes.
 REFRESH_AS_OF = os.environ.get("REFRESH_AS_OF")
@@ -323,11 +324,8 @@ def derive(history, year=None):
             ytd_anchor = val
             break
 
-    # 52-week high/low use only the trailing 1y (252 trading days), even though
-    # we now hold ~5y of closes for the multi-year sparkline.
-    closes_1y = closes.tail(252)
-    high52w = float(closes_1y.max())
-    low52w  = float(closes_1y.min())
+    # Calendar weeks, not 252 rows: crypto trades seven days a week.
+    range_52w = closing_range_52w((ts.date().isoformat(), value) for ts, value in closes.items())
 
     # Trailing 30-day annualized REALIZED volatility, in percentage points.
     # stddev of log-returns × √252 × 100  →  e.g. 15.5 means ~15.5%.
@@ -347,8 +345,10 @@ def derive(history, year=None):
         "weekChange":   pct(last, wk_ago),
         "monthChange":  pct(last, month_ago),
         "ytdChange":    pct(last, ytd_anchor),
-        "high52w":      q(high52w),
-        "low52w":       q(low52w),
+        "high52w":      q(range_52w["high"]) if range_52w else None,
+        "low52w":       q(range_52w["low"]) if range_52w else None,
+        "range52wAsOf": range_52w["asOf"] if range_52w else None,
+        "range52wBasis": "daily-closes",
         # ~3y weekly sparkline: 156 points across the trailing 756 trading days.
         "sparkline":    downsample(closes.tail(756), 156),
         # The 1W window, drawn from real daily closes rather than the weekly

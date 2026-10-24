@@ -228,8 +228,11 @@ the wrong company on those tiles.
 - Hover tooltip: ticker + **company name** + % change + sector weight (for stocks); missing quotes show `N/A`
 
 ### `EquityMarketsTable.tsx`
-- 7 columns: Index · Last · 1W · 1M · YTD · **52W Range** · **Chart (YTD/52W toggle)**
-- 52W Range column shows H/L values plus a custom horizontal bar with a glowing violet dot marking current position in the range
+- The Last column includes a shared `RangeBar`: high, low and a marker for the current quote. ETFs, government yields, commodities, currencies and crypto use the same component.
+- Yahoo ranges use daily closing observations over **52 calendar weeks**, including weekends for crypto. `market_ranges.py` requires near-full-year daily coverage; a short listing or sparse monthly history produces an unavailable range. These ranges do not change with the chart horizon.
+- `bond-ranges52w.json` records separately reviewed, published 52-week benchmark yield ranges from Investing.com, including intraday observations. Each bond links to its range source and discloses its date in the tooltip. Yield ranges are percentages, not bond-price ranges. The current yield retains its own source/date. The patcher withholds a range if it ends before the current quote, is more than seven days ahead of that quote, or does not contain the current yield. Review this file during each weekly refresh.
+- OPEC's monthly snapshots cannot establish daily extrema; its range is explicitly unavailable.
+- `node src/lib/patch-site-data.mjs --ranges-only` patches only range fields and provenance from the provider cache, preserving the published weekly prices, returns, histories, commentary and snapshot date. A normal patch also carries the range fields forward.
 - Chart toggle in the header switches all sparklines simultaneously across the site-wide ladder (1W / 3M / YTD / 2Y / 3Y); sparkline color follows the trend of the *visible* window. 1W reads the six-point `daily` series rather than the weekly sparkline — see the ladder notes in CLAUDE.md
 
 ### `EconomicChart.tsx`

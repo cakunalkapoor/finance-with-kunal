@@ -18,6 +18,8 @@ export default function ForexTable() {
     icon: fx.icon,
     name: fx.name,
     sub: fx.pair,
+    value: fx.value,
+    range52w: fx,
     price: formatRate(fx.value, fx.pair),
     dailyChange: fx.dailyChange,
     weekChange: fx.weekChange,

@@ -15,6 +15,7 @@ import { FONT_MONO } from "@/lib/utils";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import { ChangeStack } from "@/components/markets/StatStack";
+import RangeBar from "@/components/markets/RangeBar";
 
 // Every row carries its own observation date. A daily source older than ten
 // days needs attention even if the rest of the site was refreshed today.
@@ -116,6 +117,7 @@ export default function BondsTable() {
                   }}
                 >
                   {h}
+                  {h === "10Y Yield" && <div className="mt-0.5 text-[9px] tracking-normal opacity-70">52W range</div>}
                 </th>
               ))}
               <th
@@ -217,6 +219,9 @@ export default function BondsTable() {
                   >
                     {YIELD_FORMAT.format(bond.yield)}%
                   </span>
+                  <RangeBar value={bond.yield} range={bond} label={`${bond.country} 10Y yield`}
+                    format={(n) => `${YIELD_FORMAT.format(n)}%`} showSource
+                    missingReason="A current, published 52-week yield range has not been verified for this benchmark." />
                   {(() => {
                     const age = asOfAgeDays(bond.asOf);
                     const stale = age > STALE_AFTER_DAYS;
@@ -293,6 +298,10 @@ export default function BondsTable() {
           </tbody>
         </table>
       </div>
+      <p className="border-t px-4 py-3 text-[10px] leading-5" style={{ color: "var(--color-text-muted)", borderColor: "var(--color-space-border)" }}>
+        H/L bars show 52-week yield ranges, not bond prices. Investing.com&rsquo;s published ranges include intraday observations;
+        each 52W source link gives the provider and range date. The current yield retains its own provider and observation date.
+      </p>
     </SciFiCard>
   );
 }

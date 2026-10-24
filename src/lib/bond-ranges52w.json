@@ -1,0 +1,19 @@
+{
+  "reviewedAt": "2026-10-24",
+  "basis": "Published 52-week benchmark yield ranges, including intraday quotes; not bond-price ranges or extremes inferred from monthly charts.",
+  "bonds": {
+    "United States": { "low": 3.926, "high": 5.364, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/u.s.-10-year-bond-yield" },
+    "United Kingdom": { "low": 4.233, "high": 5.5267, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield" },
+    "India": { "low": 6.476, "high": 7.484, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield" },
+    "Germany": { "low": 2.603, "high": 3.6526, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/germany-10-year-bond-yield" },
+    "Canada": { "low": 3.038, "high": 4.042, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/canada-10-year-bond-yield" },
+    "Japan": { "low": 1.643, "high": 3.122, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/japan-10-year-bond-yield" },
+    "South Korea": { "low": 2.919, "high": 4.605, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield" },
+    "South Africa": { "low": 7.725, "high": 9.435, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/south-africa-10-year-bond-yield" },
+    "China": { "low": 1.573, "high": 1.952, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/china-10-year-bond-yield" },
+    "Hong Kong": { "low": 2.761, "high": 4.219, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/hong-kong-10-year-bond-yield" },
+    "Indonesia": { "low": 5.973, "high": 7.532, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/indonesia-10-year-bond-yield" },
+    "France": { "low": 3.217, "high": 5.142, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/france-10-year-bond-yield" },
+    "Taiwan": { "low": 1.25, "high": 3.02, "asOf": "2026-10-23", "sourceUrl": "https://www.investing.com/rates-bonds/taiwan-10-year-bond-yield" }
+  }
+}

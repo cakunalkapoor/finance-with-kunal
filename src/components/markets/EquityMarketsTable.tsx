@@ -16,6 +16,7 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import ChartViewTabs from "@/components/markets/ChartViewTabs";
 import { ChangeStack } from "@/components/markets/StatStack";
+import RangeBar from "@/components/markets/RangeBar";
 
 // P/E cell — shows current P/E and % variance from 10-year average.
 function VolCell({ value }: { value?: number }) {
@@ -38,64 +39,6 @@ function VolCell({ value }: { value?: number }) {
     >
       {value.toFixed(1)}%
     </span>
-  );
-}
-
-// Mini horizontal range bar showing where current price sits in 52W range
-function RangeBar({ value, low, high }: { value: number; low: number; high: number }) {
-  const pct = Math.round(((value - low) / (high - low)) * 100);
-  const fmt = (n: number) => formatNumber(n, n > 10000 ? 0 : 2);
-
-  return (
-    <div className="flex w-full min-w-0 flex-col gap-1">
-      {/* High */}
-      <div
-        className="font-semibold"
-        style={{
-          fontFamily: FONT_MONO,
-          fontSize: "10px",
-          color: "var(--color-market-up)",
-        }}
-      >
-        H: {fmt(high)}
-      </div>
-
-      {/* Range bar */}
-      <div
-        className="relative h-1 rounded-full overflow-visible"
-        style={{ background: "var(--color-space-border)" }}
-      >
-        {/* Filled portion */}
-        <div
-          className="absolute top-0 left-0 h-full rounded-full"
-          style={{
-            width: `${pct}%`,
-            background: "linear-gradient(90deg, rgba(167,139,250,0.4), rgba(167,139,250,0.8))",
-          }}
-        />
-        {/* Current price marker */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
-          style={{
-            left: `calc(${pct}% - 3px)`,
-            background: "var(--color-neon-cyan)",
-            boxShadow: "0 0 4px var(--color-neon-cyan)",
-          }}
-        />
-      </div>
-
-      {/* Low */}
-      <div
-        className="font-semibold"
-        style={{
-          fontFamily: FONT_MONO,
-          fontSize: "10px",
-          color: "var(--color-market-down)",
-        }}
-      >
-        L: {fmt(low)}
-      </div>
-    </div>
   );
 }
 
@@ -239,8 +182,8 @@ export default function EquityMarketsTable() {
                     <div className={getChangeColor(idx.dailyChange)} style={{ fontSize: "10px", fontFamily: FONT_MONO }}>
                       {formatChange(idx.dailyChange)} 1D
                     </div>
-                    <div className="mt-1.5">
-                      <RangeBar value={idx.value} low={idx.low52w} high={idx.high52w} />
+                    <div>
+                      <RangeBar value={idx.value} range={idx} label={idx.name} />
                     </div>
                   </td>
 
