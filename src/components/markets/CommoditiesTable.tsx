@@ -4,6 +4,7 @@
 // function cannot cross the server/client boundary.
 import { COMMODITIES } from "@/lib/site-data";
 import opecData from "@/lib/opec-data.json";
+import { opecSnapshot } from "@/lib/opec-history.mjs";
 import { INVESTING_COMMODITY_URL } from "@/lib/external-links";
 import { formatNumber } from "@/lib/utils";
 import AssetTable, { type AssetRow } from "@/components/markets/AssetTable";
@@ -28,33 +29,33 @@ export default function CommoditiesTable() {
     href: INVESTING_COMMODITY_URL[c.symbol],
     hrefTitle: `${c.name} on Investing.com`,
   }));
-  const history = opecData.timeSeries;
-  const latest = history.at(-1)!;
-  const priorMonth = history.at(-2)!;
-  const yearStart = history.findLast((point) => point.date < `${latest.date.slice(0, 4)}-01-01`)!;
+  const history = opecData.dailyObservations;
+  const latest = opecSnapshot(history);
   rows.push({
     key: "opec-basket",
     icon: "🛢️",
     name: "OPEC Reference Basket",
     value: latest.value,
-    rangeUnavailableReason: "Only month-end snapshots are available for OPEC; they cannot establish the daily 52-week high and low.",
-    sub: `USD/bbl · ${latest.date} · monthly history`,
+    range52w: { high52w: latest.high52w, low52w: latest.low52w, range52wAsOf: latest.asOf,
+      range52wBasis: "daily-assessments", range52wSource: opecData.sourceLabel, range52wSourceUrl: opecData.sourceUrl },
+    sub: `USD/bbl · ${latest.asOf} · daily history`,
     price: `$${formatNumber(latest.value)}`,
-    dailyChange: null,
-    weekChange: null,
-    monthChange: (latest.value / priorMonth.value - 1) * 100,
-    ytdChange: (latest.value / yearStart.value - 1) * 100,
+    dailyChange: latest.dailyChange,
+    weekChange: latest.weekChange,
+    monthChange: latest.monthChange,
+    ytdChange: latest.ytdChange,
     sparkline: history.map((point) => point.value),
     datedHistory: history,
     href: "https://www.opec.org/opec-basket-price.html",
-    hrefTitle: "OPEC Reference Basket official source; monthly snapshots, not averages",
+    hrefTitle: `${opecData.sourceLabel}; published daily basket assessments through ${latest.asOf}`,
   });
   rows.sort((a, b) => a.name.localeCompare(b.name, "en"));
 
   return (
     <AssetTable
       title="Commodities"
-      subtitle="Futures and physical basket prices · OPEC uses monthly snapshots; daily and weekly moves unavailable · click a name for source detail"
+      subtitle="Futures and physical basket prices · OPEC uses published daily basket assessments · each quote retains its own observation date"
+      rangeNote={`52W bars cover 52 calendar weeks. Futures: Yahoo Finance daily closes. OPEC: daily basket-price assessments from the site owner’s supplied export, through ${latest.asOf}, in USD/bbl.`}
       rows={rows}
       formatTooltip={(n) => (n >= 1000 ? formatNumber(n, 0) : formatNumber(n))}
     />

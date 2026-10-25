@@ -61,11 +61,13 @@ export default function AssetTable({
   title,
   subtitle,
   rows,
+  rangeNote,
   formatTooltip = (n) => n.toFixed(2),
 }: {
   title: string;
   subtitle: string;
   rows: AssetRow[];
+  rangeNote?: string;
   formatTooltip?: (value: number) => string;
 }) {
   const [chartView, setChartView] = useState<ChartView>("YTD");
@@ -114,7 +116,8 @@ export default function AssetTable({
                     textTransform: "none",
                   }}
                 >
-                  {windowLabel(chartView, 156, headerDays)}
+                  {chartView === "1W" && rows.some(row => row.datedHistory)
+                    ? "7 days to each quote date" : windowLabel(chartView, 156, headerDays)}
                 </div>
               </th>
             </tr>
@@ -208,7 +211,7 @@ export default function AssetTable({
 
                   <td className="px-4 py-3">
                     {dated && dated.length < 2 ? (
-                      <span style={{ color: "var(--color-text-muted)" }}>Monthly history</span>
+                      <span style={{ color: "var(--color-text-muted)" }}>History unavailable</span>
                     ) : <TrendSparkline
                       values={slice}
                       labels={dated ? dated.map((point) => point.date) : labelsFor(chartView, slice.length, row.dailyDates)}
@@ -223,8 +226,7 @@ export default function AssetTable({
         </table>
       </div>
       <p className="border-t px-4 py-3 text-[10px] leading-5" style={{ color: "var(--color-text-muted)", borderColor: "var(--color-space-border)" }}>
-        52W bars show daily closing highs and lows over 52 calendar weeks, in the row&rsquo;s quoted units. Source: Yahoo Finance.
-        Monthly snapshots do not establish daily extremes; a full range is shown as unavailable when it cannot be verified.
+        {rangeNote ?? "52W bars show daily closing highs and lows over 52 calendar weeks, in the row’s quoted units. Source: Yahoo Finance. A full range is shown as unavailable when it cannot be verified."}
       </p>
     </SciFiCard>
   );

@@ -5,7 +5,7 @@ export const COMMENTARY_REVIEWED_AT = "Oct 24, 2026";
 
 /** Interpretation of the sourced observations shown beside each economic chart. */
 export const ECONOMIC_CONTEXT: Record<string, string> = {
-  "opec-basket": "The retained physical-crude quote provides historical context. It cannot establish whether the basket followed the latest rise in Brent futures.",
+  "opec-basket": "The latest supplied physical-crude basket price is above September’s last published quote. Its October 22 assessment predates the October 23 Brent futures close, so the two observations should be compared with their dates and different pricing methods in view.",
   "us-gdp": "The economy continued to expand, but at a slower annualised pace. This quarterly result predates the September inflation and employment releases, so it cannot settle the current growth outlook.",
   "ea-gdp": "The return to quarterly expansion is encouraging for activity. September's higher inflation reading adds a separate price-pressure concern; quarterly growth and annual inflation are different measures.",
   "china-gdp": "The modest acceleration improves the growth picture relative to Q2. It does not by itself explain the weaker Shanghai and Hong Kong equity returns in the site's earlier market snapshot.",

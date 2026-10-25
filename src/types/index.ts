@@ -3,7 +3,7 @@ export interface MarketRange52w {
   high52w?: number | null;
   low52w?: number | null;
   range52wAsOf?: string;
-  range52wBasis?: "daily-closes" | "published-yield-range";
+  range52wBasis?: "daily-closes" | "daily-assessments" | "published-yield-range";
   range52wSource?: string;
   range52wSourceUrl?: string;
 }

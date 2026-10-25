@@ -26,6 +26,8 @@ export default function RangeBar({
   const high = range.high52w!;
   const basis = range.range52wBasis === "published-yield-range"
     ? "Published 52-week yield range, including intraday observations"
+    : range.range52wBasis === "daily-assessments"
+    ? "Published daily basket-price range over 52 calendar weeks"
     : "Daily closing range over 52 calendar weeks";
   const description = `${label}: ${basis}. Low ${format(low)}; high ${format(high)}; current ${format(value)}.${range.range52wAsOf ? ` Range as of ${range.range52wAsOf}.` : ""}${range.range52wSource ? ` Source: ${range.range52wSource}.` : ""}`;
 

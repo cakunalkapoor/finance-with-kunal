@@ -3836,7 +3836,7 @@ export const ECONOMIC_INDICATORS: EconomicIndicator[] = [
     isPositiveGood: false,
     period: opecData.timeSeries.at(-1)!.date,
     timeSeries: opecData.timeSeries,
-    description: `OPEC's basket combines 12 physical crude grades. History shows the last available published daily quote in each month, not monthly averages. The change compares with the preceding month's last quote. Source: OPEC official chart archive${opecData.supplement ? "; latest quote supplemented by Dataful's OPEC-sourced dataset" : ""}. These are physical basket prices, unlike the Brent futures prices shown alongside. Reviewed ${opecData.reviewedAt}.${opecData.refreshNote ? ` ${opecData.refreshNote}` : ""}`,
+    description: `OPEC's basket combines 12 physical crude grades. This economic chart shows the last available published daily quote in each month, not monthly averages; the change compares with the preceding month's last quote. The Markets table uses the full daily history for its range and period returns. Source: ${opecData.sourceLabel}. These are physical basket assessments, unlike Brent futures prices. Latest supplied observation: ${opecData.dailyObservations.at(-1)!.date}. Reviewed ${opecData.reviewedAt}.`,
   },
   {
     // LIVE from FRED A191RL1Q225SBEA — Real GDP Q/Q annualised
