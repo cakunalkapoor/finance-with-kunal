@@ -151,6 +151,9 @@ for (const key of Object.keys(manual.bonds ?? {})) {
 
   if (live.source !== m.source || live.asOf !== m.asOf) continue; // a newer automated feed can win
   const expectedMoves = Object.values(periodMoves([...(m.observations || []), { date: m.asOf, value: m.value }]));
+  if (expectedMoves.some(value => !Number.isFinite(value))) {
+    problems.push(`${m.country}: missing dated comparison closes — retrieve the previous session and both calendar-anniversary anchors`);
+  }
   if (JSON.stringify(moves.get(m.country)) !== JSON.stringify(expectedMoves)) {
     problems.push(`${m.country}: moves disagree with verified same-source historical closes`);
   }

@@ -85,7 +85,7 @@ export default function BondsTable() {
     <SciFiCard>
       <CardHeader
         title="Government Bond Yields"
-        subtitle={`Refreshed ${BOND_UPDATED_AT} · latest observations, including intraday quotes · moves in basis points (bp); N/A means unavailable · monthly trends include historical averages`}
+        subtitle={`Refreshed ${BOND_UPDATED_AT} · latest observations, including intraday quotes · daily, monthly and yearly moves in basis points (bp) · monthly trends include historical averages`}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-xs" style={{ tableLayout: "fixed", minWidth: 620 }}>

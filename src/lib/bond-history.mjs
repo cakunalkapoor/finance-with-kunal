@@ -20,7 +20,16 @@ export function mergeMonthlyHistory(asOf, ...histories) {
 }
 
 export function periodMoves(observations, cadence = "daily") {
-  const rows = [...observations].filter(p => Number.isFinite(p.value)).sort((a, b) => b.date.localeCompare(a.date));
+  // A verified headline is often appended to the source history. Collapse
+  // duplicate sessions before choosing the previous close; otherwise the
+  // appended headline compares with itself and invents a zero daily move.
+  // The last reading of a date wins, so the verified headline takes priority.
+  const sessions = new Map();
+  for (const point of observations) {
+    if (Number.isFinite(point.value) && /^\d{4}-\d{2}-\d{2}$/.test(point.date)
+      && Number.isFinite(Date.parse(point.date))) sessions.set(point.date, point);
+  }
+  const rows = [...sessions.values()].sort((a, b) => b.date.localeCompare(a.date));
   const latest = rows[0];
   if (!latest || cadence !== "daily") return { dailyMove: null, oneMonthMove: null, oneYearMove: null };
   const end = new Date(`${latest.date}T00:00:00Z`);

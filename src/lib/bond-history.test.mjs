@@ -21,6 +21,27 @@ test('weekends use the preceding close, while monthly averages never become dail
   assert.deepEqual(periodMoves(rows, 'monthly'), {dailyMove:null,oneMonthMove:null,oneYearMove:null});
 });
 
+test('an appended headline compares with the previous distinct session', () => {
+  const rows = [{date:'2026-10-23',value:3.3434},{date:'2026-10-22',value:3.3365}];
+  assert.equal(periodMoves([...rows, rows[0]]).dailyMove, 0.0069);
+  assert.equal(periodMoves([...rows, {date:'2026-10-23',value:3.35}]).dailyMove, 0.0135);
+  assert.equal(periodMoves([rows[0], rows[0]]).dailyMove, null);
+});
+
+test('verified current bond snapshots retain all three dated comparison anchors', () => {
+  const { bonds } = JSON.parse(readFileSync(new URL('./bonds-manual.json', import.meta.url), 'utf8'));
+  for (const bond of Object.values(bonds)) {
+    const rows = [...bond.observations, {date:bond.asOf,value:bond.value}];
+    const moves = periodMoves(rows);
+    for (const [period, move] of Object.entries(moves)) {
+      assert.ok(Number.isFinite(move), `${bond.country}: ${period} lacks a dated anchor`);
+    }
+    const previous = bond.observations.filter(p=>p.date<bond.asOf).at(-1);
+    assert.ok(Math.abs(moves.dailyMove-(bond.value-previous.value))<0.000051,
+      `${bond.country}: daily move must use the preceding session`);
+  }
+});
+
 test('verified manual bond histories retain dated closes and a prior session', () => {
   const { bonds } = JSON.parse(readFileSync(new URL('./bonds-manual.json', import.meta.url), 'utf8'));
   for (const bond of Object.values(bonds)) {
@@ -66,9 +87,10 @@ test('imported weekly histories fill all four country charts with dated monthly 
     assert.ok(trend.every(Number.isFinite), `${country}: gaps remain`);
     assert.equal(trend.at(-1), bond.value, `${country}: headline changed`);
     const monthly = monthlyHistory(trend, bond.asOf);
-    const julyClose = history.observations.filter(p => p.date.startsWith('2026-07')).at(-1);
+    const julyClose = bond.observations.filter(p => p.date.startsWith('2026-07')).at(-1)
+      ?? history.observations.filter(p => p.date.startsWith('2026-07')).at(-1);
     const july = monthly.find(p => p.date.startsWith('2026-07'));
-    assert.equal(july.value, julyClose.value, `${country}: weekly history shifted months`);
+    assert.equal(july.value, julyClose.value, `${country}: historical close shifted months`);
     const augustClose = bond.observations.filter(p => p.date.startsWith('2026-08')).at(-1);
     assert.equal(monthly.find(p => p.date.startsWith('2026-08')).value, augustClose.value,
       `${country}: verified daily close must take precedence over weekly history`);

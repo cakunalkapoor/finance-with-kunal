@@ -56,6 +56,15 @@ The heatmap, Census size chart, US services PMI, India manufacturing PMI and Can
 chart rendered with the new values. The India chart's 3M control retained the October flash
 endpoint; no page overflow or runtime errors were observed in the inspected views.
 
+Bond comparison repair: re-read daily Investing.com history from October 2025 through
+October 23, 2026 for all 11 manually verified markets. This supplies the 11 missing annual
+anchors and three missing monthly anchors without treating weekly bars or monthly averages
+as daily closes. Existing stored daily observations agreed with the newly read history.
+`periodMoves` now deduplicates dates before selecting the previous session, so appending
+the verified headline cannot manufacture a zero daily move. Monthly charts use the newly
+verified daily month-end closes where available. The bond validation gate now rejects a
+verified snapshot lacking any of its three comparison anchors.
+
 ---
 
 ## Data architecture
