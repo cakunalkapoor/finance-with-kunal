@@ -245,6 +245,12 @@ the wrong company on those tiles.
 - `node src/lib/patch-site-data.mjs --ranges-only` patches only range fields and provenance from the provider cache, preserving the published weekly prices, returns, histories, commentary and snapshot date. A normal patch also carries the range fields forward.
 - Chart toggle in the header switches all sparklines simultaneously across the site-wide ladder (1W / 3M / YTD / 2Y / 3Y); sparkline color follows the trend of the *visible* window. 1W reads the six-point `daily` series rather than the weekly sparkline — see the ladder notes in CLAUDE.md
 
+### `AIStockTable.tsx`
+
+- All 28 AI listings use the shared `RangeBar` beneath the USD price, with two-decimal dollar highs/lows and a current-price marker. The range stays fixed when the chart horizon changes.
+- Ranges use daily closes over 52 calendar weeks, converted to USD with the daily Yahoo FX history before calculating the extrema. Each stock carries its own range observation date and source. Insufficient daily history produces an unavailable range, rather than a shorter window labelled 52W.
+- `node src/lib/patch-ai-stocks.mjs --ranges-only` updates only range fields/provenance from a fresh `fetch:ai` cache. It checks that each range contains the existing displayed price and preserves stock quotes, returns, shared daily/weekly grids, index comparison series and curated figures. The normal AI patch also writes the range metadata.
+
 ### `EconomicChart.tsx`
 
 Economic chart notes and the Economic Commentary section share `economicCommentary()` in

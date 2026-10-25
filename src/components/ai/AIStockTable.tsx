@@ -22,6 +22,7 @@ import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import TrendSparkline from "@/components/markets/TrendSparkline";
 import ChartViewTabs from "@/components/markets/ChartViewTabs";
 import { ChangeStack } from "@/components/markets/StatStack";
+import RangeBar from "@/components/markets/RangeBar";
 import type { CSSProperties } from "react";
 import type { AIStockLayer } from "@/types";
 
@@ -97,6 +98,7 @@ export default function AIStockTable() {
                   style={TH_STYLE}
                 >
                   {h}
+                  {h === "Last (USD)" && <div className="mt-0.5 text-[9px] tracking-normal opacity-70">52W range</div>}
                 </th>
               ))}
 
@@ -248,6 +250,8 @@ export default function AIStockTable() {
                             {formatChange(stock.dailyChange)} 1D
                           </span>
                         </div>
+                        <RangeBar value={stock.value} range={stock} label={`${stock.company} (${stock.ticker}, USD)`}
+                          format={(value) => `$${value.toFixed(2)}`} />
                       </td>
 
                       <td className="px-4 py-3">
@@ -291,7 +295,10 @@ export default function AIStockTable() {
         for every row, including the Korean, Japanese, Taiwanese and European listings: each daily close is
         converted at that day&rsquo;s rate before anything is derived from it, so a return here is
         what a dollar investor actually earned, currency move included. An arrow marks the currency
-        a row trades in.
+        a row trades in. The 52W bars show daily closing highs and lows over 52 calendar weeks,
+        with the current price marked in the range. They use the same USD-converted daily
+        prices, sourced from Yahoo Finance stock and FX history, and stay fixed when the chart
+        window changes. Each bar&rsquo;s tooltip gives its observation date and source.
       </p>
     </SciFiCard>
   );

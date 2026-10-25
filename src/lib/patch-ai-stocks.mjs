@@ -25,6 +25,14 @@ const dump = JSON.parse(readFileSync(dumpPath, "utf8"));
 const rows = dump.aiStocks ?? [];
 const indexRows = dump.aiIndices ?? [];
 const dailyDates = dump.aiDailyDates ?? [];
+const rangeFields = (stock) => ({
+  high52w: stock.high52w ?? "null",
+  low52w: stock.low52w ?? "null",
+  range52wAsOf: JSON.stringify(stock.range52wAsOf ?? stock.asOf),
+  range52wBasis: JSON.stringify("daily-closes"),
+  range52wSource: JSON.stringify("Yahoo Finance · daily closes converted to USD"),
+  range52wSourceUrl: JSON.stringify(`https://finance.yahoo.com/quote/${encodeURIComponent(stock.symbol)}/history/`),
+});
 
 if (rows.length === 0) {
   console.error(
@@ -33,6 +41,36 @@ if (rows.length === 0) {
       "   aiStocks array means the AI section genuinely was not fetched.)",
   );
   process.exit(1);
+}
+
+if (process.argv.includes("--ranges-only")) {
+  const src = readFileSync(targetPath, "utf8");
+  const blockPattern = /export const AI_STOCKS: AIStock\[\] = \[[\s\S]*?\n\];/;
+  const original = src.match(blockPattern)?.[0];
+  if (!original) throw new Error("AI_STOCKS block not found");
+  let patchedCount = 0;
+  const updated = original.replace(/  \{\n    symbol: "([^"]+)",[\s\S]*?\n  \},/g, (object, symbol) => {
+    const stock = rows.find(row => row.symbol === symbol);
+    if (!stock || !stock.range52wAsOf || stock.range52wBasis !== "daily-closes") {
+      throw new Error(`Missing calendar-based range for ${symbol}; run fetch:ai first`);
+    }
+    const value = Number(/\n    value: ([\d.]+)/.exec(object)?.[1]);
+    if (stock.low52w != null && stock.high52w != null
+      && !(stock.low52w <= value && value <= stock.high52w)) {
+      throw new Error(`Range does not contain the published price for ${symbol}`);
+    }
+    for (const [key, value] of Object.entries(rangeFields(stock))) {
+      const field = new RegExp(`(\\n    ${key}: )([^\\n]+),`);
+      object = field.test(object) ? object.replace(field, `$1${value},`)
+        : object.replace(/\n  \},$/, `\n    ${key}: ${value},\n  },`);
+    }
+    patchedCount++;
+    return object;
+  });
+  if (patchedCount !== rows.length) throw new Error("AI range coverage differs from the published stock universe");
+  writeFileSync(targetPath, src.replace(blockPattern, updated));
+  console.log(`Patched ${patchedCount} AI 52-week ranges only; quotes, returns and comparison series unchanged.`);
+  process.exit(0);
 }
 
 /* Every series must sit on the SAME weekly grid, or the basket chart compares
@@ -90,8 +128,7 @@ const stockLiteral = (s) =>
     weekChange: ${s.weekChange},
     monthChange: ${s.monthChange},
     ytdChange: ${s.ytdChange},
-    high52w: ${s.high52w},
-    low52w: ${s.low52w},
+${Object.entries(rangeFields(s)).map(([key, value]) => `    ${key}: ${value},`).join("\n")}
     realizedVol: ${s.realizedVol ?? "undefined"},
     sparkline: [${s.sparkline.map((v) => (v === null ? "null" : v)).join(", ")}],
     daily: [${(s.daily ?? []).map((v) => (v === null ? "null" : v)).join(", ")}],

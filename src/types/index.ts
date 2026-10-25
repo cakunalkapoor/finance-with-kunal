@@ -288,7 +288,7 @@ export type AIStockLayer = "platform" | "silicon" | "infra" | "systems";
  *  every value on the page is already converted to USD. */
 export type AICurrency = "USD" | "KRW" | "JPY" | "TWD" | "EUR" | "GBP" | "CAD" | "CNY" | "HKD" | "INR";
 
-export interface AIStock {
+export interface AIStock extends MarketRange52w {
   /** Yahoo symbol — non-US listings carry an exchange suffix (.KS, .T, .TW, .PA). */
   symbol: string;
   /** Exchange ticker as a reader would type it. */
@@ -314,8 +314,8 @@ export interface AIStock {
   weekChange: number;
   monthChange: number;
   ytdChange: number;
-  high52w: number;
-  low52w: number;
+  high52w: number | null;
+  low52w: number | null;
   /**
    * 260 weekly closes across the trailing 5 years — LONGER than the 156/3y the
    * rest of the site holds, so /ai can offer a 5Y window. See TimeHorizon.
