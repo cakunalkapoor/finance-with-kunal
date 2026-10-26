@@ -253,19 +253,16 @@ the wrong company on those tiles.
 
 ### `EconomicChart.tsx`
 
-Economic chart notes and the Economic Commentary section share `economicCommentary()` in
-`src/lib/commentary.ts`: the indicator's sourced observation followed by its reviewed interpretation.
-Review all `ECONOMIC_CONTEXT` entries and `COMMENTARY_REVIEWED_AT` when changing the narrative.
-The editorial review date is separate from `DATA_UPDATED_AT`; a commentary-only edit must not
-advance the date of the market snapshot.
-- Per-indicator card with horizon tabs drawn from the site-wide ladder, filtered by `horizonsFor` to the windows the series can actually fill — monthly macro series therefore show no 1W rung
-- Color (green / red) inverts based on `isPositiveGood` so e.g. falling inflation is shown green
-- Horizon window anchors to the most recent data point (not a hardcoded date)
-- SVG renderer, smooth area chart
+- `/dashboard`, `/us-economy` and `/canada-economy` use the approved **Briefing & table** layout: compact `EconomyHeader`, four scoped headline readings, category filters, a compact indicator table and a selected-indicator focus panel. Global retains 17 indicators, US 12 plus its curve, and Canada 11 plus its curve; the union still covers all 35 indicators. `economy-view.ts` owns the existing scope rules and display formatting. All reveals every indicator on that route.
+- Table rows and the focus panel show current level, units, reporting period, change versus the prior observation and a factual status. Percentage-rate changes use percentage points; US quarterly GDP explicitly retains its annualized basis, while Canada and euro-area GDP remain ordinary QoQ. Quarter-start dates display as reporting quarters.
+- The focus panel shows the existing `ECONOMIC_CONTEXT` interpretation; Source & measurement expands inline with the full original description. Available-history low/high bars carry actual coverage dates and observation counts, without claiming a 52-week range. The duplicated bottom commentary wall is omitted. No fixed-height text scrollers hide notes. Yield curves remain in Rates, with their two series, date, spread and source notes.
+- SVG line charts use actual UTC timestamps, including both monthly `YYYY-MM` and daily `YYYY-MM-DD` dates, rather than evenly spacing records with different cadences. PMI charts include the 50 no-change reference. Absolute lines use the brand color; delta colors follow `isPositiveGood`.
+- Horizon tabs use the shared `ChartViewTabs` in its comfortable-size variant, filtered by `horizonsFor`. Windows anchor to each series' last observation; monthly series do not gain an unsupported 1W view. Category filtering changes the table rows and resets focus to the first applicable indicator; the four headline readings remain the page overview.
+- The shared published update label still comes from `DATA_UPDATED_AT`. This layout change does not advance the data snapshot or change any values, histories, commentary or provenance.
 
 ### `MacroSnapshot.tsx`
 - 6 tiles, pulled from `MACRO_SNAPSHOT` (icon, value, trend arrow, label, sub-context)
-- Used at the top of `/dashboard` (with its header) and on the homepage via `showHeader={false}`
+- Used on the homepage via `showHeader={false}`; the economy pages now have four scope-specific headlines in `EconomyDashboard`.
 
 ### Briefing status (was `PageHeader.tsx`)
 - `PageHeader.tsx` has been **deleted** — no page had used it for some time.
@@ -274,6 +271,7 @@ advance the date of the market snapshot.
   `patch-site-data.mjs`). There is no per-page date prop and no "next briefing" date.
   - `status="updated"` (default) → `Last updated: <date>` — all data-driven pages.
   - `status="none"` → nothing — About and Blog.
+- Economy, US and Canada use the compact `EconomyHeader`, with the same shared update label and coverage navigation.
 
 ---
 

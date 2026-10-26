@@ -24,10 +24,8 @@ export default function CanadaEconomyPage() {
       <CountryEconomy
         country="Canada"
         eyebrow="Canada"
-        title="The Canadian economy, one lens at a time."
+        title="The Canadian economy, at a glance."
         description="Growth, prices, jobs, Bank of Canada policy, trade, fiscal flows, and business activity for Canada—each category read on its own terms, with consistent multi-year history."
-        accent="indigo"
-        counterpart={{ href: "/us-economy", label: "the US" }}
       />
     </>
   );

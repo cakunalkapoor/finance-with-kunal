@@ -1,12 +1,7 @@
-import MacroSnapshot from "@/components/dashboard/MacroSnapshot";
-import EconomicChart from "@/components/dashboard/EconomicChart";
-import EconomicNotes from "@/components/dashboard/EconomicNotes";
-import MarketTicker from "@/components/markets/MarketTicker";
-import BriefingHero from "@/components/ui/BriefingHero";
-import Reveal from "@/components/ui/Reveal";
-import { FONT_MONO } from "@/lib/utils";
+import EconomyHeader from "@/components/dashboard/EconomyHeader";
+import EconomyDashboard from "@/components/dashboard/EconomyDashboard";
 import { ECONOMIC_INDICATORS } from "@/lib/site-data";
-import type { EconomicIndicator } from "@/types";
+import { economyIndicators } from "@/lib/economy-view";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
 
@@ -26,90 +21,14 @@ export const metadata = pageMetadata({
   ],
 });
 
-const CATEGORIES: { id: EconomicIndicator["category"]; label: string; icon: string }[] = [
-  { id: "pmi", label: "PMI", icon: "🌐" },
-  { id: "growth", label: "Growth", icon: "📈" },
-  { id: "employment", label: "Employment", icon: "👷" },
-  { id: "inflation", label: "Inflation", icon: "💹" },
-  { id: "energy", label: "Energy", icon: "⚡" },
-];
-
-// These indicators are dedicated to the /us-economy and /canada-economy pages;
-// keep the global Economy dashboard focused on its original curated (US + Asia) set.
-const US_CANADA_ONLY = new Set([
-  "us-payrolls", "us-fed-funds", "us-trade-balance", "us-tax-receipts",
-  "us-mfg-pmi", "us-services-pmi",
-  "ca-gdp", "ca-gdp-monthly", "ca-cpi", "ca-unemployment", "ca-payrolls",
-  "ca-policy-rate", "ca-trade-balance", "ca-tax-receipts",
-  "ca-mfg-pmi", "ca-services-pmi", "us-retail-sales", "ca-retail-sales",
-]);
-
 export default function DashboardPage() {
   return (
     <>
       <BreadcrumbJsonLd items={[{ name: "Global Economy", path: "/dashboard" }]} />
-      <MarketTicker />
-
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-        <BriefingHero
-          eyebrow="Global economy"
-          title="The macro story, organized."
-          description="Growth, inflation, employment, business activity, and energy indicators in one evidence-led view—so you can separate the current signal from the prevailing narrative."
-          accent="indigo"
-          // Monthly and quarterly macro series — no trading week applies.
-          status="updated"
-          stats={[
-            { label: "Pillars", value: "5", detail: "Macro categories" },
-            { label: "Format", value: "2–3Y", detail: "Historical context" },
-            { label: "Read", value: "Fast", detail: "Notes included" },
-          ]}
-        />
-
-        <Reveal>
-          <MacroSnapshot />
-        </Reveal>
-
-        {CATEGORIES.map(({ id, label, icon }) => {
-          const indicators = ECONOMIC_INDICATORS.filter(
-            (ind) => ind.category === id && !US_CANADA_ONLY.has(ind.id)
-          );
-          if (indicators.length === 0) return null;
-          return (
-            <section key={id}>
-              <Reveal className="flex items-center gap-3 mb-4">
-                <span className="text-lg">{icon}</span>
-                <h2
-                  className="font-bold text-sm tracking-widest uppercase"
-                  style={{
-                    fontFamily: FONT_MONO,
-                    color: "var(--color-text-secondary)",
-                    letterSpacing: "0.12em",
-                  }}
-                >
-                  {label}
-                </h2>
-                <div
-                  className="flex-1 h-px"
-                  style={{ background: "var(--color-space-border)" }}
-                />
-              </Reveal>
-
-              <div
-                className="grid grid-cols-1 gap-4 lg:grid-cols-2"
-              >
-                {indicators.map((ind, index) => (
-                  <Reveal key={ind.id} delay={(index % 2) * 100}>
-                    <EconomicChart indicator={ind} />
-                  </Reveal>
-                ))}
-              </div>
-            </section>
-          );
-        })}
-
-        <Reveal>
-          <EconomicNotes filter={(ind) => !US_CANADA_ONLY.has(ind.id)} />
-        </Reveal>
+      <div className="mx-auto max-w-screen-2xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
+        <EconomyHeader scope="global" eyebrow="Global economy" title="The economy, at a glance."
+          description="Business activity, growth, labour, inflation and energy — with the context behind each release." />
+        <EconomyDashboard key="global" scope="global" indicators={economyIndicators(ECONOMIC_INDICATORS, "global")} />
       </div>
     </>
   );

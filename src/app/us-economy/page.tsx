@@ -25,10 +25,8 @@ export default function USEconomyPage() {
       <CountryEconomy
         country="United States"
         eyebrow="United States"
-        title="The US economy, one lens at a time."
+        title="The US economy, at a glance."
         description="Growth, prices, jobs, policy rates, trade, fiscal flows, and business activity for the United States—each category read on its own terms, with consistent multi-year history."
-        accent="emerald"
-        counterpart={{ href: "/canada-economy", label: "Canada" }}
       />
     </>
   );

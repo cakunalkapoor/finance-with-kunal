@@ -7,6 +7,7 @@ import { FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS, withAlpha } from "@/lib/use-theme";
 import { horizonsFor, defaultHorizon, filterByHorizon } from "@/lib/chart-window";
 import type { EChartsOption } from "echarts";
+import ChartViewTabs from "@/components/markets/ChartViewTabs";
 
 const ReactECharts = dynamic(() => import("echarts-for-react"), { ssr: false });
 
@@ -37,6 +38,7 @@ export default function YieldCurveChart({ curve }: Props) {
 
   const option: EChartsOption = {
     backgroundColor: "transparent",
+    animation: false,
     grid: { top: 12, bottom: 28, left: 48, right: 16 },
     // Legend lives in the header as coloured chips so identity is never
     // carried by the line colour alone.
@@ -188,7 +190,8 @@ export default function YieldCurveChart({ curve }: Props) {
 
   return (
     <div
-      className="flex h-[400px] flex-col rounded-lg overflow-hidden"
+      data-yield-curve={curve.country}
+      className="flex min-w-0 flex-col rounded-lg overflow-hidden"
       style={{
         background: "var(--color-space-card)",
         border: "1px solid var(--color-space-border)",
@@ -229,42 +232,18 @@ export default function YieldCurveChart({ curve }: Props) {
       </div>
 
       {/* Legend — always present, since two series share the plot. */}
-      <div className="flex items-center gap-4 px-4 pb-1">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 pb-1">
         {chip(curve.short.label, curve.short.value, c.series1)}
         {chip(curve.long.label, curve.long.value, c.series2)}
       </div>
 
-      <div className="flex items-center gap-1 px-4 pb-2">
-        {horizons.map((h) => (
-          <button
-            key={h}
-            onClick={() => setHorizon(h)}
-            className="px-2 py-0.5 rounded text-xs font-semibold transition-all"
-            style={{
-              fontFamily: FONT_MONO,
-              color: horizon === h ? "var(--color-neon-cyan)" : "var(--color-text-muted)",
-              background: horizon === h ? "var(--color-neon-cyan-glow)" : "transparent",
-              border: `1px solid ${horizon === h ? "var(--color-neon-cyan-dim)" : "transparent"}`,
-              letterSpacing: "0.06em",
-            }}
-          >
-            {h}
-          </button>
-        ))}
-      </div>
+      <div className="px-4 pb-2" role="group" aria-label={`${curve.country} yield curve chart window`}><ChartViewTabs views={horizons} value={horizon} onChange={setHorizon} comfortable /></div>
 
       <div className="shrink-0 px-2 pb-3">
-        <ReactECharts option={option} style={{ height: 160 }} opts={{ renderer: "svg" }} notMerge />
+        <ReactECharts option={option} style={{ height: 220 }} opts={{ renderer: "svg" }} notMerge />
       </div>
 
-      <div
-        className="min-h-0 flex-1 overflow-y-auto px-4 pb-3 text-xs leading-relaxed"
-        style={{
-          color: "var(--color-text-muted)",
-          borderTop: "1px solid var(--color-space-border)",
-          paddingTop: "8px",
-        }}
-      >
+      <section className="px-4 pb-4 text-xs leading-6"><h4 className="mb-1 text-[10px] font-semibold uppercase tracking-wide" style={{ color: "var(--color-neon-cyan)" }}>What it means</h4><p style={{ color: "var(--color-text-secondary)" }}>
         {curve.long.name} minus {curve.short.name}, currently{" "}
         {curve.spreadBps >= 0 ? "+" : ""}
         {curve.spreadBps}bp
@@ -273,8 +252,11 @@ export default function YieldCurveChart({ curve }: Props) {
           : ", so the curve slopes upward across the long end."}{" "}
         This compares two long maturities. The slope alone cannot identify how much of the
         difference reflects expected policy rates, inflation or compensation for holding longer
-        bonds. {curve.source}
-      </div>
+        bonds.</p></section>
+      <details className="border-t px-4 text-xs leading-6" style={{ borderColor: "var(--color-space-border)" }}>
+        <summary className="cursor-pointer py-3 font-medium" style={{ color: "var(--color-text-secondary)" }}>Source &amp; measurement</summary>
+        <p className="pb-4" style={{ color: "var(--color-text-muted)" }}>{curve.source}</p>
+      </details>
     </div>
   );
 }

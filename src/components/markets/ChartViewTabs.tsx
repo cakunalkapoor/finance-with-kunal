@@ -28,10 +28,12 @@ export default function ChartViewTabs({
   views,
   value,
   onChange,
+  comfortable = false,
 }: {
   views: readonly ChartView[];
   value: ChartView;
   onChange: (view: ChartView) => void;
+  comfortable?: boolean;
 }) {
   return (
     <div className="flex flex-wrap items-center gap-x-px gap-y-1">
@@ -42,10 +44,10 @@ export default function ChartViewTabs({
             key={v}
             onClick={() => onChange(v)}
             aria-pressed={active}
-            className="rounded px-1 py-0.5 transition-all"
+            className={comfortable ? "min-h-11 min-w-11 rounded px-2 py-1 transition-all sm:min-h-8 sm:min-w-8" : "rounded px-1 py-0.5 transition-all"}
             style={{
               fontFamily: FONT_MONO,
-              fontSize: "10px",
+              fontSize: comfortable ? "11px" : "10px",
               /* No tracking. On a six-rung strip in a ~150px column the extra
                  0.08em was ~5px — the difference between one row and two. The
                  padding stays at 4px so the active rung still reads as a pill. */
