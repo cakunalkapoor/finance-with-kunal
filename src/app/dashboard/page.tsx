@@ -1,14 +1,13 @@
-import EconomyHeader from "@/components/dashboard/EconomyHeader";
-import EconomyDashboard from "@/components/dashboard/EconomyDashboard";
-import { ECONOMIC_INDICATORS } from "@/lib/site-data";
-import { economyIndicators } from "@/lib/economy-view";
+import { Suspense } from "react";
+import EconomyExperience, { EconomyView } from "@/components/dashboard/EconomyExperience";
+import { ECONOMIC_INDICATORS, YIELD_CURVES } from "@/lib/site-data";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Global Economy",
+  title: "Economy — Global, US & Canada",
   description:
-    "Global economic indicators updated weekly: GDP growth, PMI, inflation, employment and energy, with multi-year history and plain-English notes.",
+    "Global, US and Canadian economic indicators in one dashboard: GDP, PMI, inflation, employment, policy rates, yield curves and energy, with sourced history and commentary.",
   path: "/dashboard",
   keywords: [
     "global economy",
@@ -24,12 +23,10 @@ export const metadata = pageMetadata({
 export default function DashboardPage() {
   return (
     <>
-      <BreadcrumbJsonLd items={[{ name: "Global Economy", path: "/dashboard" }]} />
-      <div className="mx-auto max-w-screen-2xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
-        <EconomyHeader scope="global" eyebrow="Global economy" title="The economy, at a glance."
-          description="Business activity, growth, labour, inflation and energy — with the context behind each release." />
-        <EconomyDashboard key="global" scope="global" indicators={economyIndicators(ECONOMIC_INDICATORS, "global")} />
-      </div>
+      <BreadcrumbJsonLd items={[{ name: "Economy", path: "/dashboard" }]} />
+      <Suspense fallback={<EconomyView indicators={ECONOMIC_INDICATORS} curves={YIELD_CURVES} />}>
+        <EconomyExperience indicators={ECONOMIC_INDICATORS} curves={YIELD_CURVES} />
+      </Suspense>
     </>
   );
 }

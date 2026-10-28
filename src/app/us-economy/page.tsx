@@ -1,33 +1,13 @@
-import CountryEconomy from "@/components/dashboard/CountryEconomy";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import EconomyRedirect from "@/components/dashboard/EconomyRedirect";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "US Economy",
-  description:
-    "United States economic indicators tracked weekly: GDP, CPI inflation, payrolls and unemployment, the Federal Reserve policy rate, Treasury yields, trade, retail sales and fiscal data.",
-  path: "/us-economy",
-  keywords: [
-    "US economy",
-    "US GDP growth",
-    "US inflation",
-    "CPI",
-    "nonfarm payrolls",
-    "Federal Reserve policy rate",
-    "10-year Treasury yield",
-  ],
+  description: "Global, US and Canadian economic indicators are now together in one Economy dashboard.",
+  path: "/dashboard",
+  noIndex: true,
 });
 
-export default function USEconomyPage() {
-  return (
-    <>
-      <BreadcrumbJsonLd items={[{ name: "US Economy", path: "/us-economy" }]} />
-      <CountryEconomy
-        country="United States"
-        eyebrow="United States"
-        title="The US economy, at a glance."
-        description="Growth, prices, jobs, policy rates, trade, fiscal flows, and business activity for the United States—each category read on its own terms, with consistent multi-year history."
-      />
-    </>
-  );
+export default function LegacyEconomyPage() {
+  return <EconomyRedirect scope="us" />;
 }

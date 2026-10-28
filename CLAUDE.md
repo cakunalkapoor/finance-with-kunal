@@ -47,7 +47,7 @@ Warm editorial palette — paper, ink, and signal green. **Two themes**: light i
 
 The `--color-neon-*` names are kept for back-compat and no longer describe the actual hues. Market up/down/neutral also differ per theme. ECharts configs can't read CSS vars — use hex equivalents there.
 
-Reusable UI: `BriefingHero` (page hero + update label + stat tiles) is the standard large page header; `SciFiCard` (card wrapper + `CardHeader`) for sections. Economy, US and Canada use the approved compact `EconomyHeader` and `EconomyDashboard` table and focus layout, with the same shared update label, category filters and visible interpretation and expandable source notes.
+Reusable UI: `BriefingHero` (page hero + update label + stat tiles) is the standard large page header; `SciFiCard` (card wrapper + `CardHeader`) for sections. The combined Economy page uses Global / US / Canada coverage controls with the approved compact `EconomyHeader` and `EconomyDashboard` table and focus layout, with the same shared update label, category filters and visible interpretation and expandable source notes.
 
 **The briefing label is never hardcoded or passed per page.** `lib/briefing.ts` derives it from `DATA_UPDATED_AT`, which `patch-site-data.mjs` maintains on every refresh. `BriefingHero` takes `status`:
 

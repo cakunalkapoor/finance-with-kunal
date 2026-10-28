@@ -12,14 +12,12 @@ function lastModified(): Date {
   return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
 }
 
-/* /us-canada is deliberately absent — it is a noindex redirect stub. */
+/* Old country routes are noindex forwarding stubs; Economy is the canonical page. */
 const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
   { path: "/markets", priority: 0.9, changeFrequency: "weekly" },
   { path: "/ai", priority: 0.9, changeFrequency: "weekly" },
   { path: "/dashboard", priority: 0.9, changeFrequency: "weekly" },
-  { path: "/us-economy", priority: 0.8, changeFrequency: "weekly" },
-  { path: "/canada-economy", priority: 0.8, changeFrequency: "weekly" },
   { path: "/decisions", priority: 0.8, changeFrequency: "monthly" },
   { path: "/decisions/buy-vs-rent", priority: 0.8, changeFrequency: "monthly" },
   { path: "/decisions/buy-vs-lease", priority: 0.8, changeFrequency: "monthly" },

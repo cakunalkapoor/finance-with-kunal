@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { LAST_UPDATED_LABEL } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
 import type { EconomyScope } from "@/lib/economy-view";
 
-export default function EconomyHeader({ scope, eyebrow, title, description }: {
+export default function EconomyHeader({ scope, eyebrow, title, description, onScopeChange }: {
   scope: EconomyScope; eyebrow: string; title: string; description: string;
+  onScopeChange?: (scope: EconomyScope) => void;
 }) {
   return (
     <header className="space-y-5">
@@ -18,12 +18,12 @@ export default function EconomyHeader({ scope, eyebrow, title, description }: {
           <p className="font-semibold uppercase">{LAST_UPDATED_LABEL}</p><p>Each release retains its reporting period</p>
         </div>
       </div>
-      <nav aria-label="Economy coverage" className="flex flex-wrap gap-2">
-        {([["global", "/dashboard", "Global"], ["us", "/us-economy", "United States"], ["canada", "/canada-economy", "Canada"]] as const).map(([id, href, label]) => (
-          <Link key={id} href={href} aria-current={scope === id ? "page" : undefined} className="rounded-full border px-4 py-2 text-xs font-semibold transition-colors"
-            style={{ borderColor: "var(--color-space-border)", background: scope === id ? "var(--color-wash)" : "var(--color-space-card)", color: scope === id ? "var(--color-neon-cyan)" : "var(--color-text-secondary)" }}>{label}</Link>
+      <div role="group" aria-label="Economy coverage" className="inline-flex max-w-full flex-wrap gap-1 rounded-xl border p-1" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
+        {([["global", "🌐", "Global"], ["us", "🇺🇸", "US"], ["canada", "🇨🇦", "Canada"]] as const).map(([id, flag, label]) => (
+          <button key={id} type="button" aria-pressed={scope === id} aria-controls="economy-dashboard" disabled={!onScopeChange} onClick={() => onScopeChange?.(id)} className="min-h-11 rounded-lg px-4 py-2 text-xs font-semibold transition-colors sm:px-5"
+            style={{ background: scope === id ? "var(--color-neon-cyan)" : "transparent", color: scope === id ? "var(--color-space-card)" : "var(--color-text-secondary)" }}><span aria-hidden>{flag}</span> {label}</button>
         ))}
-      </nav>
+      </div>
     </header>
   );
 }

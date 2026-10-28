@@ -7,14 +7,12 @@ import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
 
-/* Eight links plus the wordmark fit from xl (1280px). Smaller viewports use
+/* Main navigation plus the wordmark fits from xl (1280px). Smaller viewports use
    the same links in the mobile menu so navigation never wraps. */
 const NAV_LINKS = [
   { href: "/markets", label: "Markets" },
   { href: "/ai", label: "Vantage AI" },
   { href: "/dashboard", label: "Economy" },
-  { href: "/us-economy", label: "US" },
-  { href: "/canada-economy", label: "Canada" },
   { href: "/decisions", label: "Decision Studio" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About Me" },

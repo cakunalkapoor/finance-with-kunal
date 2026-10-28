@@ -22,7 +22,9 @@ function RecentTrend({ indicator }: { indicator: EconomicIndicator }) {
 
 export default function EconomyDashboard({ indicators, scope, curve }: { indicators: EconomicIndicator[]; scope: EconomyScope; curve?: YieldCurve }) {
   const categories = economyCategories(scope).filter(c => indicators.some(i => i.category === c.id) || (c.id === "rates" && curve));
-  const [category, setCategory] = useState<string>(categories[0]?.id ?? "all");
+  const [requestedCategory, setCategory] = useState<string>(categories[0]?.id ?? "all");
+  const category = requestedCategory === "all" || categories.some(c => c.id === requestedCategory)
+    ? requestedCategory : categories[0]?.id ?? "all";
   const [selected, setSelected] = useState<string | null>(null);
   const shown = indicators.filter(i => category === "all" || i.category === category).sort((a, b) =>
     categories.findIndex(c => c.id === a.category) - categories.findIndex(c => c.id === b.category)
@@ -40,7 +42,7 @@ export default function EconomyDashboard({ indicators, scope, curve }: { indicat
     }
   }
   return (
-    <div className="space-y-6">
+    <div id="economy-dashboard" data-economy-scope={scope} className="space-y-6">
       <section aria-label="Headline indicators" className="grid grid-cols-2 overflow-hidden rounded-lg border lg:grid-cols-4" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
         {ECONOMY_HEADLINES[scope].map(({ id, label }, index) => {
           const i = indicators.find(i => i.id === id);

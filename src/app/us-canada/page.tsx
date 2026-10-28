@@ -1,13 +1,13 @@
-import RedirectNotice from "./RedirectNotice";
+import EconomyRedirect from "@/components/dashboard/EconomyRedirect";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "US & Canada Economy",
-  description: "This page has moved: US and Canada economic data now have separate pages.",
-  path: "/us-canada",
+  description: "Global, US and Canadian economic indicators are now together in one Economy dashboard.",
+  path: "/dashboard",
   noIndex: true,
 });
 
-export default function USCanadaPage() {
-  return <RedirectNotice />;
+export default function LegacyEconomyPage() {
+  return <EconomyRedirect scope="global" />;
 }
