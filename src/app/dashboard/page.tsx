@@ -1,13 +1,14 @@
 import { Suspense } from "react";
 import EconomyExperience, { EconomyView } from "@/components/dashboard/EconomyExperience";
 import { ECONOMIC_INDICATORS, YIELD_CURVES } from "@/lib/site-data";
+import { INTERNATIONAL_INDICATORS, INTERNATIONAL_UPDATED_LABEL } from "@/lib/international-economy";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Economy — Global, US & Canada",
+  title: "Economy — Global Economic Dashboard",
   description:
-    "Global, US and Canadian economic indicators in one dashboard: GDP, PMI, inflation, employment, policy rates, yield curves and energy, with sourced history and commentary.",
+    "Explore the US, Canada, euro area, UK, Japan, China, India, Australia, Germany, France and South Korea: sourced GDP, inflation, labour and business activity in one dashboard.",
   path: "/dashboard",
   keywords: [
     "global economy",
@@ -21,11 +22,12 @@ export const metadata = pageMetadata({
 });
 
 export default function DashboardPage() {
+  const indicators = [...ECONOMIC_INDICATORS, ...INTERNATIONAL_INDICATORS];
   return (
     <>
       <BreadcrumbJsonLd items={[{ name: "Economy", path: "/dashboard" }]} />
-      <Suspense fallback={<EconomyView indicators={ECONOMIC_INDICATORS} curves={YIELD_CURVES} />}>
-        <EconomyExperience indicators={ECONOMIC_INDICATORS} curves={YIELD_CURVES} />
+      <Suspense fallback={<EconomyView indicators={indicators} curves={YIELD_CURVES} additionalUpdatedLabel={INTERNATIONAL_UPDATED_LABEL} />}>
+        <EconomyExperience indicators={indicators} curves={YIELD_CURVES} additionalUpdatedLabel={INTERNATIONAL_UPDATED_LABEL} />
       </Suspense>
     </>
   );

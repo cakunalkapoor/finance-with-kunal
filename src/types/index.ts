@@ -193,6 +193,11 @@ export interface EconomicIndicator {
   period: string;
   timeSeries: { date: string; value: number }[];
   description: string;
+  /** Additional, explicitly sourced international coverage. */
+  context?: string;
+  sourceUrl?: string;
+  apiUrl?: string;
+  observationLabels?: Record<string, string>;
 }
 
 export interface MacroSnapshot {

@@ -2,31 +2,26 @@
 
 import { useSearchParams } from "next/navigation";
 import type { EconomicIndicator, YieldCurve } from "@/types";
-import { economyIndicators, type EconomyScope } from "@/lib/economy-view";
+import { economyIndicators, economyScope, ECONOMY_COVERAGE, type EconomyScope } from "@/lib/economy-view";
 import EconomyHeader from "./EconomyHeader";
 import EconomyDashboard from "./EconomyDashboard";
 
 interface Props {
   indicators: EconomicIndicator[];
   curves: YieldCurve[];
+  additionalUpdatedLabel: string;
 }
 
-const COVERAGE = {
-  global: { eyebrow: "Global economy", country: null },
-  us: { eyebrow: "United States economy", country: "United States" },
-  canada: { eyebrow: "Canadian economy", country: "Canada" },
-} as const;
-
-export function EconomyView({ indicators, curves, scope = "global", onScopeChange }: Props & {
+export function EconomyView({ indicators, curves, additionalUpdatedLabel, scope = "global", onScopeChange }: Props & {
   scope?: EconomyScope;
   onScopeChange?: (scope: EconomyScope) => void;
 }) {
-  const coverage = COVERAGE[scope];
+  const coverage = ECONOMY_COVERAGE.find(c => c.id === scope)!;
   return (
     <div className="mx-auto max-w-screen-2xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
-      <EconomyHeader scope={scope} eyebrow={coverage.eyebrow} title="The economy, at a glance."
-        description="Explore global, US and Canadian economic indicators, with the context behind each release."
-        onScopeChange={onScopeChange} />
+      <EconomyHeader scope={scope} eyebrow={scope === "global" ? "Global economy" : `${coverage.country} economy`} title="The economy, at a glance."
+        description="Explore the world’s major economies, with sourced indicators and the context behind each release."
+        onScopeChange={onScopeChange} updatedLabel={["global", "us", "canada"].includes(scope) ? undefined : additionalUpdatedLabel} />
       <EconomyDashboard scope={scope} indicators={economyIndicators(indicators, scope)}
         curve={curves.find(c => c.country === coverage.country)} />
     </div>
@@ -36,7 +31,7 @@ export function EconomyView({ indicators, curves, scope = "global", onScopeChang
 export default function EconomyExperience(props: Props) {
   const params = useSearchParams();
   const requested = params.get("view");
-  const scope: EconomyScope = requested === "us" || requested === "canada" ? requested : "global";
+  const scope = economyScope(requested);
 
   function changeScope(next: EconomyScope) {
     if (next === scope) return;

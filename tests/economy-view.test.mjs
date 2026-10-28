@@ -38,3 +38,31 @@ test('country views preserve their scope while global retains its existing US he
   assert.deepEqual(view.economyIndicators(rows,'us').map(i=>i.id),['us-gdp','us-payrolls']);
   assert.deepEqual(view.economyIndicators(rows,'canada').map(i=>i.id),['ca-gdp']);
 });
+
+test('international scope URLs are allowlisted and reporting labels retain source caveats',()=>{
+  assert.equal(view.economyScope('south-korea'),'south-korea');
+  assert.equal(view.economyScope('germany'),'germany');
+  assert.equal(view.economyScope('unrecognised'),'global');
+  assert.equal(view.economicObservationLabel(indicator({id:'uk-unemployment',observationLabels:{'2026-07':'Jun–Aug 2026 (3-month average)'}}),'2026-07'),'Jun–Aug 2026 (3-month average)');
+  assert.equal(view.economicPeriod(indicator({id:'de-gdp',observationLabels:{'2026-04':'Q2 2026 (provisional)'}})),'Q2 2026 (provisional)');
+});
+
+test('all 12 coverage choices reconcile and every headline belongs to its scoped rows',()=>{
+  const file=readFileSync(new URL('../src/lib/site-data.ts',import.meta.url),'utf8');
+  const compiled=ts.transpileModule(file,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
+  const mod={exports:{}};
+  new Function('require','module','exports',compiled)(()=>JSON.parse(readFileSync(new URL('../src/lib/opec-data.json',import.meta.url),'utf8')),mod,mod.exports);
+  const original=mod.exports.ECONOMIC_INDICATORS;
+  const extra=JSON.parse(readFileSync(new URL('../src/lib/international-economy-data.json',import.meta.url),'utf8')).indicators;
+  const rows=[...original,...extra];
+  const counts={global:17,us:12,canada:11,'euro-area':2,uk:3,japan:3,china:2,india:3,australia:3,germany:3,france:3,'south-korea':3};
+  const union=new Set();
+  for(const coverage of view.ECONOMY_COVERAGE){
+    const scoped=view.economyIndicators(rows,coverage.id);
+    assert.equal(scoped.length,counts[coverage.id],coverage.id);
+    for(const h of view.ECONOMY_HEADLINES[coverage.id])assert(scoped.some(i=>i.id===h.id),coverage.id+' missing '+h.id);
+    for(const row of scoped)union.add(row.id);
+  }
+  assert.equal(union.size,52);
+  assert.deepEqual(view.economyIndicators(rows,'global').map(i=>i.id),view.economyIndicators(original,'global').map(i=>i.id));
+});

@@ -1,10 +1,11 @@
 import { LAST_UPDATED_LABEL } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
-import type { EconomyScope } from "@/lib/economy-view";
+import { ECONOMY_COVERAGE, economyScope, type EconomyScope } from "@/lib/economy-view";
 
-export default function EconomyHeader({ scope, eyebrow, title, description, onScopeChange }: {
+export default function EconomyHeader({ scope, eyebrow, title, description, onScopeChange, updatedLabel = LAST_UPDATED_LABEL }: {
   scope: EconomyScope; eyebrow: string; title: string; description: string;
   onScopeChange?: (scope: EconomyScope) => void;
+  updatedLabel?: string;
 }) {
   return (
     <header className="space-y-5">
@@ -15,14 +16,21 @@ export default function EconomyHeader({ scope, eyebrow, title, description, onSc
           <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--color-text-secondary)" }}>{description}</p>
         </div>
         <div className="text-[11px] leading-6 sm:text-right" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>
-          <p className="font-semibold uppercase">{LAST_UPDATED_LABEL}</p><p>Each release retains its reporting period</p>
+          <p className="font-semibold uppercase">{updatedLabel}</p><p>Each release retains its reporting period</p>
         </div>
       </div>
       <div role="group" aria-label="Economy coverage" className="inline-flex max-w-full flex-wrap gap-1 rounded-xl border p-1" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
-        {([["global", "🌐", "Global"], ["us", "🇺🇸", "US"], ["canada", "🇨🇦", "Canada"]] as const).map(([id, flag, label]) => (
+        {ECONOMY_COVERAGE.slice(0, 3).map(({ id, flag, label }) => (
           <button key={id} type="button" aria-pressed={scope === id} aria-controls="economy-dashboard" disabled={!onScopeChange} onClick={() => onScopeChange?.(id)} className="min-h-11 rounded-lg px-4 py-2 text-xs font-semibold transition-colors sm:px-5"
             style={{ background: scope === id ? "var(--color-neon-cyan)" : "transparent", color: scope === id ? "var(--color-space-card)" : "var(--color-text-secondary)" }}><span aria-hidden>{flag}</span> {label}</button>
         ))}
+        <label className="flex min-w-0 items-center rounded-lg" style={{ background: !["global", "us", "canada"].includes(scope) ? "var(--color-wash)" : undefined }}>
+          <span className="sr-only">Other major economies</span>
+          <select aria-label="Other major economies" aria-controls="economy-dashboard" disabled={!onScopeChange} value={["global", "us", "canada"].includes(scope) ? "" : scope} onChange={event => onScopeChange?.(economyScope(event.target.value))} className="min-h-11 max-w-full rounded-lg px-3 text-xs font-semibold" style={{ color: "var(--color-neon-cyan)", background: "var(--color-space-card)" }}>
+            <option value="" disabled>More economies</option>
+            {ECONOMY_COVERAGE.slice(3).map(c => <option key={c.id} value={c.id}>{c.flag} {c.label}</option>)}
+          </select>
+        </label>
       </div>
     </header>
   );

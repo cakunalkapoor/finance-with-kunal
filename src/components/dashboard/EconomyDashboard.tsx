@@ -33,6 +33,7 @@ export default function EconomyDashboard({ indicators, scope, curve }: { indicat
   const title = category === "all" ? "All indicators" : categories.find(c => c.id === category)?.label;
   const selectedId = shown.some(i => i.id === selected) || (selected === "yield-curve" && showCurve) ? selected : shown[0]?.id ?? (showCurve ? "yield-curve" : null);
   const focused = shown.find(i => i.id === selectedId);
+  const headlines = ECONOMY_HEADLINES[scope].map(h => ({ ...h, indicator: indicators.find(i => i.id === h.id) })).filter(h => h.indicator);
   function selectIndicator(id: string) {
     setSelected(id);
     if (window.matchMedia("(max-width: 1279px)").matches) {
@@ -43,12 +44,11 @@ export default function EconomyDashboard({ indicators, scope, curve }: { indicat
   }
   return (
     <div id="economy-dashboard" data-economy-scope={scope} className="space-y-6">
-      <section aria-label="Headline indicators" className="grid grid-cols-2 overflow-hidden rounded-lg border lg:grid-cols-4" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
-        {ECONOMY_HEADLINES[scope].map(({ id, label }, index) => {
-          const i = indicators.find(i => i.id === id);
+      <section aria-label="Headline indicators" className={`grid grid-cols-2 overflow-hidden rounded-lg border ${headlines.length === 4 ? "lg:grid-cols-4" : headlines.length === 3 ? "sm:grid-cols-3" : ""}`} style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
+        {headlines.map(({ id, label, indicator: i }, index) => {
           if (!i) return null;
           return (
-            <div key={id} className={`min-w-0 p-4 sm:p-5 ${index < 2 ? "border-b lg:border-b-0" : ""} ${index % 2 === 0 ? "border-r" : "lg:border-r"} last:border-r-0`} style={{ borderColor: "var(--color-space-border)" }}>
+            <div key={id} className={`min-w-0 p-4 sm:p-5 ${headlines.length === 4 ? `${index < 2 ? "border-b lg:border-b-0" : ""} ${index % 2 === 0 ? "border-r" : "lg:border-r"}` : headlines.length === 3 ? `${index < 2 ? "border-b sm:border-b-0" : "col-span-2 sm:col-span-1"} ${index === 0 ? "border-r" : "sm:border-r"}` : index === 0 ? "border-r" : ""} last:border-r-0`} style={{ borderColor: "var(--color-space-border)" }}>
               <p className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>{label}</p>
               <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1" style={{ fontFamily: FONT_MONO }}>
                 <strong className="text-2xl tracking-tight sm:text-3xl" style={{ color: "var(--color-text-primary)" }}>{formatEconomicValue(i.value, i.category, i.unit)}</strong>
