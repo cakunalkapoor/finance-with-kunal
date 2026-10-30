@@ -73,6 +73,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
           <div className="min-w-0">
             <h3 className="text-sm font-semibold leading-5" style={{ color: "var(--color-text-primary)" }}><span aria-hidden>{indicator.flag}</span> {economicTitle(indicator)}</h3>
             <p className="mt-1 text-[11px] leading-5" style={{ color: "var(--color-text-muted)" }}>{indicator.country} · {economicPeriod(indicator)}</p>
+            {indicator.sourceUrl && <a href={indicator.sourceUrl} target="_blank" rel="noreferrer" className="mt-1 inline-block text-[11px] underline underline-offset-4" style={{ color: "var(--color-neon-cyan)" }}>View published source ↗</a>}
           </div>
           <span className="shrink-0 rounded px-1.5 py-1 text-[10px]" style={{ color: "var(--color-neon-cyan)", background: "var(--color-wash)", fontFamily: FONT_MONO }}>{economicStatus(indicator)}</span>
         </div>

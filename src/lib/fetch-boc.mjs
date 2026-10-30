@@ -17,6 +17,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { calendarChanges, monthlyLastObservations } from "./calendar-changes.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(__dirname, "..", "..");
@@ -119,16 +120,13 @@ function deriveBond(obs, { country, flag }) {
     oneMonthMove: monthAgo ? round2(last.value - monthAgo.value) : 0,
     oneYearMove: yearAgo ? round2(last.value - yearAgo.value) : 0,
     trend: monthly.map((o) => round2(o.value)),
+    timeSeries: monthlyLastObservations(obs).slice(-36),
+    dailySeries: obs,
   };
 }
 
 function deriveYoY(obs) {
-  // obs is a monthly INDEX series (ascending). Compute YoY % change.
-  if (obs.length < 13) return null;
-  const yoy = [];
-  for (let i = 12; i < obs.length; i++) {
-    yoy.push({ date: obs[i].date, value: round2((obs[i].value / obs[i - 12].value - 1) * 100) });
-  }
+  const yoy = calendarChanges(obs, 12).map(p => ({ ...p, value: round2(p.value) }));
   return buildRecord(yoy);
 }
 

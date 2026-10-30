@@ -19,6 +19,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { calendarChanges } from "./calendar-changes.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(__dirname, "..", "..");
@@ -51,7 +52,7 @@ const SERIES = [
   // and one decimal would round that to -0.0.
   // keep 16 quarters, not 12: the chart's 3Y tab needs 36 months and 12
   // quarterly points span only 34. latestN = keep + 1 for the first pct step.
-  { key: "ca_gdp",              vector: 62305752,   latestN: 17, unit: "% QoQ", pct: true, round: "two", keep: 16, label: "Canada GDP (QoQ)" },
+  { key: "ca_gdp",              vector: 62305752,   latestN: 17, unit: "% QoQ", pct: true, months: 3, round: "two", keep: 16, label: "Canada GDP (QoQ)" },
   // Real GDP by industry, chained 2017$, monthly SA (table 36-10-0434). LEVEL →
   // month-over-month %. Runs ~4 months ahead of the quarterly series, so this is
   // the fresher read on Canadian growth between quarterly prints.
@@ -73,6 +74,7 @@ async function fetchVector(vectorId, latestN) {
       const obj = j?.[0]?.object;
       if (j?.[0]?.status !== "SUCCESS" || !obj) throw new Error(`WDS status ${j?.[0]?.status}`);
       return (obj.vectorDataPoint || [])
+        .filter((p) => p.value != null && p.value !== "")
         .map((p) => ({ date: p.refPer.slice(0, 7), value: Number(p.value) }))
         .filter((p) => Number.isFinite(p.value))
         .sort((a, b) => a.date.localeCompare(b.date));
@@ -106,21 +108,13 @@ function buildRecord(series, { scale = 1, round = "one", keep = 24 } = {}) {
 // For LEVEL series we can report the month-over-month change (e.g. employment
 // level → "jobs added", in K). Rounded to whole thousands.
 function deriveDiff(obs, keep = 24) {
-  if (obs.length < 2) return null;
-  const diff = [];
-  for (let i = 1; i < obs.length; i++) {
-    diff.push({ date: obs[i].date, value: Math.round(obs[i].value - obs[i - 1].value) });
-  }
+  const diff = calendarChanges(obs, 1, { difference: true });
   return buildRecord(diff, { keep });
 }
 
 // For LEVEL series we report the year-over-year % change (e.g. retail sales).
 function deriveYoY(obs, keep = 24) {
-  if (obs.length < 13) return null;
-  const yoy = [];
-  for (let i = 12; i < obs.length; i++) {
-    yoy.push({ date: obs[i].date, value: round1((obs[i].value / obs[i - 12].value - 1) * 100) });
-  }
+  const yoy = calendarChanges(obs, 12);
   return buildRecord(yoy, { keep });
 }
 
@@ -128,14 +122,8 @@ function deriveYoY(obs, keep = 24) {
 // series, QoQ on a quarterly one. Not annualised: StatCan headlines quarterly
 // GDP at an annual rate, but this card has always shown the plain quarterly
 // move (and computing it this way reproduces the OECD/FRED figure exactly).
-function derivePct(obs, keep = 24, round = "two") {
-  if (obs.length < 2) return null;
-  const pct = [];
-  for (let i = 1; i < obs.length; i++) {
-    const prev = obs[i - 1].value;
-    if (!prev) continue;
-    pct.push({ date: obs[i].date, value: (obs[i].value / prev - 1) * 100 });
-  }
+function derivePct(obs, keep = 24, round = "two", months = 1) {
+  const pct = calendarChanges(obs, months);
   return buildRecord(pct, { keep, round });
 }
 
@@ -148,7 +136,7 @@ async function main() {
       const obs = await fetchVector(s.vector, s.latestN);
       const d = s.diff ? deriveDiff(obs, s.keep)
         : s.yoy ? deriveYoY(obs, s.keep)
-        : s.pct ? derivePct(obs, s.keep, s.round)
+        : s.pct ? derivePct(obs, s.keep, s.round, s.months)
         : buildRecord(obs, { scale: s.scale, round: s.round, keep: s.keep });
       macro[s.key] = { ...d, unit: s.unit, label: s.label };
       console.log(`${String(d?.value ?? "—").padStart(8)}  asOf ${d?.asOf}`);

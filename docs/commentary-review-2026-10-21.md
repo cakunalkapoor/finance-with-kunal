@@ -56,3 +56,18 @@ Sovereign yields retain their original observation dates.
 - TypeScript, all 71 tests, sovereign-bond validation and the production export passed.
 - Inspected exported HTML on the homepage, Economy, US, Canada and AI routes for the revised
   commentary, review date and corrected labels; removed placeholder text is absent.
+
+## Economy source audit — October 29, 2026
+
+The 17 added international series were independently fetched again and matched across every retained point. The original FRED, BoC and Eurostat series were reconciled against their dated source responses. Canadian monthly GDP's WDS endpoint returned “product is not released yet”; its retained history instead matched changes calculated from the [official July release's chart table](https://www150.statcan.gc.ca/n1/daily-quotidien/260929/cg-a001-png-eng.htm). Canadian retail growth is correctly 5.4%: the unrounded August calculation is 5.350300011%, so it must be rounded once.
+
+Corrections:
+
+- US CPI was wrong from November 2025 onward because a missing October release shifted an array-offset YoY calculation. September is **3.72%**, August **3.35%**, from the seasonally adjusted CPIAUCSL index. The published unadjusted headline remains **3.7%**. The prior seasonal-adjustment explanation was incorrect. All monthly and quarterly derivations now require exact calendar anchors and never fill a missing release.
+- October 17 US initial claims are now the source's revised **195K**, with the original **194K** release distinguished in the description.
+- China's full retained GDP history now uses [NBS Table 2, October 21](https://www.stats.gov.cn/english/PressRelease/202610/t20261021_1965671.html). India's full retained GDP history now uses Figure 1 of [MoSPI's August 31 release](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2304949&lang=1&reg=48), including revised January–March growth of **8.6%**, followed by April–June **7.8%**. The earlier mix of vintages was removed.
+- US yield charts and Brent/Henry Hub charts contained actual sampled prices assigned to approximate monthly/weekly dates. They were rebuilt from dated provider observations. Future fetches retain original observation dates; the patcher refuses undated caches and pairs both bond tenors on the same source date. Both curves retain their October 22 headline observations, rather than silently advancing the snapshot.
+
+PMI is manually curated **reported survey data**, not a live licensed S&P feed. Retained finals were cross-checked against the country histories/release tables on Trendonify (India June manufacturing uses the final release's 54.2, not the 54.5 flash reading in its historical table). Taiwan May is also supported by [Trading Economics' June 1 report](https://tradingeconomics.com/taiwan/manufacturing-pmi/news/555117). India's October flash pair is supported by [Reuters' October 23 report](https://www.marketscreener.com/news/india-october-business-growth-hits-4-month-high-hiring-stalls-pmi-shows-ce785cded189fe23). Flash observations remain explicitly labelled and subject to revision. OPEC remains the owner's supplied daily export; independent archive access is blocked, and the panel explicitly identifies that provenance.
+
+Every indicator now has a visible source link. This is an audit and correction of the dated Economy snapshot, not a claim that each series is real-time or has been refreshed through October 29. Markets and Vantage AI were not re-audited in this pass. Regression coverage includes missing calendar anchors, rounding, real bond dates and weekly-price dates around holidays and partial weeks.

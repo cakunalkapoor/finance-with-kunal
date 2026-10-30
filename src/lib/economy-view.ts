@@ -41,8 +41,8 @@ export function economyCurveId(curve: YieldCurve) {
   return `yield-curve-${curve.country.toLowerCase().replace(/\s+/g, "-")}`;
 }
 export const ECONOMY_HEADLINES: Record<EconomyScope, { id: string; label: string }[]> = {
-  global: [{ id: "us-cpi", label: "US consumer inflation" }, { id: "us-unemployment", label: "US unemployment" }, { id: "china-mfg-pmi", label: "China manufacturing PMI" }, { id: "brent-oil", label: "Brent crude" }],
-  us: [{ id: "us-gdp", label: "Real GDP growth" }, { id: "us-cpi", label: "Consumer inflation" }, { id: "us-unemployment", label: "Unemployment" }, { id: "us-jobless-claims", label: "Initial jobless claims" }],
+  global: [{ id: "us-cpi", label: "US CPI (adjusted index)" }, { id: "us-unemployment", label: "US unemployment" }, { id: "china-mfg-pmi", label: "China manufacturing PMI" }, { id: "brent-oil", label: "Brent crude" }],
+  us: [{ id: "us-gdp", label: "Real GDP growth" }, { id: "us-cpi", label: "CPI (adjusted index)" }, { id: "us-unemployment", label: "Unemployment" }, { id: "us-jobless-claims", label: "Initial jobless claims" }],
   canada: [{ id: "ca-gdp", label: "Real GDP growth" }, { id: "ca-cpi", label: "Consumer inflation" }, { id: "ca-unemployment", label: "Unemployment" }, { id: "ca-policy-rate", label: "Policy rate" }],
 };
 
@@ -77,7 +77,8 @@ export function economicDeltaUnit(indicator: EconomicIndicator) {
   return indicator.unit.includes("%") ? "pp" : indicator.category === "pmi" ? "pts" : indicator.unit;
 }
 export function economicTitle(indicator: EconomicIndicator) {
-  if (indicator.id === "us-cpi" || indicator.id === "ca-cpi") return "Consumer inflation (CPI)";
+  if (indicator.id === "us-cpi") return "CPI inflation (adjusted index)";
+  if (indicator.id === "ca-cpi") return "Consumer inflation (CPI)";
   if (indicator.id === "ea-hicp") return "Consumer inflation (HICP)";
   return indicator.name.replace(/^(US |Canada |China |India |Taiwan |South Korea |Euro Area |UK |Japan |Australia |Germany |France )/, "");
 }

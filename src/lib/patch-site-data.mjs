@@ -7,6 +7,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { monthlyHistory, mergeMonthlyHistory, periodMoves } from "./bond-history.mjs";
+import { monthlyLastObservations } from "./calendar-changes.mjs";
 
 const taiwanHistory = JSON.parse(readFileSync(new URL("./taiwan-bond-history.json", import.meta.url), "utf8"));
 const bondChartHistories = {
@@ -400,16 +401,6 @@ function tsLiteral(series) {
     .map((p) => `{ date: "${p.date}", value: ${p.value} }`)
     .join(",\n      ")}\n    ]`;
 }
-// Build a weekly history (date,value) from a 52-pt Yahoo sparkline ending at asOf.
-function weeklyTsFromSparkline(sparkline, asOf) {
-  const end = new Date(`${asOf}T00:00:00Z`);
-  const pts = (sparkline || []).map((v, i, arr) => {
-    const d = new Date(end);
-    d.setUTCDate(d.getUTCDate() - (arr.length - 1 - i) * 7);
-    return { date: d.toISOString().slice(0, 10), value: v };
-  });
-  return tsLiteral(pts);
-}
 // Patch one ECONOMIC_INDICATORS card. Brace-safe: the indicator object contains a
 // nested `timeSeries` array (or a genTimeSeries(...) call), so we split the match
 // into [scalar-field head][`timeSeries:`][value] rather than using a [^{}] anchor
@@ -461,7 +452,9 @@ function patchEconomicIndicator(id, macroRec, { weekly = false } = {}) {
 // NOTE: these cards' `description` prose is NOT patched here — the weekly task
 // rewrites it to match the new direction/value.
 function patchCommodityIndicator(id, rec) {
+  if (process.argv.includes("--bonds-only")) return false;
   if (!rec || rec.value == null) return false;
+  if (!rec.weeklyHistory?.length) throw new Error(`${id}: dated weekly observations required; fetch Yahoo again`);
   const wk = Number(rec.weekChange ?? 0);
   const prev = +(rec.value / (1 + wk / 100)).toFixed(2);
   return patchIndicatorObject(id, {
@@ -474,7 +467,7 @@ function patchCommodityIndicator(id, rec) {
     direction: `"${wk >= 0 ? "up" : "down"}"`,
     period: `"${asOfToFullDate(rec.asOf)}"`,
     description: JSON.stringify(`The ${asOfToFullDate(rec.asOf)} observation was $${rec.value}/${rec.symbol === "BZ=F" ? "bbl" : "MMBtu"}, with a ${wk >= 0 ? "+" : ""}${wk.toFixed(2)}% move against the prior weekly anchor. Source: Yahoo Finance (${rec.symbol}); futures-contract prices.`),
-  }, weeklyTsFromSparkline(rec.sparkline, rec.asOf));
+  }, tsLiteral(rec.weeklyHistory));
 }
 if (patchEconomicIndicator("us-cpi", m.us_cpi)) stats.macro++;
 if (patchEconomicIndicator("us-ppi", m.us_ppi)) stats.macro++;
@@ -542,25 +535,14 @@ const CURVES = [
   },
 ];
 
-/** Monthly labels ending at `asOf`'s month, one per trend point. */
-function monthLabels(asOf, count) {
-  const end = new Date(`${asOf.slice(0, 7)}-01T00:00:00Z`);
-  return Array.from({ length: count }, (_, i) => {
-    const d = new Date(end);
-    d.setUTCMonth(d.getUTCMonth() - (count - 1 - i));
-    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
-  });
-}
-
-function tenorTs(t, rec, indent) {
-  const labels = monthLabels(rec.asOf, rec.trend.length);
-  const pts = rec.trend
-    .map((v, i) => `${indent}    { date: "${labels[i]}", value: ${v} }`)
+function tenorTs(t, series, indent) {
+  const pts = series
+    .map(p => `${indent}    { date: "${p.date}", value: ${p.value} }`)
     .join(",\n");
   return `{
 ${indent}  label: "${t.label}",
 ${indent}  name: "${t.name}",
-${indent}  value: ${rec.value},
+${indent}  value: ${series.at(-1).value},
 ${indent}  series: [
 ${pts},
 ${indent}  ],
@@ -568,23 +550,27 @@ ${indent}}`;
 }
 
 const curveBlocks = [];
-for (const cfg of CURVES) {
+for (const cfg of process.argv.includes("--bonds-only") ? [] : CURVES) {
   const s = (cfg.short.from || {})[cfg.short.key];
   const l = (cfg.long.from || {})[cfg.long.key];
-  // Skip rather than half-render: a curve card missing a leg would show a
-  // spread computed against nothing.
-  if (!s?.trend?.length || !l?.trend?.length || s.value == null || l.value == null) {
-    console.warn(`  yield curve ${cfg.country}: skipped (missing leg)`);
-    continue;
+  // Never invent calendar labels for an undated sparkline, or pair two
+  // different observation dates. Old caches must be fetched again.
+  if (!s?.dailySeries?.length || !l?.dailySeries?.length) {
+    throw new Error(`Yield curve ${cfg.country}: dated observations required; fetch FRED and BoC again`);
   }
-  const asOf = s.asOf < l.asOf ? s.asOf : l.asOf;
+  const longByDate = new Map(l.dailySeries.map(p => [p.date, p.value]));
+  const paired = s.dailySeries.filter(p => longByDate.has(p.date)).sort((a, b) => a.date.localeCompare(b.date));
+  if (!paired.length) throw new Error(`Yield curve ${cfg.country}: no common observation date`);
+  const shortSeries = monthlyLastObservations(paired).slice(-36);
+  const longSeries = shortSeries.map(p => ({ date: p.date, value: longByDate.get(p.date) }));
+  const asOf = shortSeries.at(-1).date;
   curveBlocks.push(`  {
     country: ${JSON.stringify(cfg.country)},
     flag: "${cfg.flag}",
     asOf: "${asOf}",
-    spreadBps: ${Math.round((l.value - s.value) * 100)},
-    short: ${tenorTs(cfg.short, s, "    ")},
-    long: ${tenorTs(cfg.long, l, "    ")},
+    spreadBps: ${Math.round((longSeries.at(-1).value - shortSeries.at(-1).value) * 100)},
+    short: ${tenorTs(cfg.short, shortSeries, "    ")},
+    long: ${tenorTs(cfg.long, longSeries, "    ")},
     source: ${JSON.stringify(cfg.source)},
   }`);
   stats.yieldCurve = (stats.yieldCurve || 0) + 1;

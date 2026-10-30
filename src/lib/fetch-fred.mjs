@@ -12,6 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { calendarChanges, monthlyLastObservations } from "./calendar-changes.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(__dirname, "..", "..");
@@ -165,6 +166,8 @@ function deriveBondDaily(obs) {
     oneMonthMove: monthAgo ? round2(last.value - monthAgo.value) : 0,
     oneYearMove: yearAgo ? round2(last.value - yearAgo.value) : 0,
     trend,
+    timeSeries: monthlyLastObservations(obs).slice(-36),
+    dailySeries: obs,
   };
 }
 
@@ -187,11 +190,8 @@ function deriveMacro(obs, scale = 1, preserveFullDate = false) {
 
 function deriveMoMChange(obs, scale = 1) {
   // For LEVEL series (e.g. payrolls) we chart the month-over-month CHANGE.
-  if (obs.length < 2) return null;
-  const out = [];
-  for (let i = 1; i < obs.length; i++) {
-    out.push({ date: obs[i].date.slice(0, 7), value: round2((obs[i].value - obs[i - 1].value) * scale) });
-  }
+  const out = calendarChanges(obs, 1, { difference: true }).map(p => ({ ...p, value: round2(p.value * scale) }));
+  if (!out.length) return null;
   const last = out[out.length - 1];
   const prev = out[out.length - 2];
   return {
@@ -199,18 +199,14 @@ function deriveMoMChange(obs, scale = 1) {
     previousValue: prev?.value ?? null,
     change: prev ? round2(last.value - prev.value) : 0,
     direction: prev ? (last.value > prev.value ? "up" : last.value < prev.value ? "down" : "neutral") : "neutral",
-    asOf: obs[obs.length - 1].date,
+    asOf: last.date,
     timeSeries: out,
   };
 }
 
 function deriveCPI_YoY(obs) {
-  // CPIAUCSL is an index level. Compute YoY % change from last 13 months.
-  if (obs.length < 13) return null;
-  const out = [];
-  for (let i = 12; i < obs.length; i++) {
-    out.push({ date: obs[i].date.slice(0, 7), value: round2((obs[i].value / obs[i - 12].value - 1) * 100) });
-  }
+  const out = calendarChanges(obs, 12).map(p => ({ ...p, value: round2(p.value) }));
+  if (!out.length) return null;
   const last = out[out.length - 1];
   const prev = out[out.length - 2];
   return {
@@ -218,7 +214,7 @@ function deriveCPI_YoY(obs) {
     previousValue: prev?.value ?? null,
     change: prev ? round2(last.value - prev.value) : 0,
     direction: prev ? (last.value > prev.value ? "up" : last.value < prev.value ? "down" : "neutral") : "neutral",
-    asOf: obs[obs.length - 1].date,
+    asOf: last.date,
     timeSeries: out,
   };
 }

@@ -338,6 +338,11 @@ def derive(history, year=None):
         rv = float(np.std(log_returns, ddof=1) * np.sqrt(252) * 100)
         realized_vol = round(rv, 2)
 
+    # Retain original observation dates. Evenly sampling trading rows and then
+    # assigning weekly labels moves real prices onto days they never traded.
+    dated = pd.DataFrame({"value": closes.values, "date": closes.index.strftime("%Y-%m-%d")}, index=closes.index)
+    weekly_history = [{"date": row["date"], "value": q(row["value"])} for _, row in dated.resample("W-FRI").last().dropna().tail(156).iterrows()]
+
     return {
         "value":        q(last),
         "asOf":         closes_idx[-1].strftime("%Y-%m-%d"),
@@ -349,8 +354,8 @@ def derive(history, year=None):
         "low52w":       q(range_52w["low"]) if range_52w else None,
         "range52wAsOf": range_52w["asOf"] if range_52w else None,
         "range52wBasis": "daily-closes",
-        # ~3y weekly sparkline: 156 points across the trailing 756 trading days.
-        "sparkline":    downsample(closes.tail(756), 156),
+        "sparkline":    [point["value"] for point in weekly_history],
+        "weeklyHistory": weekly_history,
         # The 1W window, drawn from real daily closes rather than the weekly
         # sparkline — one week of a weekly series is a single point and renders
         # no line at all.
