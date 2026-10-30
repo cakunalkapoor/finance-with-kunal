@@ -10,9 +10,10 @@ interface Props {
   indicators: EconomicIndicator[];
   curves: YieldCurve[];
   additionalUpdatedLabel: string;
+  coverageNote?: string;
 }
 
-export function EconomyView({ indicators, curves, additionalUpdatedLabel, scope = "global", onScopeChange }: Props & {
+export function EconomyView({ indicators, curves, additionalUpdatedLabel, coverageNote, scope = "global", onScopeChange }: Props & {
   scope?: EconomyScope;
   onScopeChange?: (scope: EconomyScope) => void;
 }) {
@@ -22,6 +23,7 @@ export function EconomyView({ indicators, curves, additionalUpdatedLabel, scope 
       <EconomyHeader scope={scope} eyebrow={scope === "global" ? "Global economy" : `${coverage.country} economy`} title="The economy, at a glance."
         description={scope === "global" ? "All tracked economies in one view. Filter by theme, or switch to a dedicated US or Canada view." : "Sourced economic indicators and the context behind each release."}
         onScopeChange={onScopeChange} updatedLabel={scope === "global" ? additionalUpdatedLabel : undefined} />
+      {scope === "global" && coverageNote && <p className="text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>{coverageNote}</p>}
       <EconomyDashboard scope={scope} indicators={economyIndicators(indicators, scope)}
         curves={economyCurves(curves, scope)} />
       <p className="text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>Dated snapshots of published observations. Reporting periods vary by series; flash estimates are labelled. Open a panel’s source link to inspect the release.</p>

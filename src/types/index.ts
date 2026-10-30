@@ -198,6 +198,8 @@ export interface EconomicIndicator {
   sourceUrl?: string;
   apiUrl?: string;
   observationLabels?: Record<string, string>;
+  historyNote?: string;
+  sourceReferences?: { label: string; url: string; releaseDate?: string }[];
 }
 
 export interface MacroSnapshot {

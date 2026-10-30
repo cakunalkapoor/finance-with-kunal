@@ -25,6 +25,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
   const isPMI = indicator.category === "pmi";
   const first = filtered[0], last = filtered.at(-1);
   const context = indicator.context ?? ECONOMIC_CONTEXT[indicator.id];
+  const earlierSources = indicator.sourceReferences?.filter(source => source.url !== indicator.sourceUrl) ?? [];
   const history = indicator.timeSeries;
   const low = Math.min(...history.map(p => p.value));
   const high = Math.max(...history.map(p => p.value));
@@ -52,6 +53,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
     },
     yAxis: {
       type: "value", scale: true, splitNumber: 2,
+      minInterval: indicator.unit === "K" ? 1 : isPMI ? 0.1 : 0.01,
       ...(isPMI ? {
         min: ({ min, max }: { min: number; max: number }) => Math.floor((Math.min(min, 50) - Math.max((max - min) * 0.12, 0.3)) * 10) / 10,
         max: ({ min, max }: { min: number; max: number }) => Math.ceil((Math.max(max, 50) + Math.max((max - min) * 0.12, 0.3)) * 10) / 10,
@@ -94,6 +96,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
         <div className="flex justify-between gap-3 text-[10px]" style={{ color: "var(--color-text-secondary)", fontFamily: FONT_MONO }}><span>Low {displayValue(low)}</span><span>High {displayValue(high)}</span></div>
         <div className="relative my-2 h-1 rounded-full" style={{ background: "var(--color-space-border)" }}><span className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2" style={{ left: `${position}%`, background: "var(--color-neon-cyan)", borderColor: "var(--color-space-card)" }} /></div>
         <p className="text-[10px] leading-4" style={{ color: "var(--color-text-muted)" }}>Observed history · {economicObservationLabel(indicator, history[0].date)}–{economicObservationLabel(indicator, history.at(-1)!.date)} · {history.length} readings. Marker: latest.</p>
+        {indicator.historyNote && <p className="mt-1 text-[10px] leading-4" style={{ color: "var(--color-text-secondary)" }}>{indicator.historyNote}</p>}
       </section>}
       {context && <section className="px-4 pb-4"><h4 className="mb-1 text-[10px] font-semibold uppercase tracking-wide" style={{ color: "var(--color-neon-cyan)" }}>What it means</h4><p className="text-xs leading-6" style={{ color: "var(--color-text-secondary)" }}>{context}</p></section>}
       <details className="group border-t px-4" style={{ borderColor: "var(--color-space-border)" }}>
@@ -101,6 +104,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
         <div className="space-y-4 pb-4 text-xs leading-6">
           <p style={{ color: "var(--color-text-muted)" }}>{indicator.description}</p>
           {indicator.sourceUrl && <div className="flex flex-wrap gap-x-4 gap-y-2" style={{ color: "var(--color-neon-cyan)" }}><a href={indicator.sourceUrl} target="_blank" rel="noreferrer" className="underline underline-offset-4">Open source ↗</a>{indicator.apiUrl && <a href={indicator.apiUrl} target="_blank" rel="noreferrer" className="underline underline-offset-4">Source data ↗</a>}</div>}
+          {earlierSources.length > 0 && <div><p className="mb-1 font-medium" style={{ color: "var(--color-text-secondary)" }}>Earlier releases</p><ul className="space-y-1">{earlierSources.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer" className="underline underline-offset-4" style={{ color: "var(--color-neon-cyan)" }}>{source.label} ↗</a></li>)}</ul></div>}
         </div>
       </details>
     </article>

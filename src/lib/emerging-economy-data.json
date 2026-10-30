@@ -1,0 +1,1679 @@
+{
+  "reviewedAt": "2026-10-30",
+  "indicators": [
+    {
+      "id": "my-gdp",
+      "name": "Malaysia Real GDP growth",
+      "country": "Malaysia",
+      "flag": "🇲🇾",
+      "category": "growth",
+      "unit": "% YoY",
+      "value": 6.0,
+      "previousValue": 5.4,
+      "change": 0.6,
+      "direction": "up",
+      "isPositiveGood": true,
+      "period": "Q2 2026",
+      "timeSeries": [
+        {
+          "date": "2022-10",
+          "value": 7.4
+        },
+        {
+          "date": "2023-01",
+          "value": 5.7
+        },
+        {
+          "date": "2023-04",
+          "value": 2.7
+        },
+        {
+          "date": "2023-07",
+          "value": 3.1
+        },
+        {
+          "date": "2023-10",
+          "value": 2.9
+        },
+        {
+          "date": "2024-01",
+          "value": 4.2
+        },
+        {
+          "date": "2024-04",
+          "value": 6.0
+        },
+        {
+          "date": "2024-07",
+          "value": 5.5
+        },
+        {
+          "date": "2024-10",
+          "value": 5.0
+        },
+        {
+          "date": "2025-01",
+          "value": 4.4
+        },
+        {
+          "date": "2025-04",
+          "value": 4.6
+        },
+        {
+          "date": "2025-07",
+          "value": 5.3
+        },
+        {
+          "date": "2025-10",
+          "value": 6.2
+        },
+        {
+          "date": "2026-01",
+          "value": 5.4
+        },
+        {
+          "date": "2026-04",
+          "value": 6.0
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://open.dosm.gov.my/data-catalogue/gdp_qtr_real",
+      "reviewedAt": "2026-10-30",
+      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-10-30.",
+      "apiUrl": "https://storage.dosm.gov.my/gdp/gdp_qtr_real.csv",
+      "observationLabels": {
+        "2022-10": "Q4 2022",
+        "2023-01": "Q1 2023",
+        "2023-04": "Q2 2023",
+        "2023-07": "Q3 2023",
+        "2023-10": "Q4 2023",
+        "2024-01": "Q1 2024",
+        "2024-04": "Q2 2024",
+        "2024-07": "Q3 2024",
+        "2024-10": "Q4 2024",
+        "2025-01": "Q1 2025",
+        "2025-04": "Q2 2025",
+        "2025-07": "Q3 2025",
+        "2025-10": "Q4 2025",
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026"
+      }
+    },
+    {
+      "id": "my-cpi",
+      "name": "Malaysia Consumer inflation (CPI)",
+      "country": "Malaysia",
+      "flag": "🇲🇾",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 1.8,
+      "previousValue": 1.9,
+      "change": -0.1,
+      "direction": "down",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2022-10",
+          "value": 4.0
+        },
+        {
+          "date": "2022-11",
+          "value": 4.0
+        },
+        {
+          "date": "2022-12",
+          "value": 3.8
+        },
+        {
+          "date": "2023-01",
+          "value": 3.7
+        },
+        {
+          "date": "2023-02",
+          "value": 3.7
+        },
+        {
+          "date": "2023-03",
+          "value": 3.4
+        },
+        {
+          "date": "2023-04",
+          "value": 3.3
+        },
+        {
+          "date": "2023-05",
+          "value": 2.8
+        },
+        {
+          "date": "2023-06",
+          "value": 2.4
+        },
+        {
+          "date": "2023-07",
+          "value": 2.0
+        },
+        {
+          "date": "2023-08",
+          "value": 2.0
+        },
+        {
+          "date": "2023-09",
+          "value": 1.9
+        },
+        {
+          "date": "2023-10",
+          "value": 1.8
+        },
+        {
+          "date": "2023-11",
+          "value": 1.5
+        },
+        {
+          "date": "2023-12",
+          "value": 1.5
+        },
+        {
+          "date": "2024-01",
+          "value": 1.5
+        },
+        {
+          "date": "2024-02",
+          "value": 1.8
+        },
+        {
+          "date": "2024-03",
+          "value": 1.8
+        },
+        {
+          "date": "2024-04",
+          "value": 1.8
+        },
+        {
+          "date": "2024-05",
+          "value": 2.0
+        },
+        {
+          "date": "2024-06",
+          "value": 2.0
+        },
+        {
+          "date": "2024-07",
+          "value": 2.0
+        },
+        {
+          "date": "2024-08",
+          "value": 1.9
+        },
+        {
+          "date": "2024-09",
+          "value": 1.8
+        },
+        {
+          "date": "2024-10",
+          "value": 1.9
+        },
+        {
+          "date": "2024-11",
+          "value": 1.8
+        },
+        {
+          "date": "2024-12",
+          "value": 1.7
+        },
+        {
+          "date": "2025-01",
+          "value": 1.7
+        },
+        {
+          "date": "2025-02",
+          "value": 1.5
+        },
+        {
+          "date": "2025-03",
+          "value": 1.4
+        },
+        {
+          "date": "2025-04",
+          "value": 1.4
+        },
+        {
+          "date": "2025-05",
+          "value": 1.2
+        },
+        {
+          "date": "2025-06",
+          "value": 1.1
+        },
+        {
+          "date": "2025-07",
+          "value": 1.2
+        },
+        {
+          "date": "2025-08",
+          "value": 1.3
+        },
+        {
+          "date": "2025-09",
+          "value": 1.5
+        },
+        {
+          "date": "2025-10",
+          "value": 1.3
+        },
+        {
+          "date": "2025-11",
+          "value": 1.4
+        },
+        {
+          "date": "2025-12",
+          "value": 1.6
+        },
+        {
+          "date": "2026-01",
+          "value": 1.6
+        },
+        {
+          "date": "2026-02",
+          "value": 1.4
+        },
+        {
+          "date": "2026-03",
+          "value": 1.7
+        },
+        {
+          "date": "2026-04",
+          "value": 1.9
+        },
+        {
+          "date": "2026-05",
+          "value": 2.0
+        },
+        {
+          "date": "2026-06",
+          "value": 1.9
+        },
+        {
+          "date": "2026-07",
+          "value": 1.8
+        },
+        {
+          "date": "2026-08",
+          "value": 1.9
+        },
+        {
+          "date": "2026-09",
+          "value": 1.8
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://open.dosm.gov.my/data-catalogue/cpi_headline_inflation",
+      "reviewedAt": "2026-10-30",
+      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-10-30.",
+      "apiUrl": "https://storage.dosm.gov.my/cpi/cpi_2d_inflation.csv"
+    },
+    {
+      "id": "my-unemployment",
+      "name": "Malaysia Unemployment rate",
+      "country": "Malaysia",
+      "flag": "🇲🇾",
+      "category": "employment",
+      "unit": "%",
+      "value": 2.9,
+      "previousValue": 3.0,
+      "change": -0.1,
+      "direction": "down",
+      "isPositiveGood": false,
+      "period": "Aug 2026",
+      "timeSeries": [
+        {
+          "date": "2022-10",
+          "value": 3.6
+        },
+        {
+          "date": "2022-11",
+          "value": 3.6
+        },
+        {
+          "date": "2022-12",
+          "value": 3.6
+        },
+        {
+          "date": "2023-01",
+          "value": 3.6
+        },
+        {
+          "date": "2023-02",
+          "value": 3.5
+        },
+        {
+          "date": "2023-03",
+          "value": 3.5
+        },
+        {
+          "date": "2023-04",
+          "value": 3.5
+        },
+        {
+          "date": "2023-05",
+          "value": 3.5
+        },
+        {
+          "date": "2023-06",
+          "value": 3.4
+        },
+        {
+          "date": "2023-07",
+          "value": 3.4
+        },
+        {
+          "date": "2023-08",
+          "value": 3.4
+        },
+        {
+          "date": "2023-09",
+          "value": 3.4
+        },
+        {
+          "date": "2023-10",
+          "value": 3.4
+        },
+        {
+          "date": "2023-11",
+          "value": 3.3
+        },
+        {
+          "date": "2023-12",
+          "value": 3.3
+        },
+        {
+          "date": "2024-01",
+          "value": 3.3
+        },
+        {
+          "date": "2024-02",
+          "value": 3.3
+        },
+        {
+          "date": "2024-03",
+          "value": 3.3
+        },
+        {
+          "date": "2024-04",
+          "value": 3.3
+        },
+        {
+          "date": "2024-05",
+          "value": 3.3
+        },
+        {
+          "date": "2024-06",
+          "value": 3.3
+        },
+        {
+          "date": "2024-07",
+          "value": 3.3
+        },
+        {
+          "date": "2024-08",
+          "value": 3.2
+        },
+        {
+          "date": "2024-09",
+          "value": 3.2
+        },
+        {
+          "date": "2024-10",
+          "value": 3.2
+        },
+        {
+          "date": "2024-11",
+          "value": 3.2
+        },
+        {
+          "date": "2024-12",
+          "value": 3.1
+        },
+        {
+          "date": "2025-01",
+          "value": 3.1
+        },
+        {
+          "date": "2025-02",
+          "value": 3.1
+        },
+        {
+          "date": "2025-03",
+          "value": 3.1
+        },
+        {
+          "date": "2025-04",
+          "value": 3.1
+        },
+        {
+          "date": "2025-05",
+          "value": 3.1
+        },
+        {
+          "date": "2025-06",
+          "value": 3.0
+        },
+        {
+          "date": "2025-07",
+          "value": 3.0
+        },
+        {
+          "date": "2025-08",
+          "value": 3.0
+        },
+        {
+          "date": "2025-09",
+          "value": 3.0
+        },
+        {
+          "date": "2025-10",
+          "value": 3.0
+        },
+        {
+          "date": "2025-11",
+          "value": 2.9
+        },
+        {
+          "date": "2025-12",
+          "value": 2.9
+        },
+        {
+          "date": "2026-01",
+          "value": 2.9
+        },
+        {
+          "date": "2026-02",
+          "value": 2.9
+        },
+        {
+          "date": "2026-03",
+          "value": 2.9
+        },
+        {
+          "date": "2026-04",
+          "value": 3.0
+        },
+        {
+          "date": "2026-05",
+          "value": 3.0
+        },
+        {
+          "date": "2026-06",
+          "value": 3.0
+        },
+        {
+          "date": "2026-07",
+          "value": 3.0
+        },
+        {
+          "date": "2026-08",
+          "value": 2.9
+        }
+      ],
+      "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
+      "sourceUrl": "https://open.dosm.gov.my/data-catalogue/lfs_month",
+      "reviewedAt": "2026-10-30",
+      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-10-30.",
+      "apiUrl": "https://storage.dosm.gov.my/labour/lfs_month.csv"
+    },
+    {
+      "id": "br-gdp",
+      "name": "Brazil Real GDP growth",
+      "country": "Brazil",
+      "flag": "🇧🇷",
+      "category": "growth",
+      "unit": "% YoY",
+      "value": 2.0,
+      "previousValue": 1.8,
+      "change": 0.2,
+      "direction": "up",
+      "isPositiveGood": true,
+      "period": "Q2 2026",
+      "timeSeries": [
+        {
+          "date": "2022-10",
+          "value": 2.7
+        },
+        {
+          "date": "2023-01",
+          "value": 4.4
+        },
+        {
+          "date": "2023-04",
+          "value": 3.9
+        },
+        {
+          "date": "2023-07",
+          "value": 2.4
+        },
+        {
+          "date": "2023-10",
+          "value": 2.4
+        },
+        {
+          "date": "2024-01",
+          "value": 2.5
+        },
+        {
+          "date": "2024-04",
+          "value": 3.5
+        },
+        {
+          "date": "2024-07",
+          "value": 4.1
+        },
+        {
+          "date": "2024-10",
+          "value": 3.6
+        },
+        {
+          "date": "2025-01",
+          "value": 3.1
+        },
+        {
+          "date": "2025-04",
+          "value": 2.4
+        },
+        {
+          "date": "2025-07",
+          "value": 1.8
+        },
+        {
+          "date": "2025-10",
+          "value": 1.8
+        },
+        {
+          "date": "2026-01",
+          "value": 1.8
+        },
+        {
+          "date": "2026-04",
+          "value": 2.0
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://sidra.ibge.gov.br/tabela/5932",
+      "reviewedAt": "2026-10-30",
+      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-10-30.",
+      "apiUrl": "https://apisidra.ibge.gov.br/values/t/5932/n1/all/v/6561/p/last%2016/c11255/90707",
+      "observationLabels": {
+        "2022-10": "Q4 2022",
+        "2023-01": "Q1 2023",
+        "2023-04": "Q2 2023",
+        "2023-07": "Q3 2023",
+        "2023-10": "Q4 2023",
+        "2024-01": "Q1 2024",
+        "2024-04": "Q2 2024",
+        "2024-07": "Q3 2024",
+        "2024-10": "Q4 2024",
+        "2025-01": "Q1 2025",
+        "2025-04": "Q2 2025",
+        "2025-07": "Q3 2025",
+        "2025-10": "Q4 2025",
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026"
+      }
+    },
+    {
+      "id": "br-cpi",
+      "name": "Brazil Consumer inflation (CPI)",
+      "country": "Brazil",
+      "flag": "🇧🇷",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 4.58,
+      "previousValue": 4.22,
+      "change": 0.36,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2023-09",
+          "value": 5.19
+        },
+        {
+          "date": "2023-10",
+          "value": 4.82
+        },
+        {
+          "date": "2023-11",
+          "value": 4.68
+        },
+        {
+          "date": "2023-12",
+          "value": 4.62
+        },
+        {
+          "date": "2024-01",
+          "value": 4.51
+        },
+        {
+          "date": "2024-02",
+          "value": 4.5
+        },
+        {
+          "date": "2024-03",
+          "value": 3.93
+        },
+        {
+          "date": "2024-04",
+          "value": 3.69
+        },
+        {
+          "date": "2024-05",
+          "value": 3.93
+        },
+        {
+          "date": "2024-06",
+          "value": 4.23
+        },
+        {
+          "date": "2024-07",
+          "value": 4.5
+        },
+        {
+          "date": "2024-08",
+          "value": 4.24
+        },
+        {
+          "date": "2024-09",
+          "value": 4.42
+        },
+        {
+          "date": "2024-10",
+          "value": 4.76
+        },
+        {
+          "date": "2024-11",
+          "value": 4.87
+        },
+        {
+          "date": "2024-12",
+          "value": 4.83
+        },
+        {
+          "date": "2025-01",
+          "value": 4.56
+        },
+        {
+          "date": "2025-02",
+          "value": 5.06
+        },
+        {
+          "date": "2025-03",
+          "value": 5.48
+        },
+        {
+          "date": "2025-04",
+          "value": 5.53
+        },
+        {
+          "date": "2025-05",
+          "value": 5.32
+        },
+        {
+          "date": "2025-06",
+          "value": 5.35
+        },
+        {
+          "date": "2025-07",
+          "value": 5.23
+        },
+        {
+          "date": "2025-08",
+          "value": 5.13
+        },
+        {
+          "date": "2025-09",
+          "value": 5.17
+        },
+        {
+          "date": "2025-10",
+          "value": 4.68
+        },
+        {
+          "date": "2025-11",
+          "value": 4.46
+        },
+        {
+          "date": "2025-12",
+          "value": 4.26
+        },
+        {
+          "date": "2026-01",
+          "value": 4.44
+        },
+        {
+          "date": "2026-02",
+          "value": 3.81
+        },
+        {
+          "date": "2026-03",
+          "value": 4.14
+        },
+        {
+          "date": "2026-04",
+          "value": 4.39
+        },
+        {
+          "date": "2026-05",
+          "value": 4.72
+        },
+        {
+          "date": "2026-06",
+          "value": 4.64
+        },
+        {
+          "date": "2026-07",
+          "value": 4.44
+        },
+        {
+          "date": "2026-08",
+          "value": 4.22
+        },
+        {
+          "date": "2026-09",
+          "value": 4.58
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://sidra.ibge.gov.br/tabela/7060",
+      "reviewedAt": "2026-10-30",
+      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-10-30.",
+      "apiUrl": "https://apisidra.ibge.gov.br/values/t/7060/n1/all/v/2265/p/last%2037/c315/7169"
+    },
+    {
+      "id": "br-unemployment",
+      "name": "Brazil Unemployment rate",
+      "country": "Brazil",
+      "flag": "🇧🇷",
+      "category": "employment",
+      "unit": "%",
+      "value": 5.2,
+      "previousValue": 5.3,
+      "change": -0.1,
+      "direction": "down",
+      "isPositiveGood": false,
+      "period": "Jul–Sep 2026 (3-month average)",
+      "timeSeries": [
+        {
+          "date": "2023-09",
+          "value": 7.7
+        },
+        {
+          "date": "2023-10",
+          "value": 7.6
+        },
+        {
+          "date": "2023-11",
+          "value": 7.5
+        },
+        {
+          "date": "2023-12",
+          "value": 7.4
+        },
+        {
+          "date": "2024-01",
+          "value": 7.6
+        },
+        {
+          "date": "2024-02",
+          "value": 7.8
+        },
+        {
+          "date": "2024-03",
+          "value": 7.9
+        },
+        {
+          "date": "2024-04",
+          "value": 7.5
+        },
+        {
+          "date": "2024-05",
+          "value": 7.1
+        },
+        {
+          "date": "2024-06",
+          "value": 6.9
+        },
+        {
+          "date": "2024-07",
+          "value": 6.8
+        },
+        {
+          "date": "2024-08",
+          "value": 6.6
+        },
+        {
+          "date": "2024-09",
+          "value": 6.4
+        },
+        {
+          "date": "2024-10",
+          "value": 6.2
+        },
+        {
+          "date": "2024-11",
+          "value": 6.1
+        },
+        {
+          "date": "2024-12",
+          "value": 6.2
+        },
+        {
+          "date": "2025-01",
+          "value": 6.5
+        },
+        {
+          "date": "2025-02",
+          "value": 6.8
+        },
+        {
+          "date": "2025-03",
+          "value": 7.0
+        },
+        {
+          "date": "2025-04",
+          "value": 6.6
+        },
+        {
+          "date": "2025-05",
+          "value": 6.2
+        },
+        {
+          "date": "2025-06",
+          "value": 5.8
+        },
+        {
+          "date": "2025-07",
+          "value": 5.6
+        },
+        {
+          "date": "2025-08",
+          "value": 5.6
+        },
+        {
+          "date": "2025-09",
+          "value": 5.6
+        },
+        {
+          "date": "2025-10",
+          "value": 5.4
+        },
+        {
+          "date": "2025-11",
+          "value": 5.2
+        },
+        {
+          "date": "2025-12",
+          "value": 5.1
+        },
+        {
+          "date": "2026-01",
+          "value": 5.4
+        },
+        {
+          "date": "2026-02",
+          "value": 5.8
+        },
+        {
+          "date": "2026-03",
+          "value": 6.1
+        },
+        {
+          "date": "2026-04",
+          "value": 5.8
+        },
+        {
+          "date": "2026-05",
+          "value": 5.6
+        },
+        {
+          "date": "2026-06",
+          "value": 5.4
+        },
+        {
+          "date": "2026-07",
+          "value": 5.3
+        },
+        {
+          "date": "2026-08",
+          "value": 5.3
+        },
+        {
+          "date": "2026-09",
+          "value": 5.2
+        }
+      ],
+      "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
+      "sourceUrl": "https://sidra.ibge.gov.br/tabela/6381",
+      "reviewedAt": "2026-10-30",
+      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-10-30.",
+      "apiUrl": "https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/last%2037",
+      "observationLabels": {
+        "2023-09": "Jul–Sep 2023 (3-month average)",
+        "2023-10": "Aug–Oct 2023 (3-month average)",
+        "2023-11": "Sep–Nov 2023 (3-month average)",
+        "2023-12": "Oct–Dec 2023 (3-month average)",
+        "2024-01": "Nov 2023–Jan 2024 (3-month average)",
+        "2024-02": "Dec 2023–Feb 2024 (3-month average)",
+        "2024-03": "Jan–Mar 2024 (3-month average)",
+        "2024-04": "Feb–Apr 2024 (3-month average)",
+        "2024-05": "Mar–May 2024 (3-month average)",
+        "2024-06": "Apr–Jun 2024 (3-month average)",
+        "2024-07": "May–Jul 2024 (3-month average)",
+        "2024-08": "Jun–Aug 2024 (3-month average)",
+        "2024-09": "Jul–Sep 2024 (3-month average)",
+        "2024-10": "Aug–Oct 2024 (3-month average)",
+        "2024-11": "Sep–Nov 2024 (3-month average)",
+        "2024-12": "Oct–Dec 2024 (3-month average)",
+        "2025-01": "Nov 2024–Jan 2025 (3-month average)",
+        "2025-02": "Dec 2024–Feb 2025 (3-month average)",
+        "2025-03": "Jan–Mar 2025 (3-month average)",
+        "2025-04": "Feb–Apr 2025 (3-month average)",
+        "2025-05": "Mar–May 2025 (3-month average)",
+        "2025-06": "Apr–Jun 2025 (3-month average)",
+        "2025-07": "May–Jul 2025 (3-month average)",
+        "2025-08": "Jun–Aug 2025 (3-month average)",
+        "2025-09": "Jul–Sep 2025 (3-month average)",
+        "2025-10": "Aug–Oct 2025 (3-month average)",
+        "2025-11": "Sep–Nov 2025 (3-month average)",
+        "2025-12": "Oct–Dec 2025 (3-month average)",
+        "2026-01": "Nov 2025–Jan 2026 (3-month average)",
+        "2026-02": "Dec 2025–Feb 2026 (3-month average)",
+        "2026-03": "Jan–Mar 2026 (3-month average)",
+        "2026-04": "Feb–Apr 2026 (3-month average)",
+        "2026-05": "Mar–May 2026 (3-month average)",
+        "2026-06": "Apr–Jun 2026 (3-month average)",
+        "2026-07": "May–Jul 2026 (3-month average)",
+        "2026-08": "Jun–Aug 2026 (3-month average)",
+        "2026-09": "Jul–Sep 2026 (3-month average)"
+      }
+    },
+    {
+      "id": "mx-gdp",
+      "name": "Mexico Real GDP growth",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "category": "growth",
+      "unit": "% QoQ",
+      "value": 1.4,
+      "previousValue": -0.3,
+      "change": 1.7,
+      "direction": "up",
+      "isPositiveGood": true,
+      "period": "Q2 2026",
+      "timeSeries": [
+        {
+          "date": "2022-10",
+          "value": 1.2
+        },
+        {
+          "date": "2023-01",
+          "value": 0.6
+        },
+        {
+          "date": "2023-04",
+          "value": 0.7
+        },
+        {
+          "date": "2023-07",
+          "value": 0.6
+        },
+        {
+          "date": "2023-10",
+          "value": 0.2
+        },
+        {
+          "date": "2024-01",
+          "value": 0.4
+        },
+        {
+          "date": "2024-04",
+          "value": -0.2
+        },
+        {
+          "date": "2024-07",
+          "value": 1.0
+        },
+        {
+          "date": "2024-10",
+          "value": -0.9
+        },
+        {
+          "date": "2025-01",
+          "value": 0.8
+        },
+        {
+          "date": "2025-04",
+          "value": -0.0
+        },
+        {
+          "date": "2025-07",
+          "value": -0.1
+        },
+        {
+          "date": "2025-10",
+          "value": 0.9
+        },
+        {
+          "date": "2026-01",
+          "value": -0.3
+        },
+        {
+          "date": "2026-04",
+          "value": 1.4
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://fred.stlouisfed.org/series/NAEXKP01MXQ657S",
+      "reviewedAt": "2026-10-30",
+      "description": "Real expenditure GDP, seasonally adjusted quarterly growth, not annualized; rounded to one decimal. This OECD/FRED mirror currently ends in Q2 2026 and can lag INEGI’s newer advance releases. Its quarterly basis differs from the annual growth rates in several other country panels. Source: OECD via FRED. Reviewed 2026-10-30.",
+      "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NAEXKP01MXQ657S&cosd=2022-10-01&coed=2026-10-30",
+      "observationLabels": {
+        "2022-10": "Q4 2022",
+        "2023-01": "Q1 2023",
+        "2023-04": "Q2 2023",
+        "2023-07": "Q3 2023",
+        "2023-10": "Q4 2023",
+        "2024-01": "Q1 2024",
+        "2024-04": "Q2 2024",
+        "2024-07": "Q3 2024",
+        "2024-10": "Q4 2024",
+        "2025-01": "Q1 2025",
+        "2025-04": "Q2 2025",
+        "2025-07": "Q3 2025",
+        "2025-10": "Q4 2025",
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026"
+      }
+    },
+    {
+      "id": "vn-gdp",
+      "name": "Vietnam Real GDP growth",
+      "country": "Vietnam",
+      "flag": "🇻🇳",
+      "category": "growth",
+      "unit": "% YoY",
+      "value": 9.95,
+      "previousValue": 8.81,
+      "change": 1.14,
+      "direction": "up",
+      "isPositiveGood": true,
+      "period": "Q3 2026",
+      "timeSeries": [
+        {
+          "date": "2026-01",
+          "value": 8.15
+        },
+        {
+          "date": "2026-04",
+          "value": 8.81
+        },
+        {
+          "date": "2026-07",
+          "value": 9.95
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://www.nso.gov.vn/bai-top/2026/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2026/",
+      "reviewedAt": "2026-10-30",
+      "description": "Real GDP growth against the same quarter a year earlier. All three quarters use the Q3 release vintage; this is not cumulative nine-month growth. Latest quarter is an official estimate subject to revision. Source: National Statistics Office of Vietnam. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026",
+        "2026-07": "Q3 2026"
+      },
+      "sourceReferences": [
+        {
+          "label": "Q3 2026 GDP release and revised earlier quarters",
+          "url": "https://www.nso.gov.vn/bai-top/2026/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2026/"
+        }
+      ],
+      "historyNote": "Limited history · 3 verified observations from the cited releases."
+    },
+    {
+      "id": "vn-cpi",
+      "name": "Vietnam Consumer inflation (CPI)",
+      "country": "Vietnam",
+      "flag": "🇻🇳",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 5.08,
+      "previousValue": 4.89,
+      "change": 0.19,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2026-08",
+          "value": 4.89
+        },
+        {
+          "date": "2026-09",
+          "value": 5.08
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/",
+      "reviewedAt": "2026-10-30",
+      "description": "All-items CPI, percentage change from the same month a year earlier. This is not the year-to-date average inflation rate. Source: National Statistics Office of Vietnam. Reviewed 2026-10-30.",
+      "sourceReferences": [
+        {
+          "label": "August 2026 CPI release",
+          "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/09/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-august-and-eight-months-of-2026/",
+          "releaseDate": "2026-09-03"
+        },
+        {
+          "label": "September 2026 CPI release",
+          "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "vn-unemployment",
+      "name": "Vietnam Working-age unemployment rate",
+      "country": "Vietnam",
+      "flag": "🇻🇳",
+      "category": "employment",
+      "unit": "%",
+      "value": 2.22,
+      "previousValue": 2.23,
+      "change": -0.01,
+      "direction": "down",
+      "isPositiveGood": false,
+      "period": "Q3 2026",
+      "timeSeries": [
+        {
+          "date": "2026-04",
+          "value": 2.23
+        },
+        {
+          "date": "2026-07",
+          "value": 2.22
+        }
+      ],
+      "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
+      "sourceUrl": "https://www.nso.gov.vn/tin-tuc-thong-ke/2026/10/thong-cao-bao-chi-ve-tinh-hinh-lao-dong-viec-lam-quy-iii-va-9-thang-nam-2026/",
+      "reviewedAt": "2026-10-30",
+      "description": "National working-age unemployment rate, quarterly Labour Force Survey. Earlier quarters retain their explicitly cited release vintages and may subsequently be revised. This working-age definition differs from the total age-15+ labour force used elsewhere. Source: National Statistics Office of Vietnam. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2026-04": "Q2 2026",
+        "2026-07": "Q3 2026"
+      },
+      "sourceReferences": [
+        {
+          "label": "Q2 2026 labour release",
+          "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/08/press-release-socio-economic-performance-in-the-q2-and-in-the-first-half-of-2026/"
+        },
+        {
+          "label": "Q3 2026 labour release",
+          "url": "https://www.nso.gov.vn/tin-tuc-thong-ke/2026/10/thong-cao-bao-chi-ve-tinh-hinh-lao-dong-viec-lam-quy-iii-va-9-thang-nam-2026/"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "id-gdp",
+      "name": "Indonesia Real GDP growth",
+      "country": "Indonesia",
+      "flag": "🇮🇩",
+      "category": "growth",
+      "unit": "% YoY",
+      "value": 5.29,
+      "previousValue": 5.61,
+      "change": -0.32,
+      "direction": "down",
+      "isPositiveGood": true,
+      "period": "Q2 2026",
+      "timeSeries": [
+        {
+          "date": "2026-01",
+          "value": 5.61
+        },
+        {
+          "date": "2026-04",
+          "value": 5.29
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
+      "reviewedAt": "2026-10-30",
+      "description": "Real GDP at constant 2010 prices, change from the same quarter a year earlier; original, not seasonally adjusted. Source: BPS–Statistics Indonesia. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026"
+      },
+      "sourceReferences": [
+        {
+          "label": "Q1 2026 GDP release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/05/05/2575/indonesia-s-economic-growth-in-q1-2026-was-5-61-percent--y-on-y-.html",
+          "releaseDate": "2026-05-05"
+        },
+        {
+          "label": "Q2 2026 GDP release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
+          "releaseDate": "2026-08-05"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "id-cpi",
+      "name": "Indonesia Consumer inflation (CPI)",
+      "country": "Indonesia",
+      "flag": "🇮🇩",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 3.28,
+      "previousValue": 3.19,
+      "change": 0.09,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2026-08",
+          "value": 3.19
+        },
+        {
+          "date": "2026-09",
+          "value": 3.28
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
+      "reviewedAt": "2026-10-30",
+      "description": "National headline all-items CPI inflation, change from the same month a year earlier; 2022 reference base. This national aggregate is not a provincial CPI reading. Source: BPS–Statistics Indonesia. Reviewed 2026-10-30.",
+      "sourceReferences": [
+        {
+          "label": "August 2026 national CPI release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/09/01/2611/the-year-on-year--y-on-y--headline-inflation-in-august-2026-was-recorded-at-3-19-percent-.html",
+          "releaseDate": "2026-09-01"
+        },
+        {
+          "label": "September 2026 national CPI release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
+          "releaseDate": "2026-10-01"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "id-unemployment",
+      "name": "Indonesia Unemployment rate",
+      "country": "Indonesia",
+      "flag": "🇮🇩",
+      "category": "employment",
+      "unit": "%",
+      "value": 4.65,
+      "previousValue": 4.68,
+      "change": -0.03,
+      "direction": "down",
+      "isPositiveGood": false,
+      "period": "May 2026 (quarterly survey)",
+      "timeSeries": [
+        {
+          "date": "2026-02",
+          "value": 4.68
+        },
+        {
+          "date": "2026-05",
+          "value": 4.65
+        }
+      ],
+      "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
+      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2606/tingkat-pengangguran-terbuka--tpt--sebesar-4-65-persen---rata-rata-upah-buruh-sebesar-3-39-juta-rupiah-.html",
+      "reviewedAt": "2026-10-30",
+      "description": "National open unemployment rate, labour force aged 15+, Sakernas survey. The August 5 release reports May 2026 and February 2026 observations; these are not monthly October readings. The verified series ends in May. Source: BPS–Statistics Indonesia. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2026-02": "Feb 2026 (quarterly survey)",
+        "2026-05": "May 2026 (quarterly survey)"
+      },
+      "sourceReferences": [
+        {
+          "label": "May and February 2026 labour observations",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/08/05/2606/tingkat-pengangguran-terbuka--tpt--sebesar-4-65-persen---rata-rata-upah-buruh-sebesar-3-39-juta-rupiah-.html",
+          "releaseDate": "2026-08-05"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "bd-gdp",
+      "name": "Bangladesh Real GDP growth",
+      "country": "Bangladesh",
+      "flag": "🇧🇩",
+      "category": "growth",
+      "unit": "% YoY",
+      "value": 2.22,
+      "previousValue": 3.03,
+      "change": -0.81,
+      "direction": "down",
+      "isPositiveGood": true,
+      "period": "Jan–Mar 2026 (Q3 FY2025–26)",
+      "timeSeries": [
+        {
+          "date": "2025-07",
+          "value": 4.96
+        },
+        {
+          "date": "2025-10",
+          "value": 3.03
+        },
+        {
+          "date": "2026-01",
+          "value": 2.22
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf",
+      "reviewedAt": "2026-10-30",
+      "description": "Real GDP growth compared with the same fiscal quarter a year earlier, BBS observations reproduced by Bangladesh Bank. Fiscal years run July–June. Verified quarterly history currently ends January–March 2026; the separate FY2026 provisional annual estimate and forecasts are not used. Source: Bangladesh Bank Quarterly, Q3 FY2025–26, Executive Summary. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2025-07": "Jul–Sep 2025 (Q1 FY2025–26)",
+        "2025-10": "Oct–Dec 2025 (Q2 FY2025–26)",
+        "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)"
+      },
+      "sourceReferences": [
+        {
+          "label": "Q3 FY2025–26 GDP and earlier quarterly observations",
+          "url": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf"
+        }
+      ],
+      "historyNote": "Limited history · 3 verified observations from the cited releases."
+    },
+    {
+      "id": "bd-cpi",
+      "name": "Bangladesh Consumer inflation (CPI)",
+      "country": "Bangladesh",
+      "flag": "🇧🇩",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 8.34,
+      "previousValue": 8.26,
+      "change": 0.08,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2025-12",
+          "value": 8.49
+        },
+        {
+          "date": "2026-01",
+          "value": 8.58
+        },
+        {
+          "date": "2026-02",
+          "value": 9.13
+        },
+        {
+          "date": "2026-03",
+          "value": 8.71
+        },
+        {
+          "date": "2026-04",
+          "value": 9.04
+        },
+        {
+          "date": "2026-05",
+          "value": 9.42
+        },
+        {
+          "date": "2026-06",
+          "value": 9.16
+        },
+        {
+          "date": "2026-07",
+          "value": 8.32
+        },
+        {
+          "date": "2026-08",
+          "value": 8.26
+        },
+        {
+          "date": "2026-09",
+          "value": 8.34
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
+      "reviewedAt": "2026-10-30",
+      "description": "National headline CPI inflation, point-to-point year-over-year basis, 2021–22 base. Values are from Table 14, row b, of the October 25 weekly indicators; the twelve-month-average row is a different measure and is excluded. Source: Bangladesh Bureau of Statistics via Bangladesh Bank. Reviewed 2026-10-30.",
+      "sourceReferences": [
+        {
+          "label": "October 25 indicators, Table 14: point-to-point CPI",
+          "url": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
+          "releaseDate": "2026-10-25"
+        }
+      ],
+      "historyNote": "Limited history · 10 verified observations from the cited releases."
+    },
+    {
+      "id": "mx-cpi",
+      "name": "Mexico Consumer inflation (CPI)",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 3.45,
+      "previousValue": 3.26,
+      "change": 0.19,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2026-07",
+          "value": 3.12
+        },
+        {
+          "date": "2026-08",
+          "value": 3.26
+        },
+        {
+          "date": "2026-09",
+          "value": 3.45
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
+      "reviewedAt": "2026-10-30",
+      "description": "National all-items INPC, change from the same month a year earlier; July 2018 reference base with 2024 basket updates. Full-month releases are used; first-half-month inflation releases are excluded. Source: INEGI. Reviewed 2026-10-30.",
+      "sourceReferences": [
+        {
+          "label": "July and August 2026 full-month CPI releases",
+          "url": "https://www.inegi.org.mx/app/saladeprensa/?p=3371"
+        },
+        {
+          "label": "September 2026 CPI release",
+          "url": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
+          "releaseDate": "2026-10-08"
+        }
+      ],
+      "historyNote": "Limited history · 3 verified observations from the cited releases."
+    },
+    {
+      "id": "mx-unemployment",
+      "name": "Mexico Unemployment rate",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "category": "employment",
+      "unit": "%",
+      "value": 2.8,
+      "previousValue": 2.7,
+      "change": 0.1,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2026-08",
+          "value": 2.7
+        },
+        {
+          "date": "2026-09",
+          "value": 2.8
+        }
+      ],
+      "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
+      "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
+      "reviewedAt": "2026-10-30",
+      "description": "National unemployment rate, ENOE population aged 15+, original not seasonally adjusted series. This differs from the OECD harmonised seasonally adjusted rate. Source: INEGI. Reviewed 2026-10-30.",
+      "sourceReferences": [
+        {
+          "label": "August 2026 national unemployment observation",
+          "url": "https://www.inegi.org.mx/sistemas/IndicePrecios/"
+        },
+        {
+          "label": "September 2026 ENOE release",
+          "url": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
+          "releaseDate": "2026-10-22"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "cl-gdp",
+      "name": "Chile Real GDP growth",
+      "country": "Chile",
+      "flag": "🇨🇱",
+      "category": "growth",
+      "unit": "% YoY",
+      "value": -0.2,
+      "previousValue": -0.3,
+      "change": 0.1,
+      "direction": "up",
+      "isPositiveGood": true,
+      "period": "Q2 2026",
+      "timeSeries": [
+        {
+          "date": "2026-01",
+          "value": -0.3
+        },
+        {
+          "date": "2026-04",
+          "value": -0.2
+        }
+      ],
+      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
+      "sourceUrl": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026",
+      "reviewedAt": "2026-10-30",
+      "description": "Real total GDP growth compared with the same quarter a year earlier, using the first- and second-quarter observations quoted in the September 2026 Monetary Policy Report. These are realized quarterly observations; the report’s forward growth projections and non-mining GDP are excluded. Source: Central Bank of Chile. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026"
+      },
+      "sourceReferences": [
+        {
+          "label": "September 2026 report: realized Q1 and Q2 GDP",
+          "url": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "cl-cpi",
+      "name": "Chile Consumer inflation (CPI)",
+      "country": "Chile",
+      "flag": "🇨🇱",
+      "category": "inflation",
+      "unit": "% YoY",
+      "value": 4.1,
+      "previousValue": 4.1,
+      "change": 0.0,
+      "direction": "neutral",
+      "isPositiveGood": false,
+      "period": "Sep 2026",
+      "timeSeries": [
+        {
+          "date": "2026-08",
+          "value": 4.1
+        },
+        {
+          "date": "2026-09",
+          "value": 4.1
+        }
+      ],
+      "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
+      "sourceUrl": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
+      "reviewedAt": "2026-10-30",
+      "description": "National all-items consumer price inflation, percentage change over twelve months. Monthly changes of 0.6% and 0.4% respectively are different measures and are not used here. Source: National Statistics Institute of Chile. Reviewed 2026-10-30.",
+      "sourceReferences": [
+        {
+          "label": "August 2026 CPI release",
+          "url": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/09/08/%C3%ADndice-de-precios-al-consumidor-%28ipc%29-de-agosto-present%C3%B3-una-variaci%C3%B3n-mensual-de-0-6",
+          "releaseDate": "2026-09-08"
+        },
+        {
+          "label": "September 2026 CPI release",
+          "url": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
+          "releaseDate": "2026-10-09"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "cl-unemployment",
+      "name": "Chile Unemployment rate",
+      "country": "Chile",
+      "flag": "🇨🇱",
+      "category": "employment",
+      "unit": "%",
+      "value": 9.8,
+      "previousValue": 9.6,
+      "change": 0.2,
+      "direction": "up",
+      "isPositiveGood": false,
+      "period": "Jul–Sep 2026 (3-month average)",
+      "timeSeries": [
+        {
+          "date": "2026-08",
+          "value": 9.6
+        },
+        {
+          "date": "2026-09",
+          "value": 9.8
+        }
+      ],
+      "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
+      "sourceUrl": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
+      "reviewedAt": "2026-10-30",
+      "description": "National ENE unemployment rate, labour force aged 15+, original not seasonally adjusted series. Each observation is a moving three-month quarter, ending in its stored month, rather than a single-month unemployment rate. Source: National Statistics Institute of Chile. Reviewed 2026-10-30.",
+      "observationLabels": {
+        "2026-08": "Jun–Aug 2026 (3-month average)",
+        "2026-09": "Jul–Sep 2026 (3-month average)"
+      },
+      "sourceReferences": [
+        {
+          "label": "Jun–Aug 2026 ENE release",
+          "url": "https://www.ine.gob.cl/press-room/news/2026/10/08/the-national-unemployment-rate-was-9.6-in-the-june-august-2026-quarter",
+          "releaseDate": "2026-10-08"
+        },
+        {
+          "label": "Jul–Sep 2026 ENE release",
+          "url": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
+          "releaseDate": "2026-10-29"
+        }
+      ],
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    }
+  ],
+  "unavailable": [
+    {
+      "country": "Bangladesh",
+      "measure": "unemployment",
+      "reason": "A recent, comparable official unemployment series has not been verified; no proxy or model estimate is displayed."
+    }
+  ]
+}

@@ -45,18 +45,21 @@ test('only Global, US and Canada are coverage choices and source caveats remain 
   assert.deepEqual(view.ECONOMY_COVERAGE.map(c=>c.id),['global','us','canada']);
   assert.equal(view.economyScope('unrecognised'),'global');
   assert.equal(view.economicObservationLabel(indicator({id:'uk-unemployment',observationLabels:{'2026-07':'Jun–Aug 2026 (3-month average)'}}),'2026-07'),'Jun–Aug 2026 (3-month average)');
+  assert.equal(view.economicObservationLabel(indicator({id:'cl-unemployment',observationLabels:{'2026-09':'Jul–Sep 2026 (3-month average)'}}),'2026-09-01'),'Jul–Sep 2026 (3-month average)');
+  assert.equal(view.economicObservationLabel(indicator({id:'bd-gdp',observationLabels:{'2026-01':'Jan–Mar 2026 (Q3 FY2025–26)'}}),'2026-01-01'),'Jan–Mar 2026 (Q3 FY2025–26)');
   assert.equal(view.economicPeriod(indicator({id:'de-gdp',observationLabels:{'2026-04':'Q2 2026 (provisional)'}})),'Q2 2026 (provisional)');
 });
 
-test('Global includes all 52 indicators and both curves while US and Canada stay dedicated',()=>{
+test('Global includes all 72 indicators and both curves while US and Canada stay dedicated',()=>{
   const file=readFileSync(new URL('../src/lib/site-data.ts',import.meta.url),'utf8');
   const compiled=ts.transpileModule(file,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
   const mod={exports:{}};
   new Function('require','module','exports',compiled)(()=>JSON.parse(readFileSync(new URL('../src/lib/opec-data.json',import.meta.url),'utf8')),mod,mod.exports);
   const original=mod.exports.ECONOMIC_INDICATORS;
   const extra=JSON.parse(readFileSync(new URL('../src/lib/international-economy-data.json',import.meta.url),'utf8')).indicators;
-  const rows=[...original,...extra];
-  const counts={global:52,us:12,canada:11};
+  const emerging=JSON.parse(readFileSync(new URL('../src/lib/emerging-economy-data.json',import.meta.url),'utf8')).indicators;
+  const rows=[...original,...extra,...emerging];
+  const counts={global:72,us:12,canada:11};
   const union=new Set();
   for(const coverage of view.ECONOMY_COVERAGE){
     const scoped=view.economyIndicators(rows,coverage.id);
@@ -64,7 +67,7 @@ test('Global includes all 52 indicators and both curves while US and Canada stay
     for(const h of view.ECONOMY_HEADLINES[coverage.id])assert(scoped.some(i=>i.id===h.id),coverage.id+' missing '+h.id);
     for(const row of scoped)union.add(row.id);
   }
-  assert.equal(union.size,52);
+  assert.equal(union.size,72);
   assert.deepEqual(view.economyIndicators(rows,'global'),rows);
   const categories=new Set(view.economyCategories('global').map(c=>c.id));
   assert.deepEqual([...categories],['pmi','growth','employment','inflation','rates','energy']);

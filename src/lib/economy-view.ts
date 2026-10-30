@@ -53,11 +53,12 @@ export const ECONOMY_HEADLINES: Record<EconomyScope, { id: string; label: string
 export function economicTimestamp(date: string) {
   return Date.parse(`${date.length === 7 ? `${date}-01` : date}T00:00:00Z`);
 }
-const QUARTERLY = new Set(["us-gdp", "ea-gdp", "ca-gdp", "china-gdp", "uk-gdp", "jp-gdp", "au-gdp", "de-gdp", "fr-gdp", "kr-gdp", "us-tax-receipts", "ca-tax-receipts"]);
+const QUARTERLY = new Set(["us-gdp", "ea-gdp", "ca-gdp", "china-gdp", "uk-gdp", "jp-gdp", "au-gdp", "de-gdp", "fr-gdp", "kr-gdp", "vn-gdp", "id-gdp", "bd-gdp", "my-gdp", "br-gdp", "mx-gdp", "cl-gdp", "us-tax-receipts", "ca-tax-receipts"]);
 const monthYear = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
 const dayMonthYear = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 export function economicObservationLabel(indicator: EconomicIndicator, date: string) {
-  if (indicator.observationLabels?.[date]) return indicator.observationLabels[date];
+  const observationLabel = indicator.observationLabels?.[date] ?? indicator.observationLabels?.[date.slice(0, 7)];
+  if (observationLabel) return observationLabel;
   const timestamp = economicTimestamp(date);
   if (!Number.isFinite(timestamp)) return date;
   const d = new Date(timestamp);
@@ -83,7 +84,7 @@ export function economicTitle(indicator: EconomicIndicator) {
   if (indicator.id === "us-cpi") return "CPI inflation (adjusted index)";
   if (indicator.id === "ca-cpi") return "Consumer inflation (CPI)";
   if (indicator.id === "ea-hicp") return "Consumer inflation (HICP)";
-  return indicator.name.replace(/^(US |Canada |China |India |Taiwan |South Korea |Euro Area |UK |Japan |Australia |Germany |France )/, "");
+  return indicator.name.replace(/^(US |Canada |China |India |Taiwan |South Korea |Euro Area |UK |Japan |Australia |Germany |France |Vietnam |Indonesia |Bangladesh |Malaysia |Brazil |Mexico |Chile )/, "");
 }
 export function economicStatus(indicator: EconomicIndicator) {
   if (indicator.category === "pmi") return indicator.value > 50 ? "Above 50" : indicator.value < 50 ? "Below 50" : "At 50";

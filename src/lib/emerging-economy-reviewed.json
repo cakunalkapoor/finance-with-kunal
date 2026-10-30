@@ -1,0 +1,489 @@
+{
+  "reviewedAt": "2026-10-30",
+  "indicators": [
+    {
+      "id": "vn-gdp",
+      "country": "Vietnam",
+      "flag": "🇻🇳",
+      "name": "Vietnam Real GDP growth",
+      "category": "growth",
+      "unit": "% YoY",
+      "frequency": "quarterly",
+      "definition": "Real GDP growth against the same quarter a year earlier. All three quarters use the Q3 release vintage; this is not cumulative nine-month growth. Latest quarter is an official estimate subject to revision.",
+      "provider": "National Statistics Office of Vietnam",
+      "observations": [
+        {
+          "date": "2026-01",
+          "value": 8.15
+        },
+        {
+          "date": "2026-04",
+          "value": 8.81
+        },
+        {
+          "date": "2026-07",
+          "value": 9.95
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "Q3 2026 GDP release and revised earlier quarters",
+          "url": "https://www.nso.gov.vn/bai-top/2026/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2026/"
+        }
+      ],
+      "sourceUrl": "https://www.nso.gov.vn/bai-top/2026/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2026/",
+      "historyNote": "Limited history · 3 verified observations from the cited releases."
+    },
+    {
+      "id": "vn-cpi",
+      "country": "Vietnam",
+      "flag": "🇻🇳",
+      "name": "Vietnam Consumer inflation (CPI)",
+      "category": "inflation",
+      "unit": "% YoY",
+      "frequency": "monthly",
+      "definition": "All-items CPI, percentage change from the same month a year earlier. This is not the year-to-date average inflation rate.",
+      "provider": "National Statistics Office of Vietnam",
+      "observations": [
+        {
+          "date": "2026-08",
+          "value": 4.89
+        },
+        {
+          "date": "2026-09",
+          "value": 5.08
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "August 2026 CPI release",
+          "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/09/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-august-and-eight-months-of-2026/",
+          "releaseDate": "2026-09-03"
+        },
+        {
+          "label": "September 2026 CPI release",
+          "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/"
+        }
+      ],
+      "sourceUrl": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "vn-unemployment",
+      "country": "Vietnam",
+      "flag": "🇻🇳",
+      "name": "Vietnam Working-age unemployment rate",
+      "category": "employment",
+      "unit": "%",
+      "frequency": "quarterly",
+      "definition": "National working-age unemployment rate, quarterly Labour Force Survey. Earlier quarters retain their explicitly cited release vintages and may subsequently be revised. This working-age definition differs from the total age-15+ labour force used elsewhere.",
+      "provider": "National Statistics Office of Vietnam",
+      "observations": [
+        {
+          "date": "2026-04",
+          "value": 2.23
+        },
+        {
+          "date": "2026-07",
+          "value": 2.22
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "Q2 2026 labour release",
+          "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/08/press-release-socio-economic-performance-in-the-q2-and-in-the-first-half-of-2026/"
+        },
+        {
+          "label": "Q3 2026 labour release",
+          "url": "https://www.nso.gov.vn/tin-tuc-thong-ke/2026/10/thong-cao-bao-chi-ve-tinh-hinh-lao-dong-viec-lam-quy-iii-va-9-thang-nam-2026/"
+        }
+      ],
+      "sourceUrl": "https://www.nso.gov.vn/tin-tuc-thong-ke/2026/10/thong-cao-bao-chi-ve-tinh-hinh-lao-dong-viec-lam-quy-iii-va-9-thang-nam-2026/",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "id-gdp",
+      "country": "Indonesia",
+      "flag": "🇮🇩",
+      "name": "Indonesia Real GDP growth",
+      "category": "growth",
+      "unit": "% YoY",
+      "frequency": "quarterly",
+      "definition": "Real GDP at constant 2010 prices, change from the same quarter a year earlier; original, not seasonally adjusted.",
+      "provider": "BPS–Statistics Indonesia",
+      "observations": [
+        {
+          "date": "2026-01",
+          "value": 5.61
+        },
+        {
+          "date": "2026-04",
+          "value": 5.29
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "Q1 2026 GDP release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/05/05/2575/indonesia-s-economic-growth-in-q1-2026-was-5-61-percent--y-on-y-.html",
+          "releaseDate": "2026-05-05"
+        },
+        {
+          "label": "Q2 2026 GDP release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
+          "releaseDate": "2026-08-05"
+        }
+      ],
+      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "id-cpi",
+      "country": "Indonesia",
+      "flag": "🇮🇩",
+      "name": "Indonesia Consumer inflation (CPI)",
+      "category": "inflation",
+      "unit": "% YoY",
+      "frequency": "monthly",
+      "definition": "National headline all-items CPI inflation, change from the same month a year earlier; 2022 reference base. This national aggregate is not a provincial CPI reading.",
+      "provider": "BPS–Statistics Indonesia",
+      "observations": [
+        {
+          "date": "2026-08",
+          "value": 3.19
+        },
+        {
+          "date": "2026-09",
+          "value": 3.28
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "August 2026 national CPI release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/09/01/2611/the-year-on-year--y-on-y--headline-inflation-in-august-2026-was-recorded-at-3-19-percent-.html",
+          "releaseDate": "2026-09-01"
+        },
+        {
+          "label": "September 2026 national CPI release",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
+          "releaseDate": "2026-10-01"
+        }
+      ],
+      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "id-unemployment",
+      "country": "Indonesia",
+      "flag": "🇮🇩",
+      "name": "Indonesia Unemployment rate",
+      "category": "employment",
+      "unit": "%",
+      "frequency": "quarterly-survey",
+      "definition": "National open unemployment rate, labour force aged 15+, Sakernas survey. The August 5 release reports May 2026 and February 2026 observations; these are not monthly October readings. The verified series ends in May.",
+      "provider": "BPS–Statistics Indonesia",
+      "observations": [
+        {
+          "date": "2026-02",
+          "value": 4.68
+        },
+        {
+          "date": "2026-05",
+          "value": 4.65
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "May and February 2026 labour observations",
+          "url": "https://www.bps.go.id/en/pressrelease/2026/08/05/2606/tingkat-pengangguran-terbuka--tpt--sebesar-4-65-persen---rata-rata-upah-buruh-sebesar-3-39-juta-rupiah-.html",
+          "releaseDate": "2026-08-05"
+        }
+      ],
+      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2606/tingkat-pengangguran-terbuka--tpt--sebesar-4-65-persen---rata-rata-upah-buruh-sebesar-3-39-juta-rupiah-.html",
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "observationLabels": {
+        "2026-02": "Feb 2026 (quarterly survey)",
+        "2026-05": "May 2026 (quarterly survey)"
+      },
+      "maxLagMonths": 6
+    },
+    {
+      "id": "bd-gdp",
+      "country": "Bangladesh",
+      "flag": "🇧🇩",
+      "name": "Bangladesh Real GDP growth",
+      "category": "growth",
+      "unit": "% YoY",
+      "frequency": "quarterly",
+      "definition": "Real GDP growth compared with the same fiscal quarter a year earlier, BBS observations reproduced by Bangladesh Bank. Fiscal years run July–June. Verified quarterly history currently ends January–March 2026; the separate FY2026 provisional annual estimate and forecasts are not used.",
+      "provider": "Bangladesh Bank Quarterly, Q3 FY2025–26, Executive Summary",
+      "observations": [
+        {
+          "date": "2025-07",
+          "value": 4.96
+        },
+        {
+          "date": "2025-10",
+          "value": 3.03
+        },
+        {
+          "date": "2026-01",
+          "value": 2.22
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "Q3 FY2025–26 GDP and earlier quarterly observations",
+          "url": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf"
+        }
+      ],
+      "sourceUrl": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "observationLabels": {
+        "2025-07": "Jul–Sep 2025 (Q1 FY2025–26)",
+        "2025-10": "Oct–Dec 2025 (Q2 FY2025–26)",
+        "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)"
+      },
+      "maxLagMonths": 9
+    },
+    {
+      "id": "bd-cpi",
+      "country": "Bangladesh",
+      "flag": "🇧🇩",
+      "name": "Bangladesh Consumer inflation (CPI)",
+      "category": "inflation",
+      "unit": "% YoY",
+      "frequency": "monthly",
+      "definition": "National headline CPI inflation, point-to-point year-over-year basis, 2021–22 base. Values are from Table 14, row b, of the October 25 weekly indicators; the twelve-month-average row is a different measure and is excluded.",
+      "provider": "Bangladesh Bureau of Statistics via Bangladesh Bank",
+      "observations": [
+        {
+          "date": "2025-12",
+          "value": 8.49
+        },
+        {
+          "date": "2026-01",
+          "value": 8.58
+        },
+        {
+          "date": "2026-02",
+          "value": 9.13
+        },
+        {
+          "date": "2026-03",
+          "value": 8.71
+        },
+        {
+          "date": "2026-04",
+          "value": 9.04
+        },
+        {
+          "date": "2026-05",
+          "value": 9.42
+        },
+        {
+          "date": "2026-06",
+          "value": 9.16
+        },
+        {
+          "date": "2026-07",
+          "value": 8.32
+        },
+        {
+          "date": "2026-08",
+          "value": 8.26
+        },
+        {
+          "date": "2026-09",
+          "value": 8.34
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "October 25 indicators, Table 14: point-to-point CPI",
+          "url": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
+          "releaseDate": "2026-10-25"
+        }
+      ],
+      "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
+      "historyNote": "Limited history · 10 verified observations from the cited releases."
+    },
+    {
+      "id": "mx-cpi",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "name": "Mexico Consumer inflation (CPI)",
+      "category": "inflation",
+      "unit": "% YoY",
+      "frequency": "monthly",
+      "definition": "National all-items INPC, change from the same month a year earlier; July 2018 reference base with 2024 basket updates. Full-month releases are used; first-half-month inflation releases are excluded.",
+      "provider": "INEGI",
+      "observations": [
+        {
+          "date": "2026-07",
+          "value": 3.12
+        },
+        {
+          "date": "2026-08",
+          "value": 3.26
+        },
+        {
+          "date": "2026-09",
+          "value": 3.45
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "July and August 2026 full-month CPI releases",
+          "url": "https://www.inegi.org.mx/app/saladeprensa/?p=3371"
+        },
+        {
+          "label": "September 2026 CPI release",
+          "url": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
+          "releaseDate": "2026-10-08"
+        }
+      ],
+      "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
+      "historyNote": "Limited history · 3 verified observations from the cited releases."
+    },
+    {
+      "id": "mx-unemployment",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "name": "Mexico Unemployment rate",
+      "category": "employment",
+      "unit": "%",
+      "frequency": "monthly",
+      "definition": "National unemployment rate, ENOE population aged 15+, original not seasonally adjusted series. This differs from the OECD harmonised seasonally adjusted rate.",
+      "provider": "INEGI",
+      "observations": [
+        {
+          "date": "2026-08",
+          "value": 2.7
+        },
+        {
+          "date": "2026-09",
+          "value": 2.8
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "August 2026 national unemployment observation",
+          "url": "https://www.inegi.org.mx/sistemas/IndicePrecios/"
+        },
+        {
+          "label": "September 2026 ENOE release",
+          "url": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
+          "releaseDate": "2026-10-22"
+        }
+      ],
+      "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "cl-gdp",
+      "country": "Chile",
+      "flag": "🇨🇱",
+      "name": "Chile Real GDP growth",
+      "category": "growth",
+      "unit": "% YoY",
+      "frequency": "quarterly",
+      "definition": "Real total GDP growth compared with the same quarter a year earlier, using the first- and second-quarter observations quoted in the September 2026 Monetary Policy Report. These are realized quarterly observations; the report’s forward growth projections and non-mining GDP are excluded.",
+      "provider": "Central Bank of Chile",
+      "observations": [
+        {
+          "date": "2026-01",
+          "value": -0.3
+        },
+        {
+          "date": "2026-04",
+          "value": -0.2
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "September 2026 report: realized Q1 and Q2 GDP",
+          "url": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026"
+        }
+      ],
+      "sourceUrl": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "cl-cpi",
+      "country": "Chile",
+      "flag": "🇨🇱",
+      "name": "Chile Consumer inflation (CPI)",
+      "category": "inflation",
+      "unit": "% YoY",
+      "frequency": "monthly",
+      "definition": "National all-items consumer price inflation, percentage change over twelve months. Monthly changes of 0.6% and 0.4% respectively are different measures and are not used here.",
+      "provider": "National Statistics Institute of Chile",
+      "observations": [
+        {
+          "date": "2026-08",
+          "value": 4.1
+        },
+        {
+          "date": "2026-09",
+          "value": 4.1
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "August 2026 CPI release",
+          "url": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/09/08/%C3%ADndice-de-precios-al-consumidor-%28ipc%29-de-agosto-present%C3%B3-una-variaci%C3%B3n-mensual-de-0-6",
+          "releaseDate": "2026-09-08"
+        },
+        {
+          "label": "September 2026 CPI release",
+          "url": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
+          "releaseDate": "2026-10-09"
+        }
+      ],
+      "sourceUrl": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "cl-unemployment",
+      "country": "Chile",
+      "flag": "🇨🇱",
+      "name": "Chile Unemployment rate",
+      "category": "employment",
+      "unit": "%",
+      "frequency": "rolling",
+      "definition": "National ENE unemployment rate, labour force aged 15+, original not seasonally adjusted series. Each observation is a moving three-month quarter, ending in its stored month, rather than a single-month unemployment rate.",
+      "provider": "National Statistics Institute of Chile",
+      "observations": [
+        {
+          "date": "2026-08",
+          "value": 9.6
+        },
+        {
+          "date": "2026-09",
+          "value": 9.8
+        }
+      ],
+      "sourceReferences": [
+        {
+          "label": "Jun–Aug 2026 ENE release",
+          "url": "https://www.ine.gob.cl/press-room/news/2026/10/08/the-national-unemployment-rate-was-9.6-in-the-june-august-2026-quarter",
+          "releaseDate": "2026-10-08"
+        },
+        {
+          "label": "Jul–Sep 2026 ENE release",
+          "url": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
+          "releaseDate": "2026-10-29"
+        }
+      ],
+      "sourceUrl": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
+      "historyNote": "Limited history · 2 verified observations from the cited releases."
+    }
+  ],
+  "unavailable": [
+    {
+      "country": "Bangladesh",
+      "measure": "unemployment",
+      "reason": "A recent, comparable official unemployment series has not been verified; no proxy or model estimate is displayed."
+    }
+  ]
+}
