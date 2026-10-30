@@ -1,6 +1,6 @@
 import { LAST_UPDATED_LABEL } from "@/lib/briefing";
 import { FONT_MONO } from "@/lib/utils";
-import { ECONOMY_COVERAGE, economyScope, type EconomyScope } from "@/lib/economy-view";
+import { ECONOMY_COVERAGE, type EconomyScope } from "@/lib/economy-view";
 
 export default function EconomyHeader({ scope, eyebrow, title, description, onScopeChange, updatedLabel = LAST_UPDATED_LABEL }: {
   scope: EconomyScope; eyebrow: string; title: string; description: string;
@@ -20,17 +20,10 @@ export default function EconomyHeader({ scope, eyebrow, title, description, onSc
         </div>
       </div>
       <div role="group" aria-label="Economy coverage" className="inline-flex max-w-full flex-wrap gap-1 rounded-xl border p-1" style={{ borderColor: "var(--color-space-border)", background: "var(--color-space-card)" }}>
-        {ECONOMY_COVERAGE.slice(0, 3).map(({ id, flag, label }) => (
+        {ECONOMY_COVERAGE.map(({ id, flag, label }) => (
           <button key={id} type="button" aria-pressed={scope === id} aria-controls="economy-dashboard" disabled={!onScopeChange} onClick={() => onScopeChange?.(id)} className="min-h-11 rounded-lg px-4 py-2 text-xs font-semibold transition-colors sm:px-5"
             style={{ background: scope === id ? "var(--color-neon-cyan)" : "transparent", color: scope === id ? "var(--color-space-card)" : "var(--color-text-secondary)" }}><span aria-hidden>{flag}</span> {label}</button>
         ))}
-        <label className="flex min-w-0 items-center rounded-lg" style={{ background: !["global", "us", "canada"].includes(scope) ? "var(--color-wash)" : undefined }}>
-          <span className="sr-only">Other major economies</span>
-          <select aria-label="Other major economies" aria-controls="economy-dashboard" disabled={!onScopeChange} value={["global", "us", "canada"].includes(scope) ? "" : scope} onChange={event => onScopeChange?.(economyScope(event.target.value))} className="min-h-11 max-w-full rounded-lg px-3 text-xs font-semibold" style={{ color: "var(--color-neon-cyan)", background: "var(--color-space-card)" }}>
-            <option value="" disabled>More economies</option>
-            {ECONOMY_COVERAGE.slice(3).map(c => <option key={c.id} value={c.id}>{c.flag} {c.label}</option>)}
-          </select>
-        </label>
       </div>
     </header>
   );

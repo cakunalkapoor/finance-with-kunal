@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import type { EconomicIndicator, YieldCurve } from "@/types";
-import { economyIndicators, economyScope, ECONOMY_COVERAGE, type EconomyScope } from "@/lib/economy-view";
+import { economyIndicators, economyCurves, economyScope, ECONOMY_COVERAGE, type EconomyScope } from "@/lib/economy-view";
 import EconomyHeader from "./EconomyHeader";
 import EconomyDashboard from "./EconomyDashboard";
 
@@ -20,10 +20,10 @@ export function EconomyView({ indicators, curves, additionalUpdatedLabel, scope 
   return (
     <div className="mx-auto max-w-screen-2xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
       <EconomyHeader scope={scope} eyebrow={scope === "global" ? "Global economy" : `${coverage.country} economy`} title="The economy, at a glance."
-        description="Explore the world’s major economies, with sourced indicators and the context behind each release."
-        onScopeChange={onScopeChange} updatedLabel={["global", "us", "canada"].includes(scope) ? undefined : additionalUpdatedLabel} />
+        description={scope === "global" ? "All tracked economies in one view. Filter by theme, or switch to a dedicated US or Canada view." : "Sourced economic indicators and the context behind each release."}
+        onScopeChange={onScopeChange} updatedLabel={scope === "global" ? additionalUpdatedLabel : undefined} />
       <EconomyDashboard scope={scope} indicators={economyIndicators(indicators, scope)}
-        curve={curves.find(c => c.country === coverage.country)} />
+        curves={economyCurves(curves, scope)} />
     </div>
   );
 }

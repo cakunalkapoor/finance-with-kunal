@@ -32,22 +32,23 @@ test('PMI status depends on its level, not just its direction',()=>{
   assert.equal(view.economicStatus(indicator({category:'pmi',value:49.9,direction:'up'})),'Below 50');
   assert.equal(view.economicStatus(indicator({category:'pmi',value:50})),'At 50');
 });
-test('country views preserve their scope while global retains its existing US headline series',()=>{
+test('global includes every supplied indicator while country views retain their scope',()=>{
   const rows=[indicator(),indicator({id:'us-payrolls',category:'employment'}),indicator({id:'natural-gas',category:'energy'}),indicator({id:'ca-gdp',country:'Canada'}),indicator({id:'china-mfg-pmi',country:'China',category:'pmi'})];
-  assert.deepEqual(view.economyIndicators(rows,'global').map(i=>i.id),['us-gdp','natural-gas','china-mfg-pmi']);
+  assert.deepEqual(view.economyIndicators(rows,'global'),rows);
   assert.deepEqual(view.economyIndicators(rows,'us').map(i=>i.id),['us-gdp','us-payrolls']);
   assert.deepEqual(view.economyIndicators(rows,'canada').map(i=>i.id),['ca-gdp']);
 });
 
-test('international scope URLs are allowlisted and reporting labels retain source caveats',()=>{
-  assert.equal(view.economyScope('south-korea'),'south-korea');
-  assert.equal(view.economyScope('germany'),'germany');
+test('only Global, US and Canada are coverage choices and source caveats remain intact',()=>{
+  assert.equal(view.economyScope('south-korea'),'global');
+  assert.equal(view.economyScope('germany'),'global');
+  assert.deepEqual(view.ECONOMY_COVERAGE.map(c=>c.id),['global','us','canada']);
   assert.equal(view.economyScope('unrecognised'),'global');
   assert.equal(view.economicObservationLabel(indicator({id:'uk-unemployment',observationLabels:{'2026-07':'Jun–Aug 2026 (3-month average)'}}),'2026-07'),'Jun–Aug 2026 (3-month average)');
   assert.equal(view.economicPeriod(indicator({id:'de-gdp',observationLabels:{'2026-04':'Q2 2026 (provisional)'}})),'Q2 2026 (provisional)');
 });
 
-test('all 12 coverage choices reconcile and every headline belongs to its scoped rows',()=>{
+test('Global includes all 52 indicators and both curves while US and Canada stay dedicated',()=>{
   const file=readFileSync(new URL('../src/lib/site-data.ts',import.meta.url),'utf8');
   const compiled=ts.transpileModule(file,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
   const mod={exports:{}};
@@ -55,7 +56,7 @@ test('all 12 coverage choices reconcile and every headline belongs to its scoped
   const original=mod.exports.ECONOMIC_INDICATORS;
   const extra=JSON.parse(readFileSync(new URL('../src/lib/international-economy-data.json',import.meta.url),'utf8')).indicators;
   const rows=[...original,...extra];
-  const counts={global:17,us:12,canada:11,'euro-area':2,uk:3,japan:3,china:2,india:3,australia:3,germany:3,france:3,'south-korea':3};
+  const counts={global:52,us:12,canada:11};
   const union=new Set();
   for(const coverage of view.ECONOMY_COVERAGE){
     const scoped=view.economyIndicators(rows,coverage.id);
@@ -64,5 +65,13 @@ test('all 12 coverage choices reconcile and every headline belongs to its scoped
     for(const row of scoped)union.add(row.id);
   }
   assert.equal(union.size,52);
-  assert.deepEqual(view.economyIndicators(rows,'global').map(i=>i.id),view.economyIndicators(original,'global').map(i=>i.id));
+  assert.deepEqual(view.economyIndicators(rows,'global'),rows);
+  const categories=new Set(view.economyCategories('global').map(c=>c.id));
+  for(const row of rows)assert(categories.has(row.category),row.id+' missing category');
+  const curves=mod.exports.YIELD_CURVES;
+  assert.equal(view.economyCurves(curves,'global').length,2);
+  assert.deepEqual(view.economyCurves(curves,'us').map(c=>c.country),['United States']);
+  assert.deepEqual(view.economyCurves(curves,'canada').map(c=>c.country),['Canada']);
+  assert.equal(new Set(curves.map(view.economyCurveId)).size,2);
+  assert(curves.every(c=>view.economyCurveId(c).startsWith('yield-curve-')));
 });
