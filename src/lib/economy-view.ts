@@ -13,7 +13,7 @@ export type EconomyCategory = { id: EconomicIndicator["category"]; label: string
 
 const BASE_CATEGORIES: EconomyCategory[] = [
   { id: "pmi", label: "Activity" }, { id: "growth", label: "Growth" },
-  { id: "employment", label: "Labour" }, { id: "inflation", label: "Prices" },
+  { id: "employment", label: "Labour" }, { id: "inflation", label: "Inflation" },
   { id: "energy", label: "Energy" },
 ];
 const COUNTRY_CATEGORIES: EconomyCategory[] = [
@@ -21,7 +21,10 @@ const COUNTRY_CATEGORIES: EconomyCategory[] = [
   { id: "consumption", label: "Consumption" }, { id: "rates", label: "Rates" },
   { id: "trade", label: "Trade" }, { id: "fiscal", label: "Fiscal" },
 ];
-const GLOBAL_CATEGORIES: EconomyCategory[] = [...COUNTRY_CATEGORIES, { id: "energy", label: "Energy" }];
+const GLOBAL_CATEGORIES: EconomyCategory[] = [
+  ...BASE_CATEGORIES.filter(c => c.id !== "energy"),
+  { id: "rates", label: "Rates" }, { id: "energy", label: "Energy" },
+];
 
 /** Global contains every supplied indicator; country views keep their established scope. */
 export function economyIndicators(indicators: EconomicIndicator[], scope: EconomyScope) {

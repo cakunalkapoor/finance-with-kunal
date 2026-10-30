@@ -44,8 +44,9 @@ export default function EconomyDashboard({ indicators, scope, curves }: { indica
   const category = requestedCategory === "all" || categories.some(c => c.id === requestedCategory)
     ? requestedCategory : categories[0]?.id ?? "all";
   const [selected, setSelected] = useState<string | null>(null);
+  const categoryOrder = new Map(categories.map((c, index) => [c.id, index]));
   const shown = indicators.filter(i => category === "all" || i.category === category).sort((a, b) =>
-    categories.findIndex(c => c.id === a.category) - categories.findIndex(c => c.id === b.category)
+    (categoryOrder.get(a.category) ?? categories.length) - (categoryOrder.get(b.category) ?? categories.length)
     || a.country.localeCompare(b.country, "en") || a.name.localeCompare(b.name, "en"));
   const shownCurves = category === "all" || category === "rates" ? curves : [];
   const title = category === "all" ? "All indicators" : categories.find(c => c.id === category)?.label;

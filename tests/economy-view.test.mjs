@@ -67,7 +67,12 @@ test('Global includes all 52 indicators and both curves while US and Canada stay
   assert.equal(union.size,52);
   assert.deepEqual(view.economyIndicators(rows,'global'),rows);
   const categories=new Set(view.economyCategories('global').map(c=>c.id));
-  for(const row of rows)assert(categories.has(row.category),row.id+' missing category');
+  assert.deepEqual([...categories],['pmi','growth','employment','inflation','rates','energy']);
+  for(const scope of ['us','canada']) {
+    const countryCategories=view.economyCategories(scope);
+    for(const id of ['consumption','trade','fiscal'])assert(countryCategories.some(c=>c.id===id),scope+' missing '+id);
+  }
+  for(const scope of ['global','us','canada'])assert.equal(view.economyCategories(scope).find(c=>c.id==='inflation').label,'Inflation');
   const curves=mod.exports.YIELD_CURVES;
   assert.equal(view.economyCurves(curves,'global').length,2);
   assert.deepEqual(view.economyCurves(curves,'us').map(c=>c.country),['United States']);
