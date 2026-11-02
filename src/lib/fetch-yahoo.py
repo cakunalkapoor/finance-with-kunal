@@ -341,7 +341,7 @@ def derive(history, year=None):
     # Retain original observation dates. Evenly sampling trading rows and then
     # assigning weekly labels moves real prices onto days they never traded.
     dated = pd.DataFrame({"value": closes.values, "date": closes.index.strftime("%Y-%m-%d")}, index=closes.index)
-    weekly_history = [{"date": row["date"], "value": q(row["value"])} for _, row in dated.resample("W-FRI").last().dropna().tail(156).iterrows()]
+    weekly_history = [{"date": row["date"], "value": q(row["value"])} for _, row in dated.resample("W-FRI").last().dropna().tail(208).iterrows()]
 
     return {
         "value":        q(last),
@@ -354,7 +354,7 @@ def derive(history, year=None):
         "low52w":       q(range_52w["low"]) if range_52w else None,
         "range52wAsOf": range_52w["asOf"] if range_52w else None,
         "range52wBasis": "daily-closes",
-        "sparkline":    [point["value"] for point in weekly_history],
+        "sparkline":    [point["value"] for point in weekly_history[-156:]],
         "weeklyHistory": weekly_history,
         # The 1W window, drawn from real daily closes rather than the weekly
         # sparkline — one week of a weekly series is a single point and renders

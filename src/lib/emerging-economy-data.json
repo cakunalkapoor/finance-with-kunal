@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-10-30",
+  "reviewedAt": "2026-11-01",
   "indicators": [
     {
       "id": "my-gdp",
@@ -78,8 +78,8 @@
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/gdp_qtr_real",
-      "reviewedAt": "2026-10-30",
-      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-10-30.",
+      "reviewedAt": "2026-11-01",
+      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-01.",
       "apiUrl": "https://storage.dosm.gov.my/gdp/gdp_qtr_real.csv",
       "observationLabels": {
         "2022-10": "Q4 2022",
@@ -308,8 +308,8 @@
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/cpi_headline_inflation",
-      "reviewedAt": "2026-10-30",
-      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-10-30.",
+      "reviewedAt": "2026-11-01",
+      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-01.",
       "apiUrl": "https://storage.dosm.gov.my/cpi/cpi_2d_inflation.csv"
     },
     {
@@ -517,8 +517,8 @@
       ],
       "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/lfs_month",
-      "reviewedAt": "2026-10-30",
-      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-10-30.",
+      "reviewedAt": "2026-11-01",
+      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-01.",
       "apiUrl": "https://storage.dosm.gov.my/labour/lfs_month.csv"
     },
     {
@@ -598,8 +598,8 @@
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/5932",
-      "reviewedAt": "2026-10-30",
-      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-10-30.",
+      "reviewedAt": "2026-11-01",
+      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-11-01.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/5932/n1/all/v/6561/p/last%2016/c11255/90707",
       "observationLabels": {
         "2022-10": "Q4 2022",
@@ -784,8 +784,8 @@
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/7060",
-      "reviewedAt": "2026-10-30",
-      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-10-30.",
+      "reviewedAt": "2026-11-01",
+      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-11-01.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/7060/n1/all/v/2265/p/last%2037/c315/7169"
     },
     {
@@ -953,8 +953,8 @@
       ],
       "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/6381",
-      "reviewedAt": "2026-10-30",
-      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-10-30.",
+      "reviewedAt": "2026-11-01",
+      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-11-01.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/last%2037",
       "observationLabels": {
         "2023-09": "Jul–Sep 2023 (3-month average)",
@@ -994,104 +994,6 @@
         "2026-07": "May–Jul 2026 (3-month average)",
         "2026-08": "Jun–Aug 2026 (3-month average)",
         "2026-09": "Jul–Sep 2026 (3-month average)"
-      }
-    },
-    {
-      "id": "mx-gdp",
-      "name": "Mexico Real GDP growth",
-      "country": "Mexico",
-      "flag": "🇲🇽",
-      "category": "growth",
-      "unit": "% QoQ",
-      "value": 1.4,
-      "previousValue": -0.3,
-      "change": 1.7,
-      "direction": "up",
-      "isPositiveGood": true,
-      "period": "Q2 2026",
-      "timeSeries": [
-        {
-          "date": "2022-10",
-          "value": 1.2
-        },
-        {
-          "date": "2023-01",
-          "value": 0.6
-        },
-        {
-          "date": "2023-04",
-          "value": 0.7
-        },
-        {
-          "date": "2023-07",
-          "value": 0.6
-        },
-        {
-          "date": "2023-10",
-          "value": 0.2
-        },
-        {
-          "date": "2024-01",
-          "value": 0.4
-        },
-        {
-          "date": "2024-04",
-          "value": -0.2
-        },
-        {
-          "date": "2024-07",
-          "value": 1.0
-        },
-        {
-          "date": "2024-10",
-          "value": -0.9
-        },
-        {
-          "date": "2025-01",
-          "value": 0.8
-        },
-        {
-          "date": "2025-04",
-          "value": -0.0
-        },
-        {
-          "date": "2025-07",
-          "value": -0.1
-        },
-        {
-          "date": "2025-10",
-          "value": 0.9
-        },
-        {
-          "date": "2026-01",
-          "value": -0.3
-        },
-        {
-          "date": "2026-04",
-          "value": 1.4
-        }
-      ],
-      "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
-      "sourceUrl": "https://fred.stlouisfed.org/series/NAEXKP01MXQ657S",
-      "reviewedAt": "2026-10-30",
-      "description": "Real expenditure GDP, seasonally adjusted quarterly growth, not annualized; rounded to one decimal. This OECD/FRED mirror currently ends in Q2 2026 and can lag INEGI’s newer advance releases. Its quarterly basis differs from the annual growth rates in several other country panels. Source: OECD via FRED. Reviewed 2026-10-30.",
-      "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NAEXKP01MXQ657S&cosd=2022-10-01&coed=2026-10-30",
-      "observationLabels": {
-        "2022-10": "Q4 2022",
-        "2023-01": "Q1 2023",
-        "2023-04": "Q2 2023",
-        "2023-07": "Q3 2023",
-        "2023-10": "Q4 2023",
-        "2024-01": "Q1 2024",
-        "2024-04": "Q2 2024",
-        "2024-07": "Q3 2024",
-        "2024-10": "Q4 2024",
-        "2025-01": "Q1 2025",
-        "2025-04": "Q2 2025",
-        "2025-07": "Q3 2025",
-        "2025-10": "Q4 2025",
-        "2026-01": "Q1 2026",
-        "2026-04": "Q2 2026"
       }
     },
     {
@@ -1667,6 +1569,111 @@
         }
       ],
       "historyNote": "Limited history · 2 verified observations from the cited releases."
+    },
+    {
+      "id": "mx-gdp",
+      "name": "Mexico Real GDP growth",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "category": "growth",
+      "unit": "% QoQ",
+      "value": 0.9,
+      "previousValue": 1.4,
+      "change": -0.5,
+      "direction": "down",
+      "isPositiveGood": true,
+      "period": "Q3 2026 (advance)",
+      "timeSeries": [
+        {
+          "date": "2023-01",
+          "value": 0.6
+        },
+        {
+          "date": "2023-04",
+          "value": 0.7
+        },
+        {
+          "date": "2023-07",
+          "value": 0.6
+        },
+        {
+          "date": "2023-10",
+          "value": 0.2
+        },
+        {
+          "date": "2024-01",
+          "value": 0.4
+        },
+        {
+          "date": "2024-04",
+          "value": -0.2
+        },
+        {
+          "date": "2024-07",
+          "value": 1.0
+        },
+        {
+          "date": "2024-10",
+          "value": -0.9
+        },
+        {
+          "date": "2025-01",
+          "value": 0.8
+        },
+        {
+          "date": "2025-04",
+          "value": 0.0
+        },
+        {
+          "date": "2025-07",
+          "value": -0.1
+        },
+        {
+          "date": "2025-10",
+          "value": 0.9
+        },
+        {
+          "date": "2026-01",
+          "value": -0.3
+        },
+        {
+          "date": "2026-04",
+          "value": 1.4
+        },
+        {
+          "date": "2026-07",
+          "value": 0.9
+        }
+      ],
+      "context": "The advance Q3 estimate shows continued expansion at a slower quarterly rate than Q2. These seasonally adjusted changes are not annualized and should not be compared directly with annual GDP growth rates. The advance estimate can be revised.",
+      "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
+      "reviewedAt": "2026-11-01",
+      "description": "Real GDP, seasonally adjusted quarterly growth, not annualized, at constant 2018 prices. All observations use Graph 1 of the October 30, 2026 release vintage; Q3 2026 is an advance estimate subject to revision. Source: INEGI / Sistema de Cuentas Nacionales de México. Reviewed 2026-11-01.",
+      "observationLabels": {
+        "2023-01": "Q1 2023",
+        "2023-04": "Q2 2023",
+        "2023-07": "Q3 2023",
+        "2023-10": "Q4 2023",
+        "2024-01": "Q1 2024",
+        "2024-04": "Q2 2024",
+        "2024-07": "Q3 2024",
+        "2024-10": "Q4 2024",
+        "2025-01": "Q1 2025",
+        "2025-04": "Q2 2025",
+        "2025-07": "Q3 2025",
+        "2025-10": "Q4 2025",
+        "2026-01": "Q1 2026",
+        "2026-04": "Q2 2026",
+        "2026-07": "Q3 2026 (advance)"
+      },
+      "sourceReferences": [
+        {
+          "label": "INEGI bulletin 673/26, Graph 1 and Table 1",
+          "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
+          "releaseDate": "2026-10-30"
+        }
+      ],
+      "historyNote": "15 quarterly observations from Q1 2023 to Q3 2026, transcribed from the same official release vintage. The final quarter is an advance estimate. No FRED history is spliced into this series."
     }
   ],
   "unavailable": [

@@ -29,20 +29,20 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // ── Series catalogue ─────────────────────────────────────────────────────────
 // `daily` series are downsampled to one point per month (last obs of the month).
 const SERIES = [
-  { key: "ca_policy_rate", id: "V39079",     label: "Canada Policy Rate", unit: "%", positiveGood: false, daily: true, months: 37 },
+  { key: "ca_policy_rate", id: "V39079",     label: "Canada Policy Rate", unit: "%", positiveGood: false, daily: true, months: 49 },
   // Total CPI INDEX (2002=100). We compute the YoY % change ourselves — the
   // STATIC_TOTALCPICHANGE series is not chronologically ordered and is unreliable.
-  { key: "ca_cpi",         id: "V41690973",  label: "Canada CPI Inflation", unit: "% YoY", positiveGood: false, yoy: true, months: 52 },
+  { key: "ca_cpi",         id: "V41690973",  label: "Canada CPI Inflation", unit: "% YoY", positiveGood: false, yoy: true, months: 64 },
 ];
 
 // 10Y sovereign yield — bond-shaped record (value + moves + 36-pt monthly trend),
 // matching the FRED bonds dump so patch-site-data.mjs treats both identically.
 const BONDS = [
-  { key: "ca10y", id: "BD.CDN.10YR.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "10Y", months: 37 },
+  { key: "ca10y", id: "BD.CDN.10YR.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "10Y", months: 49 },
   // Canada has no 30-year constant-maturity series. The BoC's long-end benchmark
   // is "long-term" — currently a ~30Y bond, but the maturity is not fixed, so it
   // is labelled long-term throughout rather than asserted to be exactly 30Y.
-  { key: "ca30y", id: "BD.CDN.LONG.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "long-term", months: 37, curveOnly: true },
+  { key: "ca30y", id: "BD.CDN.LONG.DQ.YLD", country: "Canada", flag: "🇨🇦", tenor: "long-term", months: 49, curveOnly: true },
 ];
 
 async function valetFetch(seriesId, { months = 25, daily = false } = {}) {
@@ -94,7 +94,7 @@ function buildRecord(series) {
     change: prev ? round2(last.value - prev.value) : 0,
     direction: prev ? (last.value > prev.value ? "up" : last.value < prev.value ? "down" : "neutral") : "neutral",
     asOf: last.date,
-    timeSeries: series.slice(-36).map((o) => ({ date: o.date.slice(0, 7), value: round2(o.value) })),
+    timeSeries: series.slice(-48).map((o) => ({ date: o.date.slice(0, 7), value: round2(o.value) })),
   };
 }
 

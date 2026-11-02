@@ -26,7 +26,7 @@ export function EconomyView({ indicators, curves, additionalUpdatedLabel, covera
       {scope === "global" && coverageNote && <p className="text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>{coverageNote}</p>}
       <EconomyDashboard scope={scope} indicators={economyIndicators(indicators, scope)}
         curves={economyCurves(curves, scope)} />
-      <p className="text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>Dated snapshots of published observations. Reporting periods vary by series; flash estimates are labelled. Open a panel’s source link to inspect the release.</p>
+      <p className="text-xs leading-5" style={{ color: "var(--color-text-muted)" }}>Only series with at least three years of sourced history are shown. Reporting periods vary; unpublished observations remain absent. Open a panel’s source link to inspect the release.</p>
     </div>
   );
 }

@@ -125,15 +125,15 @@ def feed_specs(reviewed):
             variable=variable, aggregate=aggregate, apiUrl=url,
             sourceUrl='https://sidra.ibge.gov.br/tabela/' + table,
             definition=definition, provider='IBGE / SIDRA')
-    add('mx', 'Mexico', '🇲🇽', 'gdp', kind='csv', frequency='quarterly', unit='% QoQ',
-        dateColumn='observation_date', valueColumn='NAEXKP01MXQ657S', decimals=1,
-        apiUrl='https://fred.stlouisfed.org/graph/fredgraph.csv?id=NAEXKP01MXQ657S&cosd=2022-10-01&coed=' + reviewed,
-        sourceUrl='https://fred.stlouisfed.org/series/NAEXKP01MXQ657S', provider='OECD via FRED',
-        definition='Real expenditure GDP, seasonally adjusted quarterly growth, not annualized; rounded to one decimal. This OECD/FRED mirror currently ends in Q2 2026 and can lag INEGI’s newer advance releases. Its quarterly basis differs from the annual growth rates in several other country panels.')
     return specs
 
 
 def build_indicator(spec, observations, reviewed):
+    # Preserve earlier review dates when only part of the curated file is rechecked.
+    record_reviewed = spec.get('reviewedAt', reviewed)
+    date.fromisoformat(record_reviewed)
+    if record_reviewed > reviewed:
+        raise ValueError(spec['id'] + ': review date is after refresh date')
     retained = [p for p in observations if '2022-10' <= p['date'] <= reviewed[:7]]
     if len(retained) < 2:
         raise ValueError(spec['id'] + ': need at least two verified observations')
@@ -142,7 +142,9 @@ def build_indicator(spec, observations, reviewed):
     interval = (int(last['date'][:4]) - int(previous['date'][:4])) * 12 + int(last['date'][5:7]) - int(previous['date'][5:7])
     if interval != expected_months:
         raise ValueError(spec['id'] + ': preceding reporting period is not verified')
-    lag = (int(reviewed[:4]) - int(last['date'][:4])) * 12 + int(reviewed[5:7]) - int(last['date'][5:7])
+    # Retained curated records are evaluated at their disclosed review date;
+    # a partial refresh must not silently restamp those older source checks.
+    lag = (int(record_reviewed[:4]) - int(last['date'][:4])) * 12 + int(record_reviewed[5:7]) - int(last['date'][5:7])
     if lag > spec.get('maxLagMonths', 9 if spec['category'] == 'growth' else 4):
         raise ValueError(spec['id'] + ': stale observation')
     if any(p['date'] > reviewed[:7] for p in observations):
@@ -165,8 +167,8 @@ def build_indicator(spec, observations, reviewed):
     result.update(value=last['value'], previousValue=previous['value'], change=change,
                   direction='up' if change > 0 else 'down' if change < 0 else 'neutral',
                   isPositiveGood=spec['category'] == 'growth', period=period, timeSeries=retained,
-                  context=context, sourceUrl=spec['sourceUrl'], reviewedAt=reviewed,
-                  description=spec['definition'] + ' Source: ' + spec['provider'] + '. Reviewed ' + reviewed + '.')
+                  context=context, sourceUrl=spec['sourceUrl'], reviewedAt=record_reviewed,
+                  description=spec['definition'] + ' Source: ' + spec['provider'] + '. Reviewed ' + record_reviewed + '.')
     if spec.get('apiUrl'):
         result['apiUrl'] = spec['apiUrl']
     if labels:

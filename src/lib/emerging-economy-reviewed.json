@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-10-30",
+  "reviewedAt": "2026-11-01",
   "indicators": [
     {
       "id": "vn-gdp",
@@ -32,7 +32,8 @@
         }
       ],
       "sourceUrl": "https://www.nso.gov.vn/bai-top/2026/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2026/",
-      "historyNote": "Limited history · 3 verified observations from the cited releases."
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "vn-cpi",
@@ -66,7 +67,8 @@
         }
       ],
       "sourceUrl": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "vn-unemployment",
@@ -99,7 +101,8 @@
         }
       ],
       "sourceUrl": "https://www.nso.gov.vn/tin-tuc-thong-ke/2026/10/thong-cao-bao-chi-ve-tinh-hinh-lao-dong-viec-lam-quy-iii-va-9-thang-nam-2026/",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "id-gdp",
@@ -134,7 +137,8 @@
         }
       ],
       "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "id-cpi",
@@ -169,7 +173,8 @@
         }
       ],
       "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "id-unemployment",
@@ -204,7 +209,8 @@
         "2026-02": "Feb 2026 (quarterly survey)",
         "2026-05": "May 2026 (quarterly survey)"
       },
-      "maxLagMonths": 6
+      "maxLagMonths": 6,
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "bd-gdp",
@@ -243,7 +249,8 @@
         "2025-10": "Oct–Dec 2025 (Q2 FY2025–26)",
         "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)"
       },
-      "maxLagMonths": 9
+      "maxLagMonths": 9,
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "bd-cpi",
@@ -305,7 +312,8 @@
         }
       ],
       "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
-      "historyNote": "Limited history · 10 verified observations from the cited releases."
+      "historyNote": "Limited history · 10 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "mx-cpi",
@@ -343,7 +351,8 @@
         }
       ],
       "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
-      "historyNote": "Limited history · 3 verified observations from the cited releases."
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "mx-unemployment",
@@ -377,7 +386,8 @@
         }
       ],
       "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "cl-gdp",
@@ -406,7 +416,8 @@
         }
       ],
       "sourceUrl": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "cl-cpi",
@@ -441,7 +452,8 @@
         }
       ],
       "sourceUrl": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
     },
     {
       "id": "cl-unemployment",
@@ -476,7 +488,94 @@
         }
       ],
       "sourceUrl": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "reviewedAt": "2026-10-30"
+    },
+    {
+      "id": "mx-gdp",
+      "name": "Mexico Real GDP growth",
+      "country": "Mexico",
+      "flag": "🇲🇽",
+      "category": "growth",
+      "unit": "% QoQ",
+      "frequency": "quarterly",
+      "definition": "Real GDP, seasonally adjusted quarterly growth, not annualized, at constant 2018 prices. All observations use Graph 1 of the October 30, 2026 release vintage; Q3 2026 is an advance estimate subject to revision.",
+      "provider": "INEGI / Sistema de Cuentas Nacionales de México",
+      "observations": [
+        {
+          "date": "2023-01",
+          "value": 0.6
+        },
+        {
+          "date": "2023-04",
+          "value": 0.7
+        },
+        {
+          "date": "2023-07",
+          "value": 0.6
+        },
+        {
+          "date": "2023-10",
+          "value": 0.2
+        },
+        {
+          "date": "2024-01",
+          "value": 0.4
+        },
+        {
+          "date": "2024-04",
+          "value": -0.2
+        },
+        {
+          "date": "2024-07",
+          "value": 1.0
+        },
+        {
+          "date": "2024-10",
+          "value": -0.9
+        },
+        {
+          "date": "2025-01",
+          "value": 0.8
+        },
+        {
+          "date": "2025-04",
+          "value": 0.0
+        },
+        {
+          "date": "2025-07",
+          "value": -0.1
+        },
+        {
+          "date": "2025-10",
+          "value": 0.9
+        },
+        {
+          "date": "2026-01",
+          "value": -0.3
+        },
+        {
+          "date": "2026-04",
+          "value": 1.4
+        },
+        {
+          "date": "2026-07",
+          "value": 0.9
+        }
+      ],
+      "observationLabels": {
+        "2026-07": "Q3 2026 (advance)"
+      },
+      "context": "The advance Q3 estimate shows continued expansion at a slower quarterly rate than Q2. These seasonally adjusted changes are not annualized and should not be compared directly with annual GDP growth rates. The advance estimate can be revised.",
+      "sourceReferences": [
+        {
+          "label": "INEGI bulletin 673/26, Graph 1 and Table 1",
+          "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
+          "releaseDate": "2026-10-30"
+        }
+      ],
+      "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
+      "historyNote": "15 quarterly observations from Q1 2023 to Q3 2026, transcribed from the same official release vintage. The final quarter is an advance estimate. No FRED history is spliced into this series."
     }
   ],
   "unavailable": [

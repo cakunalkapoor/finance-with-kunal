@@ -43,6 +43,22 @@ class EmergingSources(unittest.TestCase):
             with self.assertRaises(ValueError):
                 source.build_indicator(feed, observations, '2026-10-30')
 
+    def test_mexico_gdp_uses_a_complete_official_vintage_and_labels_the_advance_estimate(self):
+        snapshot = json.loads(PATH.with_name('emerging-economy-data.json').read_text())
+        mexico = next(row for row in snapshot['indicators'] if row['id'] == 'mx-gdp')
+        self.assertEqual(len(mexico['timeSeries']), 15)
+        self.assertEqual(mexico['timeSeries'][0]['date'], '2023-01')
+        self.assertEqual(mexico['timeSeries'][-1], {'date': '2026-07', 'value': 0.9})
+        self.assertEqual(mexico['previousValue'], 1.4)
+        self.assertEqual(mexico['change'], -0.5)
+        self.assertEqual(mexico['period'], 'Q3 2026 (advance)')
+        self.assertEqual(mexico['unit'], '% QoQ')
+        self.assertIn('inegi.org.mx', mexico['sourceUrl'])
+        self.assertNotIn('apiUrl', mexico)
+        self.assertEqual(mexico['reviewedAt'], '2026-11-01')
+        vietnam = next(row for row in snapshot['indicators'] if row['id'] == 'vn-gdp')
+        self.assertEqual(vietnam['reviewedAt'], '2026-10-30')
+
     def test_requested_country_coverage_keeps_the_unverified_labour_gap_explicit(self):
         snapshot = json.loads(PATH.with_name('emerging-economy-data.json').read_text())
         self.assertEqual(len(snapshot['indicators']), 20)

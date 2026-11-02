@@ -175,12 +175,12 @@ export default function AIPage() {
               >
                 TSMC&rsquo;s Q3 US-dollar revenue rose 41.2% year over year, and ASML lifted the
                 floor of its annual sales guidance to €44B. Those releases support a picture of
-                strong foundry and equipment demand. SK hynix&rsquo;s card retains Q2 results;
-                its{" "}
-                <a href="https://news.skhynix.com/en/q3-2026-earnings-conference-call-invitation/"
+                strong foundry and equipment demand. SK hynix reported an 80% operating margin
+                in its{" "}
+                <a href="https://news.skhynix.com/en/q3-2026-business-results/"
                   target="_blank" rel="noopener noreferrer" className="font-semibold underline-offset-2 hover:underline">
-                  Q3 release is scheduled for October 28
-                </a>, after this review. None isolates
+                  October 28 Q3 results
+                </a>. None isolates
                 AI-only revenue or margin. SK hynix and
                 ASML figures are translated at the results-date{" "}
                 <a

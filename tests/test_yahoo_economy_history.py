@@ -23,6 +23,14 @@ class DatedWeeklyHistoryTests(unittest.TestCase):
         self.assertNotIn("2026-05-01", [p["date"] for p in result["weeklyHistory"]])
         self.assertEqual(result["sparkline"], [p["value"] for p in result["weeklyHistory"]])
 
+    def test_economy_retains_four_years_without_extending_market_sparklines(self):
+        dates = pd.bdate_range("2021-10-01", "2026-10-30")
+        result = yahoo.derive(pd.DataFrame({"Close": range(100, 100 + len(dates))}, index=dates))
+        self.assertEqual(len(result["weeklyHistory"]), 208)
+        self.assertEqual(len(result["sparkline"]), 156)
+        self.assertEqual(result["sparkline"], [p["value"] for p in result["weeklyHistory"][-156:]])
+        self.assertLess(result["weeklyHistory"][0]["date"], "2023-10-30")
+
     def test_partial_week_cannot_be_assigned_a_future_friday(self):
         dates = pd.bdate_range("2026-09-01", "2026-10-29")
         result = yahoo.derive(pd.DataFrame({"Close": range(100, 100 + len(dates))}, index=dates))

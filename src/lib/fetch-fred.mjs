@@ -59,34 +59,34 @@ const BONDS = [
 
 const MACRO = [
   // US Unemployment Rate — monthly
-  { key: "us_unemployment", id: "UNRATE",  limit: 36, label: "US Unemployment", unit: "%", positiveGood: false },
+  { key: "us_unemployment", id: "UNRATE",  limit: 60, label: "US Unemployment", unit: "%", positiveGood: false },
   // NOTE: Canada unemployment + trade balance now come from Statistics Canada WDS
   // (direct, ~1 month fresher than FRED's OECD-harmonised series). See fetch-statcan.mjs.
-  // US Initial Jobless Claims — weekly (~3y of weekly points)
-  { key: "us_jobless",      id: "ICSA",    limit: 156, label: "US Initial Jobless Claims", unit: "K", positiveGood: false, scale: 0.001 },
+  // US Initial Jobless Claims — weekly (~4y of weekly points)
+  { key: "us_jobless",      id: "ICSA",    limit: 210, label: "US Initial Jobless Claims", unit: "K", positiveGood: false, scale: 0.001 },
   // US Real GDP — quarterly (level $B)
-  { key: "us_real_gdp",     id: "GDPC1",   limit: 12, label: "US Real GDP", unit: "USD B" },
+  { key: "us_real_gdp",     id: "GDPC1",   limit: 16, label: "US Real GDP", unit: "USD B" },
   // US GDP growth (annualised quarterly %)
   // 16 quarters, not 12: the chart's 3Y tab needs 36 months of history, and 12
-  // quarterly points span only 34. Any quarterly series feeding a card wants
+  // quarterly points span only 33 months. Any quarterly series feeding a card wants
   // >= 13 points for 3Y to be offered at all.
   { key: "us_gdp_growth",   id: "A191RL1Q225SBEA", limit: 16, label: "US GDP Growth", unit: "% QoQ", positiveGood: true },
   // US CPI All Items (1982-84=100) — monthly. We compute YoY % change.
-  { key: "us_cpi_index",    id: "CPIAUCSL", limit: 48, label: "US CPI Index", unit: "Index" },
+  { key: "us_cpi_index",    id: "CPIAUCSL", limit: 60, label: "US CPI Index", unit: "Index" },
   // US PPI Final Demand (Nov 2009=100) — monthly. We compute YoY % change.
-  { key: "us_ppi_index",    id: "PPIFIS",   limit: 48, label: "US PPI Index", unit: "Index" },
+  { key: "us_ppi_index",    id: "PPIFIS",   limit: 60, label: "US PPI Index", unit: "Index" },
 
   // ── US & Canada dashboard series (added for the US & Canada page) ────────────
   // US Nonfarm Payrolls — monthly LEVEL in thousands. We emit month-over-month change.
-  { key: "us_payrolls",     id: "PAYEMS",   limit: 37, label: "US Nonfarm Payrolls", unit: "K MoM", positiveGood: true, momChange: true },
+  { key: "us_payrolls",     id: "PAYEMS",   limit: 49, label: "US Nonfarm Payrolls", unit: "K MoM", positiveGood: true, momChange: true },
   // US Effective Fed Funds Rate — monthly %
-  { key: "us_fed_funds",    id: "FEDFUNDS", limit: 36, label: "US Fed Funds Rate", unit: "%", positiveGood: false },
+  { key: "us_fed_funds",    id: "FEDFUNDS", limit: 60, label: "US Fed Funds Rate", unit: "%", positiveGood: false },
   // US Trade Balance (goods + services) — monthly $M. Scale to $B.
-  { key: "us_trade",        id: "BOPGSTB",  limit: 36, label: "US Trade Balance", unit: "USD B", positiveGood: true, scale: 0.001 },
+  { key: "us_trade",        id: "BOPGSTB",  limit: 60, label: "US Trade Balance", unit: "USD B", positiveGood: true, scale: 0.001 },
   // US Federal Government current tax receipts — quarterly, $B (annualised).
-  { key: "us_tax",          id: "W006RC1Q027SBEA", limit: 12, label: "US Federal Tax Receipts", unit: "USD B", positiveGood: true },
+  { key: "us_tax",          id: "W006RC1Q027SBEA", limit: 16, label: "US Federal Tax Receipts", unit: "USD B", positiveGood: true },
   // US Advance Retail Sales (Retail + Food Services) — monthly $M LEVEL. YoY % computed.
-  { key: "us_retail",       id: "RSAFS",    limit: 48, label: "US Retail Sales", unit: "% YoY", positiveGood: true, yoy: true },
+  { key: "us_retail",       id: "RSAFS",    limit: 60, label: "US Retail Sales", unit: "% YoY", positiveGood: true, yoy: true },
 
   // Canada Real GDP — already a quarterly QoQ growth %; pass through.
   // Canada GDP now comes from Statistics Canada direct (table 36-10-0104, vector

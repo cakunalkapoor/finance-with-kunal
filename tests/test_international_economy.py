@@ -44,7 +44,7 @@ class InternationalSources(unittest.TestCase):
             self.assertTrue(row['sourceUrl'].startswith('https://'))
             self.assertTrue(row['context'])
         australia=next(r for r in snapshot['indicators'] if r['id']=='au-cpi')
-        self.assertEqual(australia['timeSeries'][-1]['date'],'2026-08')
+        self.assertEqual(australia['timeSeries'][-1]['date'],'2026-09')
         germany=next(r for r in snapshot['indicators'] if r['id']=='de-gdp')
         self.assertIn('provisional',germany['observationLabels'][germany['timeSeries'][-1]['date']])
 

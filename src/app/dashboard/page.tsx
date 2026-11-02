@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Economy — Global Economic Dashboard",
   description:
-    "Explore major and emerging economies, including Vietnam, Indonesia, Bangladesh, Malaysia, Brazil, Mexico and Chile: sourced GDP growth, inflation and unemployment in one dashboard.",
+    "Explore global, US and Canadian economic indicators with at least three years of sourced history, including GDP growth, inflation, unemployment and policy rates.",
   path: "/dashboard",
   keywords: [
     "global economy",

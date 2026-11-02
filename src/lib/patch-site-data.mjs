@@ -561,7 +561,7 @@ for (const cfg of process.argv.includes("--bonds-only") ? [] : CURVES) {
   const longByDate = new Map(l.dailySeries.map(p => [p.date, p.value]));
   const paired = s.dailySeries.filter(p => longByDate.has(p.date)).sort((a, b) => a.date.localeCompare(b.date));
   if (!paired.length) throw new Error(`Yield curve ${cfg.country}: no common observation date`);
-  const shortSeries = monthlyLastObservations(paired).slice(-36);
+  const shortSeries = monthlyLastObservations(paired).slice(-48);
   const longSeries = shortSeries.map(p => ({ date: p.date, value: longByDate.get(p.date) }));
   const asOf = shortSeries.at(-1).date;
   curveBlocks.push(`  {

@@ -26,19 +26,45 @@ const GLOBAL_CATEGORIES: EconomyCategory[] = [
   { id: "rates", label: "Rates" }, { id: "energy", label: "Energy" },
 ];
 
-/** Global contains every supplied indicator; country views keep their established scope. */
+/** Three calendar years of observed history, with enough points for its cadence.
+ * Missing source observations are never interpolated to make a series qualify. */
+export function hasEconomyHistory(indicator: Pick<EconomicIndicator, "timeSeries"> & Partial<Pick<EconomicIndicator, "id">>) {
+  const points = indicator.timeSeries;
+  if (points.length < 13) return false;
+  const times = points.map(point => economicTimestamp(point.date));
+  if (points.some((point, index) => !Number.isFinite(point.value)
+    || !Number.isFinite(times[index]) || (index > 0 && times[index] <= times[index - 1]))) return false;
+  const end = new Date(times.at(-1)!);
+  const cutoff = new Date(end);
+  cutoff.setUTCFullYear(end.getUTCFullYear() - 3);
+  if (times[0] > cutoff.getTime()) return false;
+  const gaps = times.slice(1).map((time, index) => (time - times[index]) / 86_400_000).sort((a, b) => a - b);
+  const cadence = gaps[Math.floor(gaps.length / 2)];
+  const recent = times.filter(time => time >= cutoff.getTime()).length;
+  // Weekly series need 156 genuine readings, monthly series 36 (one unpublished
+  // source month may remain absent), quarterly series all 13 quarterly anchors.
+  if (cadence <= 10) return recent >= 156;
+  if (cadence <= 40) return recent >= 36;
+  if (cadence <= 100 && (!indicator.id || QUARTERLY.has(indicator.id) || indicator.id === "india-gdp")) return recent >= 13;
+  return false;
+}
+
+/** Only adequately sourced histories are offered in any Economy coverage view. */
 export function economyIndicators(indicators: EconomicIndicator[], scope: EconomyScope) {
-  if (scope === "global") return indicators;
+  const eligible = indicators.filter(hasEconomyHistory);
+  if (scope === "global") return eligible;
   const country = ECONOMY_COVERAGE.find(c => c.id === scope)?.country;
-  return indicators.filter(i => i.country === country && COUNTRY_CATEGORIES.some(c => c.id === i.category));
+  return eligible.filter(i => i.country === country && COUNTRY_CATEGORIES.some(c => c.id === i.category));
 }
 export function economyCategories(scope: EconomyScope) {
   return scope === "global" ? GLOBAL_CATEGORIES : COUNTRY_CATEGORIES;
 }
 export function economyCurves(curves: YieldCurve[], scope: EconomyScope) {
-  if (scope === "global") return curves;
+  const eligible = curves.filter(curve => hasEconomyHistory({ timeSeries: curve.short.series })
+    && hasEconomyHistory({ timeSeries: curve.long.series }));
+  if (scope === "global") return eligible;
   const country = ECONOMY_COVERAGE.find(c => c.id === scope)?.country;
-  return curves.filter(c => c.country === country);
+  return eligible.filter(c => c.country === country);
 }
 export function economyCurveId(curve: YieldCurve) {
   return `yield-curve-${curve.country.toLowerCase().replace(/\s+/g, "-")}`;

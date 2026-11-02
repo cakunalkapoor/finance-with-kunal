@@ -32,17 +32,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const SERIES = [
   // LFS unemployment rate, both sexes 15+, seasonally adjusted, Canada (table 14-10-0287).
   // StatCan direct — publishes ~1 month ahead of FRED's OECD-harmonised series.
-  { key: "ca_unemployment",     vector: 2062815,    latestN: 37, unit: "%",     round: "one", keep: 36,       label: "Canada Unemployment" },
+  { key: "ca_unemployment",     vector: 2062815,    latestN: 49, unit: "%",     round: "one", keep: 48,       label: "Canada Unemployment" },
   // Merchandise trade balance, balance-of-payments basis, all countries, seasonally
   // adjusted (table 12-10-0011). $millions → $billions. StatCan direct.
-  { key: "ca_trade",            vector: 87008984,   latestN: 37, unit: "CAD B", scale: 0.001, round: "one", keep: 36, label: "Canada Trade Balance" },
+  { key: "ca_trade",            vector: 87008984,   latestN: 49, unit: "CAD B", scale: 0.001, round: "one", keep: 48, label: "Canada Trade Balance" },
   // Employment LEVEL (K persons) → month-over-month change in K ("jobs added").
   // latestN = keep + 1 (need one extra level to derive the first diff).
-  { key: "ca_jobs_added",       vector: 2062811,    latestN: 37, unit: "K MoM", diff: true, keep: 36,        label: "Canada Jobs Added" },
-  { key: "ca_govt_revenue",     vector: 62425572,   latestN: 13, unit: "CAD B", scale: 0.001, round: "one",   label: "Canada Govt Revenues" },
+  { key: "ca_jobs_added",       vector: 2062811,    latestN: 49, unit: "K MoM", diff: true, keep: 48,        label: "Canada Jobs Added" },
+  { key: "ca_govt_revenue",     vector: 62425572,   latestN: 16, unit: "CAD B", scale: 0.001, round: "one",   label: "Canada Govt Revenues" },
   // Total retail trade sales, Canada, seasonally adjusted (table 20-10-0056). LEVEL → YoY %.
   // latestN = keep + 12 (YoY needs 12 extra months of raw levels).
-  { key: "ca_retail",           vector: 1446859483, latestN: 48, unit: "% YoY", yoy: true, keep: 36,         label: "Canada Retail Sales" },
+  { key: "ca_retail",           vector: 1446859483, latestN: 60, unit: "% YoY", yoy: true, keep: 48,         label: "Canada Retail Sales" },
   // Real GDP, expenditure-based, chained 2017$, quarterly SA (table 36-10-0104).
   // LEVEL → plain (not annualised) quarter-over-quarter %, which is what the card
   // has always shown. Replaces FRED's OECD mirror NAEXKP01CAQ657S: StatCan
@@ -56,7 +56,7 @@ const SERIES = [
   // Real GDP by industry, chained 2017$, monthly SA (table 36-10-0434). LEVEL →
   // month-over-month %. Runs ~4 months ahead of the quarterly series, so this is
   // the fresher read on Canadian growth between quarterly prints.
-  { key: "ca_gdp_monthly",      vector: 65201210,   latestN: 37, unit: "% MoM", pct: true, round: "two", keep: 36, label: "Canada GDP (MoM)" },
+  { key: "ca_gdp_monthly",      vector: 65201210,   latestN: 49, unit: "% MoM", pct: true, round: "two", keep: 48, label: "Canada GDP (MoM)" },
 ];
 
 async function fetchVector(vectorId, latestN) {
@@ -86,7 +86,7 @@ async function fetchVector(vectorId, latestN) {
   throw lastErr;
 }
 
-function buildRecord(series, { scale = 1, round = "one", keep = 24 } = {}) {
+function buildRecord(series, { scale = 1, round = "one", keep = 16 } = {}) {
   const rounder = round === "whole" ? Math.round : round === "two" ? round2 : round1;
   const apply = (v) => rounder(v * scale);
   const s = series.map((p) => ({ date: p.date, value: apply(p.value) }));
@@ -107,13 +107,13 @@ function buildRecord(series, { scale = 1, round = "one", keep = 24 } = {}) {
 
 // For LEVEL series we can report the month-over-month change (e.g. employment
 // level → "jobs added", in K). Rounded to whole thousands.
-function deriveDiff(obs, keep = 24) {
+function deriveDiff(obs, keep = 16) {
   const diff = calendarChanges(obs, 1, { difference: true });
   return buildRecord(diff, { keep });
 }
 
 // For LEVEL series we report the year-over-year % change (e.g. retail sales).
-function deriveYoY(obs, keep = 24) {
+function deriveYoY(obs, keep = 16) {
   const yoy = calendarChanges(obs, 12);
   return buildRecord(yoy, { keep });
 }
@@ -122,7 +122,7 @@ function deriveYoY(obs, keep = 24) {
 // series, QoQ on a quarterly one. Not annualised: StatCan headlines quarterly
 // GDP at an annual rate, but this card has always shown the plain quarterly
 // move (and computing it this way reproduces the OECD/FRED figure exactly).
-function derivePct(obs, keep = 24, round = "two", months = 1) {
+function derivePct(obs, keep = 16, round = "two", months = 1) {
   const pct = calendarChanges(obs, months);
   return buildRecord(pct, { keep, round });
 }

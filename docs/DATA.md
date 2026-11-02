@@ -3,6 +3,55 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Week ending October 31, 2026
+
+Content-only refresh; the existing design is preserved. Exchange closes are October 30,
+crypto October 31. Provider retrieval completed November 1, so the shared retrieval label
+can differ from the observation and briefing dates. Yahoo, FRED, BoC, StatCan, Eurostat,
+sovereign yields, AI prices and the 1,618-stock heatmap were refreshed; seven missing
+constituent quotes remain unavailable. Weekly prose reconciles to the final saved quotes.
+
+Economy now offers **50 indicators and two curves**, after applying a shared three-year
+history gate in `economy-view.ts`. US has 10 eligible indicators; Canada has nine. Histories
+must be chronological, unique, finite and span three calendar years, with sufficient recent
+observations for their cadence: 156 weekly, 36 monthly, or 13 quarterly. One unpublished
+monthly observation can remain absent; values are never interpolated. The existing October
+2025 gap in US CPI/unemployment remains visible. The check applies to all coverage views
+and both yield-curve tenors before rendering. Short source snapshots stay available for
+provenance but cannot enter the displayed series.
+
+Backfills: US/Canadian monthly fetches now retain four or more years, weekly claims and
+energy approximately four, quarterly tax receipts 16 quarters, and paired yield curves up
+to 48 month-end readings. China manufacturing PMI has 37 monthly observations, October
+2023–October 2026, from the [2024](https://www.stats.gov.cn/english/PressRelease/202411/t20241115_1957434.html),
+[2025](https://www.stats.gov.cn/english/PressRelease/202511/t20251103_1961770.html) and
+[2026](https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261031_1965718.html) NBS tables.
+
+Excluded until sufficient comparable source history is verified: eight other PMI series;
+Australian complete monthly CPI; Vietnam, Indonesia, Bangladesh and Chile's supplied
+measures; and Mexican CPI/unemployment. Mexico GDP now uses 15 quarters from Q1 2023 through the Q3 2026 advance estimate, all from Graph 1 of the [October 30 INEGI release](https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf), replacing the lagging FRED mirror.
+The alternative Mexican OECD/FRED CPI series ends in July 2024 and is unsuitable as a
+current replacement; the unemployment mirror failed. Australia's complete CPI starts in
+April 2025 in the returned source; the earlier monthly indicator is not spliced into it.
+
+Reviewed new releases include [US Q3 GDP](https://www.bea.gov/data/gdp/gross-domestic-product),
+[euro-area Q3 GDP](https://ec.europa.eu/eurostat/web/products-euro-indicators/w/2-30102026-ap),
+[October 28 BoC policy](https://www.bankofcanada.ca/2026/10/fad-press-release-2026-10-28/),
+[October 28 Fed policy](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm),
+and the Alphabet, Microsoft, Amazon and SK hynix earnings linked alongside their updated
+AI figures. Distinct revenue, run-rate, cloud-backlog and capex definitions remain explicit.
+
+Source exceptions: OPEC HTTP 403 retains the owner's October 22 export with its real date;
+Japanese statistics HTTP 502 and Korean FRED failures retain five previously verified
+October 27 records, explicitly noted in their descriptions. The other 12 international
+series were refreshed from the existing official adapters. Six emerging feeds and the new Mexican GDP release were reviewed November 1; the other 13 curated measures retain their October 30 review dates. Manual sovereign closes/ranges and independent cross-checks are
+recorded in `bonds-manual.json` and `bond-ranges52w.json`; country curves use paired
+October 29 official readings, while Markets uses October 30 quotes where available.
+
+Validation: 98 Node tests, 20 Python tests, sovereign-bond validation, scoped ESLint and
+production webpack static export (including OG generation) passed. Browser checks confirm
+Mexico GDP's three-year window and the 50-indicator/two-curve coverage.
+
 ## Week ending October 24, 2026
 
 The market snapshot was refreshed October 24 in America/Vancouver time. Exchange quotes
@@ -193,7 +242,7 @@ in `build-catalogue.py` covers the four the rules cannot reach (`BRKB` → `BRK-
 | `EQUITY_INDICES` | The 13 equity indices on /markets, each with price, return, range, volatility, and sparkline fields |
 | `BOND_YIELDS` | 10Y govt bonds for US, DE, GB, CA, JP, IN, KR, AU, ZA with daily/1M/1Y moves and a 12-point trend |
 | `POLICY_RATES` | Latest headline central-bank policy rate for the same nine bond-table countries; no history by design |
-| `YIELD_CURVES` | US and Canada long-end curves — two tenors with 36-month history plus the spread in bp. **Regenerated wholesale** by `patch-site-data.mjs`; hand edits are overwritten |
+| `YIELD_CURVES` | US and Canada long-end curves — two tenors with up to 48 monthly observations plus the spread in bp. **Regenerated wholesale** by `patch-site-data.mjs`; hand edits are overwritten |
 | `COMMODITIES` | Brent, WTI, Gold, Silver, Copper, Aluminum, Iron Ore, Soybeans, Natural Gas (9 total) |
 | `CRYPTO` | Bitcoin, Ethereum, Solana, BNB spot prices (typed `CryptoAsset[]`, not `Commodity[]`) |
 | `FOREX_RATES` | US Dollar Index + EUR / GBP / JPY / CAD / INR vs USD |
@@ -253,21 +302,21 @@ the wrong company on those tiles.
 
 ### `EconomicChart.tsx`
 
-- The October 30 emerging-economy supplement adds 20 core series across Vietnam, Indonesia, Bangladesh, Malaysia, Brazil, Mexico and Chile, using `emerging-economy-data.json`. No new PMI series are added. Brazil uses pinned IBGE/SIDRA variables and national aggregates; Malaysia uses OpenDOSM CSVs; Mexico quarterly GDP uses the active OECD/FRED mirror. Its latest verified observation is Q2 2026 and is explicitly labelled QoQ, not annualized.
+- The October 30 emerging-economy supplement adds 20 core series across Vietnam, Indonesia, Bangladesh, Malaysia, Brazil, Mexico and Chile, using `emerging-economy-data.json`. No new PMI series are added. Brazil uses pinned IBGE/SIDRA variables and national aggregates; Malaysia uses OpenDOSM CSVs; Mexico quarterly GDP now uses the October 30 INEGI release (including its complete historical graph), explicitly labelled QoQ, not annualized; Q3 2026 is marked advance.
 - `python3 src/lib/fetch-emerging.py --reviewed-on 2026-10-30` refreshes seven API/CSV histories and combines thirteen manually reviewed official-release series from `emerging-economy-reviewed.json`. A later review date is blocked until those releases are reviewed. Future, stale, conflicting and nonadjacent headline comparisons fail validation; the snapshot is written atomically. `sourceReferences` preserves the earlier cited releases, and limited histories are visible beside their charts.
-- Bangladesh has verified inflation and fiscal-quarter GDP through Jan–Mar 2026; recent comparable unemployment remains unavailable and is disclosed in Global. Vietnam labour uses working-age quarterly observations; Indonesia labour currently ends in the May 2026 survey. Brazil and Chile unemployment use rolling three-month windows, retained in periods and hover labels. No annual unemployment proxy or forecast fills the Bangladesh gap. Existing source definitions and the independently reviewed October 27 supplement remain intact.
+- Bangladesh has verified inflation and fiscal-quarter GDP through Jan–Mar 2026; recent comparable unemployment remains unavailable. The supplied Bangladeshi histories currently fail the three-year display minimum. Vietnam labour uses working-age quarterly observations; Indonesia labour currently ends in the May 2026 survey. Brazil and Chile unemployment use rolling three-month windows, retained in periods and hover labels. No annual unemployment proxy or forecast fills the Bangladesh gap. Existing source definitions and the independently reviewed October 27 supplement remain intact.
 
-- `/dashboard` combines Global, US and Canada using a top-of-page coverage toggle and the approved **Briefing & table** layout: compact `EconomyHeader`, scoped headline readings, category filters, a compact indicator table and a selected-indicator focus panel. The toggle updates the headlines, categories, rows, focus and country curve in place. Global opens with All selected and includes all 72 indicators plus both yield curves. US retains 12 indicators plus its curve, and Canada 11 plus its curve. `economy-view.ts` owns the existing scope rules and display formatting. Global category filters are Activity, Growth, Labour, Inflation, Rates and Energy; Consumption, Trade and Fiscal filters appear only in US and Canada. All still includes every supplied indicator. The inflation category is labelled Inflation in all three views.
+- `/dashboard` combines Global, US and Canada using a top-of-page coverage toggle and the approved **Briefing & table** layout: compact `EconomyHeader`, scoped headline readings, category filters, a compact indicator table and a selected-indicator focus panel. The toggle updates the headlines, categories, rows, focus and country curve in place. Global opens with All selected and includes 50 eligible indicators plus both yield curves. US retains 10 eligible indicators plus its curve, and Canada nine plus its curve. `economy-view.ts` owns the existing scope rules and display formatting. Global category filters are Activity, Growth, Labour, Inflation, Rates and Energy; Consumption, Trade and Fiscal filters appear only in US and Canada. All includes every supplied indicator that passes the minimum three-year history check. The inflation category is labelled Inflation in all three views.
 - Table rows and the focus panel show current level, units, reporting period, change versus the prior observation and a factual status. Percentage-rate changes use percentage points; US quarterly GDP explicitly retains its annualized basis, while Canada and euro-area GDP remain ordinary QoQ. Quarter-start dates display as reporting quarters.
 - The focus panel shows the existing `ECONOMIC_CONTEXT` interpretation; Source & measurement expands inline with the full original description. Available-history low/high bars carry actual coverage dates and observation counts, without claiming a 52-week range. The duplicated bottom commentary wall is omitted. No fixed-height text scrollers hide notes. Yield curves remain in Rates, with their two series, date, spread and source notes.
 - SVG line charts use actual UTC timestamps, including both monthly `YYYY-MM` and daily `YYYY-MM-DD` dates, rather than evenly spacing records with different cadences. PMI charts include the 50 no-change reference. Absolute lines use the brand color; delta colors follow `isPositiveGood`.
 - Horizon tabs use the shared `ChartViewTabs` in its comfortable-size variant, filtered by `horizonsFor`. Windows anchor to each series' last observation; monthly series do not gain an unsupported 1W view. Category filtering changes the table rows and resets focus to the first applicable indicator; the scoped headline readings remain the page overview.
 - Coverage is bookmarkable with `?view=us` or `?view=canada`; Global uses the base URL. Browser Back/Forward restores coverage. Supported categories stay selected across coverage changes; unsupported ones fall back to the first available category. Legacy `/us-economy`, `/canada-economy` and `/us-canada` routes forward to the combined page and are excluded from the sitemap.
 - US and Canada retain the shared published update label from `DATA_UPDATED_AT`. Global includes both supplements and uses their most recent `reviewedAt`, formatted by `international-economy.ts`; this does not advance the market or AI snapshot.
-- Global includes the euro area, UK, Japan, China, India, Australia, Germany, France and South Korea alongside the US, Canada, Taiwan and energy data. The only coverage controls are Global / US / Canada; the separate More economies selector is removed. Old country query values fall back to the complete Global view. Each global row retains its country label, observation period and source. Yield-curve selections use country-specific IDs so US and Canadian curves cannot collide.
+- Global includes the euro area, UK, Japan, China, India, Australia, Germany, France and South Korea alongside the US, Canada, Malaysia, Brazil, Mexico and energy data. Short histories are omitted. The only coverage controls are Global / US / Canada; the separate More economies selector is removed. Old country query values fall back to the complete Global view. Each global row retains its country label, observation period and source. Yield-curve selections use country-specific IDs so US and Canadian curves cannot collide.
 - `international-economy-data.json` adds 17 verified indicators to the original 35 (52 distinct series in total). UK, Japan, Australia, Germany and France each add real GDP, consumer inflation and unemployment. South Korea adds OECD/FRED real GDP and unemployment alongside its existing manufacturing PMI. Euro area, China and India reuse their existing verified indicators; headline counts reflect available coverage rather than inserting missing metrics.
 - Refresh the supplement with `python3 src/lib/fetch-international.py --reviewed-on YYYY-MM-DD`. It reads public ONS, Eurostat, Japan Statistics Dashboard, ABS and FRED endpoints, validates timestamps, units, current/previous/delta reconciliation, staleness and single-series filters, and writes the snapshot atomically. Before a later refresh, review the explicit ABS CPI publication cap; an observation month is not its release date. No credentials are embedded.
-- The first supplemental review is Oct 27, 2026. UK GDP uses revised QNA (not the older PN2 first estimate). UK unemployment retains the source’s rolling three-month labels. Germany’s provisional GDP flags remain visible. HICP is labelled as harmonised inflation, not national CPI. Japanese API attribution is retained. Australian CPI stops at August because September’s release was scheduled for Oct 28; its monthly measurement transition is disclosed. Korean OECD/FRED reporting lag is explicit; the discontinued 2023 CPI series is excluded. Projections and unsourced series are not inserted.
+- The first supplemental review is Oct 27, 2026. UK GDP uses revised QNA (not the older PN2 first estimate). UK unemployment retains the source’s rolling three-month labels. Germany’s provisional GDP flags remain visible. HICP is labelled as harmonised inflation, not national CPI. Japanese API attribution is retained. The October 31 review extends Australian CPI through September, released October 28; its complete monthly history is too short for display and is not spliced with the older indicator. Korean OECD/FRED reporting lag is explicit; the discontinued 2023 CPI series is excluded. Projections and unsourced series are not inserted.
 - Supplemental interpretations and source links travel with their indicator rows; original `ECONOMIC_CONTEXT` and source data remain unchanged.
 
 ### `MacroSnapshot.tsx`
