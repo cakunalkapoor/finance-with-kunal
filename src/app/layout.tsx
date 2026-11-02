@@ -58,6 +58,7 @@ export const metadata: Metadata = {
     "Kunal Kapoor",
   ],
   applicationName: SITE_NAME,
+  referrer: "strict-origin-when-cross-origin",
   authors: [{ name: AUTHOR_NAME, url: absoluteUrl("/about") }],
   creator: AUTHOR_NAME,
   publisher: AUTHOR_NAME,

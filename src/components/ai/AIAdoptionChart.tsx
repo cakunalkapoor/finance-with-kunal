@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import dynamic from "next/dynamic";
 import { AI_ADOPTION_BY_SIZE, AI_ADOPTION_NATIONAL_RANGE, AI_ADOPTION_PERIOD, AI_ADOPTION_RELEASE } from "@/lib/ai-data";
 import { useTheme, CHART_COLORS } from "@/lib/use-theme";
@@ -51,9 +53,9 @@ export default function AIAdoptionChart() {
       formatter: (params: any) => {
         const p = Array.isArray(params) ? params[0] : params;
         return `<div style="padding:2px 4px">
-          <div style="color:${c.tooltipMuted};font-size:10px">${p.name}</div>
-          <div style="font-weight:700;font-size:13px">${p.value}% use AI</div>
-          <div style="color:${c.tooltipMuted};font-size:10px;margin-top:2px">National rate ${nationalLabel}</div>
+          <div style="color:${c.tooltipMuted};font-size:10px">${escapeHtml(p.name)}</div>
+          <div style="font-weight:700;font-size:13px">${escapeHtml(p.value)}% use AI</div>
+          <div style="color:${c.tooltipMuted};font-size:10px;margin-top:2px">National rate ${escapeHtml(nationalLabel)}</div>
         </div>`;
       },
     },

@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import type { TimeHorizon, YieldCurve } from "@/types";
@@ -75,11 +77,11 @@ export default function YieldCurveChart({ curve }: Props) {
             ? ""
             : `<div style="display:flex;align-items:center;gap:6px;margin-top:2px">
                  <span style="width:8px;height:8px;border-radius:2px;background:${color}"></span>
-                 <span style="color:${c.tooltipMuted};font-size:10px">${label}</span>
+                 <span style="color:${c.tooltipMuted};font-size:10px">${escapeHtml(label)}</span>
                  <span style="font-weight:700;font-size:12px;margin-left:auto">${value.toFixed(2)}%</span>
                </div>`;
         return `<div style="padding:2px 4px;min-width:150px">
-          <div style="color:${c.tooltipMuted};font-size:10px">${rows[0].axisValue}</div>
+          <div style="color:${c.tooltipMuted};font-size:10px">${escapeHtml(rows[0].axisValue)}</div>
           ${line(curve.short.label, s, c.series1)}
           ${line(curve.long.label, l, c.series2)}
           ${

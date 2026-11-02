@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import dynamic from "next/dynamic";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
 import { AI_CAPEX, AI_CAPEX_PRIOR_YEAR_SOURCE } from "@/lib/ai-data";
@@ -66,12 +68,12 @@ export default function AICapexChart() {
         const range =
           plan.low === plan.high ? `$${plan.low}B` : `$${plan.low}–${plan.high}B`;
         return `<div style="padding:2px 4px;max-width:230px">
-          <div style="font-weight:700;margin-bottom:3px">${plan.company}</div>
+          <div style="font-weight:700;margin-bottom:3px">${escapeHtml(plan.company)}</div>
           <div style="color:${c.tooltipMuted};font-size:10px">Prior year</div>
-          <div>$${plan.priorYear}B</div>
+          <div>$${escapeHtml(plan.priorYear)}B</div>
           <div style="color:${c.tooltipMuted};font-size:10px;margin-top:3px">2026 guidance</div>
-          <div>${range}</div>
-          <div style="color:${c.tooltipMuted};font-size:10px;margin-top:4px;white-space:normal;line-height:1.4">${plan.note}</div>
+          <div>${escapeHtml(range)}</div>
+          <div style="color:${c.tooltipMuted};font-size:10px;margin-top:4px;white-space:normal;line-height:1.4">${escapeHtml(plan.note)}</div>
         </div>`;
       },
     },

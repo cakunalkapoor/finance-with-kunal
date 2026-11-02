@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import dynamic from "next/dynamic";
 import type { EChartsOption } from "echarts";
 
@@ -67,7 +69,7 @@ export default function TrendSparkline({
       textStyle: { color: "#f2f1eb", fontSize: 11 },
       formatter: (params) => {
         const p = Array.isArray(params) ? params[0] : params;
-        return `${p.name}<br/><strong>${p.value == null ? "Unavailable" : format(Number(p.value))}</strong>`;
+        return `${escapeHtml(p.name)}<br/><strong>${escapeHtml(p.value == null ? "Unavailable" : format(Number(p.value)))}</strong>`;
       },
     },
     xAxis: {

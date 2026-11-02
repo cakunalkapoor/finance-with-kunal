@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import type { EconomicIndicator, TimeHorizon } from "@/types";
@@ -48,7 +50,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
         }) : params) as { value?: unknown };
         if (!Array.isArray(point?.value)) return "";
         const date = new Date(Number(point.value[0])).toISOString().slice(0, 10);
-        return `<div style="padding:2px 4px"><div style="color:${c.tooltipMuted};margin-bottom:3px">${economicObservationLabel(indicator, date)}</div><strong>${displayValue(Number(point.value[1]))} ${economicUnit(indicator)}</strong></div>`;
+        return `<div style="padding:2px 4px"><div style="color:${c.tooltipMuted};margin-bottom:3px">${escapeHtml(economicObservationLabel(indicator, date))}</div><strong>${displayValue(Number(point.value[1]))} ${escapeHtml(economicUnit(indicator))}</strong></div>`;
       },
     },
     xAxis: {

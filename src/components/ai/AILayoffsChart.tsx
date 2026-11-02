@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import dynamic from "next/dynamic";
 import { AI_LAYOFF_MONTHS } from "@/lib/ai-data";
 import { useTheme, CHART_COLORS } from "@/lib/use-theme";
@@ -47,9 +49,9 @@ export default function AILayoffsChart() {
           .filter(Boolean)
           .join(" of ");
         return `<div style="padding:2px 4px">
-          <div style="color:${c.tooltipMuted};font-size:10px">${entry.month}</div>
-          <div style="font-weight:700;font-size:13px">${entry.aiSharePct}% of announced cuts</div>
-          ${counts ? `<div style="color:${c.tooltipMuted};font-size:10px;margin-top:2px">${counts}</div>` : ""}
+          <div style="color:${c.tooltipMuted};font-size:10px">${escapeHtml(entry.month)}</div>
+          <div style="font-weight:700;font-size:13px">${escapeHtml(entry.aiSharePct)}% of announced cuts</div>
+          ${counts ? `<div style="color:${c.tooltipMuted};font-size:10px;margin-top:2px">${escapeHtml(counts)}</div>` : ""}
         </div>`;
       },
     },

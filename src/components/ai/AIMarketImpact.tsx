@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import {
@@ -246,13 +248,13 @@ export default function AIMarketImpact() {
             return `<div style="display:flex;gap:12px;justify-content:space-between${
               isBasket ? `;font-weight:700;color:${ACCENT[theme]}` : ""
             }">
-              <span>${p.seriesName}</span>
+              <span>${escapeHtml(p.seriesName)}</span>
               <span>${change >= 0 ? "+" : ""}${change.toFixed(1)}%</span>
             </div>`;
           })
           .join("");
         return `<div style="padding:2px 4px">
-          <div style="color:${c.tooltipMuted};font-size:10px;margin-bottom:3px">${sorted[0].axisValue}</div>
+          <div style="color:${c.tooltipMuted};font-size:10px;margin-bottom:3px">${escapeHtml(sorted[0].axisValue)}</div>
           ${body}
         </div>`;
       },

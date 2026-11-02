@@ -1,5 +1,7 @@
 "use client";
 
+import { escapeHtml } from "@/lib/html";
+
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { HEATMAP_INDICES } from "@/lib/site-data";
@@ -128,16 +130,16 @@ export default function MarketHeatmap() {
         // For stock tiles, show ticker + company name. For sector tiles, just the name.
         const companyName = stock ? getCompanyName(stock.yahoo ?? params.name, params.name) : null;
         const headerHtml = companyName
-          ? `<div style="font-weight:700;color:#1e1b3a;font-size:13px">${params.name}</div>
-             <div style="color:#524b7a;font-size:11px;margin-bottom:4px">${companyName}</div>`
-          : `<div style="font-weight:700;color:#1e1b3a;margin-bottom:4px">${params.name}</div>`;
+          ? `<div style="font-weight:700;color:#1e1b3a;font-size:13px">${escapeHtml(params.name)}</div>
+             <div style="color:#524b7a;font-size:11px;margin-bottom:4px">${escapeHtml(companyName)}</div>`
+          : `<div style="font-weight:700;color:#1e1b3a;margin-bottom:4px">${escapeHtml(params.name)}</div>`;
         return `<div style="padding:4px 2px;min-width:160px">
             ${headerHtml}
             <div style="display:flex;align-items:baseline;gap:6px">
               <span style="color:${change == null ? "#64748b" : change >= 0 ? "#059669" : "#e11d48"};font-size:15px;font-weight:700">${change == null ? "N/A" : `${sign}${change.toFixed(2)}%`}</span>
               <span style="color:#9590b8;font-size:10px;font-weight:600;letter-spacing:0.04em">1W</span>
             </div>
-            <div style="color:#9590b8;font-size:10px;margin-top:2px">Index weight: ${val}%</div>
+            <div style="color:#9590b8;font-size:10px;margin-top:2px">Index weight: ${escapeHtml(val)}%</div>
             ${stock ? `<div style="color:#7c3aed;font-size:10px;margin-top:4px;font-weight:600">Click to open on Yahoo Finance ↗</div>` : ""}
           </div>`;
       },
