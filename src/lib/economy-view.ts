@@ -79,6 +79,18 @@ export const ECONOMY_HEADLINES: Record<EconomyScope, { id: string; label: string
 export function economicTimestamp(date: string) {
   return Date.parse(`${date.length === 7 ? `${date}-01` : date}T00:00:00Z`);
 }
+/** Keep each measurement vintage separate, including when a chart is clipped. */
+export function economicHistorySegments(indicator: Pick<EconomicIndicator, "timeSeries" | "seriesBreaks">, points = indicator.timeSeries) {
+  const segments: typeof points[] = [];
+  for (const [index, point] of points.entries()) {
+    const crossesBreak = index > 0 && indicator.seriesBreaks?.some(change =>
+      economicTimestamp(points[index - 1].date) < economicTimestamp(change.date)
+      && economicTimestamp(point.date) >= economicTimestamp(change.date));
+    if (index === 0 || crossesBreak) segments.push([]);
+    segments.at(-1)!.push(point);
+  }
+  return segments;
+}
 const QUARTERLY = new Set(["us-gdp", "ea-gdp", "ca-gdp", "china-gdp", "uk-gdp", "jp-gdp", "au-gdp", "de-gdp", "fr-gdp", "kr-gdp", "vn-gdp", "id-gdp", "bd-gdp", "my-gdp", "br-gdp", "mx-gdp", "cl-gdp", "us-tax-receipts", "ca-tax-receipts"]);
 const monthYear = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
 const dayMonthYear = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });

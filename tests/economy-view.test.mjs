@@ -59,8 +59,9 @@ test('All Economy scopes enforce the minimum history while keeping eligible curv
   const original=mod.exports.ECONOMIC_INDICATORS;
   const extra=JSON.parse(readFileSync(new URL('../src/lib/international-economy-data.json',import.meta.url),'utf8')).indicators;
   const emerging=JSON.parse(readFileSync(new URL('../src/lib/emerging-economy-data.json',import.meta.url),'utf8')).indicators;
-  const rows=[...original,...extra,...emerging];
-  const counts={global:50,us:10,canada:9};
+  const india=JSON.parse(readFileSync(new URL('../src/lib/india-cpi-data.json',import.meta.url),'utf8')).indicators;
+  const rows=[...original,...extra,...emerging,...india];
+  const counts={global:51,us:10,canada:9};
   const union=new Set();
   for(const coverage of view.ECONOMY_COVERAGE){
     const scoped=view.economyIndicators(rows,coverage.id);
@@ -68,10 +69,11 @@ test('All Economy scopes enforce the minimum history while keeping eligible curv
     for(const h of view.ECONOMY_HEADLINES[coverage.id])assert(scoped.some(i=>i.id===h.id),coverage.id+' missing '+h.id);
     for(const row of scoped)union.add(row.id);
   }
-  assert.equal(union.size,50);
+  assert.equal(union.size,51);
   assert.deepEqual(view.economyIndicators(rows,'global'),rows.filter(view.hasEconomyHistory));
   assert(view.economyIndicators(rows,'global').every(view.hasEconomyHistory));
   assert.deepEqual(view.economyIndicators(rows,'global').filter(row=>row.country==='Mexico').map(row=>row.id),['mx-gdp']);
+  assert(view.economyIndicators(rows,'global').some(row=>row.id==='india-cpi' && row.category==='inflation'));
   const categories=new Set(view.economyCategories('global').map(c=>c.id));
   assert.deepEqual([...categories],['pmi','growth','employment','inflation','rates','energy']);
   for(const scope of ['us','canada']) {
@@ -103,4 +105,16 @@ test('duplicates, invalid values and insufficient recent coverage cannot qualify
   const oneUnpublishedMonth=points.filter((_,index)=>index!==20);
   assert.equal(view.hasEconomyHistory(indicator({timeSeries:oneUnpublishedMonth})),true);
   assert.equal(oneUnpublishedMonth.length,36);
+});
+
+test('measurement changes split chart history without adding or dropping observations',()=>{
+  const row=JSON.parse(readFileSync(new URL('../src/lib/india-cpi-data.json',import.meta.url),'utf8')).indicators[0];
+  const segments=view.economicHistorySegments(row);
+  assert.equal(segments.length,2);
+  assert(segments[0].every(point=>point.date<'2026-01'));
+  assert(segments[1].every(point=>point.date>='2026-01'));
+  assert.deepEqual(segments.flat(),row.timeSeries);
+  assert.equal(view.economicHistorySegments(row,row.timeSeries.filter(point=>point.date>='2026-01')).length,1);
+  assert.equal(view.economicHistorySegments(indicator()).length,1);
+  assert(view.hasEconomyHistory(row));
 });

@@ -13,7 +13,10 @@ function RecentTrend({ indicator }: { indicator: EconomicIndicator }) {
   const times = points.map(p => economicTimestamp(p.date));
   const values = points.map(p => p.value);
   const low = Math.min(...values), high = Math.max(...values);
-  const path = points.map((p, index) => `${index ? "L" : "M"}${2 + (times[index] - times[0]) / (times.at(-1)! - times[0] || 1) * 116},${30 - (p.value - low) / (high - low || 1) * 26}`).join(" ");
+  const path = points.map((p, index) => {
+    const crossesBreak = index > 0 && indicator.seriesBreaks?.some(change => times[index - 1] < economicTimestamp(change.date) && times[index] >= economicTimestamp(change.date));
+    return `${index && !crossesBreak ? "L" : "M"}${2 + (times[index] - times[0]) / (times.at(-1)! - times[0] || 1) * 116},${30 - (p.value - low) / (high - low || 1) * 26}`;
+  }).join(" ");
   return <div className="w-[120px]">
     <svg viewBox="0 0 120 34" className="h-9 w-full" role="img" aria-label={`${indicator.name}, ${points.length} observations: ${economicObservationLabel(indicator, points[0].date)} to ${economicObservationLabel(indicator, points.at(-1)!.date)}`}><path d={path} fill="none" stroke="var(--color-neon-cyan)" strokeWidth="1.7" /></svg>
     <p className="text-[9px]" style={{ color: "var(--color-text-muted)", fontFamily: FONT_MONO }}>{points[0].date} — {points.at(-1)!.date}</p>

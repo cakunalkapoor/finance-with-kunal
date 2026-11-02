@@ -7,7 +7,7 @@ import { formatEconomicValue, getChangeColor, FONT_MONO } from "@/lib/utils";
 import { useTheme, CHART_COLORS } from "@/lib/use-theme";
 import { horizonsFor, defaultHorizon, filterByHorizon } from "@/lib/chart-window";
 import { ECONOMIC_CONTEXT } from "@/lib/commentary";
-import { economicTitle, economicPeriod, economicUnit, economicDeltaUnit, economicStatus, economicTimestamp, economicObservationLabel } from "@/lib/economy-view";
+import { economicTitle, economicPeriod, economicUnit, economicDeltaUnit, economicStatus, economicTimestamp, economicObservationLabel, economicHistorySegments } from "@/lib/economy-view";
 import ChartViewTabs from "@/components/markets/ChartViewTabs";
 import type { EChartsOption } from "echarts";
 
@@ -24,6 +24,10 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
   const referenceColor = theme === "dark" ? "#edc76d" : "#916c1e";
   const isPMI = indicator.category === "pmi";
   const first = filtered[0], last = filtered.at(-1);
+  const segments = economicHistorySegments(indicator, filtered);
+  const visibleBreaks = (indicator.seriesBreaks ?? []).filter(change => first && last
+    && economicTimestamp(change.date) >= economicTimestamp(first.date)
+    && economicTimestamp(change.date) <= economicTimestamp(last.date));
   const context = indicator.context ?? ECONOMIC_CONTEXT[indicator.id];
   const earlierSources = indicator.sourceReferences?.filter(source => source.url !== indicator.sourceUrl) ?? [];
   const history = indicator.timeSeries;
@@ -38,7 +42,10 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
       textStyle: { color: c.tooltipText, fontFamily: "Space Mono, monospace", fontSize: 11 },
       axisPointer: { type: "line", lineStyle: { color: c.axisLine, width: 1 } },
       formatter: (params) => {
-        const point = (Array.isArray(params) ? params[0] : params) as { value?: unknown };
+        const point = (Array.isArray(params) ? params.find(item => {
+          const value = (item as { value?: unknown }).value;
+          return Array.isArray(value) && typeof value[1] === "number" && Number.isFinite(value[1]);
+        }) : params) as { value?: unknown };
         if (!Array.isArray(point?.value)) return "";
         const date = new Date(Number(point.value[0])).toISOString().slice(0, 10);
         return `<div style="padding:2px 4px"><div style="color:${c.tooltipMuted};margin-bottom:3px">${economicObservationLabel(indicator, date)}</div><strong>${displayValue(Number(point.value[1]))} ${economicUnit(indicator)}</strong></div>`;
@@ -62,11 +69,18 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
       axisLabel: { color: c.axisLabel, fontFamily: "Space Mono, monospace", fontSize: 10, formatter: (value: number) => displayValue(value) },
       axisLine: { show: false }, axisTick: { show: false },
     },
-    series: [{
-      type: "line", data: filtered.map(p => [economicTimestamp(p.date), p.value]),
-      smooth: false, showSymbol: false, lineStyle: { width: 2, color: lineColor }, itemStyle: { color: lineColor },
+    series: segments.map((segment, index) => ({
+      type: "line" as const,
+      data: filtered.map(p => [economicTimestamp(p.date), segment.some(point => point.date === p.date) ? p.value : null]),
+      connectNulls: false, smooth: false, showSymbol: segment.length === 1,
+      lineStyle: { width: 2, color: lineColor }, itemStyle: { color: lineColor },
       ...(isPMI ? { markLine: { silent: true, symbol: "none", lineStyle: { color: referenceColor, type: "dashed", width: 1 }, label: { formatter: "50 · no change", position: "insideEndTop", color: referenceColor, fontSize: 10 }, data: [{ yAxis: 50 }] } } : {}),
-    }],
+      ...(index === 0 && visibleBreaks.length ? { markLine: {
+        silent: true, symbol: "none", lineStyle: { color: referenceColor, type: "dashed" as const, width: 1 },
+        label: { position: "insideEndTop" as const, color: referenceColor, fontSize: 10 },
+        data: visibleBreaks.map(change => ({ xAxis: economicTimestamp(change.date), label: { formatter: change.label } })),
+      } } : {}),
+    })),
   };
   return (
     <article id={`indicator-${indicator.id}`} data-indicator={indicator.id} aria-label={`${indicator.country}: ${economicTitle(indicator)}`} className="min-w-0 overflow-hidden rounded-lg border" style={{ background: "var(--color-space-card)", borderColor: "var(--color-space-border)" }}>
@@ -89,7 +103,7 @@ export default function EconomicChart({ indicator }: { indicator: EconomicIndica
         </p>
         <div className="mt-2 min-h-7" role="group" aria-label={`${indicator.name} chart window`}><ChartViewTabs views={horizons} value={horizon} onChange={setHorizon} comfortable /></div>
       </div>
-      <div role="img" aria-label={`${indicator.name}: ${first?.date ?? "unavailable"} to ${last?.date ?? "unavailable"}; latest ${displayValue(indicator.value)} ${economicUnit(indicator)}${isPMI ? "; 50 marks no change in surveyed activity" : ""}`} className="px-1">
+      <div role="img" aria-label={`${indicator.name}: ${first?.date ?? "unavailable"} to ${last?.date ?? "unavailable"}; latest ${displayValue(indicator.value)} ${economicUnit(indicator)}${isPMI ? "; 50 marks no change in surveyed activity" : ""}${visibleBreaks.map(change => `; ${change.label} ${change.date}, separate chart segments`).join("")}`} className="px-1">
         <ReactECharts option={option} style={{ height: 220 }} opts={{ renderer: "svg" }} notMerge />
       </div>
       {history.length > 1 && <section aria-label="Observed history range" className="mx-4 mb-4 rounded-md p-3" style={{ background: "var(--color-wash)" }}>

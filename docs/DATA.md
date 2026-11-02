@@ -3,6 +3,48 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## India CPI addition — November 2, 2026
+
+India now appears in Global → Inflation, bringing the display to 51 indicators and two
+curves. The current national combined headline rate is 5.54% YoY for September 2026,
+after 4.83% in August (+0.71pp), verified against the [official monthly release](https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2322244&lang=2&reg=48).
+
+`npm run fetch:india-cpi` reads the official MoSPI public MCP service, with the official
+CPI API as a secondary transport. `npm run build` automatically runs it through `prebuild`,
+so local weekly refreshes and GitHub Pages deployments both check the source. No API key,
+paid provider, spreadsheet dependency or browser scraping is required. TLS verification
+stays enabled. The MCP route also avoids the legacy TLS negotiation problem seen with
+some clients on the direct API host.
+
+The exact series is All India / Combined / CPI General / published year-on-year inflation.
+Filters are pinned separately for each base year: national state code 99 for 2012 and 1 for
+2024, combined sector 3, general group 0 (2012) or general division 0 (2024). Returned names,
+bases, dimensions and pagination are checked. The fetcher rejects conflicting/duplicate
+months, missing readings, future dates, mismatched geography or subgroups, index-vs-rate
+confusion and a regressing latest observation. It reconciles reported inflation with the
+exact prior-year index within each basket, allowing for published index rounding.
+
+The saved snapshot retains 48 consecutive monthly **reported headline rates**, October
+2022–September 2026. This is not a reconstructed constant-basket series. The source's 2012
+basket ends in December 2025 and its 2024 basket's reported inflation begins January 2026.
+New-basket 2025 index levels have no published YoY inflation and are never converted into
+synthetic transition-year rates. Instead, the genuinely reported older headline observations
+remain in their own chart segment. Main charts and table sparklines do not connect across
+January 2026. The three-year view has a labelled measurement-break marker and a visible
+comparability note, following [MoSPI's explanation](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2291051&lang=1&reg=1).
+
+`india-cpi-data.json` keeps the source rows, successful review date, last attempt date,
+transport status and display record. Writes are atomic. If fetching or validation fails,
+`--allow-cached` revalidates the saved source rows and retains the original observation and
+successful review dates; the chart shows a source-availability note and the build logs a
+warning. A cache older than 45 days cannot silently carry another production build. The
+usual monthly release timetable is checked with a short publication/holiday grace period.
+Latest readings remain subject to publisher revisions; no upstream service can guarantee
+availability on every attempt.
+
+Validation: 99 Node tests, 29 Python tests, scoped ESLint, TypeScript and the production
+static export passed, including a live MoSPI fetch through the automatic prebuild hook.
+
 ## Week ending October 31, 2026
 
 Content-only refresh; the existing design is preserved. Exchange closes are October 30,
@@ -306,7 +348,7 @@ the wrong company on those tiles.
 - `python3 src/lib/fetch-emerging.py --reviewed-on 2026-10-30` refreshes seven API/CSV histories and combines thirteen manually reviewed official-release series from `emerging-economy-reviewed.json`. A later review date is blocked until those releases are reviewed. Future, stale, conflicting and nonadjacent headline comparisons fail validation; the snapshot is written atomically. `sourceReferences` preserves the earlier cited releases, and limited histories are visible beside their charts.
 - Bangladesh has verified inflation and fiscal-quarter GDP through Jan–Mar 2026; recent comparable unemployment remains unavailable. The supplied Bangladeshi histories currently fail the three-year display minimum. Vietnam labour uses working-age quarterly observations; Indonesia labour currently ends in the May 2026 survey. Brazil and Chile unemployment use rolling three-month windows, retained in periods and hover labels. No annual unemployment proxy or forecast fills the Bangladesh gap. Existing source definitions and the independently reviewed October 27 supplement remain intact.
 
-- `/dashboard` combines Global, US and Canada using a top-of-page coverage toggle and the approved **Briefing & table** layout: compact `EconomyHeader`, scoped headline readings, category filters, a compact indicator table and a selected-indicator focus panel. The toggle updates the headlines, categories, rows, focus and country curve in place. Global opens with All selected and includes 50 eligible indicators plus both yield curves. US retains 10 eligible indicators plus its curve, and Canada nine plus its curve. `economy-view.ts` owns the existing scope rules and display formatting. Global category filters are Activity, Growth, Labour, Inflation, Rates and Energy; Consumption, Trade and Fiscal filters appear only in US and Canada. All includes every supplied indicator that passes the minimum three-year history check. The inflation category is labelled Inflation in all three views.
+- `/dashboard` combines Global, US and Canada using a top-of-page coverage toggle and the approved **Briefing & table** layout: compact `EconomyHeader`, scoped headline readings, category filters, a compact indicator table and a selected-indicator focus panel. The toggle updates the headlines, categories, rows, focus and country curve in place. Global opens with All selected and includes 51 eligible indicators plus both yield curves. US retains 10 eligible indicators plus its curve, and Canada nine plus its curve. `economy-view.ts` owns the existing scope rules and display formatting. Global category filters are Activity, Growth, Labour, Inflation, Rates and Energy; Consumption, Trade and Fiscal filters appear only in US and Canada. All includes every supplied indicator that passes the minimum three-year history check. The inflation category is labelled Inflation in all three views.
 - Table rows and the focus panel show current level, units, reporting period, change versus the prior observation and a factual status. Percentage-rate changes use percentage points; US quarterly GDP explicitly retains its annualized basis, while Canada and euro-area GDP remain ordinary QoQ. Quarter-start dates display as reporting quarters.
 - The focus panel shows the existing `ECONOMIC_CONTEXT` interpretation; Source & measurement expands inline with the full original description. Available-history low/high bars carry actual coverage dates and observation counts, without claiming a 52-week range. The duplicated bottom commentary wall is omitted. No fixed-height text scrollers hide notes. Yield curves remain in Rates, with their two series, date, spread and source notes.
 - SVG line charts use actual UTC timestamps, including both monthly `YYYY-MM` and daily `YYYY-MM-DD` dates, rather than evenly spacing records with different cadences. PMI charts include the 50 no-change reference. Absolute lines use the brand color; delta colors follow `isPositiveGood`.

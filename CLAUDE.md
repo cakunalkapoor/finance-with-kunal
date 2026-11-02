@@ -104,6 +104,14 @@ src/
 
 Five live providers are wired in — **Yahoo Finance, FRED, Bank of Canada Valet, Statistics Canada WDS, Eurostat**; Twelve Data + Finnhub are scaffolds. (The Alpha Vantage path and the older `fetch-market-data.mjs` were deleted — both wrote a `market-data.json` no component read, and the Alpha Vantage script carried the same hard-coded YTD year that was fixed in `fetch-yahoo.py`.) Only the S&P Global PMI cards, china-gdp/india-gdp, and BLOG_POSTS are still hand-maintained. Keys in `.env.local` (gitignored). Refresh via `npm run fetch:<provider>`; each writes a gitignored `src/lib/<provider>-data.json` that is patched into `site-data.ts`. Datasets exported from `site-data.ts`: `EQUITY_INDICES`, `ETFS`, `BOND_YIELDS`, `COMMODITIES`, `CRYPTO`, `FOREX_RATES`, `HEATMAP_INDICES`, `ECONOMIC_INDICATORS`, `MACRO_SNAPSHOT`, `BLOG_POSTS`.
 
+**India CPI** has a dedicated official-source refresh: `npm run fetch:india-cpi` writes the committed
+`src/lib/india-cpi-data.json`, consumed by `international-economy.ts`. The `prebuild` hook runs it
+with `--allow-cached` on every production build, including GitHub Pages. Keep it in refresh scope.
+It validates published All-India Combined headline inflation, preserves original dates on a
+source failure and refuses a cache over 45 days old. History spans the 2012 and 2024 baskets as
+separate reported series, with a January 2026 measurement break. Never calculate missing 2025
+inflation from mismatched basket indices or connect the two chart segments. See `docs/DATA.md`.
+
 **Heatmaps** are a four-stage pipeline of their own — `build:catalogue` → `fetch:sectors` →
 `fetch:heatmap` → `patch:heatmap`. Membership and weights come from `data/index-constituents.xlsx`
 (published index weights, 11 indices, 1,618 constituents); sectors come from Yahoo and are held in a

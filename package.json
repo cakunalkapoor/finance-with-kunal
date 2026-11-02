@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",
+    "prebuild": "npm run fetch:india-cpi -- --allow-cached",
     "postbuild": "node src/lib/postbuild-og.mjs",
     "start": "next start",
     "lint": "eslint",
@@ -16,6 +17,7 @@
     "fetch:boc": "node src/lib/fetch-boc.mjs",
     "fetch:statcan": "node src/lib/fetch-statcan.mjs",
     "fetch:eurostat": "node src/lib/fetch-eurostat.mjs",
+    "fetch:india-cpi": "python3 src/lib/fetch-india-cpi.py",
     "fetch:twelvedata": "node src/lib/fetch-twelvedata.mjs",
     "fetch:finnhub": "node src/lib/fetch-finnhub.mjs",
     "build:catalogue": "./.venv/bin/python3 src/lib/build-catalogue.py",

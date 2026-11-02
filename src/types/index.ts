@@ -199,6 +199,8 @@ export interface EconomicIndicator {
   apiUrl?: string;
   observationLabels?: Record<string, string>;
   historyNote?: string;
+  /** Published measurement changes; charts must not connect across these dates. */
+  seriesBreaks?: { date: string; label: string }[];
   sourceReferences?: { label: string; url: string; releaseDate?: string }[];
 }
 
