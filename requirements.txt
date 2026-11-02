@@ -28,5 +28,5 @@ six==1.17.0
 soupsieve==2.10
 typing_extensions==4.15.0
 urllib3==2.8.0
-websockets==16.0
+websockets==17.4
 yfinance==1.4.1
