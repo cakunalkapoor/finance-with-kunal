@@ -1,6 +1,18 @@
 export type Assumptions = Record<string, number>;
 export type Projection = { year: number; values: number[]; debts?: number[]; investments?: number[]; interest?: number[] };
-export type Analysis = { labels: string[]; points: Projection[]; payoff?: (number | null)[]; interest?: number[]; notes: string[]; energy?: number[]; maintenance?: number[]; reserves?: number[] };
+export type VehicleCostBreakdown = {
+  key: "gas" | "hybrid" | "ev";
+  label: string;
+  netCapitalCost: number;
+  energyTotal: number;
+  maintenanceTotal: number;
+  insuranceTotal: number;
+  ownershipCost: number;
+  batteryReserveTotal: number;
+  planningCost: number;
+  monthlyCost: number;
+};
+export type Analysis = { labels: string[]; points: Projection[]; payoff?: (number | null)[]; interest?: number[]; notes: string[]; energy?: number[]; maintenance?: number[]; reserves?: number[]; vehicleCosts?: VehicleCostBreakdown[] };
 export function validateExpansion(x: Assumptions, kind: string): string | null {
   if (Object.values(x).some(v => !Number.isFinite(v))) return "Complete all numeric assumptions.";
   if (!Number.isInteger(x.years) || x.years < 1 || x.years > 40) return "Choose a whole duration from 1 to 40 years.";
@@ -50,11 +62,23 @@ export function vehicleMaintenancePresets(km: number, usdMultiplier: number) {
 }
 export function modelVehicles(x: Assumptions): Analysis {
   const error=validateExpansion(x,"vehicle"); if(error) throw new Error(error);
-  const labels=["Gas","Hybrid","Electric"], keys=["gas","hybrid","ev"];
+  const labels=["Gas","Hybrid","Electric"], keys=["gas","hybrid","ev"] as const;
   const electricity=x.homeShare/100*x.homeElectricity+(1-x.homeShare/100)*x.publicElectricity;
   const energy=[x.km/100*x.gasEfficiency*x.fuel,x.km/100*x.hybridEfficiency*x.fuel,x.km/x.evRange*x.evBattery/(x.chargingEfficiency/100)*electricity];
   const reserves=[0,x.hybridBatteryCost/x.hybridReserveYears,x.evBatteryCost/x.evReserveYears];
   const maintenance=keys.map((key,i)=>x[`${key}Maintenance`]+reserves[i]);
+  const vehicleCosts:VehicleCostBreakdown[]=keys.map((key,i)=> {
+    const netCapitalCost=x[`${key}Price`]-x[`${key}Rebate`]+(key === "ev" ? x.charger : 0)-x[`${key}Resale`];
+    const energyTotal=energy[i]*x.years;
+    // Reserve contributions stay separate from ownership spending: they are savings, not repair bills.
+    const maintenanceTotal=x[`${key}Maintenance`]*x.years;
+    const insuranceTotal=x[`${key}Insurance`]*x.years;
+    const ownershipCost=netCapitalCost+energyTotal+maintenanceTotal+insuranceTotal;
+    const batteryReserveTotal=reserves[i]*x.years;
+    return {key,label:labels[i],netCapitalCost,energyTotal,maintenanceTotal,insuranceTotal,
+      ownershipCost,batteryReserveTotal,planningCost:ownershipCost+batteryReserveTotal,
+      monthlyCost:ownershipCost/(x.years*12)};
+  });
   const points:Projection[]=[];
   for(let year=1;year<=x.years;year++) {
     const values=keys.map((key,i)=> {
@@ -64,5 +88,5 @@ export function modelVehicles(x: Assumptions): Analysis {
     });
     points.push({year,values});
   }
-  return {labels,points,energy,maintenance,reserves,notes:["Total planning cost = tax-inclusive cash purchase price minus confirmed rebates + charging setup + energy + scheduled maintenance + battery reserve + insurance − net resale proceeds.","Hybrid means a conventional, non-plug-in hybrid. Electricity per kilometre = usable battery kWh / range per full charge / charging efficiency. Enter usable capacity (not gross advertised capacity); range and capacity must describe the same car and conditions. Charging efficiency adds wall-to-battery losses once. Home/public charging shares produce a weighted electricity price.","All cars cover the same annual kilometres, with no mileage cap. Intermediate resale values follow an illustrative straight line to your end-of-duration estimate; they are not market forecasts.","This is a cash-purchase cost comparison. Financing, invested savings, inflation, unscheduled repairs beyond entered maintenance, emissions and charging convenience are excluded. Energy prices and annual costs stay constant. Enter confirmed incentives only. Battery reserve = replacement cost / funding years, added each year as a conservative planning allowance, not an actual repair charge or failure probability. Set battery cost to zero to exclude it. Warranty-covered replacements should not be budgeted as out-of-pocket costs. Routine maintenance must exclude these separately entered high-voltage battery reserves. Historical maintenance presets are US benchmarks, not current local quotes; amounts stay fixed until edited or reloaded."]};
+  return {labels,points,energy,maintenance,reserves,vehicleCosts,notes:["Ownership cost = tax-inclusive cash purchase price minus confirmed rebates + charging setup + energy + scheduled maintenance + insurance − net resale proceeds. Monthly average = ownership cost divided by comparison months; it is not a financing payment.","Total planning cost = ownership cost + the optional battery savings allowance. The allowance is shown separately because it is not an actual repair bill. Yearly planning projections include that allowance.","Hybrid means a conventional, non-plug-in hybrid. Electricity per kilometre = usable battery kWh / range per full charge / charging efficiency. Enter usable capacity (not gross advertised capacity); range and capacity must describe the same car and conditions. Charging efficiency adds wall-to-battery losses once. Home/public charging shares produce a weighted electricity price.","All cars cover the same annual kilometres, with no mileage cap. Intermediate resale values follow an illustrative straight line to your end-of-duration estimate; they are not market forecasts.","This is a cash-purchase cost comparison. Financing, invested savings, inflation, unscheduled repairs beyond entered maintenance, emissions and charging convenience are excluded. Energy prices and annual costs stay constant. Enter confirmed incentives only. Battery reserve = replacement cost / funding years, added each year as a conservative planning allowance, not an actual repair charge or failure probability. Set battery cost to zero to exclude it. Warranty-covered replacements should not be budgeted as out-of-pocket costs. Routine maintenance must exclude these separately entered high-voltage battery reserves. Historical maintenance presets are US benchmarks, not current local quotes; amounts stay fixed until edited or reloaded."]};
 }

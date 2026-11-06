@@ -33,6 +33,63 @@ test('historical maintenance presets convert miles to km and use explicit curren
  close(p.gasMaintenance,1363.5); close(p.hybridMaintenance,1269); close(p.evMaintenance,823.5);
  close(vehicleMaintenancePresets(0,1.35).evMaintenance,0);
 });
+test('ownership breakdown reconciles to existing planning totals for the default comparison',()=>{
+ const r=modelVehicles({...v,years:8,km:15000,fuel:1.6,homeElectricity:0.15,homeShare:100,
+  gasEfficiency:8,evBattery:64,chargingEfficiency:90,gasPrice:35000,hybridPrice:40000,evPrice:45000,
+  gasResale:10000,hybridResale:12000,evResale:14000,hybridBatteryCost:4725,evBatteryCost:14175,
+  ...vehicleMaintenancePresets(15000,1.35)});
+ assert.deepEqual(r.vehicleCosts.map(row=>row.key),['gas','hybrid','ev']);
+ assert.deepEqual(r.vehicleCosts.map(row=>row.label),r.labels);
+ const ownership=[50526.88,47062.24,40340.40];
+ const planning=[50526.88,49582.24,47900.40];
+ const reserves=[0,2520,7560];
+ r.vehicleCosts.forEach((row,i)=>{
+  close(row.ownershipCost,ownership[i]);
+  close(row.ownershipCost,row.netCapitalCost+row.energyTotal+row.maintenanceTotal+row.insuranceTotal);
+  close(row.batteryReserveTotal,reserves[i]);
+  close(row.planningCost,planning[i]);
+  close(row.planningCost,row.ownershipCost+row.batteryReserveTotal);
+  close(row.planningCost,r.points.at(-1).values[i]);
+  close(row.monthlyCost,row.ownershipCost/96);
+ });
+});
+test('optional battery savings change planning costs without changing ownership spending',()=>{
+ const assumptions={...v,hybridBatteryCost:6000,evBatteryCost:15000,
+  hybridMaintenance:100,evMaintenance:200,hybridInsurance:1000,evInsurance:1500};
+ const withReserve=modelVehicles(assumptions);
+ const withoutReserve=modelVehicles({...assumptions,hybridBatteryCost:0,evBatteryCost:0});
+ withReserve.vehicleCosts.forEach((row,i)=>{
+  const other=withoutReserve.vehicleCosts[i];
+  close(row.ownershipCost,other.ownershipCost);
+  close(row.maintenanceTotal,other.maintenanceTotal);
+  close(row.monthlyCost,other.monthlyCost);
+  close(row.planningCost-other.planningCost,row.batteryReserveTotal);
+  close(withReserve.points.at(-1).values[i]-withoutReserve.points.at(-1).values[i],row.batteryReserveTotal);
+  close(other.batteryReserveTotal,0);
+ });
+ close(withReserve.vehicleCosts[1].maintenanceTotal,200);
+ close(withReserve.vehicleCosts[2].maintenanceTotal,400);
+ close(withReserve.vehicleCosts[2].insuranceTotal,3000);
+});
+test('breakdown charges rebates and charging setup once while annual costs stay constant',()=>{
+ const assumptions={...v,gasRebate:200,hybridRebate:300,evRebate:1000,charger:500,
+  gasMaintenance:100,hybridMaintenance:200,evMaintenance:300,
+  gasInsurance:400,hybridInsurance:500,evInsurance:600,
+  hybridBatteryCost:6000,evBatteryCost:15000};
+ const two=modelVehicles(assumptions);
+ const four=modelVehicles({...assumptions,years:4});
+ assert.deepEqual(two.vehicleCosts.map(row=>row.netCapitalCost),[1800,1700,1500]);
+ two.vehicleCosts.forEach((row,i)=>{
+  const longer=four.vehicleCosts[i];
+  close(longer.netCapitalCost,row.netCapitalCost);
+  for(const component of ['energyTotal','maintenanceTotal','insuranceTotal','batteryReserveTotal']) {
+   close(longer[component],row[component]*2);
+  }
+  close(longer.planningCost,four.points.at(-1).values[i]);
+ });
+ assert.deepEqual(two.energy,four.energy);
+ assert.deepEqual(two.maintenance,four.maintenance);
+});
 
 test('one annual extra EMI pays principal and keeps equal cash budgets',()=>{
  const x={...debt,balance:2400,extraMode:1,extraEmis:1,extraMonth:12};
