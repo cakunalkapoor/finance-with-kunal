@@ -226,11 +226,12 @@ export function housingBreakEvens(x: HousingInputs): { rent: HousingThreshold; r
   return { rent: solve("rent", 100000, true), rate: x.downPayment === x.price ? { value: null, status: "no-loan" } : solve("mortgageRate", 25, false) };
 }
 
-/** A small, flat-cost interface for the public calculator. All recurring cash inputs are monthly. */
+/** A small interface for the public calculator. Cash inputs are monthly; rent can increase annually. */
 export interface SimpleHousingInputs {
   price: number;
   downPayment: number;
   rent: number;
+  rentInflation: number;
   mortgageRate: number;
   amortization: number;
   years: number;
@@ -249,7 +250,7 @@ export interface SimpleHousingInputs {
 }
 
 export const DEFAULT_SIMPLE_HOUSING: SimpleHousingInputs = {
-  price: 750000, downPayment: 150000, rent: 3000, mortgageRate: 4.5,
+  price: 750000, downPayment: 150000, rent: 3000, rentInflation: 0, mortgageRate: 4.5,
   amortization: 25, years: 10, compounding: "semiannual",
   renterInsurance: 0, homeInsurance: 0, propertyTax: 0, strata: 0, maintenance: 0,
   closingCosts: 0, renterMoving: 0, ownerMoving: 0, sellingCosts: 0,
@@ -267,7 +268,7 @@ function simpleHousingInputs(x: SimpleHousingInputs): HousingInputs {
     sellingCosts: x.sellingCosts, investmentReturn: x.investmentReturn, appreciation: x.appreciation,
     // These rules are explicit: no dormant advanced assumptions affect the simple page.
     propertyType: "house", condoTaxIncluded: false, condoInsuranceIncluded: false,
-    mortgageRateChanges: [], rentInflation: 0, ownerInflation: 0, renterInflation: 0,
+    mortgageRateChanges: [], rentInflation: x.rentInflation, ownerInflation: 0, renterInflation: 0,
     movingFrequency: 0, ownerOther: 0, renterOther: 0, mortgageInsurance: 0,
   };
 }
@@ -280,7 +281,7 @@ export function modelSimpleHousing(x: SimpleHousingInputs) {
   const result = modelHousing(simpleHousingInputs(x));
   const months = x.years * 12;
   const rentCosts = [
-    { label: "Rent", value: x.rent * months },
+    { label: "Rent", value: result.points.reduce((sum, p) => sum + p.rentPaid, 0) },
     { label: "Renter insurance", value: x.renterInsurance * months },
     { label: "Moving into the rental", value: x.renterMoving },
   ];
@@ -309,15 +310,15 @@ export function modelSimpleHousing(x: SimpleHousingInputs) {
 
 export function simpleHousingCsv(x: SimpleHousingInputs, currency: string): string {
   const r = modelSimpleHousing(x);
-  const keys = ["year", "homeValue", "debt", "annualInterest", "annualPrincipal", "ownerInvestments", "renterInvestments", "ownerContributions", "renterContributions", "ownerMarketGain", "renterMarketGain", "buyWealth", "rentWealth"] as const;
+  const keys = ["year", "rentPaid", "homeValue", "debt", "annualInterest", "annualPrincipal", "ownerInvestments", "renterInvestments", "ownerContributions", "renterContributions", "ownerMarketGain", "renterMarketGain", "buyWealth", "rentWealth"] as const;
   return ["Rent or buy · simple comparison", `Currency,${currency}`, "Assumption,Value",
     ...Object.entries(x).map(([k,v]) => `${k},${v}`),
     "Units,Recurring cash inputs are monthly; moving and transaction costs are one-time; rates are annual percentages",
-    "Rules,Constant rent and bills; fixed mortgage rate; one move at the start; same starting cash and monthly budget; month-end investments",
+    "Rules,Rent increases once a year starting in year 2; other bills stay constant; fixed mortgage rate; one move at the start; same starting cash and monthly budget; month-end investments",
     "Cost definition,Interest and bills and one-time fees; excludes down payment and mortgage principal which build equity",
     "Investment definition,Invest unused starting cash and actual monthly cash savings; buyer savings are invested too; annual return is after fees and tax",
-    "Limitations,No renewal changes or inflation or repeat moves or financed mortgage insurance; utilities assumed equal; home-sale taxes excluded; returns not guaranteed",
+    "Limitations,No renewal changes or inflation of other bills or repeat moves or financed mortgage insurance; utilities assumed equal; home-sale taxes excluded; returns not guaranteed",
     "", "Costs over comparison period,Amount", `Renting,${r.rentCost}`, `Buying,${r.buyCost}`,
-    "", "Yearly balances in future currency units", keys.join(","),
+    "", "Year-end balances and annual rent paid in future currency units", keys.join(","),
     ...r.points.map(p => keys.map(k => p[k]).join(","))].join("\n");
 }

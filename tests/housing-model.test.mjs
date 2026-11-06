@@ -73,18 +73,38 @@ test("simple mortgage bill splits exactly into interest, principal and monthly e
   close(r.points[25].ownerAnnual,6000);
 });
 
-test("simple page has flat bills and only an initial move with no dormant advanced inputs", () => {
+test("simple page keeps other bills flat and has no dormant advanced inputs", () => {
   const a=modelSimpleHousing({...simple,years:10});
-  const b=modelSimpleHousing({...simple,years:10,rentInflation:20,ownerInflation:20,renterInflation:20,movingFrequency:1,mortgageRateChanges:[{year:2,rate:20}]});
+  const b=modelSimpleHousing({...simple,years:10,ownerInflation:20,renterInflation:20,movingFrequency:1,mortgageRateChanges:[{year:2,rate:20}]});
   close(a.rentCost,124500); close(a.buyCost,b.buyCost);
   assert.deepEqual(a.points,b.points);
   assert.equal(a.points.filter(p=>p.movingPaid>0).length,1);
 });
 
+test("simple rent inflation compounds at anniversaries and feeds total rental costs", () => {
+  const r=modelSimpleHousing({...simple,years:3,rentInflation:10});
+  [12000,13200,14520].forEach((v,i)=>close(r.points[i].rentPaid,v));
+  close(r.rentCosts[0].value,39720);
+  close(r.rentCost,42120); // Growing rent + flat insurance + one move.
+  close(r.rentMonthlyBill,1025); // The monthly-bills card still shows year 1.
+  close(r.final.difference,r.rentCost-r.buyCost);
+  const oneYear=modelSimpleHousing({...simple,rentInflation:10});
+  close(oneYear.rentCost,modelSimpleHousing(simple).rentCost);
+});
+
+test("rising rent changes which path invests the monthly savings", () => {
+  const r=modelSimpleHousing({...simple,rent:900,renterInsurance:0,homeInsurance:1000,propertyTax:0,strata:0,maintenance:0,closingCosts:0,renterMoving:0,ownerMoving:0,sellingCosts:0,years:3,rentInflation:20,investmentReturn:6});
+  close(r.final.renterContributions,1200); // Renter saves 100/month in year 1 only.
+  close(r.final.ownerContributions,4512); // Buyer saves 80/month then 296/month.
+  close(r.final.rentWealth,r.renterInitialInvestments+r.final.renterContributions+r.final.renterMarketGain);
+  close(r.final.ownerInvestments,r.ownerInitialInvestments+r.final.ownerContributions+r.final.ownerMarketGain);
+  assert.ok(r.final.rentWealth<modelSimpleHousing({...simple,rent:900,renterInsurance:0,homeInsurance:1000,propertyTax:0,strata:0,maintenance:0,closingCosts:0,renterMoving:0,ownerMoving:0,sellingCosts:0,years:3,rentInflation:0,investmentReturn:6}).final.rentWealth);
+});
+
 test("simple comparison preserves negative equity and validates monthly amounts", () => {
   const r=modelSimpleHousing({...simple,downPayment:0,mortgageRate:8,amortization:40,appreciation:-20});
   assert.ok(r.netHomeEquity<0);
-  for(const update of [{renterInsurance:NaN},{propertyTax:-1},{strata:1e8},{years:1.5},{downPayment:120001},{investmentReturn:31}]) {
+  for(const update of [{renterInsurance:NaN},{propertyTax:-1},{strata:1e8},{years:1.5},{downPayment:120001},{investmentReturn:31},{rentInflation:NaN},{rentInflation:-1},{rentInflation:31}]) {
     assert.ok(validateSimpleHousing({...simple,...update}).length);
     assert.throws(()=>modelSimpleHousing({...simple,...update}));
   }
@@ -96,6 +116,11 @@ test("simple export states monthly units and reconciles cost and investment summ
   assert.ok(csv.includes("Renting,13800")); assert.ok(csv.includes("Buying,11800"));
   assert.ok(csv.includes("ownerContributions,renterContributions,ownerMarketGain,renterMarketGain"));
   assert.ok(csv.includes("renterMoving,1500"));
+  const growing=simpleHousingCsv({...simple,years:3,rentInflation:10},"CAD");
+  assert.ok(growing.includes("rentInflation,10"));
+  assert.ok(growing.includes("Renting,42120"));
+  assert.ok(growing.includes("year,rentPaid,homeValue"));
+  close(Number(growing.split("\n").find(line=>line.startsWith("3,")).split(",")[1]),14520);
 });
 
 test("monthly mortgage matches a known 30-year 6% payment", () => {
