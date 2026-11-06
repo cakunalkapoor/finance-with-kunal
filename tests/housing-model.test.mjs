@@ -5,7 +5,7 @@ import ts from "typescript";
 
 const source = readFileSync(new URL("../src/lib/housing-model.ts", import.meta.url), "utf8");
 const { outputText } = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.ES2020 } });
-const { modelHousing, mortgagePayment, DEFAULT_HOUSING, validateHousing, housingBreakEvens } = await import(`data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`);
+const { modelHousing, mortgagePayment, DEFAULT_HOUSING, validateHousing, housingBreakEvens, DEFAULT_SIMPLE_HOUSING, modelSimpleHousing, validateSimpleHousing, simpleHousingCsv } = await import(`data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`);
 const close = (actual, expected, tolerance = 0.01) => assert.ok(Math.abs(actual - expected) < tolerance, `${actual} should equal ${expected}`);
 const flat = { ...DEFAULT_HOUSING, price: 120000, downPayment: 120000, rent: 0,
   closingCosts: 0, sellingCosts: 0, mortgageRate: 0, appreciation: 0, investmentReturn: 0,
@@ -13,6 +13,90 @@ const flat = { ...DEFAULT_HOUSING, price: 120000, downPayment: 120000, rent: 0,
   hoa: 0, ownerOther: 0, renterOther: 0,
   rentInflation: 0, ownerInflation: 0, renterInflation: 0,
   ownerMoving: 0, renterMoving: 0, movingFrequency: 0, amortization: 10, years: 10 };
+
+const simple = { ...DEFAULT_SIMPLE_HOUSING, price: 120000, downPayment: 120000, rent: 1000,
+  years: 1, mortgageRate: 0, amortization: 1, renterInsurance: 25, homeInsurance: 100,
+  propertyTax: 200, strata: 50, maintenance: 150, closingCosts: 3000,
+  renterMoving: 1500, ownerMoving: 800, sellingCosts: 2000 };
+
+test("simple housing converts monthly bills once and charges transaction costs once", () => {
+  const r = modelSimpleHousing(simple);
+  close(r.rentMonthlyBill,1025); close(r.buyMonthlyBill,500);
+  close(r.rentCost,13800); close(r.buyCost,11800);
+  close(r.upfront,123800); close(r.renterUpfront,1500);
+  close(r.averageBuyCost,11800/12); close(r.averageRentCost,1150);
+  close(r.final.difference,2000);
+});
+
+test("simple costs exclude principal and down payment while monthly bills include principal", () => {
+  const r = modelSimpleHousing({...simple,price:1200,downPayment:0,rent:100,renterInsurance:0,homeInsurance:0,propertyTax:0,strata:0,maintenance:0,closingCosts:0,renterMoving:0,ownerMoving:0,sellingCosts:0});
+  close(r.buyMonthlyBill,100); close(r.monthlyPrincipal,100); close(r.monthlyInterest,0);
+  close(r.buyCost,0); close(r.rentCost,1200); close(r.final.buyWealth,1200);
+  close(r.final.rentWealth,0); close(r.final.difference,1200);
+});
+
+test("simple flat-price zero-return wealth difference reconciles to actual cost difference", () => {
+  for(const years of [1,3,25,40,100]) {
+    for(const downPayment of [0,60000,120000]) {
+      const r=modelSimpleHousing({...simple,downPayment,years,amortization:25,mortgageRate:4.5});
+      close(r.final.difference,r.rentCost-r.buyCost);
+    }
+  }
+});
+
+test("simple market growth separates initial investment, contributions and gains", () => {
+  const r=modelSimpleHousing({...simple,rent:0,renterInsurance:0,homeInsurance:0,propertyTax:0,strata:0,maintenance:0,closingCosts:0,renterMoving:0,ownerMoving:0,sellingCosts:0,years:2,investmentReturn:10});
+  close(r.renterInitialInvestments,120000); close(r.final.renterContributions,0);
+  close(r.final.renterMarketGain,25200); close(r.final.rentWealth,145200);
+  close(r.final.buyWealth,120000);
+});
+
+test("both paths invest actual monthly savings and balances reconcile under losses too", () => {
+  for(const investmentReturn of [-20,0,7]) {
+    const r=modelSimpleHousing({...simple,downPayment:30000,amortization:2,years:4,mortgageRate:4,investmentReturn});
+    assert.ok(r.final.renterContributions>0);
+    assert.ok(r.final.ownerContributions>0);
+    for(const p of r.points) {
+      close(p.rentWealth,r.renterInitialInvestments+p.renterContributions+p.renterMarketGain);
+      close(p.ownerInvestments,r.ownerInitialInvestments+p.ownerContributions+p.ownerMarketGain);
+      close(p.buyWealth,p.homeValue-p.debt-simple.sellingCosts+p.ownerInvestments);
+    }
+    close(r.points[2].mortgagePaid,0);
+  }
+});
+
+test("simple mortgage bill splits exactly into interest, principal and monthly expenses", () => {
+  const r=modelSimpleHousing({...simple,downPayment:20000,mortgageRate:6,amortization:25,years:30});
+  close(r.monthlyInterest+r.monthlyPrincipal,r.payment);
+  close(r.buyMonthlyBill,r.monthlyInterest+r.monthlyPrincipal+500);
+  assert.ok(r.points[1].annualInterest<r.points[0].annualInterest);
+  close(r.points[25].ownerAnnual,6000);
+});
+
+test("simple page has flat bills and only an initial move with no dormant advanced inputs", () => {
+  const a=modelSimpleHousing({...simple,years:10});
+  const b=modelSimpleHousing({...simple,years:10,rentInflation:20,ownerInflation:20,renterInflation:20,movingFrequency:1,mortgageRateChanges:[{year:2,rate:20}]});
+  close(a.rentCost,124500); close(a.buyCost,b.buyCost);
+  assert.deepEqual(a.points,b.points);
+  assert.equal(a.points.filter(p=>p.movingPaid>0).length,1);
+});
+
+test("simple comparison preserves negative equity and validates monthly amounts", () => {
+  const r=modelSimpleHousing({...simple,downPayment:0,mortgageRate:8,amortization:40,appreciation:-20});
+  assert.ok(r.netHomeEquity<0);
+  for(const update of [{renterInsurance:NaN},{propertyTax:-1},{strata:1e8},{years:1.5},{downPayment:120001},{investmentReturn:31}]) {
+    assert.ok(validateSimpleHousing({...simple,...update}).length);
+    assert.throws(()=>modelSimpleHousing({...simple,...update}));
+  }
+});
+
+test("simple export states monthly units and reconciles cost and investment summaries", () => {
+  const csv=simpleHousingCsv(simple,"CAD");
+  assert.ok(csv.includes("Units,Recurring cash inputs are monthly"));
+  assert.ok(csv.includes("Renting,13800")); assert.ok(csv.includes("Buying,11800"));
+  assert.ok(csv.includes("ownerContributions,renterContributions,ownerMarketGain,renterMarketGain"));
+  assert.ok(csv.includes("renterMoving,1500"));
+});
 
 test("monthly mortgage matches a known 30-year 6% payment", () => {
   close(mortgagePayment(300000, 6, 30, "monthly"), 1798.651575);

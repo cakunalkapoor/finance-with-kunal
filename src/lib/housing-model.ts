@@ -71,6 +71,10 @@ export interface HousingYear {
   annualPrincipal: number;
   interestPaid: number;
   principalPaid: number;
+  ownerContributions: number;
+  renterContributions: number;
+  ownerMarketGain: number;
+  renterMarketGain: number;
 }
 
 export function validateHousing(x: HousingInputs): string[] {
@@ -140,6 +144,8 @@ export function modelHousing(x: HousingInputs) {
   let ownerInvestments = startingCash - upfront;
   let interestPaid = 0;
   let principalPaid = 0;
+  let ownerContributions = 0;
+  let renterContributions = 0;
   const points: HousingYear[] = [];
   for (let year = 1; year <= x.years; year++) {
     const nextRate = rateChanges.get(year);
@@ -171,8 +177,12 @@ export function modelHousing(x: HousingInputs) {
       const renterCost = (rentPaid + renterExpenses) / 12 + (month === 0 ? repeatMove : 0);
       debt = Math.max(0, debt - principal);
       annualInterest += interest; annualPrincipal += principal; mortgagePaid += paid;
-      renterInvestments = renterInvestments * (1 + monthlyReturn) + Math.max(0, ownerCost - renterCost);
-      ownerInvestments = ownerInvestments * (1 + monthlyReturn) + Math.max(0, renterCost - ownerCost);
+      const renterSaving = Math.max(0, ownerCost - renterCost);
+      const ownerSaving = Math.max(0, renterCost - ownerCost);
+      renterContributions += renterSaving;
+      ownerContributions += ownerSaving;
+      renterInvestments = renterInvestments * (1 + monthlyReturn) + renterSaving;
+      ownerInvestments = ownerInvestments * (1 + monthlyReturn) + ownerSaving;
       ownerAnnual += ownerCost; renterAnnual += renterCost;
     }
     interestPaid += annualInterest; principalPaid += annualPrincipal;
@@ -185,7 +195,10 @@ export function modelHousing(x: HousingInputs) {
       ownerCashOutflow: ownerAnnual + (year === 1 ? upfront : 0),
       renterCashOutflow: renterAnnual + (year === 1 ? renterUpfront : 0),
       ownerExpenses, renterExpenses, rentPaid, movingPaid: repeatMove + (year === 1 ? renterUpfront : 0),
-      mortgagePaid, mortgageRate, monthlyMortgagePayment, annualInterest, annualPrincipal, interestPaid, principalPaid });
+      mortgagePaid, mortgageRate, monthlyMortgagePayment, annualInterest, annualPrincipal, interestPaid, principalPaid,
+      ownerContributions, renterContributions,
+      ownerMarketGain: ownerInvestments - (startingCash - upfront) - ownerContributions,
+      renterMarketGain: renterInvestments - (startingCash - renterUpfront) - renterContributions });
   }
   const final = points[points.length - 1];
   const firstBuyingLead = points.find(p => p.difference >= 0)?.year ?? null;
@@ -211,4 +224,100 @@ export function housingBreakEvens(x: HousingInputs): { rent: HousingThreshold; r
     return { value: (low + high) / 2, status: "crossing" };
   }
   return { rent: solve("rent", 100000, true), rate: x.downPayment === x.price ? { value: null, status: "no-loan" } : solve("mortgageRate", 25, false) };
+}
+
+/** A small, flat-cost interface for the public calculator. All recurring cash inputs are monthly. */
+export interface SimpleHousingInputs {
+  price: number;
+  downPayment: number;
+  rent: number;
+  mortgageRate: number;
+  amortization: number;
+  years: number;
+  compounding: HousingInputs["compounding"];
+  renterInsurance: number;
+  homeInsurance: number;
+  propertyTax: number;
+  strata: number;
+  maintenance: number;
+  closingCosts: number;
+  renterMoving: number;
+  ownerMoving: number;
+  sellingCosts: number;
+  investmentReturn: number;
+  appreciation: number;
+}
+
+export const DEFAULT_SIMPLE_HOUSING: SimpleHousingInputs = {
+  price: 750000, downPayment: 150000, rent: 3000, mortgageRate: 4.5,
+  amortization: 25, years: 10, compounding: "semiannual",
+  renterInsurance: 0, homeInsurance: 0, propertyTax: 0, strata: 0, maintenance: 0,
+  closingCosts: 0, renterMoving: 0, ownerMoving: 0, sellingCosts: 0,
+  investmentReturn: 0, appreciation: 0,
+};
+
+function simpleHousingInputs(x: SimpleHousingInputs): HousingInputs {
+  return {
+    ...DEFAULT_HOUSING, price: x.price, downPayment: x.downPayment, rent: x.rent,
+    mortgageRate: x.mortgageRate, amortization: x.amortization, years: x.years,
+    compounding: x.compounding, renterInsurance: x.renterInsurance * 12,
+    homeInsurance: x.homeInsurance * 12, propertyTax: x.propertyTax * 12,
+    hoa: x.strata * 12, maintenance: x.maintenance * 12,
+    closingCosts: x.closingCosts, renterMoving: x.renterMoving, ownerMoving: x.ownerMoving,
+    sellingCosts: x.sellingCosts, investmentReturn: x.investmentReturn, appreciation: x.appreciation,
+    // These rules are explicit: no dormant advanced assumptions affect the simple page.
+    propertyType: "house", condoTaxIncluded: false, condoInsuranceIncluded: false,
+    mortgageRateChanges: [], rentInflation: 0, ownerInflation: 0, renterInflation: 0,
+    movingFrequency: 0, ownerOther: 0, renterOther: 0, mortgageInsurance: 0,
+  };
+}
+
+export function validateSimpleHousing(x: SimpleHousingInputs): string[] {
+  return validateHousing(simpleHousingInputs(x));
+}
+
+export function modelSimpleHousing(x: SimpleHousingInputs) {
+  const result = modelHousing(simpleHousingInputs(x));
+  const months = x.years * 12;
+  const rentCosts = [
+    { label: "Rent", value: x.rent * months },
+    { label: "Renter insurance", value: x.renterInsurance * months },
+    { label: "Moving into the rental", value: x.renterMoving },
+  ];
+  const buyCosts = [
+    { label: "Mortgage interest", value: result.final.interestPaid },
+    { label: "Home insurance", value: x.homeInsurance * months },
+    { label: "Property tax", value: x.propertyTax * months },
+    { label: "Strata / HOA fees", value: x.strata * months },
+    { label: "Maintenance & repairs", value: x.maintenance * months },
+    { label: "Buying / closing fees", value: x.closingCosts },
+    { label: "Moving into the purchased home", value: x.ownerMoving },
+    { label: "Selling fees at the end", value: x.sellingCosts },
+  ];
+  const rentCost = rentCosts.reduce((sum, row) => sum + row.value, 0);
+  const buyCost = buyCosts.reduce((sum, row) => sum + row.value, 0);
+  const first = result.points[0];
+  return { ...result, rentCosts, buyCosts, rentCost, buyCost,
+    rentMonthlyBill: x.rent + x.renterInsurance,
+    buyMonthlyBill: first.ownerAnnual / 12,
+    monthlyInterest: first.annualInterest / 12,
+    monthlyPrincipal: first.annualPrincipal / 12,
+    netHomeEquity: result.final.homeValue - result.final.debt - x.sellingCosts,
+    averageRentCost: rentCost / months, averageBuyCost: buyCost / months,
+  };
+}
+
+export function simpleHousingCsv(x: SimpleHousingInputs, currency: string): string {
+  const r = modelSimpleHousing(x);
+  const keys = ["year", "homeValue", "debt", "annualInterest", "annualPrincipal", "ownerInvestments", "renterInvestments", "ownerContributions", "renterContributions", "ownerMarketGain", "renterMarketGain", "buyWealth", "rentWealth"] as const;
+  return ["Rent or buy · simple comparison", `Currency,${currency}`, "Assumption,Value",
+    ...Object.entries(x).map(([k,v]) => `${k},${v}`),
+    "Units,Recurring cash inputs are monthly; moving and transaction costs are one-time; rates are annual percentages",
+    "Rules,Constant rent and bills; fixed mortgage rate; one move at the start; same starting cash and monthly budget; month-end investments",
+    "Cost definition,Interest and bills and one-time fees; excludes down payment and mortgage principal which build equity",
+    "Investment definition,Invest unused starting cash and actual monthly cash savings; buyer savings are invested too; annual return is after fees and tax",
+    "Limitations,No renewal changes or inflation or repeat moves or financed mortgage insurance; utilities assumed equal; home-sale taxes excluded; returns not guaranteed",
+    "", "Costs over comparison period,Amount", `Renting,${r.rentCost}`, `Buying,${r.buyCost}`,
+    "", "Yearly balances in future currency units", keys.join(","),
+    ...r.points.map(p => keys.map(k => p[k]).join(","))].join("\n");
 }
