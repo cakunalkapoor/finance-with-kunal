@@ -103,7 +103,7 @@ def definitions(reviewed):
         for suffix,name,cat,unit,dataset,params,definition,context in [
             ('gdp','Real GDP growth','growth','% QoQ','namq_10_gdp','s_adj=SCA&unit=CLV_PCH_PRE&na_item=B1GQ&lastTimePeriod=16','Chain-linked real GDP, seasonally and calendar adjusted, quarterly growth; not annualized.','Real quarterly GDP tracks output rather than prices. Compare this non-annualized growth rate with other countries on the same basis.'),
             ('hicp','Consumer inflation (HICP)','inflation','% YoY','prc_hicp_minr','unit=RCH_A&coicop18=TOTAL&lastTimePeriod=37','All-items harmonised consumer-price inflation, COICOP 2018; annual rate of change. HICP is not the national CPI.','HICP provides a harmonised European measure of consumer-price inflation. Its coverage and weights can differ from the national CPI.'),
-            ('unemployment','Unemployment rate','employment','%','une_rt_m','sex=T&age=TOTAL&unit=PC_ACT&s_adj=SA&lastTimePeriod=37','Total unemployment rate, both sexes, seasonally adjusted, percentage of the labour force. Eurostat total covers ages 15–74.','This is the harmonised survey-based unemployment rate, rather than the count of people registered for unemployment benefits.')]:
+            ('unemployment','Unemployment rate','employment','%','une_rt_m','sex=T&age=TOTAL&unit=PC_ACT&s_adj=SA&lastTimePeriod=49','Total unemployment rate, both sexes, seasonally adjusted, percentage of the labour force. Eurostat total covers ages 15–74.','This is the harmonised survey-based unemployment rate, rather than the count of people registered for unemployment benefits.')]:
             add(prefix+'-'+suffix,country,flag,country+' '+name,cat,unit,definition,source('eurostat',euro+dataset+'?format=JSON&geo='+code+'&'+params),context)
     for suffix,name,cat,unit,code,cycle,season,start,definition,context in [
         ('gdp','Real GDP growth','growth','% QoQ','0705020501000040000','2','2','20231Q00','Real expenditure GDP, 2020 base, seasonally adjusted quarterly percentage change; not annualized.','This is quarterly real GDP growth on a non-annualized basis. It measures output momentum rather than the annual pace often quoted in Japanese GDP headlines.'),
@@ -166,7 +166,7 @@ def build_indicator(spec, raw, reviewed):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--reviewed-on',required=True)
     args=parser.parse_args();date.fromisoformat(args.reviewed_on)
-    if args.reviewed_on!='2026-10-31':
+    if args.reviewed_on not in ('2026-10-31', '2026-11-05'):
         raise SystemExit('Review the ABS CPI publication cap before refreshing a new review date.')
     result=[]
     for spec in definitions(args.reviewed_on):

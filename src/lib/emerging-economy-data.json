@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-01",
+  "reviewedAt": "2026-11-05",
   "indicators": [
     {
       "id": "my-gdp",
@@ -78,8 +78,8 @@
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/gdp_qtr_real",
-      "reviewedAt": "2026-11-01",
-      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-01.",
+      "reviewedAt": "2026-11-05",
+      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-05.",
       "apiUrl": "https://storage.dosm.gov.my/gdp/gdp_qtr_real.csv",
       "observationLabels": {
         "2022-10": "Q4 2022",
@@ -308,8 +308,8 @@
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/cpi_headline_inflation",
-      "reviewedAt": "2026-11-01",
-      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-01.",
+      "reviewedAt": "2026-11-05",
+      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-05.",
       "apiUrl": "https://storage.dosm.gov.my/cpi/cpi_2d_inflation.csv"
     },
     {
@@ -517,8 +517,8 @@
       ],
       "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/lfs_month",
-      "reviewedAt": "2026-11-01",
-      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-01.",
+      "reviewedAt": "2026-11-05",
+      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-05.",
       "apiUrl": "https://storage.dosm.gov.my/labour/lfs_month.csv"
     },
     {
@@ -598,8 +598,8 @@
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/5932",
-      "reviewedAt": "2026-11-01",
-      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-11-01.",
+      "reviewedAt": "2026-11-05",
+      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-11-05.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/5932/n1/all/v/6561/p/last%2016/c11255/90707",
       "observationLabels": {
         "2022-10": "Q4 2022",
@@ -784,8 +784,8 @@
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/7060",
-      "reviewedAt": "2026-11-01",
-      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-11-01.",
+      "reviewedAt": "2026-11-05",
+      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-11-05.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/7060/n1/all/v/2265/p/last%2037/c315/7169"
     },
     {
@@ -953,8 +953,8 @@
       ],
       "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/6381",
-      "reviewedAt": "2026-11-01",
-      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-11-01.",
+      "reviewedAt": "2026-11-05",
+      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-11-05.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/last%2037",
       "observationLabels": {
         "2023-09": "Jul–Sep 2023 (3-month average)",

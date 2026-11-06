@@ -11,7 +11,8 @@ import json
 import math
 import subprocess
 import sys
-from datetime import date, datetime, timezone
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -245,7 +246,7 @@ def refresh(target, as_of, allow_cached=False, fetcher=fetch_data):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--as-of', default=datetime.now(timezone.utc).date().isoformat())
+    parser.add_argument('--as-of', default=datetime.now(ZoneInfo('America/Vancouver')).date().isoformat())
     parser.add_argument('--allow-cached', action='store_true')
     args = parser.parse_args()
     result = refresh(TARGET, date.fromisoformat(args.as_of), args.allow_cached)

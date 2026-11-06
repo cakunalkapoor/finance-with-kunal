@@ -3,6 +3,44 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Refresh — November 5, 2026
+
+Published snapshot dates use America/Vancouver. Refreshed all configured Yahoo markets,
+28 AI stocks, 12 AI comparison indices, and the 1,618-constituent heatmap; 1,608
+constituent quotes are available. Markets and AI end November 5; the returned crypto
+histories end November 4 and keep that date. Weekly commentary uses the saved rolling
+weekly returns, rather than implying a completed Friday briefing.
+
+FRED, BoC, StatCan, Eurostat and India CPI checks succeeded. International adapters
+refreshed 12 of 17 measures, and the six emerging API measures were refreshed. Three
+Japanese HTTP 403 responses and two Korean timeouts retain their prior observations
+and explicit failure notes. Curated emerging releases keep their own October 30 or
+November 1 review dates. Eurostat unemployment now requests 49 periods to preserve
+three full years even when its time dimension extends past the last published reading.
+The Economy coverage remains 51 indicators and two yield curves.
+
+All 13 sovereign quotes are dated November 5. Published Investing.com histories supplement
+the feeds; independent Trading Economics cross-checks retain their own dates, including
+November 6 Asian observations, and are never used as historical return anchors. Published
+52-week yield ranges were re-read. US/Canadian curves use paired November 4 official data.
+
+New reviewed material:
+
+- [US claims, November 5](https://www.dol.gov/ui/data.pdf): 189K for the week ending October 31; previous week revised to 195K.
+- [Bank of England, November 5](https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026): Bank Rate increased to 4%.
+- [China policy framework, Reuters November 2](https://www.investing.com/news/economy-news/chinas-shift-to-new-policy-rate-signals-easier-funding-conditions-4989818): overnight reverse repo replaces the seven-day policy anchor; the different tenors are not treated as a like-for-like rate change.
+- Final October S&P Global / HSBC PMIs, via linked Trading Economics series: US manufacturing 54.9, services 56.1; Canada 49.6 and 48.1; India 54.7 and 55.8; Taiwan manufacturing 54.9; Korea 51.3. These replace flash or September observations but remain excluded where three-year history is unavailable.
+- [Challenger, November 5](https://www.challengergray.com/blog/october-layoffs-at-three-year-low-seasonal-hiring-plans-up-26/): October AI-attributed cuts, cumulative figures and chart updated. Other curated AI research keeps each item's source date.
+
+OPEC returned HTTP 403 again. The October 22 owner-supplied basket assessment remains
+with its actual date and a November 5 failure note. India CPI defaults to Vancouver time,
+so an evening build cannot give the shared Global Economy label tomorrow's UTC date.
+
+Validation: 104 Node tests, 29 Python tests, TypeScript, scoped ESLint, sovereign-bond
+validation and production static export including Open Graph and CSP generation.
+The deployment's high-severity dependency gate passes; npm reports eight existing
+moderate development-tool findings. Dependencies were not changed in this refresh.
+
 ## India CPI addition — November 2, 2026
 
 India now appears in Global → Inflation, bringing the display to 51 indicators and two

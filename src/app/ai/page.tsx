@@ -99,7 +99,7 @@ export default function AIPage() {
           stats={[
             { label: "2026 capex", value: figure(AI_CAPEX_CONTEXT, "capex-total"), detail: "Company-wide · four hyperscalers" },
             { label: "Q3 VC share", value: figure(AI_PRIVATE_CAPITAL, "ai-share"), detail: "Oct 2 global snapshot" },
-            { label: "AI rank", value: figure(AI_LABOUR, "leading-reason"), detail: "September layoff reasons" },
+            { label: "AI job cuts", value: figure(AI_LABOUR, "leading-reason"), detail: "October employer attribution" },
           ]}
         />
 
@@ -219,9 +219,9 @@ export default function AIPage() {
                 columns={2}
                 glow="purple"
               >
-                September&rsquo;s lower total cuts and roughly 9% AI-attributed share show that
-                the monthly pattern differs from the cumulative AI story. The 120,136
-                AI-attributed cuts through September are employer-announced plans; the data do
+                October&rsquo;s roughly 3% AI-attributed share differs from the cumulative
+                share of about 20%. The 121,401
+                AI-attributed cuts through October are employer-announced plans; the data do
                 not establish how many jobs AI independently displaced. Technology-sector cuts
                 include every stated reason, so that total should not be added to AI cuts.
               </AIFigureSection>
