@@ -37,7 +37,11 @@ export interface SmithMonth {
   prepayment: number;
   reborrowed: number;
   helocInterest: number;
+  grossIncome: number;
+  incomeTaxPaid: number;
   afterTaxIncome: number;
+  cumulativeIncomeTax: number;
+  cumulativeHelocInterest: number;
   refund: number;
   extraCash: number;
   cumulativeExtraCash: number;
@@ -71,13 +75,16 @@ export function modelSmith(x: SmithInputs) {
   let mortgage = x.mortgage, baselineMortgage = x.mortgage, heloc = 0, portfolio = 0, costBasis = 0;
   let paid = 0, baselinePaid = 0, cumulativeExtraCash = 0, mortgageInterestPaid = 0, baselineInterestPaid = 0;
   let yearInterest = 0, priorYearInterest = 0, refundsReceived = 0, peakHeloc = 0, peakCombinedDebt = x.mortgage;
+  let cumulativeIncomeTax = 0, cumulativeHelocInterest = 0;
   let smithPayoff: number | null = x.mortgage === 0 ? 0 : null;
   let baselinePayoff: number | null = x.mortgage === 0 ? 0 : null;
   const months: SmithMonth[] = [];
   for (let month = 1; month <= 360; month++) {
     if ((month - 1) % 12 === 0) { priorYearInterest = yearInterest; yearInterest = 0; }
     const refund = (month - 1) % 12 + 1 === x.refundMonth ? priorYearInterest * x.marginalTax / 100 : 0;
-    const afterTaxIncome = portfolio * x.yield / 1200 * (1 - x.incomeTax / 100);
+    const grossIncome = portfolio * x.yield / 1200;
+    const afterTaxIncome = grossIncome * (1 - x.incomeTax / 100);
+    const incomeTaxPaid = grossIncome - afterTaxIncome;
     const interest = mortgage * mr;
     const scheduled = Math.min(payment, mortgage + interest);
     const prepayment = Math.max(0, Math.min(mortgage + interest - scheduled, afterTaxIncome * x.prepayShare / 100 + refund));
@@ -90,6 +97,8 @@ export function modelSmith(x: SmithInputs) {
     portfolio = portfolio * (1 + x.growth / 1200) + reborrowed;
     costBasis += reborrowed;
     yearInterest += helocInterest;
+    cumulativeHelocInterest += helocInterest;
+    cumulativeIncomeTax += incomeTaxPaid;
     refundsReceived += refund;
     // Negative extra cash represents retained income/refunds, without further investment returns.
     const extraCash = prepayment + (x.capitalizeInterest ? 0 : helocInterest) - afterTaxIncome - refund;
@@ -108,7 +117,8 @@ export function modelSmith(x: SmithInputs) {
     peakHeloc = Math.max(peakHeloc, heloc);
     peakCombinedDebt = Math.max(peakCombinedDebt, heloc + mortgage);
     months.push({ month, mortgage, baselineMortgage, heloc, portfolio, costBasis, exitTax,
-      payment: scheduled, baselinePayment, prepayment, reborrowed, helocInterest, afterTaxIncome,
+      payment: scheduled, baselinePayment, prepayment, reborrowed, helocInterest, grossIncome, incomeTaxPaid, afterTaxIncome,
+      cumulativeIncomeTax, cumulativeHelocInterest,
       refund, extraCash, cumulativeExtraCash, mortgageInterestPaid, baselineInterestPaid,
       refundsReceived, smithPosition, baselinePosition, advantage: smithPosition - baselinePosition });
   }
@@ -121,6 +131,9 @@ export function smithCsv(x: SmithInputs): string {
   const keys = Object.keys(r.months[0]) as (keyof SmithMonth)[];
   return ["Smith Manoeuvre · illustrative model,CAD", "Assumption,Value", ...Object.entries(x).map(([k,v]) => `${k},${v}`),
     "Method,360 months; opening-balance returns; month-end advances; prior-year interest refund",
+    "Income tax,Monthly gross cash distributions times incomeTax; net distributions available for prepayment or retained cash",
+    "Interest tax saving,Prior-year HELOC interest times marginalTax; full interest deductibility and sufficient taxable income assumed",
+    "Capital gains tax,Hypothetical sale at each reporting date; positive portfolio gain over cost basis times inclusion times gainsTax; not an annual portfolio withdrawal",
     "Limitations,Constant rates and returns; full interest deductibility assumed; lending caps flagged but not enforced; no return on retained cash or freed payments; no loss tax credit",
     "Tax caveat,Capitalized interest deduction is a simplifying assumption; compound interest may require payment; verify eligibility with a tax adviser",
     "Position,Portfolio less exit tax and all debt and cumulative external cash and scheduled payments; common home value excluded",

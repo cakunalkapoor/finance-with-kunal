@@ -35,6 +35,26 @@ test("Smith opening balances receive returns before month-end investment", () =>
   close(second.portfolio, first.portfolio * (1 + 0.05 / 12) + second.reborrowed);
 });
 
+test("Smith reports gross distributions, income tax and HELOC interest cumulatively", () => {
+  for (const incomeTax of [0, 20, 100]) {
+    const r = modelSmith({ ...smith, incomeTax });
+    let previousPortfolio = 0, totalTax = 0, totalInterest = 0;
+    for (const p of r.months) {
+      close(p.grossIncome, previousPortfolio * smith.yield / 1200);
+      close(p.incomeTaxPaid, p.grossIncome * incomeTax / 100);
+      close(p.grossIncome, p.afterTaxIncome + p.incomeTaxPaid);
+      totalTax += p.incomeTaxPaid;
+      totalInterest += p.helocInterest;
+      close(p.cumulativeIncomeTax, totalTax);
+      close(p.cumulativeHelocInterest, totalInterest);
+      previousPortfolio = p.portfolio;
+    }
+  }
+  const base = modelSmith(smith);
+  close(base.headline.cumulativeIncomeTax, 33988.4395);
+  assert.ok(modelSmith({ ...smith, incomeTax: 40 }).headline.advantage < base.headline.advantage);
+});
+
 test("Smith refunds use only prior-year interest, in the selected month", () => {
   for (const refundMonth of [1, 4, 12]) {
     const r = modelSmith({ ...smith, refundMonth });
@@ -42,6 +62,42 @@ test("Smith refunds use only prior-year interest, in the selected month", () => 
     assert.ok(r.months.slice(0, 12).every(p => p.refund === 0));
     close(r.months[12 + refundMonth - 1].refund, yearOneInterest * 0.33);
     assert.equal(r.months.slice(12, 24).filter(p => p.refund > 0).length, 1);
+  }
+});
+
+test("Smith marginal tax rate changes the prior-year interest saving and mortgage path", () => {
+  for (const marginalTax of [0, 20, 50]) {
+    const r = modelSmith({ ...smith, marginalTax });
+    const yearOneInterest = r.months.slice(0, 12).reduce((sum, p) => sum + p.helocInterest, 0);
+    close(r.months[12 + smith.refundMonth - 1].refund, yearOneInterest * marginalTax / 100);
+    if (marginalTax === 0) assert.ok(r.months.every(p => p.refund === 0 && p.refundsReceived === 0));
+  }
+  const noDeduction = modelSmith({ ...smith, marginalTax: 0 });
+  const base = modelSmith(smith);
+  const higherDeduction = modelSmith({ ...smith, marginalTax: 50 });
+  assert.ok(noDeduction.headline.advantage < base.headline.advantage);
+  assert.ok(higherDeduction.headline.advantage > base.headline.advantage);
+  assert.ok(noDeduction.smithPayoff > base.smithPayoff);
+  assert.ok(higherDeduction.smithPayoff < base.smithPayoff);
+});
+
+test("Smith capital gains rates affect hypothetical exit tax without changing the investment or debt path", () => {
+  const base = modelSmith(smith);
+  for (const taxChange of [{ gainsTax: 50 }, { inclusion: 75 }, { gainsTax: 0 }, { inclusion: 0 }]) {
+    const assumptions = { ...smith, ...taxChange };
+    const r = modelSmith(assumptions);
+    for (const [i, p] of r.months.entries()) {
+      const original = base.months[i];
+      for (const key of ["mortgage", "baselineMortgage", "heloc", "portfolio", "costBasis", "afterTaxIncome", "refund", "cumulativeExtraCash"]) {
+        close(p[key], original[key]);
+      }
+      close(p.exitTax, Math.max(0, p.portfolio - p.costBasis) * assumptions.inclusion / 100 * assumptions.gainsTax / 100);
+      close(p.advantage - original.advantage, original.exitTax - p.exitTax);
+    }
+  }
+  for (const growth of [0, -20]) {
+    const r = modelSmith({ ...smith, growth });
+    assert.ok(r.months.every(p => p.exitTax === 0));
   }
 });
 
@@ -166,6 +222,9 @@ test("CSV exports contain assumptions, all model rows and method limitations", (
   const a = smithCsv(smith), b = equityCsv(equity,"INR");
   assert.ok(a.includes("headlineYear,20"));
   assert.ok(a.includes("Limitations,"));
+  assert.ok(a.includes("Income tax,Monthly gross cash distributions times incomeTax"));
+  assert.ok(a.includes("Capital gains tax,Hypothetical sale"));
+  assert.ok(a.includes("grossIncome,incomeTaxPaid,afterTaxIncome,cumulativeIncomeTax,cumulativeHelocInterest"));
   assert.ok(a.split("\n").at(-1).startsWith("360,"));
   assert.ok(b.includes("Currency,INR"));
   assert.ok(b.includes("Implied annual rate,"));

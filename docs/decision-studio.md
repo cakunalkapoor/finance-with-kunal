@@ -66,6 +66,14 @@ EV energy uses usable battery kWh, range per full charge, and wall-to-battery ch
 
 With the unchanged eight-year examples, ownership costs before insurance are 50,526.88 gas, 47,062.24 hybrid and 40,340.40 electric. Additional battery allowances are 0, 2,520 and 7,560, giving unchanged planning totals of 50,526.88, 49,582.24 and 47,900.40. Tests reconcile component totals, separate savings from spending, apply rebates/charger setup once, and preserve fixed annual cost assumptions.
 
+## Smith Manoeuvre tax visibility
+
+Tax rates were already part of the Smith model; the updated public page makes all four controls visible: personal marginal rate for eligible interest deductions, effective tax on investment distributions, personal rate on the taxable gain at sale, and capital-gains inclusion. Defaults remain 33%, 20%, 33% and 50% respectively. A visible effective-gain rate reconciles 50% × 33% = 16.5%. These are editable flat-rate assumptions, not a province/income tax engine. Dividend credits, progressive brackets, foreign withholding, annual realized-gain distributions and loss offsets are not calculated separately.
+
+A plain-English introduction explains the mortgage-to-HELOC/investment cycle and remaining secured debt. CRA links explain income-earning use, tracing, registered-account exclusions and capital-gains-only ineligibility. The page identifies the model as Canadian and links IRS guidance while explicitly excluding US investment-interest limits and itemizing rules from the calculation.
+
+The selected-year results separately show interest-deduction tax savings received, cumulative tax on distributions and hypothetical exit tax, with invested principal, gain/loss and after-tax portfolio reconciliation. Exit taxes are liabilities for an illustrative sale at each snapshot, not repeatedly charged annual sales. New monthly/CSV fields `grossIncome`, `incomeTaxPaid`, `cumulativeIncomeTax` and `cumulativeHelocInterest` report the existing math without changing projections. Default year 20 includes 60,714.75 deduction savings received, 33,988.44 distribution tax and 46,734.10 exit tax, while the strategy advantage remains 277,453.26. Tests confirm rate sensitivity and that sale-tax assumptions do not change the mortgage/HELOC/portfolio trajectory.
+
 ## Extra EMI schedule
 
 Debt vs invest defaults to one extra EMI per comparison year, paid in month 12. Users can edit the EMI count and month (relative to projection start), or switch to a monthly surplus. Extra EMI amount tracks the regular payment. Both paths have identical cash budgets and timing; the invest path invests the extra at month-end, and all unused payments are invested after payoff. Annual budgets continue after payoff. Prepayment penalties are excluded. Interest savings and payoff comparisons appear in results, with savings limited to the selected horizon.
