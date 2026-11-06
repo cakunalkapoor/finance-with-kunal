@@ -25,7 +25,7 @@ export default function SmithManoeuvre() {
   const final = result?.months.at(-1);
   return <SimulationShell title="The Smith Manoeuvre" intro="Use repaid mortgage principal to borrow and invest. See how investment returns, borrowing costs and your taxes change the outcome.">
     <section className={`${panel} mb-6`}>
-      <h2 className="text-lg font-semibold">In simple English</h2>
+      <h2 className="text-lg font-semibold">How the Smith Manoeuvre works</h2>
       <ol className="mt-4 grid list-inside list-decimal gap-4 text-sm leading-relaxed sm:grid-cols-2">
         <li>You make your normal mortgage payment, reducing what you owe.</li>
         <li>A readvanceable mortgage lets you borrow that repaid principal through a home equity line of credit (HELOC).</li>
