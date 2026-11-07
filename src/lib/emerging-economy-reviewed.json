@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-01",
+  "reviewedAt": "2026-11-06",
   "indicators": [
     {
       "id": "vn-gdp",
@@ -53,6 +53,10 @@
         {
           "date": "2026-09",
           "value": 5.08
+        },
+        {
+          "date": "2026-10",
+          "value": 5.09
         }
       ],
       "sourceReferences": [
@@ -64,11 +68,16 @@
         {
           "label": "September 2026 CPI release",
           "url": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/"
+        },
+        {
+          "label": "October 2026 CPI release",
+          "url": "https://www.nso.gov.vn/bai-top/2026/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-thang-muoi-va-10-thang-nam-2026/",
+          "releaseDate": "2026-11-03"
         }
       ],
-      "sourceUrl": "https://www.nso.gov.vn/en/data-and-statistics/2026/10/consumer-price-index-gold-price-index-and-us-dollar-price-index-in-september-2026-q3-2026-and-the-nine-months-of-2026/",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.nso.gov.vn/bai-top/2026/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-thang-muoi-va-10-thang-nam-2026/",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-06"
     },
     {
       "id": "vn-unemployment",
@@ -122,6 +131,10 @@
         {
           "date": "2026-04",
           "value": 5.29
+        },
+        {
+          "date": "2026-07",
+          "value": 5.47
         }
       ],
       "sourceReferences": [
@@ -134,11 +147,16 @@
           "label": "Q2 2026 GDP release",
           "url": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
           "releaseDate": "2026-08-05"
+        },
+        {
+          "label": "Q3 2026 GDP release",
+          "url": "https://www.bi.go.id/en/publikasi/ruang-media/news-release/Pages/sp_2824126.aspx",
+          "releaseDate": "2026-11-05"
         }
       ],
-      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2605/ekonomi-indonesia-triwulan-ii-2026-tumbuh-5-29-persen--y-on-y-.html",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.bi.go.id/en/publikasi/ruang-media/news-release/Pages/sp_2824126.aspx",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-06"
     },
     {
       "id": "id-cpi",
@@ -158,6 +176,10 @@
         {
           "date": "2026-09",
           "value": 3.28
+        },
+        {
+          "date": "2026-10",
+          "value": 3.23
         }
       ],
       "sourceReferences": [
@@ -170,11 +192,16 @@
           "label": "September 2026 national CPI release",
           "url": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
           "releaseDate": "2026-10-01"
+        },
+        {
+          "label": "October 2026 national CPI release",
+          "url": "https://ppid.bps.go.id/?mfd=0000",
+          "releaseDate": "2026-11-02"
         }
       ],
-      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/10/01/2623/the-year-on-year--y-on-y--headline-inflation-in-september-2026-was-recorded-at-3-28-percent-.html",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://ppid.bps.go.id/?mfd=0000",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-06"
     },
     {
       "id": "id-unemployment",
@@ -184,7 +211,7 @@
       "category": "employment",
       "unit": "%",
       "frequency": "quarterly-survey",
-      "definition": "National open unemployment rate, labour force aged 15+, Sakernas survey. The August 5 release reports May 2026 and February 2026 observations; these are not monthly October readings. The verified series ends in May.",
+      "definition": "National open unemployment rate, labour force aged 15+, Sakernas quarterly survey. The latest observation is August 2026.",
       "provider": "BPS–Statistics Indonesia",
       "observations": [
         {
@@ -194,6 +221,10 @@
         {
           "date": "2026-05",
           "value": 4.65
+        },
+        {
+          "date": "2026-08",
+          "value": 4.75
         }
       ],
       "sourceReferences": [
@@ -201,16 +232,22 @@
           "label": "May and February 2026 labour observations",
           "url": "https://www.bps.go.id/en/pressrelease/2026/08/05/2606/tingkat-pengangguran-terbuka--tpt--sebesar-4-65-persen---rata-rata-upah-buruh-sebesar-3-39-juta-rupiah-.html",
           "releaseDate": "2026-08-05"
+        },
+        {
+          "label": "August 2026 labour observation",
+          "url": "https://www.bi.go.id/id/statistik/sdds/default.aspx",
+          "releaseDate": "2026-11-05"
         }
       ],
-      "sourceUrl": "https://www.bps.go.id/en/pressrelease/2026/08/05/2606/tingkat-pengangguran-terbuka--tpt--sebesar-4-65-persen---rata-rata-upah-buruh-sebesar-3-39-juta-rupiah-.html",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
+      "sourceUrl": "https://www.bi.go.id/id/statistik/sdds/default.aspx",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
       "observationLabels": {
         "2026-02": "Feb 2026 (quarterly survey)",
-        "2026-05": "May 2026 (quarterly survey)"
+        "2026-05": "May 2026 (quarterly survey)",
+        "2026-08": "Aug 2026 (quarterly survey)"
       },
       "maxLagMonths": 6,
-      "reviewedAt": "2026-10-30"
+      "reviewedAt": "2026-11-06"
     },
     {
       "id": "bd-gdp",
@@ -427,7 +464,7 @@
       "category": "inflation",
       "unit": "% YoY",
       "frequency": "monthly",
-      "definition": "National all-items consumer price inflation, percentage change over twelve months. Monthly changes of 0.6% and 0.4% respectively are different measures and are not used here.",
+      "definition": "National all-items consumer price inflation, percentage change over twelve months.",
       "provider": "National Statistics Institute of Chile",
       "observations": [
         {
@@ -437,6 +474,10 @@
         {
           "date": "2026-09",
           "value": 4.1
+        },
+        {
+          "date": "2026-10",
+          "value": 4.5
         }
       ],
       "sourceReferences": [
@@ -449,11 +490,16 @@
           "label": "September 2026 CPI release",
           "url": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
           "releaseDate": "2026-10-09"
+        },
+        {
+          "label": "October 2026 CPI release",
+          "url": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/11/06/%C3%ADndice-de-precios-al-consumidor-%28ipc%29-de-octubre-present%C3%B3-una-variaci%C3%B3n-mensual-de-0-5",
+          "releaseDate": "2026-11-06"
         }
       ],
-      "sourceUrl": "https://www.ine.gob.cl/press-room/news/2026/10/09/in-september-the-monthly-variation-of-the-consumer-price-index-%28cpi%29-was-0.4",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/11/06/%C3%ADndice-de-precios-al-consumidor-%28ipc%29-de-octubre-present%C3%B3-una-variaci%C3%B3n-mensual-de-0-5",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-06"
     },
     {
       "id": "cl-unemployment",
@@ -575,7 +621,8 @@
         }
       ],
       "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
-      "historyNote": "15 quarterly observations from Q1 2023 to Q3 2026, transcribed from the same official release vintage. The final quarter is an advance estimate. No FRED history is spliced into this series."
+      "historyNote": "15 quarterly observations from Q1 2023 to Q3 2026, transcribed from the same official release vintage. The final quarter is an advance estimate. No FRED history is spliced into this series.",
+      "reviewedAt": "2026-11-01"
     }
   ],
   "unavailable": [

@@ -3,6 +3,38 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Week ending November 6, 2026
+
+Updated Yahoo equity indices, ETFs, commodity futures, currencies, 28 AI stocks and 12 AI
+comparison indices through November 6. The four crypto histories end November 5.
+The heatmap has quotes for 1,609 of 1,618 constituents. The weekly briefing uses the
+saved returns and identifies the coverage dates.
+
+FRED and Statistics Canada match the November 6 labour releases. US payrolls rose
+165K in October after a revised 60K gain in September, and unemployment fell to 4.1%.
+Canadian employment was little changed at −4.7K and unemployment rose to 6.7%.
+[Bureau of Labor Statistics](https://www.bls.gov/news.release/archives/empsit_11062026.htm) ·
+[Statistics Canada](https://www150.statcan.gc.ca/n1/daily-quotidien/261106/dq261106a-eng.htm)
+
+The Bank of Canada, Eurostat and official India CPI refreshes succeeded. Japan’s
+Statistics Dashboard was reachable and now shows September unemployment at 2.4%.
+Two South Korean FRED CSV requests timed out, so those series retain their last
+verified observations. Six emerging-economy API series were checked. The curated
+supplement incorporates October CPI for Vietnam, Indonesia and Chile, Indonesian Q3
+GDP and its August unemployment observation. Sources and release dates are stored
+with each series.
+
+Twelve of 13 sovereign quotes are dated November 6. The Japan Ministry of Finance
+feed ends November 5. Both yield curves pair November 5 official observations.
+Investing.com histories and published 52-week ranges were rechecked, with separate
+Trading Economics cross-checks for the manually maintained quotes. OPEC returned
+HTTP 403 and retains its October 22 assessment.
+
+Validation passed for 143 Node tests, 29 Python tests, scoped ESLint, the sovereign
+bond checks, and the production static export. Its November 7 India CPI check
+verified the same September observation. The deployed dependency gate passes
+with eight existing moderate development-tool findings.
+
 ## Refresh — November 5, 2026
 
 Published snapshot dates use America/Vancouver. Refreshed all configured Yahoo markets,
@@ -384,7 +416,7 @@ the wrong company on those tiles.
 
 - The October 30 emerging-economy supplement adds 20 core series across Vietnam, Indonesia, Bangladesh, Malaysia, Brazil, Mexico and Chile, using `emerging-economy-data.json`. No new PMI series are added. Brazil uses pinned IBGE/SIDRA variables and national aggregates; Malaysia uses OpenDOSM CSVs; Mexico quarterly GDP now uses the October 30 INEGI release (including its complete historical graph), explicitly labelled QoQ, not annualized; Q3 2026 is marked advance.
 - `python3 src/lib/fetch-emerging.py --reviewed-on 2026-10-30` refreshes seven API/CSV histories and combines thirteen manually reviewed official-release series from `emerging-economy-reviewed.json`. A later review date is blocked until those releases are reviewed. Future, stale, conflicting and nonadjacent headline comparisons fail validation; the snapshot is written atomically. `sourceReferences` preserves the earlier cited releases, and limited histories are visible beside their charts.
-- Bangladesh has verified inflation and fiscal-quarter GDP through Jan–Mar 2026; recent comparable unemployment remains unavailable. The supplied Bangladeshi histories currently fail the three-year display minimum. Vietnam labour uses working-age quarterly observations; Indonesia labour currently ends in the May 2026 survey. Brazil and Chile unemployment use rolling three-month windows, retained in periods and hover labels. No annual unemployment proxy or forecast fills the Bangladesh gap. Existing source definitions and the independently reviewed October 27 supplement remain intact.
+- Bangladesh has verified inflation and fiscal-quarter GDP through Jan–Mar 2026; recent comparable unemployment remains unavailable. The supplied Bangladeshi histories currently fail the three-year display minimum. Vietnam labour uses working-age quarterly observations. Indonesia labour uses Sakernas survey observations, with August 2026 the latest verified period. Brazil and Chile unemployment use rolling three-month windows, retained in periods and hover labels. No annual unemployment proxy or forecast fills the Bangladesh gap. Existing source definitions and the independently reviewed October 27 supplement remain intact.
 
 - `/dashboard` combines Global, US and Canada using a top-of-page coverage toggle and the approved **Briefing & table** layout: compact `EconomyHeader`, scoped headline readings, category filters, a compact indicator table and a selected-indicator focus panel. The toggle updates the headlines, categories, rows, focus and country curve in place. Global opens with All selected and includes 51 eligible indicators plus both yield curves. US retains 10 eligible indicators plus its curve, and Canada nine plus its curve. `economy-view.ts` owns the existing scope rules and display formatting. Global category filters are Activity, Growth, Labour, Inflation, Rates and Energy; Consumption, Trade and Fiscal filters appear only in US and Canada. All includes every supplied indicator that passes the minimum three-year history check. The inflation category is labelled Inflation in all three views.
 - Table rows and the focus panel show current level, units, reporting period, change versus the prior observation and a factual status. Percentage-rate changes use percentage points; US quarterly GDP explicitly retains its annualized basis, while Canada and euro-area GDP remain ordinary QoQ. Quarter-start dates display as reporting quarters.

@@ -2,7 +2,7 @@
   "source": "https://www.opec.org/basket/basketDay.json",
   "supplement": null,
   "reviewedAt": "2026-10-25",
-  "refreshNote": "Official endpoint returned HTTP 403 on November 5, 2026; retaining the last verified October 22 basket assessment.",
+  "refreshNote": "Official endpoint returned HTTP 403 on November 6, 2026. The last verified basket assessment is dated October 22.",
   "frequency": "Last available published daily quote in each month; not monthly averages",
   "timeSeries": [
     {
