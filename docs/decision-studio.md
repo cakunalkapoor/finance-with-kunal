@@ -45,7 +45,7 @@ The 24-month worked reference with existing example inputs (40,000 price, 5,000 
 ## Additional comparisons
 
 Two financial simulations also extend the landing page to six tools:
-- `/decisions/smith-manoeuvre/`: a fixed 360-month mortgage/HELOC/investment model. Opening balances earn income and growth before month-end re-advances. The annual refund uses prior-year HELOC interest. The selected headline year is independent of the 30-year payoff, interest-saved, refund and peak-HELOC statistics. Reference defaults produce a $277,453 advantage at year 20, mortgage payoff in month 220 versus month 300, $70,717 mortgage interest saved and $143,215 refunds over 30 years. Cumulative positions deduct external cash costs and scheduled payments; they are not household net worth. Full deductibility, constant rates and returns, and no returns on freed payments are explicit simplifications. Lending limits are flagged, not enforced. Capitalized compound interest has a separate tax-treatment caveat and CRA/FCAC references.
+- `/decisions/smith-manoeuvre/` runs a 360-month mortgage, HELOC and investment comparison. The selected result year is independent of the full-model payoff, interest, tax savings and peak borrowing metrics. The annual table and monthly CSV reconcile cash, debt and portfolio positions.
 - `/decisions/implied-cost-of-equity/`: constant-payout reverse equity valuation with 1–20 explicit years, terminal reinvestment, linked or fixed terminal ROE, optional beta, growth sensitivity and CSV. Example inputs from the supplied brief are labelled unverified, without a current stock-data claim. Default linked ROE solves 8.87%; fixed 13.5% terminal ROE solves 10.92%. Bisection requires a valid rate above perpetual growth and zero, up to 150%; unsupported assumptions and missing brackets are explicit. Terminal growth may track the risk-free input or be entered separately. Sensitivity cells apply both growth assumptions and unlink perpetual growth. No market data, consensus forecasts, residual-income valuation or CAPM estimate is supplied. Tests: `tests/financial-simulations.test.mjs`.
 
 Two independent routes extend the landing page to four comparisons:
@@ -66,13 +66,32 @@ EV energy uses usable battery kWh, range per full charge, and wall-to-battery ch
 
 With the unchanged eight-year examples, ownership costs before insurance are 50,526.88 gas, 47,062.24 hybrid and 40,340.40 electric. Additional battery allowances are 0, 2,520 and 7,560, giving unchanged planning totals of 50,526.88, 49,582.24 and 47,900.40. Tests reconcile component totals, separate savings from spending, apply rebates/charger setup once, and preserve fixed annual cost assumptions.
 
-## Smith Manoeuvre tax visibility
+## Smith Manoeuvre lending and tax assumptions
 
-Tax rates were already part of the Smith model; the updated public page makes all four controls visible: personal marginal rate for eligible interest deductions, effective tax on investment distributions, personal rate on the taxable gain at sale, and capital-gains inclusion. Defaults remain 33%, 20%, 33% and 50% respectively. A visible effective-gain rate reconciles 50% × 33% = 16.5%. These are editable flat-rate assumptions, not a province/income tax engine. Dividend credits, progressive brackets, foreign withholding, annual realized-gain distributions and loss offsets are not calculated separately.
+Mortgage payments and permitted prepayments reduce principal before HELOC draws. New draws
+are limited by the 65% combined readvance threshold, the 80% overall ceiling and an optional
+fixed lender limit. Eligible draws can resume when principal falls enough. Falling collateral
+can block new credit while existing balances remain due. Projected appreciation increases the
+lending value only at an assumed annual reappraisal. [OSFI combined-loan guidance](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/clarification-treatment-innovative-real-estate-secured-lending-products-under-guideline-b-20)
 
-A plain-English introduction explains the mortgage-to-HELOC/investment cycle and remaining secured debt. CRA links explain income-earning use, tracing, registered-account exclusions and capital-gains-only ineligibility. The page identifies the model as Canadian and links IRS guidance while explicitly excluding US investment-interest limits and itemizing rules from the calculation.
+HELOC interest is paid in cash by default. The optional financing mode allocates available
+credit to interest first and uses the rest for investment draws up to repaid mortgage principal.
+The refund estimate applies the user's savings rate and annual dollar cap to prior-year
+cash-paid interest attributable to investment advances. It excludes financed interest and
+interest on the balance borrowed to cover interest. [CRA interest deductibility folio](https://www.canada.ca/en/revenue-agency/services/tax/technical-information/income-tax/income-tax-folios-index/series-3-property-investments-savings-plans/series-3-property-investments-savings-plan-folio-6-interest/income-tax-folio-s3-f6-c1-interest-deductibility.html)
 
-The selected-year results separately show interest-deduction tax savings received, cumulative tax on distributions and hypothetical exit tax, with invested principal, gain/loss and after-tax portfolio reconciliation. Exit taxes are liabilities for an illustrative sale at each snapshot, not repeatedly charged annual sales. New monthly/CSV fields `grossIncome`, `incomeTaxPaid`, `cumulativeIncomeTax` and `cumulativeHelocInterest` report the existing math without changing projections. Default year 20 includes 60,714.75 deduction savings received, 33,988.44 distribution tax and 46,734.10 exit tax, while the strategy advantage remains 277,453.26. Tests confirm rate sensitivity and that sale-tax assumptions do not change the mortgage/HELOC/portfolio trajectory.
+The default assumes a 7% HELOC rate, 6.59% effective annual total return before personal tax,
+25% tax rates, 50% capital-gains inclusion and a $5,000 annual tax-saving ceiling. A separate
+$50,000 annual prepayment privilege is an editable contract assumption. The year-15 default
+advantage is about $33,010. The scenarios show 6% and 7% returns, higher borrowing costs and
+zero deduction benefit. Loan renewals, lender fees, cash reinvestment and individual tax
+brackets are outside the model.
+
+CSV version 2 retains the original monthly columns and appends collateral, limits, funded and
+blocked draws, interest paid in cash, eligible interest and the monthly cash difference versus
+the baseline. Exit tax is calculated independently at every reporting date as an illustrative
+sale. The regression tests include all 360 months of the reviewed scenario, the appraisal and
+credit boundaries, cash-funded interest and the annual tax and prepayment limits.
 
 ## Extra EMI schedule
 
