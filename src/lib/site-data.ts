@@ -429,6 +429,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/u.s.-10-year-bond-yield",
+    oneWeekMove: -0.07,
   },
   {
     country: "China",
@@ -448,6 +449,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/china-10-year-bond-yield",
+    oneWeekMove: -0.06,
   },
   {
     country: "Hong Kong",
@@ -467,6 +469,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://hk.investing.com/rates-bonds/hong-kong-10-year-bond-yield",
+    oneWeekMove: -0.193,
   },
   {
     country: "Japan",
@@ -486,6 +489,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/japan-10-year-bond-yield",
+    oneWeekMove: -0.07,
   },
   {
     country: "India",
@@ -505,6 +509,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/india-10-year-bond-yield",
+    oneWeekMove: -0.217,
   },
   {
     country: "Indonesia",
@@ -524,6 +529,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/indonesia-10-year-bond-yield",
+    oneWeekMove: 0.049,
   },
   {
     country: "Germany",
@@ -543,6 +549,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/germany-10-year-bond-yield",
+    oneWeekMove: -0.0648,
   },
   {
     country: "United Kingdom",
@@ -562,6 +569,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/uk-10-year-bond-yield",
+    oneWeekMove: -0.1362,
   },
   {
     country: "France",
@@ -581,6 +589,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/france-10-year-bond-yield",
+    oneWeekMove: -0.21,
   },
   {
     country: "Canada",
@@ -600,6 +609,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/canada-10-year-bond-yield",
+    oneWeekMove: -0.14,
   },
   {
     country: "South Korea",
@@ -619,6 +629,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield",
+    oneWeekMove: -0.163,
   },
   {
     country: "Taiwan",
@@ -638,6 +649,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/taiwan-10-year-bond-yield",
+    oneWeekMove: -0.07,
   },
   {
     country: "South Africa",
@@ -657,6 +669,7 @@ export const BOND_YIELDS: BondYield[] = [
     range52wBasis: "published-yield-range",
     range52wSource: "Investing.com · benchmark yields",
     range52wSourceUrl: "https://www.investing.com/rates-bonds/south-africa-10-year-bond-yield",
+    oneWeekMove: -0.29,
   },
 ];
 

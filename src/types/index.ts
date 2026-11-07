@@ -53,6 +53,7 @@ export interface BondYield extends MarketRange52w {
   /** Changes in percentage points against same-source daily observations.
    * Unavailable calendar-period anchors remain null. */
   dailyMove: number | null;
+  oneWeekMove: number | null;
   oneMonthMove: number | null;
   oneYearMove: number | null;
   /** One slot per calendar month ending at asOf; null denotes missing data. */

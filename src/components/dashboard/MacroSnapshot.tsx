@@ -1,153 +1,62 @@
-import { ECONOMIC_INDICATORS, MACRO_SNAPSHOT } from "@/lib/site-data";
-import {
-  Activity,
-  BadgeDollarSign,
-  BriefcaseBusiness,
-  ClipboardList,
-  Droplets,
-  Factory,
-  TrendingDown,
-  TrendingUp,
-  Minus,
-} from "lucide-react";
-import { FONT_MONO } from "@/lib/utils";
+import { Activity, BadgeDollarSign, BriefcaseBusiness } from "lucide-react";
+import { economicPeriod } from "@/lib/economy-view";
+import { ECONOMIC_INDICATORS } from "@/lib/site-data";
+import { FONT_MONO, formatEconomicValue } from "@/lib/utils";
 
-const METRICS = [
+const COUNTRIES = [
   {
-    key: "gdp" as const,
-    label: "GDP",
-    displayValue: `${MACRO_SNAPSHOT.gdp.value}%`,
-    context: "US QoQ",
-    icon: Activity,
+    name: "United States",
+    metrics: [
+      { id: "us-cpi", label: "CPI inflation", basis: "YoY · adjusted index", icon: BadgeDollarSign },
+      { id: "us-gdp", label: "Real GDP growth", basis: "QoQ annualized", icon: Activity },
+      { id: "us-payrolls", label: "Nonfarm payrolls", basis: "Jobs · monthly change", icon: BriefcaseBusiness },
+    ],
   },
   {
-    key: "pmi" as const,
-    label: "China Mfg PMI",
-    displayValue: `${MACRO_SNAPSHOT.pmi.value}`,
-    // Dated on the tile: a PMI print is a monthly snapshot, and the previous
-    // undated "Global PMI" read as current long after it had been superseded.
-    context: `NBS · ${ECONOMIC_INDICATORS.find((indicator) => indicator.id === "china-mfg-pmi")!.period}`,
-    icon: Factory,
-  },
-  {
-    key: "inflation" as const,
-    label: "Inflation",
-    displayValue: `${MACRO_SNAPSHOT.inflation.value}%`,
-    context: "US CPI YoY",
-    icon: BadgeDollarSign,
-  },
-  {
-    key: "jobs" as const,
-    label: "Unemployment",
-    displayValue: `${MACRO_SNAPSHOT.jobs.value}%`,
-    context: "US Rate",
-    icon: BriefcaseBusiness,
-  },
-  {
-    key: "claims" as const,
-    label: "Initial Claims",
-    displayValue: `${MACRO_SNAPSHOT.claims.value}K`,
-    context: "US Weekly",
-    icon: ClipboardList,
-  },
-  {
-    key: "oil" as const,
-    label: "Oil",
-    displayValue: `$${MACRO_SNAPSHOT.oil.value}`,
-    context: "Brent $/bbl",
-    icon: Droplets,
+    name: "Canada",
+    metrics: [
+      { id: "ca-cpi", label: "CPI inflation", basis: "YoY", icon: BadgeDollarSign },
+      { id: "ca-gdp", label: "Real GDP growth", basis: "QoQ", icon: Activity },
+      { id: "ca-payrolls", label: "Employment", basis: "Jobs · monthly change", icon: BriefcaseBusiness },
+    ],
   },
 ];
 
-function TrendIcon({ trend }: { trend: "up" | "down" | "neutral" }) {
-  if (trend === "up")
-    return <TrendingUp size={14} style={{ color: "var(--color-market-up)" }} />;
-  if (trend === "down")
-    return <TrendingDown size={14} style={{ color: "var(--color-market-down)" }} />;
-  return <Minus size={14} style={{ color: "var(--color-market-neutral)" }} />;
-}
-
-export default function MacroSnapshot({
-  showHeader = true,
-}: {
-  showHeader?: boolean;
-} = {}) {
+export default function MacroSnapshot() {
   return (
-    <div>
-      {showHeader && (
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-px w-7" style={{ background: "var(--color-neon-cyan)" }} />
-          <h2
-            className="text-sm font-bold tracking-widest uppercase"
-            style={{
-              color: "var(--color-neon-cyan)",
-              fontFamily: FONT_MONO,
-              letterSpacing: "0.15em",
-            }}
-          >
-            Global Macro Snapshot
-          </h2>
-          <div
-            className="ml-auto text-xs px-2 py-0.5 rounded"
-            style={{
-              fontFamily: FONT_MONO,
-              color: "var(--color-text-muted)",
-              border: "1px solid var(--color-space-border)",
-              letterSpacing: "0.08em",
-            }}
-          >
-            LATEST AVAILABLE
-          </div>
-        </div>
-      )}
+    <div className="grid gap-6 lg:grid-cols-2">
+      {COUNTRIES.map(({ name, metrics }) => (
+        <section key={name}>
+          <h3 className="mb-3 text-base font-bold text-text-primary">{name}</h3>
+          <dl className="grid grid-cols-3 gap-px border border-space-border bg-space-border">
+            {metrics.map(({ id, label, basis, icon: Icon }) => {
+              const indicator = ECONOMIC_INDICATORS.find(entry => entry.id === id);
+              const value = indicator && formatEconomicValue(indicator.value, indicator.category, indicator.unit);
+              const displayValue = !indicator ? "—" : indicator.unit === "K MoM"
+                ? `${indicator.value > 0 ? "+" : ""}${value}K`
+                : `${value}%`;
 
-      <div className="grid grid-cols-2 border-l border-t sm:grid-cols-3 lg:grid-cols-6" style={{ borderColor: "var(--color-space-border)" }}>
-        {METRICS.map(({ key, label, displayValue, context, icon: Icon }) => {
-          const trend = MACRO_SNAPSHOT[key].trend;
-          return (
-            <div
-              key={key}
-              className="group flex min-h-40 flex-col justify-between border-b border-r p-4 transition-colors sm:p-5"
-              style={{
-                background: "var(--color-space-card)",
-                borderColor: "var(--color-space-border)",
-              }}
-            >
-              <div className="flex items-center justify-between">
-                <Icon size={17} style={{ color: "var(--color-neon-cyan)" }} />
-                <TrendIcon trend={trend} />
-              </div>
-              <div
-                className="text-2xl font-bold leading-none sm:text-3xl"
-                style={{
-                  fontFamily: FONT_MONO,
-                  color: "var(--color-text-primary)",
-                  letterSpacing: "-0.06em",
-                }}
-              >
-                {displayValue}
-              </div>
-              <div>
-                <div
-                  className="font-semibold text-sm"
-                  style={{ color: "var(--color-text-secondary)" }}
-                >
-                  {label}
+              return (
+                <div key={id} className="flex min-w-0 flex-col gap-2 bg-space-card px-2.5 py-3 sm:px-4 sm:py-4">
+                  <dt className="text-xs font-semibold text-text-primary sm:text-sm">
+                    <Icon size={16} aria-hidden="true" className="mb-2 text-neon-cyan" />
+                    {label}
+                  </dt>
+                  <dd className="mt-auto">
+                    <p className="whitespace-nowrap text-xl font-bold tracking-tight text-text-primary sm:text-2xl" style={{ fontFamily: FONT_MONO }}>
+                      {displayValue}
+                    </p>
+                    <p className="mt-1 text-xs font-semibold text-text-secondary">
+                      {indicator ? economicPeriod(indicator) : "Period unavailable"}
+                    </p>
+                    <p className="mt-0.5 text-[11px] leading-tight text-text-secondary">{basis}</p>
+                  </dd>
                 </div>
-                <div
-                  className="text-xs"
-                  style={{
-                    color: "var(--color-text-muted)",
-                    fontFamily: FONT_MONO,
-                  }}
-                >
-                  {context}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              );
+            })}
+          </dl>
+        </section>
+      ))}
     </div>
   );
 }

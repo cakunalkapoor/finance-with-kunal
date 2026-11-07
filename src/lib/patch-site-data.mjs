@@ -284,14 +284,17 @@ function considerBond(b, fallbackCadence) {
      source's current endpoint. */
   const prevTrend = Array.isArray(prev?.trend) ? prev.trend : [];
   const nextTrend = Array.isArray(b.trend) ? b.trend : [];
+  const cadence = b.cadence || fallbackCadence;
 
   bondCandidates[b.country] = {
     country: b.country,
     value,
     asOf: b.asOf,
     source: b.source || "unknown",
-    cadence: b.cadence || fallbackCadence,
+    cadence,
     dailyMove: b.dailyMove,
+    oneWeekMove: b.oneWeekMove ?? (b.dailySeries?.at(-1)?.date === b.asOf
+      ? periodMoves(b.dailySeries, cadence).oneWeekMove : null),
     oneMonthMove: b.oneMonthMove,
     oneYearMove: b.oneYearMove,
     trend: nextTrend.length ? nextTrend : prevTrend,
@@ -349,6 +352,7 @@ for (const b of Object.values(bondCandidates)) {
     // patchObject skips null/undefined so a missing field can't blank a good
     // one — but here the ABSENCE is the fact to publish, so write it literally.
     dailyMove: b.dailyMove ?? "null",
+    oneWeekMove: b.oneWeekMove ?? "null",
     oneMonthMove: b.oneMonthMove ?? "null",
     oneYearMove: b.oneYearMove ?? "null",
     trend: b.trend,

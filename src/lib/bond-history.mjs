@@ -31,10 +31,10 @@ export function periodMoves(observations, cadence = "daily") {
   }
   const rows = [...sessions.values()].sort((a, b) => b.date.localeCompare(a.date));
   const latest = rows[0];
-  if (!latest || cadence !== "daily") return { dailyMove: null, oneMonthMove: null, oneYearMove: null };
+  if (!latest || cadence !== "daily") return { dailyMove: null, oneWeekMove: null, oneMonthMove: null, oneYearMove: null };
   const end = new Date(`${latest.date}T00:00:00Z`);
-  const delta = (anchor, target) => {
-    if (!anchor || (target - Date.parse(anchor.date)) / 86400000 > 7) return null;
+  const delta = (anchor, target, maxLagDays = 7) => {
+    if (!anchor || (target - Date.parse(anchor.date)) / 86400000 > maxLagDays) return null;
     return Math.round((latest.value - anchor.value) * 10000) / 10000;
   };
   const prior = (months) => {
@@ -42,5 +42,11 @@ export function periodMoves(observations, cadence = "daily") {
     const target = Date.UTC(end.getUTCFullYear(), end.getUTCMonth() - months, Math.min(end.getUTCDate(), lastDay));
     return delta(rows.find(p => Date.parse(p.date) <= target), target);
   };
-  return { dailyMove: delta(rows[1], end.getTime()), oneMonthMove: prior(1), oneYearMove: prior(12) };
+  const weekAgo = end.getTime() - 7 * 86400000;
+  return {
+    dailyMove: delta(rows[1], end.getTime()),
+    oneWeekMove: delta(rows.find(p => Date.parse(p.date) <= weekAgo), weekAgo, 3),
+    oneMonthMove: prior(1),
+    oneYearMove: prior(12),
+  };
 }

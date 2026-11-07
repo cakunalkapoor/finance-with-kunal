@@ -53,6 +53,9 @@ const parseMove = (value) => value === "null" ? null : Number(value);
 const moves = new Map([...block.matchAll(
   /country: "([^"]+)"[\s\S]*?dailyMove: (null|-?[\d.]+),[\s\S]*?oneMonthMove: (null|-?[\d.]+),[\s\S]*?oneYearMove: (null|-?[\d.]+),/g
 )].map((m) => [m[1], [parseMove(m[2]), parseMove(m[3]), parseMove(m[4])]]));
+const weeklyMoves = new Map([...block.matchAll(
+  /country: "([^"]+)"[^{}]*?oneWeekMove: (null|-?[\d.]+),/g
+)].map(m => [m[1], parseMove(m[2])]));
 
 if (bonds.some(b => b.country === "Germany" && /ECB|euro-area/.test(b.source))) problems.push("Germany must use a Bund series, not the euro-area AAA proxy");
 
@@ -150,11 +153,12 @@ for (const key of Object.keys(manual.bonds ?? {})) {
   }
 
   if (live.source !== m.source || live.asOf !== m.asOf) continue; // a newer automated feed can win
-  const expectedMoves = Object.values(periodMoves([...(m.observations || []), { date: m.asOf, value: m.value }]));
+  const { oneWeekMove, ...otherMoves } = periodMoves([...(m.observations || []), { date: m.asOf, value: m.value }]);
+  const expectedMoves = Object.values(otherMoves);
   if (expectedMoves.some(value => !Number.isFinite(value))) {
     problems.push(`${m.country}: missing dated comparison closes — retrieve the previous session and both calendar-anniversary anchors`);
   }
-  if (JSON.stringify(moves.get(m.country)) !== JSON.stringify(expectedMoves)) {
+  if (weeklyMoves.get(m.country) !== oneWeekMove || JSON.stringify(moves.get(m.country)) !== JSON.stringify(expectedMoves)) {
     problems.push(`${m.country}: moves disagree with verified same-source historical closes`);
   }
   const trendMatch = block.match(new RegExp(`country: "${m.country}"[\\s\\S]*?trend: \\[([^\\]]*)\\]`));

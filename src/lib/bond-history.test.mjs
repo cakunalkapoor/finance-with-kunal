@@ -12,13 +12,20 @@ test('overlapping histories merge once and retain the newer source', () => {
   assert.deepEqual(result.slice(-4), [1,2,4,5]);
 });
 test('period comparisons use calendar dates and never clamp to short history', () => {
-  assert.deepEqual(periodMoves([{date:'2026-09-25',value:5},{date:'2026-09-24',value:4.9},{date:'2026-08-25',value:4.5}]), {dailyMove:0.1,oneMonthMove:0.5,oneYearMove:null});
+  assert.deepEqual(periodMoves([{date:'2026-09-25',value:5},{date:'2026-09-24',value:4.9},{date:'2026-08-25',value:4.5}]), {dailyMove:0.1,oneWeekMove:null,oneMonthMove:0.5,oneYearMove:null});
   assert.equal(periodMoves([{date:'2026-09-25',value:5},{date:'2026-08-26',value:4.5}]).oneMonthMove,null);
 });
 test('weekends use the preceding close, while monthly averages never become daily moves', () => {
   const rows = [{date:'2026-09-23',value:4.409},{date:'2026-09-22',value:4.464},{date:'2026-08-21',value:4}];
-  assert.deepEqual(periodMoves(rows), {dailyMove:-0.055,oneMonthMove:0.409,oneYearMove:null});
-  assert.deepEqual(periodMoves(rows, 'monthly'), {dailyMove:null,oneMonthMove:null,oneYearMove:null});
+  assert.deepEqual(periodMoves(rows), {dailyMove:-0.055,oneWeekMove:null,oneMonthMove:0.409,oneYearMove:null});
+  assert.deepEqual(periodMoves(rows, 'monthly'), {dailyMove:null,oneWeekMove:null,oneMonthMove:null,oneYearMove:null});
+});
+
+test('one-week yield moves use a dated close at or just before the seven-day anchor', () => {
+  const rows = [{date:'2026-11-06',value:4.859},{date:'2026-11-05',value:4.837},{date:'2026-11-02',value:4.91}];
+  assert.equal(periodMoves([...rows, {date:'2026-10-30',value:4.929}]).oneWeekMove, -0.07);
+  assert.equal(periodMoves([...rows, {date:'2026-10-29',value:4.98}]).oneWeekMove, -0.121);
+  assert.equal(periodMoves([...rows, {date:'2026-10-26',value:4.99}]).oneWeekMove, null);
 });
 
 test('an appended headline compares with the previous distinct session', () => {
@@ -28,7 +35,7 @@ test('an appended headline compares with the previous distinct session', () => {
   assert.equal(periodMoves([rows[0], rows[0]]).dailyMove, null);
 });
 
-test('verified current bond snapshots retain all three dated comparison anchors', () => {
+test('verified current bond snapshots retain all four dated comparison anchors', () => {
   const { bonds } = JSON.parse(readFileSync(new URL('./bonds-manual.json', import.meta.url), 'utf8'));
   for (const bond of Object.values(bonds)) {
     const rows = [...bond.observations, {date:bond.asOf,value:bond.value}];
@@ -57,7 +64,7 @@ test('verified manual bond histories retain dated closes and a prior session', (
   // anniversary anchors; periodMoves deliberately returns null in that case.
   const indiaOctober12 = bonds.in10y.observations.filter(point => point.date <= '2026-10-12');
   assert.deepEqual(periodMoves(indiaOctober12), {
-    dailyMove: 0.08, oneMonthMove: 0.361, oneYearMove: 0.851,
+    dailyMove: 0.08, oneWeekMove: 0.169, oneMonthMove: 0.361, oneYearMove: 0.851,
   });
 });
 
