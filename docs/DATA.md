@@ -393,6 +393,7 @@ the wrong company on those tiles.
 ### `MarketTicker.tsx` and `MarketBrief.tsx`
 
 - The shared ticker appears directly below navigation on the homepage and Markets page. It shows the stored equity index and commodity levels and their daily percentage moves from the published snapshot.
+- Vantage AI uses the same ticker with `AI_STOCKS`, starting with chip and equipment companies. The closes and one-day percentage changes both come from the published USD price series.
 - The homepage Market Brief shows equity indices, 10-year government bond yields, AI stocks, and commodities and crypto. Its `1W move` column uses weekly returns for prices and basis points for yields. Quote dates are shown per group when shared and per instrument when they differ. The snapshot header uses `DATA_UPDATED_AT`.
 
 ### `MarketHeatmap.tsx`

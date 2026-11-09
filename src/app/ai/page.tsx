@@ -6,11 +6,13 @@ import AILayoffsChart from "@/components/ai/AILayoffsChart";
 import AIDealsTable from "@/components/ai/AIDealsTable";
 import AIAdoptionChart from "@/components/ai/AIAdoptionChart";
 import { AIFigureSection } from "@/components/ai/AIFigureGrid";
+import MarketTicker from "@/components/markets/MarketTicker";
 import BriefingHero from "@/components/ui/BriefingHero";
 import SciFiCard, { CardHeader } from "@/components/ui/SciFiCard";
 import Reveal from "@/components/ui/Reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
+import { formatNumber } from "@/lib/utils";
 import type { AIFigure } from "@/types";
 import {
   AI_ADOPTION,
@@ -71,6 +73,14 @@ const COL = "flex flex-col gap-5 [&>*:last-child]:grow [&>*:last-child>*]:h-full
  *  wrapper: the grid stretches them, and this makes the card fill the Reveal. */
 const TWO_COL_DIRECT = `${TWO_COL} [&>*>*]:h-full`;
 
+const aiTickerItems = AI_STOCKS
+  .toSorted((a, b) => Number(b.layer === "silicon") - Number(a.layer === "silicon"))
+  .map(stock => ({
+    label: stock.company,
+    value: `$${formatNumber(stock.value)}`,
+    change: stock.dailyChange,
+  }));
+
 /** The headline value of one curated figure, by id — so the hero can restate a
  *  number that lives (with its source) in ai-data.ts without copying it. */
 function figure(figures: AIFigure[], id: string): string {
@@ -86,6 +96,7 @@ export default function AIPage() {
   return (
     <>
       <BreadcrumbJsonLd items={[{ name: "AI", path: "/ai" }]} />
+      <MarketTicker items={aiTickerItems} label="AI stocks · USD · 1D" />
 
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-5">
         <BriefingHero

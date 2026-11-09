@@ -179,7 +179,7 @@ body {
   100% { transform: translateX(-50%); }
 }
 .ticker-track {
-  animation: ticker-slide 20s linear infinite;
+  animation: ticker-slide linear infinite;
 }
 .ticker-track:hover {
   animation-play-state: paused;
@@ -774,6 +774,13 @@ html.js .rule-grid.is-revealed .rule-cell-body {
   }
   .ticker-track {
     animation: none;
+  }
+  .ticker-track > [aria-hidden="true"] {
+    display: none;
+  }
+  .ticker-mask {
+    overflow-x: auto;
+    mask-image: none;
   }
   /* A wash chasing the cursor is exactly the kind of incidental movement this
      preference is asking us to drop. */
