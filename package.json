@@ -35,12 +35,12 @@
     "date-fns": "^4.4.0",
     "echarts": "^6.1.0",
     "echarts-for-react": "^3.0.6",
-    "lucide-react": "^1.17.0",
-    "next": "16.4.4",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "swr": "^2.4.1",
-    "tailwind-merge": "^3.6.0"
+    "lucide-react": "^1.70.0",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "swr": "^2.5.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -48,7 +48,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.4.4",
+    "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
