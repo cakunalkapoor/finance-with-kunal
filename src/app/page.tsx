@@ -73,9 +73,9 @@ function EconomicSnapshot() {
 export default function HomePage() {
   return (
     <>
+      <MarketTicker />
       <HomeIntro />
       <MarketBrief />
-      <MarketTicker />
       <EconomicSnapshot />
       <WeeklyCommentary />
       <TrendingHeadlines />

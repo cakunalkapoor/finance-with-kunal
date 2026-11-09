@@ -116,7 +116,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className="grid-bg min-h-screen flex flex-col"
+        className="min-h-screen flex flex-col"
         style={{ fontFamily: "var(--font-space-grotesk), system-ui, sans-serif" }}
       >
         {/* Runs before paint: applies the saved/system theme (no flash of the

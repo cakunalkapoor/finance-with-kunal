@@ -135,14 +135,6 @@ body {
   background: var(--color-neon-cyan);
 }
 
-/* Quiet publication grid, used as a structural texture rather than decoration. */
-.grid-bg {
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--color-space-border) 25%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--color-space-border) 25%, transparent) 1px, transparent 1px);
-  background-size: 80px 80px;
-}
-
 /* Shadow utilities — replace neon glows with soft elevated shadows */
 .glow-cyan {
   box-shadow:
