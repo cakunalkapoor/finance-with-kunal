@@ -12,7 +12,7 @@ A light, professional personal-finance blog + global-markets dashboard with a "B
 
 | Route | Nav label | Purpose |
 |-------|-----------|---------|
-| `/` | — | Hero + Market Snapshot + Economic Snapshot + latest posts |
+| `/` | — | Market ticker below navigation, hero, Market Brief, US and Canada economic snapshot, and weekly commentary |
 | `/markets` | **Markets** | Equity indices, ETFs, bonds, commodities, FX, crypto, 11-index constituent heatmap |
 | `/ai` | **Vantage AI** | AI basket vs all 12 global indices, 28-name AI universe, capex, AI revenue, chips, layoffs, VC deals, adoption |
 | `/dashboard` | **Economy** | Global Macro Snapshot + leading economic indicators (incl. euro area) |
@@ -35,7 +35,7 @@ Nav labels and route slugs differ on purpose (`/dashboard` shows as "Economy"). 
 
 ## Design tokens (`globals.css` `@theme`)
 
-Warm editorial palette — paper, ink, and signal green. **Two themes**: light is the `@theme` default, dark is applied by adding `.dark` to `<html>` (an inline script in the root layout sets it before paint; `ThemeToggle` flips it and persists to localStorage). Both must be styled.
+The original palette uses paper, ink, and signal green. Page backgrounds are solid in both themes. Light is the `@theme` default. The root layout applies `.dark` to `<html>` before paint, and `ThemeToggle` persists the reader's choice in localStorage. Style and verify both modes.
 
 | Token | Light | Dark |
 |---|---|---|
@@ -64,10 +64,10 @@ Reusable UI: `BriefingHero` (page hero + update label + stat tiles) is the stand
 src/
 ├── app/
 │   ├── layout.tsx              # Root layout, fonts, metadata + OG, Navbar, Footer
-│   ├── page.tsx                # Homepage: hero, Market + Economic snapshots, latest posts
+│   ├── page.tsx                # Homepage: ticker, hero, Market Brief, macro snapshot, commentary
 │   ├── opengraph-image.tsx     # Build-time branded OG/social card
 │   ├── sitemap.ts, robots.ts   # Static /sitemap.xml + /robots.txt
-│   ├── globals.css             # @theme tokens, animations, grid bg
+│   ├── globals.css             # Theme tokens, solid page backgrounds, animations
 │   ├── markets/page.tsx        # Heatmap + Equity + ETFs + Bonds + Commodities + Forex + Crypto
 │   ├── ai/page.tsx             # AI dashboard — see "The /ai page" below
 │   ├── dashboard/page.tsx      # MacroSnapshot + EconomicCharts + Notes (global)

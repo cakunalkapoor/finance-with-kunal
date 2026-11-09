@@ -390,6 +390,11 @@ the wrong company on those tiles.
 
 ## Key component behavior
 
+### `MarketTicker.tsx` and `MarketBrief.tsx`
+
+- The shared ticker appears directly below navigation on the homepage and Markets page. It shows the stored equity index and commodity levels and their daily percentage moves from the published snapshot.
+- The homepage Market Brief shows equity indices, 10-year government bond yields, AI stocks, and commodities and crypto. Its `1W move` column uses weekly returns for prices and basis points for yields. Quote dates are shown per group when shared and per instrument when they differ. The snapshot header uses `DATA_UPDATED_AT`.
+
 ### `MarketHeatmap.tsx`
 - 11-index switcher — driven by `useState`
 - ECharts treemap, **SVG renderer** (NOT canvas — canvas dropped text labels when the custom font wasn't ready at first paint). A `fontReady` state + `key={`${activeId}-${fontReady}`}` forces a clean remount once `document.fonts.ready` resolves.
@@ -432,8 +437,8 @@ the wrong company on those tiles.
 - Supplemental interpretations and source links travel with their indicator rows; original `ECONOMIC_CONTEXT` and source data remain unchanged.
 
 ### `MacroSnapshot.tsx`
-- 6 tiles, pulled from `MACRO_SNAPSHOT` (icon, value, trend arrow, label, sub-context)
-- Used on the homepage via `showHeader={false}`; the economy pages now have four scope-specific headlines in `EconomyDashboard`.
+- Six homepage readings from `ECONOMIC_INDICATORS` cover CPI inflation, real GDP growth, and monthly job changes for the US and Canada. Each reading shows its reporting period and basis. US GDP growth is annualized QoQ, and Canadian GDP growth is QoQ.
+- The Economy dashboard has its own scope-specific headlines in `EconomyDashboard`.
 
 ### Briefing status (was `PageHeader.tsx`)
 - `PageHeader.tsx` has been **deleted** — no page had used it for some time.
@@ -449,22 +454,21 @@ the wrong company on those tiles.
 ## Status
 
 **Done:**
-- Full visual design system (light violet palette, sci-fi cards, gradient hero)
+- Original paper and green light theme and near-black and lime dark theme, with solid page backgrounds
 - All three top-level pages with their datasets, charts, and tables
-- Homepage Market Snapshot + Economic Snapshot sections
+- Homepage market ticker, Market Brief, and US and Canada economic snapshot
 - Eleven-index market heatmap with company-name tooltips and quote-coverage status
 - 52W range column and YTD/52W chart toggle in the equity table
 - PMI section + regional PMIs (China, India, Taiwan, South Korea) in the Economy dashboard
 - Blog lists published articles; `/blog/[slug]` exports each article with inline citations,
   a source list, article metadata and JSON-LD. Article URLs are included in the sitemap.
 - Branded OG/social card (`opengraph-image.tsx`) + full `openGraph`/`twitter` metadata
-- GitHub Pages workflow (`.github/workflows/deploy.yml`); `next.config.ts` supports optional `NEXT_PUBLIC_BASE_PATH` for project-page hosting
+- GitHub Pages deployment at [kunalkapoor.fyi](https://kunalkapoor.fyi/) via `.github/workflows/deploy.yml`. `next.config.ts` supports optional `NEXT_PUBLIC_BASE_PATH` for project-page hosting.
 - Static export build passes cleanly
 
 **Not yet built:**
 - Real API integration layer — `src/lib/api/` is empty (fetchers patch into `site-data.ts` instead)
 - Optional markdown/MDX content pipeline — current articles use typed content in `src/lib/blog-data.ts`
-- Custom domain (set `NEXT_PUBLIC_SITE_URL` for OG absolute URLs once chosen)
 - Search, RSS, newsletter signup
 - Mobile polish on the heatmap (treemap labels get tight on narrow screens)
 - Repository-hosted data refresh automation and freshness alerts
