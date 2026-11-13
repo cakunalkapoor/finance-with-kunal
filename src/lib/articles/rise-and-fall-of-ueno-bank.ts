@@ -249,6 +249,6 @@ export const UENO_BANK_ARTICLE: BlogArticle = {
   "sourcesNote": "This article incorporates information from official publications by the International Monetary Fund, Paraguay's National Statistics Institute, Banco Central del Paraguay, Ueno Bank's investor disclosures, and reporting by Reuters, Bloomberg Línea, ABC Color, Última Hora and other financial news organisations. Data originally reported by Ueno before intervention may differ from its subsequently adjusted regulatory financial position. The investigation and resolution process remain ongoing as of November 11, 2026.",
   "relatedLink": {
     "href": "/blog",
-    "label": "Read more from the journal"
+    "label": "Read more from the Ledger"
   }
 };

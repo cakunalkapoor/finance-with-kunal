@@ -52,7 +52,7 @@ export default function Footer() {
             {[
               { href: "/markets", label: "Markets" },
               { href: "/dashboard", label: "Economy" },
-              { href: "/blog", label: "Blog" },
+              { href: "/blog", label: "Ledger" },
             ].map((link) => (
               <Link
                 key={link.href}

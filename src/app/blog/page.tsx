@@ -6,24 +6,31 @@ import BriefingHero from "@/components/ui/BriefingHero";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({
-  title: "Blog",
+const ledgerMetadata = pageMetadata({
+  title: "The Ledger",
   description:
-    "Long-form finance commentary, market analysis, and economic perspectives by Kunal Kapoor — written to stay useful after the headline has moved on.",
+    "Finance essays and commentary, market analysis, and economic perspectives by Kunal Kapoor — written to stay useful after the headline has moved on.",
   path: "/blog",
-  keywords: ["finance blog", "market commentary", "macro analysis", "economic perspectives"],
+  keywords: ["The Ledger", "finance essays", "market commentary", "macro analysis", "economic perspectives"],
 });
+
+export const metadata = {
+  ...ledgerMetadata,
+  title: { absolute: "The Ledger" },
+  openGraph: { ...ledgerMetadata.openGraph, title: "The Ledger" },
+  twitter: { ...ledgerMetadata.twitter, title: "The Ledger" },
+};
 
 export default function BlogPage() {
   const posts = [...BLOG_POSTS].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      <BreadcrumbJsonLd items={[{ name: "Blog", path: "/blog" }]} />
+      <BreadcrumbJsonLd items={[{ name: "Ledger", path: "/blog" }]} />
       <BriefingHero
         eyebrow="Journal"
-        title="Ideas that outlive the news cycle."
-        description="Long-form commentary on the forces moving markets and economies—written to stay useful after the headline has moved on."
+        title="The Ledger"
+        description="Essays and commentary on the forces moving markets and economies—written to stay useful after the headline has moved on."
         accent="violet"
         // Posts aren't tied to the data refresh, so the update label would be
         // describing data this page doesn't show.

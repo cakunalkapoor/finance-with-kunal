@@ -81,11 +81,11 @@ export default async function BlogArticlePage({ params }: Props) {
   const article = findArticle((await params).slug);
   return (
     <article className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
-      <BreadcrumbJsonLd items={[{ name: "Blog", path: "/blog" }, { name: article.title, path: `/blog/${article.slug}` }]} />
+      <BreadcrumbJsonLd items={[{ name: "Ledger", path: "/blog" }, { name: article.title, path: `/blog/${article.slug}` }]} />
       <ArticleJsonLd post={article} />
       <Link href="/blog" className="inline-flex items-center gap-2 text-xs font-bold"
         style={{ color: "var(--color-neon-cyan)", fontFamily: FONT_MONO }}>
-        <ArrowLeft size={14} /> Back to the journal
+        <ArrowLeft size={14} /> Back to the Ledger
       </Link>
 
       <header className="mt-10 border-b pb-10 sm:pb-12" style={{ borderColor: "var(--color-space-border)" }}>

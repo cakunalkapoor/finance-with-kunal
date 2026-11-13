@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { href: "/ai", label: "Vantage AI" },
   { href: "/dashboard", label: "Economy" },
   { href: "/decisions", label: "Decision Studio" },
-  { href: "/blog", label: "Blog" },
+  { href: "/blog", label: "Ledger" },
   { href: "/about", label: "About Me" },
 ];
 
