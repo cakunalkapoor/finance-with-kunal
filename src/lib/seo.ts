@@ -25,18 +25,16 @@ export function absoluteUrl(path: string): string {
   return `${SITE_URL}${canonicalPath(path)}`;
 }
 
-/* Social card. `postbuild` copies Next's extensionless `out/opengraph-image`
-   to `out/og.png` — GitHub Pages serves the extensionless original as
-   application/octet-stream, which the scrapers refuse to render. Pointing at
-   the .png copy also gives sub-pages an og:image, which they otherwise lose
-   by declaring their own `openGraph` block. */
+/* A new filename lets sharing services fetch the updated artwork. An explicit
+   PNG also gives sub-pages an og:image when they declare their own openGraph
+   block. `postbuild` keeps og.png as an alias for previously shared links. */
 const BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/+$/, "");
 
 export const OG_IMAGE = {
-  url: `${SITE_URL}${BASE_PATH}/og.png`,
+  url: `${SITE_URL}${BASE_PATH}/og-dark-signal.png`,
   width: 1200,
   height: 630,
-  alt: `${SITE_NAME} — Global Markets & Economic Intelligence`,
+  alt: "See the market. Read the signal. A global perspective on markets and the economy.",
 } as const;
 
 interface PageMetaInput {

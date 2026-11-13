@@ -16,7 +16,7 @@ import { FONT_MONO } from "@/lib/utils";
 import { OG_IMAGE } from "@/lib/seo";
 
 // Title/description/canonical come from the root layout; this only pins the
-// social image to the .png copy (see OG_IMAGE) so the homepage doesn't fall
+// social image to the public PNG (see OG_IMAGE) so the homepage doesn't fall
 // back to the extensionless opengraph-image route.
 export const metadata = {
   openGraph: { images: [OG_IMAGE] },

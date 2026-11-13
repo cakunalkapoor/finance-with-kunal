@@ -2,7 +2,7 @@
 // with no file extension, and GitHub Pages serves extensionless files as
 // application/octet-stream — which Facebook, LinkedIn and X reject when they
 // scrape the card. Copy it to a real `.png` so it's served as image/png; the
-// metadata in src/lib/seo.ts points every page at that copy.
+// legacy og.png URL stays available for links shared before the redesign.
 import { copyFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
@@ -12,7 +12,7 @@ const target = join(OUT, "og.png");
 
 if (!existsSync(source)) {
   // `next build` without output: "export" (or a failed image render) — don't
-  // fail the build, just say so, since the metadata falls back to the route.
+  // fail the build: current sharing metadata points at a public PNG.
   console.warn("[postbuild-og] out/opengraph-image not found — skipped og.png");
   process.exit(0);
 }
