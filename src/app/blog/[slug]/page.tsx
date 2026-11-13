@@ -39,8 +39,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
   return {
     ...metadata,
+    title: { absolute: article.title },
     authors: [{ name: AUTHOR_NAME }],
-    openGraph: { ...metadata.openGraph, type: "article", publishedTime: article.date, authors: [AUTHOR_NAME] },
+    openGraph: { ...metadata.openGraph, title: article.title, type: "article", publishedTime: article.date, authors: [AUTHOR_NAME] },
+    twitter: { ...metadata.twitter, title: article.title },
   };
 }
 
