@@ -28,7 +28,7 @@ export default function BlogPage() {
     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <BreadcrumbJsonLd items={[{ name: "Ledger", path: "/blog" }]} />
       <BriefingHero
-        eyebrow="Journal"
+        eyebrow="Ledger"
         title="The Ledger"
         description="Essays and commentary on the forces moving markets and economies—written to stay useful after the headline has moved on."
         accent="violet"
