@@ -1,4 +1,5 @@
 import type { BlogPost } from "@/types";
+import { UENO_BANK_ARTICLE } from "./articles/rise-and-fall-of-ueno-bank";
 
 export interface BlogSource {
   id: string;
@@ -8,20 +9,32 @@ export interface BlogSource {
   url: string;
 }
 
+export interface BlogFigure {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  caption: string;
+}
+
 export interface BlogArticle extends BlogPost {
-  takeaway: string;
+  takeaway?: string;
   introduction: string[];
   cases: { company: string; date: string; outcome: string; evidence: string; source: string }[];
   sections: {
     id: string;
     title: string;
-    paragraphs: { text: string; sources?: string[] }[];
+    paragraphs: { text: string; sources?: string[]; figureAfter?: BlogFigure }[];
     points?: { title: string; text: string }[];
   }[];
   sources: BlogSource[];
+  sourcesHeading?: string;
+  sourcesNote: string;
+  relatedLink?: { href: string; label: string };
 }
 
 export const BLOG_ARTICLES: BlogArticle[] = [
+  UENO_BANK_ARTICLE,
   {
     slug: "ai-data-center-ipo-setbacks",
     title: "AI data-center IPOs hit a valuation test",
@@ -156,6 +169,8 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       { id: "airtrunk-reuters", publisher: "Reuters via MarketScreener", title: "Blackstone-backed AirTrunk delays Singapore REIT IPO amid AI stock selloff, sources say", date: "2026-10-13", url: "https://ca.marketscreener.com/news/blackstone-backed-airtrunk-delays-singapore-reit-ipo-amid-ai-stock-selloff-sources-say-ce785ddddd80ff27" },
       { id: "elice-sedaily", publisher: "Seoul Economic Daily", title: "Elice plunges 30% in KOSDAQ trading debut", date: "2026-10-20", url: "https://en.sedaily.com/finance/2026/10/20/elice-plunges-30-percent-in-kosdaq-trading-debut" },
     ],
+    sourcesNote: "Reviewed October 21, 2026. Company explanations and anonymously sourced reporting are attributed above; the interpretation and financing questions are the author's analysis. Subsequent events may change an offering's status.",
+    relatedLink: { href: "/ai", label: "Explore the sourced AI dashboard" },
   },
 ];
 

@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
-import { BLOG_ARTICLES, type BlogArticle } from "@/lib/blog-data";
+import { BLOG_ARTICLES, type BlogArticle, type BlogFigure } from "@/lib/blog-data";
 import { AUTHOR_NAME, pageMetadata } from "@/lib/seo";
-import { FONT_MONO } from "@/lib/utils";
+import { FONT_MONO, withBasePath } from "@/lib/utils";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -54,6 +56,25 @@ function SourceLink({ article, id }: { article: BlogArticle; id: string }) {
   );
 }
 
+function ArticleFigure({ figure }: { figure: BlogFigure }) {
+  const src = withBasePath(figure.src);
+  return (
+    <figure className="my-8">
+      <a href={src} target="_blank" rel="noopener noreferrer"
+        className="block overflow-hidden rounded-lg border"
+        style={{ borderColor: "var(--color-space-border)" }}
+        aria-label={`Open full-size chart: ${figure.alt}`}>
+        <Image src={src} alt={figure.alt} width={figure.width} height={figure.height}
+          className="h-auto w-full" sizes="(max-width: 768px) 100vw, 768px" />
+      </a>
+      <figcaption className="mt-3 text-sm leading-6" style={{ color: "var(--color-text-muted)" }}>
+        {figure.caption} <a href={src} target="_blank" rel="noopener noreferrer"
+          className="underline underline-offset-4" style={{ color: "var(--color-neon-cyan)" }}>View full size</a>
+      </figcaption>
+    </figure>
+  );
+}
+
 export default async function BlogArticlePage({ params }: Props) {
   const article = findArticle((await params).slug);
   return (
@@ -85,14 +106,14 @@ export default async function BlogArticlePage({ params }: Props) {
       <div className="mx-auto max-w-3xl space-y-6 pt-10 text-base leading-8"
         style={{ color: "var(--color-text-secondary)" }}>
         {article.introduction.map((text) => <p key={text}>{text}</p>)}
-        <aside className="border-l-2 p-5 sm:p-7"
+        {article.takeaway && <aside className="border-l-2 p-5 sm:p-7"
           style={{ borderColor: "var(--color-neon-cyan)", background: "var(--color-wash)" }}>
           <p className="eyebrow mb-3">The financing question</p>
           <p className="text-lg font-medium" style={{ color: "var(--color-text-primary)" }}>{article.takeaway}</p>
-        </aside>
+        </aside>}
       </div>
 
-      <section className="mt-12" aria-labelledby="outcomes-title">
+      {article.cases && article.cases.length > 0 && <section className="mt-12" aria-labelledby="outcomes-title">
         <h2 id="outcomes-title" className="text-2xl font-semibold" style={{ color: "var(--color-text-primary)" }}>
           Three setbacks, three different outcomes
         </h2>
@@ -124,7 +145,7 @@ export default async function BlogArticlePage({ params }: Props) {
             </tbody>
           </table>
         </div>
-      </section>
+      </section>}
 
       <div className="mx-auto mt-12 max-w-3xl space-y-12">
         {article.sections.map((section) => (
@@ -133,12 +154,15 @@ export default async function BlogArticlePage({ params }: Props) {
               style={{ color: "var(--color-text-primary)", letterSpacing: "-0.025em" }}>{section.title}</h2>
             <div className="space-y-5 text-base leading-8" style={{ color: "var(--color-text-secondary)" }}>
               {section.paragraphs.map((paragraph) => (
-                <p key={paragraph.text}>
-                  {paragraph.text}
-                  {paragraph.sources?.map((id) => (
-                    <span key={id} className="ml-2 text-sm">(<SourceLink article={article} id={id} />)</span>
-                  ))}
-                </p>
+                <Fragment key={paragraph.text}>
+                  <p>
+                    {paragraph.text}
+                    {paragraph.sources?.map((id) => (
+                      <span key={id} className="ml-2 text-sm">(<SourceLink article={article} id={id} />)</span>
+                    ))}
+                  </p>
+                  {paragraph.figureAfter && <ArticleFigure figure={paragraph.figureAfter} />}
+                </Fragment>
               ))}
             </div>
             {section.points && (
@@ -155,12 +179,11 @@ export default async function BlogArticlePage({ params }: Props) {
         ))}
 
         <section id="sources" className="border-t pt-8" aria-labelledby="sources-title" style={{ borderColor: "var(--color-space-border)" }}>
-          <h2 id="sources-title" className="text-xl font-semibold" style={{ color: "var(--color-text-primary)" }}>Sources and reporting dates</h2>
+          <h2 id="sources-title" className="text-xl font-semibold" style={{ color: "var(--color-text-primary)" }}>{article.sourcesHeading ?? "Sources and reporting dates"}</h2>
           <p className="mt-3 text-sm leading-6" style={{ color: "var(--color-text-secondary)" }}>
-            Reviewed {displayDate(article.date)}. Company explanations and anonymously sourced reporting are attributed above;
-            the interpretation and financing questions are the author&rsquo;s analysis. Subsequent events may change an offering&rsquo;s status.
+            {article.sourcesNote}
           </p>
-          <ul className="mt-5 space-y-4">
+          {article.sources.length > 0 && <ul className="mt-5 space-y-4">
             {article.sources.map((source) => (
               <li key={source.id} id={`source-${source.id}`}>
                 <a href={source.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-2 text-sm font-medium underline-offset-4 hover:underline"
@@ -168,11 +191,11 @@ export default async function BlogArticlePage({ params }: Props) {
                 <p className="mt-1 text-xs" style={{ color: "var(--color-text-muted)" }}>{source.publisher} · {displayDate(source.date)}</p>
               </li>
             ))}
-          </ul>
+          </ul>}
         </section>
-        <Link href="/ai" className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--color-neon-cyan)" }}>
-          Explore the sourced AI dashboard <ArrowUpRight size={15} />
-        </Link>
+        {article.relatedLink && <Link href={article.relatedLink.href} className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--color-neon-cyan)" }}>
+          {article.relatedLink.label} <ArrowUpRight size={15} />
+        </Link>}
       </div>
     </article>
   );
