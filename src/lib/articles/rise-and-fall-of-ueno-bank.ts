@@ -44,7 +44,7 @@ export const UENO_BANK_ARTICLE: BlogArticle = {
         {
           "text": "By the end of 2024, the combined institution reported approximately 2.16 million customers. That number increased to 2.68 million at the end of 2025 and approached three million by June 2026.",
           "figureAfter": {
-            "src": "/blog/rise-and-fall-of-ueno-bank/customer-growth.png",
+            "src": "/ledger/rise-and-fall-of-ueno-bank/customer-growth.png",
             "width": 1980,
             "height": 1045,
             "alt": "Reported customers: 2.16 million in December 2024, 2.68 million in December 2025 and 2.94 million in June 2026.",
@@ -63,7 +63,7 @@ export const UENO_BANK_ARTICLE: BlogArticle = {
         {
           "text": "There was also a striking difference between the growth of lending and deposits. During the first six months of 2026, Ueno's reported loan portfolio expanded by approximately 32 per cent, while deposits increased by roughly 9 per cent. Such growth is not necessarily dangerous. Banks can use wholesale financing, bonds and shareholder capital to expand their lending operations. But rapid loan growth increases the importance of credit assessment, concentration limits and effective supervision. The expansion that made Ueno commercially successful also increased the consequences of any weakness in its lending practices.",
           "figureAfter": {
-            "src": "/blog/rise-and-fall-of-ueno-bank/loans-and-deposits.png",
+            "src": "/ledger/rise-and-fall-of-ueno-bank/loans-and-deposits.png",
             "width": 1980,
             "height": 1045,
             "alt": "Deposits and loans in trillion Paraguayan guaraníes: December 2024, 10.26 and 7.28; December 2025, 15.83 and 11.38; June 2026, 17.31 and 14.97.",
@@ -103,7 +103,7 @@ export const UENO_BANK_ARTICLE: BlogArticle = {
         {
           "text": "Four days later, Ueno's position became untenable. On November 2, the board of Paraguay's central bank unanimously decided to initiate resolution proceedings against the institution. The decision was announced early the next morning, effectively suspending the bank's normal operations. Regulators had determined that, after adjustments to its financial statements, Ueno's solvency ratio had fallen below half the minimum required by law. With a regulatory minimum of 12 per cent, this indicated an adjusted ratio below 6 per cent, dramatically weaker than the capital position Ueno had previously reported.",
           "figureAfter": {
-            "src": "/blog/rise-and-fall-of-ueno-bank/capital-ratio.png",
+            "src": "/ledger/rise-and-fall-of-ueno-bank/capital-ratio.png",
             "width": 1980,
             "height": 1045,
             "alt": "Reported regulatory capital ratio: 21.05% in December 2024, 15.84% in December 2025 and 14.52% in June 2026. The November adjusted ratio was below 6%, against a 12% minimum.",
@@ -131,7 +131,7 @@ export const UENO_BANK_ARTICLE: BlogArticle = {
         {
           "text": "According to figures examined by ABC Color, deposits from public institutions at Ueno increased from approximately 1.75 trillion guaraníes to 4.19 trillion during 2025, a rise of roughly 140 per cent. Over a longer period, Ueno's share of all state funds deposited across Paraguay's banking system increased from approximately 5.7 per cent in July 2024 to 18.6 per cent by December 2025. By June 2026, Ueno itself disclosed approximately $827 million in deposits from public-sector institutions, including $295 million from the Instituto de Previsión Social, Paraguay's social-security institution. That represented almost 30 per cent of the bank's reported $2.8 billion deposit base.",
           "figureAfter": {
-            "src": "/blog/rise-and-fall-of-ueno-bank/public-sector-deposits.png",
+            "src": "/ledger/rise-and-fall-of-ueno-bank/public-sector-deposits.png",
             "width": 1672,
             "height": 941,
             "alt": "Public-sector deposits rose from approximately US$271 million in November 2024 to US$722 million in November 2025, an increase of 166%.",
@@ -248,7 +248,7 @@ export const UENO_BANK_ARTICLE: BlogArticle = {
   "sourcesHeading": "Research and reporting note",
   "sourcesNote": "This article incorporates information from official publications by the International Monetary Fund, Paraguay's National Statistics Institute, Banco Central del Paraguay, Ueno Bank's investor disclosures, and reporting by Reuters, Bloomberg Línea, ABC Color, Última Hora and other financial news organisations. Data originally reported by Ueno before intervention may differ from its subsequently adjusted regulatory financial position. The investigation and resolution process remain ongoing as of November 11, 2026.",
   "relatedLink": {
-    "href": "/blog",
+    "href": "/ledger",
     "label": "Read more from the Ledger"
   }
 };

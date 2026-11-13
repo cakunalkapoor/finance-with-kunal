@@ -461,7 +461,7 @@ the wrong company on those tiles.
 - Eleven-index market heatmap with company-name tooltips and quote-coverage status
 - 52W range column and YTD/52W chart toggle in the equity table
 - PMI section + regional PMIs (China, India, Taiwan, South Korea) in the Economy dashboard
-- Blog lists published articles; `/blog/[slug]` exports each article with inline citations,
+- The Ledger lists published articles; `/ledger/[slug]` exports each article with inline citations,
   a source list, article metadata and JSON-LD. Article URLs are included in the sitemap.
 - Branded OG/social card (`opengraph-image.tsx`) + full `openGraph`/`twitter` metadata
 - GitHub Pages deployment at [kunalkapoor.fyi](https://kunalkapoor.fyi/) via `.github/workflows/deploy.yml`. `next.config.ts` supports optional `NEXT_PUBLIC_BASE_PATH` for project-page hosting.

@@ -1,6 +1,6 @@
 # AI infrastructure IPO article — source review
 
-Article: `/blog/ai-data-center-ipo-setbacks/`, dated October 21, 2026.
+Article: `/ledger/ai-data-center-ipo-setbacks/`, dated October 21, 2026.
 
 ## Inclusion and classification
 

@@ -87,7 +87,7 @@ export function ArticleJsonLd({ post }: { post: { title: string; excerpt: string
     description: post.excerpt,
     datePublished: post.date,
     dateModified: post.date,
-    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
+    mainEntityOfPage: absoluteUrl(`/ledger/${post.slug}`),
     author: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR_NAME },
     publisher: { "@type": "Person", "@id": `${SITE_URL}/#person`, name: AUTHOR_NAME },
     inLanguage: "en",

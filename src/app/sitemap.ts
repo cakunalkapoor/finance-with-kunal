@@ -12,7 +12,7 @@ function lastModified(): Date {
   return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
 }
 
-/* Old country routes are noindex forwarding stubs; Economy is the canonical page. */
+/* Legacy country and blog routes are noindex forwarding stubs. */
 const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
   { path: "/markets", priority: 0.9, changeFrequency: "weekly" },
@@ -25,7 +25,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: "weekly" | "mon
   { path: "/decisions/debt-vs-invest", priority: 0.8, changeFrequency: "monthly" },
   { path: "/decisions/smith-manoeuvre", priority: 0.8, changeFrequency: "monthly" },
   { path: "/decisions/implied-cost-of-equity", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/blog", priority: 0.7, changeFrequency: "weekly" },
+  { path: "/ledger", priority: 0.7, changeFrequency: "weekly" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" },
 ];
 
@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority,
   }));
   return [...pages, ...BLOG_POSTS.map((post) => ({
-    url: absoluteUrl(`/blog/${post.slug}`),
+    url: absoluteUrl(`/ledger/${post.slug}`),
     lastModified: new Date(`${post.date}T00:00:00Z`),
     changeFrequency: "monthly" as const,
     priority: 0.7,

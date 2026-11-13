@@ -51,7 +51,7 @@ export default function AIIPOSetbacks() {
             Elice completed its capital raise, while AirTrunk&rsquo;s postponement remains an
             attributed report. The cases are examples, not a sector-wide failure rate.
           </p>
-          <Link href={`/blog/${article.slug}`} className="inline-flex items-center gap-1 text-xs font-semibold underline-offset-4 hover:underline"
+          <Link href={`/ledger/${article.slug}`} className="inline-flex items-center gap-1 text-xs font-semibold underline-offset-4 hover:underline"
             style={{ color: "var(--color-neon-cyan)" }}>
             Read the full IPO analysis and sources <ArrowUpRight size={13} aria-hidden />
           </Link>
