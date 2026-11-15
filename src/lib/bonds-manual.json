@@ -7,18 +7,18 @@
     "When advancing a headline date, also retrieve both anniversary anchors from sourceUrl; recent-session observations alone leave 1M/1Y blank.",
     "Monthly history is merged by date. Missing months and unsupported moves stay unavailable."
   ],
-  "readAt": "2026-11-06",
+  "readAt": "2026-11-13",
   "bonds": {
     "uk10y": {
       "country": "United Kingdom",
-      "value": 5.1555,
-      "asOf": "2026-11-06",
+      "value": 5.3417,
+      "asOf": "2026-11-13",
       "source": "Investing.com UK 10Y",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/united-kingdom/government-bond-yield",
-        "value": 5.1555,
-        "asOf": "2026-11-06"
+        "value": 5.34,
+        "asOf": "2026-11-13"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/uk-10-year-bond-yield-historical-data",
       "observations": [
@@ -1112,15 +1112,15 @@
         },
         {
           "date": "2026-10-28",
-          "value": 5.3511
+          "value": 5.3252
         },
         {
           "date": "2026-10-29",
-          "value": 5.294
+          "value": 5.3005
         },
         {
           "date": "2026-10-30",
-          "value": 5.2917
+          "value": 5.291
         },
         {
           "date": "2026-11-02",
@@ -1141,20 +1141,40 @@
         {
           "date": "2026-11-06",
           "value": 5.1555
+        },
+        {
+          "date": "2026-11-09",
+          "value": 5.1308
+        },
+        {
+          "date": "2026-11-10",
+          "value": 5.2284
+        },
+        {
+          "date": "2026-11-11",
+          "value": 5.2224
+        },
+        {
+          "date": "2026-11-12",
+          "value": 5.3085
+        },
+        {
+          "date": "2026-11-13",
+          "value": 5.3417
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "in10y": {
       "country": "India",
-      "value": 7.195,
-      "asOf": "2026-11-06",
+      "value": 7.303,
+      "asOf": "2026-11-13",
       "source": "Investing.com India 10Y",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/india/government-bond-yield",
-        "value": 7.168,
-        "asOf": "2026-11-06"
+        "value": 7.31,
+        "asOf": "2026-11-13"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/india-10-year-bond-yield-historical-data",
       "observations": [
@@ -2309,20 +2329,40 @@
         {
           "date": "2026-11-06",
           "value": 7.195
+        },
+        {
+          "date": "2026-11-09",
+          "value": 7.156
+        },
+        {
+          "date": "2026-11-10",
+          "value": 7.156
+        },
+        {
+          "date": "2026-11-11",
+          "value": 7.217
+        },
+        {
+          "date": "2026-11-12",
+          "value": 7.249
+        },
+        {
+          "date": "2026-11-13",
+          "value": 7.303
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "kr10y": {
       "country": "South Korea",
-      "value": 3.845,
-      "asOf": "2026-11-06",
+      "value": 4.004,
+      "asOf": "2026-11-13",
       "source": "Investing.com South Korea 10Y",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/south-korea/government-bond-yield",
-        "value": 3.845,
-        "asOf": "2026-11-06"
+        "value": 4.0,
+        "asOf": "2026-11-13"
       },
       "sourceUrl": "https://www.investing.com/rates-bonds/south-korea-10-year-bond-yield-historical-data",
       "observations": [
@@ -3392,22 +3432,42 @@
         },
         {
           "date": "2026-11-06",
-          "value": 3.845
+          "value": 3.852
+        },
+        {
+          "date": "2026-11-09",
+          "value": 3.858
+        },
+        {
+          "date": "2026-11-10",
+          "value": 3.851
+        },
+        {
+          "date": "2026-11-11",
+          "value": 3.952
+        },
+        {
+          "date": "2026-11-12",
+          "value": 3.923
+        },
+        {
+          "date": "2026-11-13",
+          "value": 4.004
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "de10y": {
       "country": "Germany",
-      "value": 3.2537,
-      "asOf": "2026-11-06",
+      "value": 3.3762,
+      "asOf": "2026-11-13",
       "source": "Investing.com Germany 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/germany-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/germany/government-bond-yield",
-        "value": 3.2537,
-        "asOf": "2026-11-06"
+        "value": 3.39,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -4561,21 +4621,41 @@
         {
           "date": "2026-11-06",
           "value": 3.2537
+        },
+        {
+          "date": "2026-11-09",
+          "value": 3.2654
+        },
+        {
+          "date": "2026-11-10",
+          "value": 3.3069
+        },
+        {
+          "date": "2026-11-11",
+          "value": 3.3236
+        },
+        {
+          "date": "2026-11-12",
+          "value": 3.3256
+        },
+        {
+          "date": "2026-11-13",
+          "value": 3.3762
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "ca10y": {
       "country": "Canada",
-      "value": 3.659,
-      "asOf": "2026-11-06",
+      "value": 3.856,
+      "asOf": "2026-11-13",
       "source": "Investing.com Canada 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/canada-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/canada/government-bond-yield",
-        "value": 3.659,
-        "asOf": "2026-11-06"
+        "value": 3.86,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -5677,21 +5757,37 @@
         {
           "date": "2026-11-06",
           "value": 3.659
+        },
+        {
+          "date": "2026-11-09",
+          "value": 3.658
+        },
+        {
+          "date": "2026-11-10",
+          "value": 3.717
+        },
+        {
+          "date": "2026-11-12",
+          "value": 3.81
+        },
+        {
+          "date": "2026-11-13",
+          "value": 3.856
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "cn10y": {
       "country": "China",
-      "value": 1.571,
-      "asOf": "2026-11-06",
+      "value": 1.59,
+      "asOf": "2026-11-13",
       "source": "Investing.com China 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/china-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/china/government-bond-yield",
-        "value": 1.5932,
-        "asOf": "2026-11-06"
+        "value": 1.62,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -6772,22 +6868,42 @@
         },
         {
           "date": "2026-11-06",
-          "value": 1.571
+          "value": 1.604
+        },
+        {
+          "date": "2026-11-09",
+          "value": 1.6
+        },
+        {
+          "date": "2026-11-10",
+          "value": 1.587
+        },
+        {
+          "date": "2026-11-11",
+          "value": 1.614
+        },
+        {
+          "date": "2026-11-12",
+          "value": 1.638
+        },
+        {
+          "date": "2026-11-13",
+          "value": 1.59
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "hk10y": {
       "country": "Hong Kong",
-      "value": 3.662,
-      "asOf": "2026-11-06",
+      "value": 3.994,
+      "asOf": "2026-11-13",
       "source": "Investing.com Hong Kong 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/hong-kong-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/hong-kong/government-bond-yield",
-        "value": 3.662,
-        "asOf": "2026-11-06"
+        "value": 3.99,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -7937,21 +8053,41 @@
         {
           "date": "2026-11-06",
           "value": 3.662
+        },
+        {
+          "date": "2026-11-09",
+          "value": 3.677
+        },
+        {
+          "date": "2026-11-10",
+          "value": 3.674
+        },
+        {
+          "date": "2026-11-11",
+          "value": 3.804
+        },
+        {
+          "date": "2026-11-12",
+          "value": 3.825
+        },
+        {
+          "date": "2026-11-13",
+          "value": 3.994
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "id10y": {
       "country": "Indonesia",
-      "value": 7.692,
-      "asOf": "2026-11-06",
+      "value": 7.607,
+      "asOf": "2026-11-13",
       "source": "Investing.com Indonesia 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/indonesia-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/indonesia/government-bond-yield",
-        "value": 7.692,
-        "asOf": "2026-11-06"
+        "value": 7.61,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -9021,21 +9157,41 @@
         {
           "date": "2026-11-06",
           "value": 7.692
+        },
+        {
+          "date": "2026-11-09",
+          "value": 7.693
+        },
+        {
+          "date": "2026-11-10",
+          "value": 7.55
+        },
+        {
+          "date": "2026-11-11",
+          "value": 7.551
+        },
+        {
+          "date": "2026-11-12",
+          "value": 7.63
+        },
+        {
+          "date": "2026-11-13",
+          "value": 7.607
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "fr10y": {
       "country": "France",
-      "value": 4.763,
-      "asOf": "2026-11-06",
+      "value": 4.926,
+      "asOf": "2026-11-13",
       "source": "Investing.com France 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/france-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/france/government-bond-yield",
-        "value": 4.772,
-        "asOf": "2026-11-06"
+        "value": 4.92,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -10189,21 +10345,41 @@
         {
           "date": "2026-11-06",
           "value": 4.763
+        },
+        {
+          "date": "2026-11-09",
+          "value": 4.736
+        },
+        {
+          "date": "2026-11-10",
+          "value": 4.802
+        },
+        {
+          "date": "2026-11-11",
+          "value": 4.785
+        },
+        {
+          "date": "2026-11-12",
+          "value": 4.838
+        },
+        {
+          "date": "2026-11-13",
+          "value": 4.926
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     },
     "tw10y": {
       "country": "Taiwan",
-      "value": 1.92,
-      "asOf": "2026-11-06",
+      "value": 1.86,
+      "asOf": "2026-11-13",
       "source": "Investing.com Taiwan 10Y",
       "sourceUrl": "https://www.investing.com/rates-bonds/taiwan-10-year-bond-yield-historical-data",
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/taiwan/government-bond-yield",
-        "value": 1.92,
-        "asOf": "2026-11-06"
+        "value": 1.86,
+        "asOf": "2026-11-13"
       },
       "observations": [
         {
@@ -11357,6 +11533,26 @@
         {
           "date": "2026-11-06",
           "value": 1.92
+        },
+        {
+          "date": "2026-11-09",
+          "value": 1.91
+        },
+        {
+          "date": "2026-11-10",
+          "value": 1.9
+        },
+        {
+          "date": "2026-11-11",
+          "value": 1.87
+        },
+        {
+          "date": "2026-11-12",
+          "value": 1.86
+        },
+        {
+          "date": "2026-11-13",
+          "value": 1.86
         }
       ],
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
@@ -12469,16 +12665,36 @@
         {
           "date": "2026-11-06",
           "value": 8.44
+        },
+        {
+          "date": "2026-11-09",
+          "value": 8.41
+        },
+        {
+          "date": "2026-11-10",
+          "value": 8.51
+        },
+        {
+          "date": "2026-11-11",
+          "value": 8.61
+        },
+        {
+          "date": "2026-11-12",
+          "value": 8.64
+        },
+        {
+          "date": "2026-11-13",
+          "value": 8.675
         }
       ],
       "crossCheck": {
         "source": "Trading Economics 10Y",
         "sourceUrl": "https://tradingeconomics.com/south-africa/government-bond-yield",
-        "value": 8.44,
-        "asOf": "2026-11-06"
+        "value": 8.68,
+        "asOf": "2026-11-13"
       },
-      "value": 8.44,
-      "asOf": "2026-11-06",
+      "value": 8.675,
+      "asOf": "2026-11-13",
       "note": "Daily closing history re-read from sourceUrl on October 24, 2026, covering October 2025 through the latest completed session. Period moves use distinct same-source sessions and dated calendar-anniversary anchors."
     }
   },

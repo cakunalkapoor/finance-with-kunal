@@ -94,7 +94,7 @@ def definitions(reviewed):
         rows.append(dict(id=id,country=country,flag=flag,name=name,category=category,unit=unit,
                          definition=definition,source=src,context=context))
     for id, series, dataset, path, cat, unit, definition, context in [
-        ('uk-gdp','ihyq','qna','economy/grossdomesticproductgdp','growth','% QoQ','Real GDP, chain-volume measure, seasonally adjusted; quarterly growth, not annualized.', 'Quarterly real growth measures output momentum. It is not annualized, so compare its basis before comparing it with the US GDP headline.'),
+        ('uk-gdp','ihyq','pn2','economy/grossdomesticproductgdp','growth','% QoQ','Real GDP, chain-volume measure, seasonally adjusted; quarterly growth, not annualized. Q3 2026 first quarterly estimate, released November 12; subject to revision.', 'Quarterly real growth measures output momentum. It is not annualized, so compare its basis before comparing it with the US GDP headline.'),
         ('uk-cpi','d7g7','mm23','economy/inflationandpriceindices','inflation','% YoY','All-items CPI, percentage change over 12 months; not seasonally adjusted.', 'This is annual consumer-price inflation, not the monthly price change. A lower rate means slower price increases, not necessarily falling prices.'),
         ('uk-unemployment','mgsx','lms','employmentandlabourmarket/peoplenotinwork/unemployment','employment','%','ILO unemployment rate, age 16+, seasonally adjusted, rolling three-month average. The API dates observations by the middle month of each window.', 'The labour-market reading is a rolling three-month estimate, so it should not be treated as a single-month rate. Overlapping windows smooth short-term changes.')]:
         u=f'{ons}{path}/timeseries/{series}/{dataset}/data'
@@ -166,7 +166,7 @@ def build_indicator(spec, raw, reviewed):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--reviewed-on',required=True)
     args=parser.parse_args();date.fromisoformat(args.reviewed_on)
-    if args.reviewed_on not in ('2026-10-31', '2026-11-05'):
+    if args.reviewed_on not in ('2026-10-31', '2026-11-05', '2026-11-13'):
         raise SystemExit('Review the ABS CPI publication cap before refreshing a new review date.')
     result=[]
     for spec in definitions(args.reviewed_on):

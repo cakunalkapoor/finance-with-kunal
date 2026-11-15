@@ -1,6 +1,6 @@
 {
-  "reviewedAt": "2026-11-07",
-  "lastAttemptAt": "2026-11-07",
+  "reviewedAt": "2026-11-14",
+  "lastAttemptAt": "2026-11-14",
   "sourceStatus": "verified",
   "cacheNote": "",
   "indicators": [
@@ -10,18 +10,14 @@
       "category": "inflation",
       "country": "India",
       "flag": "🇮🇳",
-      "value": 5.54,
+      "value": 6.09,
       "unit": "% YoY",
-      "previousValue": 4.83,
-      "change": 0.71,
+      "previousValue": 5.54,
+      "change": 0.55,
       "direction": "up",
       "isPositiveGood": false,
-      "period": "Sep 2026",
+      "period": "Oct 2026",
       "timeSeries": [
-        {
-          "date": "2022-10",
-          "value": 6.77
-        },
         {
           "date": "2022-11",
           "value": 5.88
@@ -209,6 +205,10 @@
         {
           "date": "2026-09",
           "value": 5.54
+        },
+        {
+          "date": "2026-10",
+          "value": 6.09
         }
       ],
       "sourceUrl": "https://esankhyiki.mospi.gov.in/macroindicators?product=cpi",
@@ -818,6 +818,23 @@
       }
     ],
     "2024": [
+      {
+        "base_year": "2024",
+        "series": "Current",
+        "year": "2026",
+        "month": "October",
+        "state": "All India",
+        "sector": "Combined",
+        "division": "CPI (General)",
+        "group": null,
+        "class": null,
+        "sub_class": null,
+        "item": null,
+        "code": null,
+        "index": "110.05",
+        "inflation": "6.09",
+        "imputation": null
+      },
       {
         "base_year": "2024",
         "series": "Current",

@@ -3,6 +3,43 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Week ending November 13, 2026
+
+Refreshed all 13 equity indices, 16 ETFs, nine commodity futures, six currency
+series, 28 AI stocks and 12 AI comparison indices through November 13. Crypto
+histories end November 12 and retain that date. The heatmap has quotes for 1,609
+of 1,618 constituents. Weekly commentary and headlines reconcile to the saved
+snapshot. All 13 sovereign quotes are current: 12 end November 13; Japan's
+official feed ends November 12. Published daily histories, independent Trading
+Economics cross-checks and 52-week yield ranges were re-read. Both country yield
+curves use paired November 12 official observations.
+
+FRED, BoC, StatCan, Eurostat and India CPI source checks succeeded. October India
+CPI is 6.09% YoY after 5.54%; the production build rechecked it November 14.
+US claims are 200K for November 7 after a revised 191K. October PPI is 6.52% YoY
+from the seasonally adjusted index, distinct from the BLS 6.5% unadjusted headline.
+October US CPI rose 0.4% MoM, but its annual rate is unavailable because October
+2025 observations are missing; the annual-rate card retains September explicitly.
+UK GDP now uses the November 12 PN2 first estimate: Q3 growth of 0.7% QoQ after
+0.5%. The older QNA feed still ends in Q2. Australian CPI remains capped at
+September, with October scheduled for November 25. Fifteen international adapters
+succeeded; the two Korean FRED CSV requests timed out and retain their dated
+observations. Six emerging API series were refreshed, and Mexico's November 9 CPI
+release adds October's 3.75% reading. Other curated releases keep their own dates.
+
+Vantage AI uses Anthropic's November company IPO fact sheet for reported Q3
+revenue of $17.0B. Census adoption now uses cycle 202622, released November 5:
+October 5–18 reference period, October 19–November 1 collection, 24.2% current
+use and 27.6% expected use. The seven firm-size readings are 22.8, 23.4, 25.3,
+29.2, 33.2, 40.0 and 44.1%. In the current workbook, question 7 / answer 1 is
+current use and question 28 / answer 1 is expected use; identify the question
+text as well as its ID when refreshing. OPEC returned HTTP 403 and retains its
+October 22 assessment with a November 13 failure note.
+
+Validation: 151 Node tests, 29 Python tests, scoped ESLint, sovereign-bond
+validation, provider-to-display reconciliation and the webpack production static
+export passed. Dependencies and visual styling were unchanged.
+
 ## Week ending November 6, 2026
 
 Updated Yahoo equity indices, ETFs, commodity futures, currencies, 28 AI stocks and 12 AI

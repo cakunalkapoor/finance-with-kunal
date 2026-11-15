@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-06",
+  "reviewedAt": "2026-11-13",
   "indicators": [
     {
       "id": "vn-gdp",
@@ -374,6 +374,10 @@
         {
           "date": "2026-09",
           "value": 3.45
+        },
+        {
+          "date": "2026-10",
+          "value": 3.75
         }
       ],
       "sourceReferences": [
@@ -385,11 +389,16 @@
           "label": "September 2026 CPI release",
           "url": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
           "releaseDate": "2026-10-08"
+        },
+        {
+          "label": "October 2026 full-month CPI release",
+          "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/inpc/inpc_2q2026_11.pdf",
+          "releaseDate": "2026-11-09"
         }
       ],
-      "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11265",
-      "historyNote": "Limited history · 3 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/inpc/inpc_2q2026_11.pdf",
+      "historyNote": "Limited history · 4 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-13"
     },
     {
       "id": "mx-unemployment",
