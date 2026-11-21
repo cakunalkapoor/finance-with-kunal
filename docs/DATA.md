@@ -3,6 +3,44 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Week ending November 20, 2026
+
+The weekly snapshot uses Vancouver dates. Yahoo Finance returned November 20
+observations for all 13 equity indices, 16 ETFs, nine commodity futures and six
+currency series. All 28 AI stock and 12 comparison-index histories refreshed.
+Schneider Electric and all four crypto histories end November 19. The heatmap
+has quotes for 1,609 of 1,618 constituents. The Market Brief uses the saved
+weekly returns and identifies the crypto observation date.
+
+Twelve of 13 sovereign yields are dated November 20. Japan’s Ministry of
+Finance series ends November 19, the date also used for the paired US and
+Canadian yield curves. The manual quotes use published daily histories and
+independent Trading Economics cross-checks. The 52-week yield ranges were
+reviewed against Investing.com. OPEC’s feed and XML archive returned HTTP 403,
+so the basket keeps its last verified October 22 observation and a November 20
+refresh note.
+
+FRED, Bank of Canada, Statistics Canada, Eurostat and India CPI were verified.
+US initial claims rose to 203K from a revised 202K. Canada’s October headline
+CPI held at 3.1% and September retail sales rose 0.8% month over month. Euro-area
+HICP rose to 4.0% and UK CPI to 3.6%. All 17 international series were verified,
+including the two Korean FRED histories on retry. Australia’s October CPI is
+scheduled for November 25, so the feed remains capped at September. The six
+emerging-economy APIs refreshed, with Malaysia Q3 GDP at 5.5%. Reviewed reports
+also added Bangladesh October inflation and April–June GDP, and Chile Q3 GDP
+with revised earlier quarters.
+
+Vantage AI updates NVIDIA Data Center revenue to $107.6B and cites Anthropic’s
+final prospectus for its $17.0B September-quarter revenue. Census BTOS cycle
+202623 was released November 19, with an October 19–November 1 reference period
+and a November 2–15 collection period. Current national use is 25.0% and expected
+use is 28.2%. The seven firm-size estimates are 23.4, 25.3, 27.8, 28.1, 33.1,
+35.3 and 44.0%.
+
+Validation passed for 151 Node tests, 29 Python tests, scoped ESLint, sovereign
+yield checks, provider-to-display reconciliation and the production static
+export. The deployment dependency gate passed with eight moderate findings.
+
 ## Week ending November 13, 2026
 
 Refreshed all 13 equity indices, 16 ETFs, nine commodity futures, six currency

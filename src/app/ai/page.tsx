@@ -139,14 +139,11 @@ export default function AIPage() {
                 figures={AI_REVENUE}
                 columns={2}
               >
-                The revenue evidence mixes periods and accounting bases. Anthropic&rsquo;s
-                $16.8B is reported Q3 revenue shared with investors; OpenAI&rsquo;s roughly
-                $50B is an annualized pace, net of partner shares. The earlier $70B comparison
-                is superseded, and the $70B year-end figure in the newer report is a forecast.
-                Neither is directly comparable with quarterly NVIDIA Data Center or Google
-                Cloud segment revenue. These figures cannot be summed into one AI market
-                total. TSMC&rsquo;s FY2025 accelerator share and Microsoft&rsquo;s retired
-                standalone metric retain their separate treatment.
+                Anthropic&rsquo;s final prospectus reports {figure(AI_REVENUE, "anthropic")}
+                {" "}in company revenue for the September quarter. OpenAI&rsquo;s roughly $50B
+                is an annualized pace net of partner shares. NVIDIA Data Center and Google
+                Cloud disclose quarterly revenue for individual businesses, while TSMC
+                reports accelerators as a share of company revenue.
               </AIFigureSection>
             </Reveal>
 

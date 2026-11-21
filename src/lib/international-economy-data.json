@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-13",
+  "reviewedAt": "2026-11-20",
   "indicators": [
     {
       "id": "uk-gdp",
@@ -81,10 +81,9 @@
           "value": 0.7
         }
       ],
-      "description": "Real GDP, chain-volume measure, seasonally adjusted; quarterly growth, not annualized. Q3 2026 first quarterly estimate, released November 12; subject to revision. Source: Office for National Statistics. Reviewed 2026-11-13.",
+      "description": "Real GDP, chain-volume measure, seasonally adjusted; quarterly growth, not annualized. Q3 2026 first quarterly estimate, released November 12; subject to revision. Source: Office for National Statistics. Reviewed 2026-11-20.",
       "sourceUrl": "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ihyq/pn2",
-      "apiUrl": "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ihyq/pn2/data",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://www.ons.gov.uk/economy/grossdomesticproductgdp/timeseries/ihyq/pn2/data"
     },
     {
       "id": "uk-cpi",
@@ -94,12 +93,12 @@
       "category": "inflation",
       "unit": "% YoY",
       "context": "This is annual consumer-price inflation, not the monthly price change. A lower rate means slower price increases, not necessarily falling prices.",
-      "value": 3.5,
-      "previousValue": 3.1,
-      "change": 0.4,
+      "value": 3.6,
+      "previousValue": 3.5,
+      "change": 0.1,
       "direction": "up",
       "isPositiveGood": false,
-      "period": "Sep 2026",
+      "period": "Oct 2026",
       "timeSeries": [
         {
           "date": "2022-10",
@@ -292,12 +291,15 @@
         {
           "date": "2026-09",
           "value": 3.5
+        },
+        {
+          "date": "2026-10",
+          "value": 3.6
         }
       ],
-      "description": "All-items CPI, percentage change over 12 months; not seasonally adjusted. Source: Office for National Statistics. Reviewed 2026-11-13.",
+      "description": "All-items CPI, percentage change over 12 months; not seasonally adjusted. Source: Office for National Statistics. Reviewed 2026-11-20.",
       "sourceUrl": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g7/mm23",
-      "apiUrl": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g7/mm23/data",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g7/mm23/data"
     },
     {
       "id": "uk-unemployment",
@@ -307,12 +309,12 @@
       "category": "employment",
       "unit": "%",
       "context": "The labour-market reading is a rolling three-month estimate, so it should not be treated as a single-month rate. Overlapping windows smooth short-term changes.",
-      "value": 4.7,
-      "previousValue": 4.9,
-      "change": -0.2,
+      "value": 4.6,
+      "previousValue": 4.7,
+      "change": -0.1,
       "direction": "down",
       "isPositiveGood": false,
-      "period": "2026 JUN-AUG (3-month average)",
+      "period": "2026 JUL-SEP (3-month average)",
       "timeSeries": [
         {
           "date": "2022-10",
@@ -497,9 +499,13 @@
         {
           "date": "2026-07",
           "value": 4.7
+        },
+        {
+          "date": "2026-08",
+          "value": 4.6
         }
       ],
-      "description": "ILO unemployment rate, age 16+, seasonally adjusted, rolling three-month average. The API dates observations by the middle month of each window. Source: Office for National Statistics. Reviewed 2026-11-13.",
+      "description": "ILO unemployment rate, age 16+, seasonally adjusted, rolling three-month average. The API dates observations by the middle month of each window. Source: Office for National Statistics. Reviewed 2026-11-20.",
       "sourceUrl": "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/unemployment/timeseries/mgsx/lms",
       "apiUrl": "https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/unemployment/timeseries/mgsx/lms/data",
       "observationLabels": {
@@ -548,9 +554,9 @@
         "2026-04": "2026 MAR-MAY (3-month average)",
         "2026-05": "2026 APR-JUN (3-month average)",
         "2026-06": "2026 MAY-JUL (3-month average)",
-        "2026-07": "2026 JUN-AUG (3-month average)"
-      },
-      "reviewedAt": "2026-11-13"
+        "2026-07": "2026 JUN-AUG (3-month average)",
+        "2026-08": "2026 JUL-SEP (3-month average)"
+      }
     },
     {
       "id": "de-gdp",
@@ -632,7 +638,7 @@
           "value": 0.2
         }
       ],
-      "description": "Chain-linked real GDP, seasonally and calendar adjusted, quarterly growth; not annualized. Source: Eurostat. Reviewed 2026-11-13.",
+      "description": "Chain-linked real GDP, seasonally and calendar adjusted, quarterly growth; not annualized. Source: Eurostat. Reviewed 2026-11-20.",
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en",
       "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/namq_10_gdp?format=JSON&geo=DE&s_adj=SCA&unit=CLV_PCH_PRE&na_item=B1GQ&lastTimePeriod=16",
       "observationLabels": {
@@ -651,8 +657,7 @@
         "2026-01": "Q1 2026 (provisional)",
         "2026-04": "Q2 2026 (provisional)",
         "2026-07": "Q3 2026 (provisional)"
-      },
-      "reviewedAt": "2026-11-13"
+      }
     },
     {
       "id": "de-hicp",
@@ -662,9 +667,9 @@
       "category": "inflation",
       "unit": "% YoY",
       "context": "HICP provides a harmonised European measure of consumer-price inflation. Its coverage and weights can differ from the national CPI.",
-      "value": 2.8,
+      "value": 2.9,
       "previousValue": 3.3,
-      "change": -0.5,
+      "change": -0.4,
       "direction": "down",
       "isPositiveGood": false,
       "period": "Oct 2026",
@@ -815,13 +820,12 @@
         },
         {
           "date": "2026-10",
-          "value": 2.8
+          "value": 2.9
         }
       ],
-      "description": "All-items harmonised consumer-price inflation, COICOP 2018; annual rate of change. HICP is not the national CPI. Source: Eurostat. Reviewed 2026-11-13.",
+      "description": "All-items harmonised consumer-price inflation, COICOP 2018; annual rate of change. HICP is not the national CPI. Source: Eurostat. Reviewed 2026-11-20.",
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en",
-      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr?format=JSON&geo=DE&unit=RCH_A&coicop18=TOTAL&lastTimePeriod=37",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr?format=JSON&geo=DE&unit=RCH_A&coicop18=TOTAL&lastTimePeriod=37"
     },
     {
       "id": "de-unemployment",
@@ -1031,10 +1035,9 @@
           "value": 4.1
         }
       ],
-      "description": "Total unemployment rate, both sexes, seasonally adjusted, percentage of the labour force. Eurostat total covers ages 15–74. Source: Eurostat. Reviewed 2026-11-13.",
+      "description": "Total unemployment rate, both sexes, seasonally adjusted, percentage of the labour force. Eurostat total covers ages 15–74. Source: Eurostat. Reviewed 2026-11-20.",
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/une_rt_m/default/table?lang=en",
-      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/une_rt_m?format=JSON&geo=DE&sex=T&age=TOTAL&unit=PC_ACT&s_adj=SA&lastTimePeriod=49",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/une_rt_m?format=JSON&geo=DE&sex=T&age=TOTAL&unit=PC_ACT&s_adj=SA&lastTimePeriod=49"
     },
     {
       "id": "fr-gdp",
@@ -1116,10 +1119,9 @@
           "value": -0.1
         }
       ],
-      "description": "Chain-linked real GDP, seasonally and calendar adjusted, quarterly growth; not annualized. Source: Eurostat. Reviewed 2026-11-13.",
+      "description": "Chain-linked real GDP, seasonally and calendar adjusted, quarterly growth; not annualized. Source: Eurostat. Reviewed 2026-11-20.",
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=en",
-      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/namq_10_gdp?format=JSON&geo=FR&s_adj=SCA&unit=CLV_PCH_PRE&na_item=B1GQ&lastTimePeriod=16",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/namq_10_gdp?format=JSON&geo=FR&s_adj=SCA&unit=CLV_PCH_PRE&na_item=B1GQ&lastTimePeriod=16"
     },
     {
       "id": "fr-hicp",
@@ -1129,9 +1131,9 @@
       "category": "inflation",
       "unit": "% YoY",
       "context": "HICP provides a harmonised European measure of consumer-price inflation. Its coverage and weights can differ from the national CPI.",
-      "value": 3.8,
+      "value": 3.7,
       "previousValue": 3.4,
-      "change": 0.4,
+      "change": 0.3,
       "direction": "up",
       "isPositiveGood": false,
       "period": "Oct 2026",
@@ -1282,13 +1284,12 @@
         },
         {
           "date": "2026-10",
-          "value": 3.8
+          "value": 3.7
         }
       ],
-      "description": "All-items harmonised consumer-price inflation, COICOP 2018; annual rate of change. HICP is not the national CPI. Source: Eurostat. Reviewed 2026-11-13.",
+      "description": "All-items harmonised consumer-price inflation, COICOP 2018; annual rate of change. HICP is not the national CPI. Source: Eurostat. Reviewed 2026-11-20.",
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table?lang=en",
-      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr?format=JSON&geo=FR&unit=RCH_A&coicop18=TOTAL&lastTimePeriod=37",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_minr?format=JSON&geo=FR&unit=RCH_A&coicop18=TOTAL&lastTimePeriod=37"
     },
     {
       "id": "fr-unemployment",
@@ -1498,10 +1499,9 @@
           "value": 8.5
         }
       ],
-      "description": "Total unemployment rate, both sexes, seasonally adjusted, percentage of the labour force. Eurostat total covers ages 15–74. Source: Eurostat. Reviewed 2026-11-13.",
+      "description": "Total unemployment rate, both sexes, seasonally adjusted, percentage of the labour force. Eurostat total covers ages 15–74. Source: Eurostat. Reviewed 2026-11-20.",
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/une_rt_m/default/table?lang=en",
-      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/une_rt_m?format=JSON&geo=FR&sex=T&age=TOTAL&unit=PC_ACT&s_adj=SA&lastTimePeriod=49",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/une_rt_m?format=JSON&geo=FR&sex=T&age=TOTAL&unit=PC_ACT&s_adj=SA&lastTimePeriod=49"
     },
     {
       "id": "jp-gdp",
@@ -1511,12 +1511,12 @@
       "category": "growth",
       "unit": "% QoQ",
       "context": "This is quarterly real GDP growth on a non-annualized basis. It measures output momentum rather than the annual pace often quoted in Japanese GDP headlines.",
-      "value": 0.4,
-      "previousValue": 0.5,
-      "change": -0.1,
+      "value": -0.0,
+      "previousValue": 0.4,
+      "change": -0.4,
       "direction": "down",
       "isPositiveGood": true,
-      "period": "Apr 2026",
+      "period": "Jul 2026",
       "timeSeries": [
         {
           "date": "2023-01",
@@ -1528,11 +1528,11 @@
         },
         {
           "date": "2023-07",
-          "value": -1.3
+          "value": -1.2
         },
         {
           "date": "2023-10",
-          "value": 0.5
+          "value": 0.4
         },
         {
           "date": "2024-01",
@@ -1544,11 +1544,11 @@
         },
         {
           "date": "2024-07",
-          "value": 0.8
+          "value": 0.9
         },
         {
           "date": "2024-10",
-          "value": 0.4
+          "value": 0.3
         },
         {
           "date": "2025-01",
@@ -1556,7 +1556,7 @@
         },
         {
           "date": "2025-04",
-          "value": 0.1
+          "value": 0.2
         },
         {
           "date": "2025-07",
@@ -1573,12 +1573,15 @@
         {
           "date": "2026-04",
           "value": 0.4
+        },
+        {
+          "date": "2026-07",
+          "value": -0.0
         }
       ],
-      "description": "Real expenditure GDP, 2020 base, seasonally adjusted quarterly percentage change; not annualized. This service uses the API feature of Statistics Dashboard, but the contents of this service are not guaranteed by the Statistics Bureau of Japan. Source: Statistics Bureau / Cabinet Office of Japan. Reviewed 2026-11-13.",
+      "description": "Real expenditure GDP, 2020 base, seasonally adjusted quarterly percentage change; not annualized. This service uses the API feature of Statistics Dashboard, but the contents of this service are not guaranteed by the Statistics Bureau of Japan. Source: Statistics Bureau / Cabinet Office of Japan. Reviewed 2026-11-20.",
       "sourceUrl": "https://dashboard.e-stat.go.jp/en/",
-      "apiUrl": "https://dashboard.e-stat.go.jp/api/1.0/Json/getData?Lang=EN&RegionalRank=2&RegionCode=00000&MetaGetFlg=Y&SectionHeaderFlg=1&IndicatorCode=0705020501000040000&Cycle=2&IsSeasonalAdjustment=2&TimeFrom=20231Q00",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://dashboard.e-stat.go.jp/api/1.0/Json/getData?Lang=EN&RegionalRank=2&RegionCode=00000&MetaGetFlg=Y&SectionHeaderFlg=1&IndicatorCode=0705020501000040000&Cycle=2&IsSeasonalAdjustment=2&TimeFrom=20231Q00"
     },
     {
       "id": "jp-cpi",
@@ -1588,12 +1591,12 @@
       "category": "inflation",
       "unit": "% YoY",
       "context": "All-items inflation includes fresh food and energy. It should not be confused with Japan’s commonly quoted CPI excluding fresh food.",
-      "value": 2.1,
-      "previousValue": 1.9,
+      "value": 2.3,
+      "previousValue": 2.1,
       "change": 0.2,
       "direction": "up",
       "isPositiveGood": false,
-      "period": "Sep 2026",
+      "period": "Oct 2026",
       "timeSeries": [
         {
           "date": "2023-01",
@@ -1774,12 +1777,15 @@
         {
           "date": "2026-09",
           "value": 2.1
+        },
+        {
+          "date": "2026-10",
+          "value": 2.3
         }
       ],
-      "description": "All-items consumer price inflation, 2025 base, change from the same month a year earlier; original series. This service uses the API feature of Statistics Dashboard, but the contents of this service are not guaranteed by the Statistics Bureau of Japan. Source: Statistics Bureau / Cabinet Office of Japan. Reviewed 2026-11-13.",
+      "description": "All-items consumer price inflation, 2025 base, change from the same month a year earlier; original series. This service uses the API feature of Statistics Dashboard, but the contents of this service are not guaranteed by the Statistics Bureau of Japan. Source: Statistics Bureau / Cabinet Office of Japan. Reviewed 2026-11-20.",
       "sourceUrl": "https://dashboard.e-stat.go.jp/en/",
-      "apiUrl": "https://dashboard.e-stat.go.jp/api/1.0/Json/getData?Lang=EN&RegionalRank=2&RegionCode=00000&MetaGetFlg=Y&SectionHeaderFlg=1&IndicatorCode=0703010601010030000&Cycle=1&IsSeasonalAdjustment=1&TimeFrom=20230100",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://dashboard.e-stat.go.jp/api/1.0/Json/getData?Lang=EN&RegionalRank=2&RegionCode=00000&MetaGetFlg=Y&SectionHeaderFlg=1&IndicatorCode=0703010601010030000&Cycle=1&IsSeasonalAdjustment=1&TimeFrom=20230100"
     },
     {
       "id": "jp-unemployment",
@@ -1977,10 +1983,9 @@
           "value": 2.4
         }
       ],
-      "description": "Unemployment rate, both sexes, seasonally adjusted, monthly Labour Force Survey. This service uses the API feature of Statistics Dashboard, but the contents of this service are not guaranteed by the Statistics Bureau of Japan. Source: Statistics Bureau / Cabinet Office of Japan. Reviewed 2026-11-13.",
+      "description": "Unemployment rate, both sexes, seasonally adjusted, monthly Labour Force Survey. This service uses the API feature of Statistics Dashboard, but the contents of this service are not guaranteed by the Statistics Bureau of Japan. Source: Statistics Bureau / Cabinet Office of Japan. Reviewed 2026-11-20.",
       "sourceUrl": "https://dashboard.e-stat.go.jp/en/",
-      "apiUrl": "https://dashboard.e-stat.go.jp/api/1.0/Json/getData?Lang=EN&RegionalRank=2&RegionCode=00000&MetaGetFlg=Y&SectionHeaderFlg=1&IndicatorCode=0301010000020020010&Cycle=1&IsSeasonalAdjustment=2&TimeFrom=20230100",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://dashboard.e-stat.go.jp/api/1.0/Json/getData?Lang=EN&RegionalRank=2&RegionCode=00000&MetaGetFlg=Y&SectionHeaderFlg=1&IndicatorCode=0301010000020020010&Cycle=1&IsSeasonalAdjustment=2&TimeFrom=20230100"
     },
     {
       "id": "au-gdp",
@@ -2058,10 +2063,9 @@
           "value": 0.4
         }
       ],
-      "description": "Real GDP, chain volume measures, seasonally adjusted quarterly percentage change; not annualized. Source: Australian Bureau of Statistics. Reviewed 2026-11-13.",
+      "description": "Real GDP, chain volume measures, seasonally adjusted quarterly percentage change; not annualized. Source: Australian Bureau of Statistics. Reviewed 2026-11-20.",
       "sourceUrl": "https://www.abs.gov.au/statistics/economy/national-accounts/australian-national-accounts-national-income-expenditure-and-product/latest-release",
-      "apiUrl": "https://data.api.abs.gov.au/rest/data/ANA_AGG/M2.GPM.20.AUS.Q?startPeriod=2022-Q3&format=csv",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://data.api.abs.gov.au/rest/data/ANA_AGG/M2.GPM.20.AUS.Q?startPeriod=2022-Q3&format=csv"
     },
     {
       "id": "au-cpi",
@@ -2151,10 +2155,9 @@
           "value": 4.3
         }
       ],
-      "description": "All-groups monthly CPI annual percentage change, weighted average of eight capital cities, original series. September CPI was published October 28, 2026; later observation months are excluded until their releases are reviewed. Source: Australian Bureau of Statistics. Reviewed 2026-11-13.",
+      "description": "All-groups monthly CPI annual percentage change, weighted average of eight capital cities, original series. September CPI was published October 28, 2026; later observation months are excluded until their releases are reviewed. Source: Australian Bureau of Statistics. Reviewed 2026-11-20.",
       "sourceUrl": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/latest-release",
-      "apiUrl": "https://data.api.abs.gov.au/rest/data/CPI/3.10001.10.50.M?startPeriod=2023-01&endPeriod=2026-09&format=csv",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://data.api.abs.gov.au/rest/data/CPI/3.10001.10.50.M?startPeriod=2023-01&endPeriod=2026-09&format=csv"
     },
     {
       "id": "au-unemployment",
@@ -2164,12 +2167,12 @@
       "category": "employment",
       "unit": "%",
       "context": "Use the seasonally adjusted reading to assess labour-market direction. Small monthly changes can reflect sampling variability as well as changes in employment conditions.",
-      "value": 4.7,
+      "value": 4.9,
       "previousValue": 4.7,
-      "change": 0.0,
-      "direction": "neutral",
+      "change": 0.2,
+      "direction": "up",
       "isPositiveGood": false,
-      "period": "Sep 2026",
+      "period": "Oct 2026",
       "timeSeries": [
         {
           "date": "2023-01",
@@ -2241,7 +2244,7 @@
         },
         {
           "date": "2024-06",
-          "value": 4.0
+          "value": 4.1
         },
         {
           "date": "2024-07",
@@ -2337,7 +2340,7 @@
         },
         {
           "date": "2026-06",
-          "value": 4.4
+          "value": 4.5
         },
         {
           "date": "2026-07",
@@ -2350,12 +2353,15 @@
         {
           "date": "2026-09",
           "value": 4.7
+        },
+        {
+          "date": "2026-10",
+          "value": 4.9
         }
       ],
-      "description": "Unemployment rate, persons age 15+, Australia, seasonally adjusted monthly Labour Force Survey; rounded to the published one decimal place. Source: Australian Bureau of Statistics. Reviewed 2026-11-13.",
+      "description": "Unemployment rate, persons age 15+, Australia, seasonally adjusted monthly Labour Force Survey; rounded to the published one decimal place. Source: Australian Bureau of Statistics. Reviewed 2026-11-20.",
       "sourceUrl": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release",
-      "apiUrl": "https://data.api.abs.gov.au/rest/data/LF/M13.3.1599.20.AUS.M?startPeriod=2023-01&format=csv",
-      "reviewedAt": "2026-11-13"
+      "apiUrl": "https://data.api.abs.gov.au/rest/data/LF/M13.3.1599.20.AUS.M?startPeriod=2023-01&format=csv"
     },
     {
       "id": "kr-gdp",
@@ -2365,12 +2371,12 @@
       "category": "growth",
       "unit": "% QoQ",
       "context": "This series measures real quarterly output growth. OECD/FRED can lag the Bank of Korea’s newest release; retain the observation date when comparing it with the manufacturing survey.",
-      "value": 0.63,
-      "previousValue": 1.83,
-      "change": -1.2,
-      "direction": "down",
+      "value": 0.97,
+      "previousValue": 0.63,
+      "change": 0.34,
+      "direction": "up",
       "isPositiveGood": true,
-      "period": "Apr 2026",
+      "period": "Jul 2026",
       "timeSeries": [
         {
           "date": "2022-10",
@@ -2431,12 +2437,15 @@
         {
           "date": "2026-04",
           "value": 0.63
+        },
+        {
+          "date": "2026-07",
+          "value": 0.97
         }
       ],
-      "description": "Real GDP, expenditure approach, seasonally adjusted quarterly growth; not annualized. OECD Main Economic Indicators, retrieved through FRED. Source: OECD Main Economic Indicators via FRED. Reviewed 2026-10-27. The November 6 FRED request timed out. The last verified observations are retained. Source check 2026-11-13 failed (TimeoutError: The read operation timed out); retains the last verified observation and review date.",
+      "description": "Real GDP, expenditure approach, seasonally adjusted quarterly growth; not annualized. OECD Main Economic Indicators, retrieved through FRED. Source: OECD Main Economic Indicators via FRED. Reviewed 2026-11-20.",
       "sourceUrl": "https://fred.stlouisfed.org/series/NAEXKP01KRQ657S",
-      "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NAEXKP01KRQ657S&cosd=2022-10-01&coed=2026-10-27",
-      "reviewedAt": "2026-10-27"
+      "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NAEXKP01KRQ657S&cosd=2022-10-01&coed=2026-11-20"
     },
     {
       "id": "kr-unemployment",
@@ -2446,13 +2455,25 @@
       "category": "employment",
       "unit": "%",
       "context": "The harmonised unemployment rate supports international comparisons, with a reporting lag relative to Statistics Korea’s national release. It measures a different part of the economy from manufacturing PMI.",
-      "value": 2.7,
-      "previousValue": 2.8,
+      "value": 2.6,
+      "previousValue": 2.7,
       "change": -0.1,
       "direction": "down",
       "isPositiveGood": false,
-      "period": "Aug 2026",
+      "period": "Sep 2026",
       "timeSeries": [
+        {
+          "date": "2022-10",
+          "value": 2.9
+        },
+        {
+          "date": "2022-11",
+          "value": 2.8
+        },
+        {
+          "date": "2022-12",
+          "value": 2.7
+        },
         {
           "date": "2023-01",
           "value": 2.7
@@ -2599,7 +2620,7 @@
         },
         {
           "date": "2026-01",
-          "value": 3
+          "value": 3.0
         },
         {
           "date": "2026-02",
@@ -2628,12 +2649,15 @@
         {
           "date": "2026-08",
           "value": 2.7
+        },
+        {
+          "date": "2026-09",
+          "value": 2.6
         }
       ],
-      "description": "Unemployment rate, total age 15+, seasonally adjusted. OECD Infra-Annual Labour Statistics, retrieved through FRED. Source: OECD Main Economic Indicators via FRED. Reviewed 2026-10-27. The November 6 FRED request timed out. The last verified observations are retained. Source check 2026-11-13 failed (TimeoutError: The read operation timed out); retains the last verified observation and review date.",
+      "description": "Unemployment rate, total age 15+, seasonally adjusted. OECD Infra-Annual Labour Statistics, retrieved through FRED. Source: OECD Main Economic Indicators via FRED. Reviewed 2026-11-20.",
       "sourceUrl": "https://fred.stlouisfed.org/series/LRHUTTTTKRM156S",
-      "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=LRHUTTTTKRM156S&cosd=2022-10-01&coed=2026-10-27",
-      "reviewedAt": "2026-10-27"
+      "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=LRHUTTTTKRM156S&cosd=2022-10-01&coed=2026-11-20"
     }
   ]
 }

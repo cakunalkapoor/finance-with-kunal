@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-13",
+  "reviewedAt": "2026-11-20",
   "indicators": [
     {
       "id": "vn-gdp",
@@ -257,8 +257,8 @@
       "category": "growth",
       "unit": "% YoY",
       "frequency": "quarterly",
-      "definition": "Real GDP growth compared with the same fiscal quarter a year earlier, BBS observations reproduced by Bangladesh Bank. Fiscal years run July–June. Verified quarterly history currently ends January–March 2026; the separate FY2026 provisional annual estimate and forecasts are not used.",
-      "provider": "Bangladesh Bank Quarterly, Q3 FY2025–26, Executive Summary",
+      "definition": "Real GDP growth compared with the same fiscal quarter a year earlier, BBS observations reproduced by Bangladesh Bank. Fiscal years run July–June. Q4 FY2025–26 is provisional.",
+      "provider": "Bangladesh Bank Quarterly, Q4 FY2025–26, Table I.3",
       "observations": [
         {
           "date": "2025-07",
@@ -271,23 +271,33 @@
         {
           "date": "2026-01",
           "value": 2.22
+        },
+        {
+          "date": "2026-04",
+          "value": 4.6
         }
       ],
       "sourceReferences": [
         {
           "label": "Q3 FY2025–26 GDP and earlier quarterly observations",
           "url": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf"
+        },
+        {
+          "label": "Q4 FY2025–26 quarterly GDP, Table I.3",
+          "url": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%204.pdf",
+          "releaseDate": "2026-11-15"
         }
       ],
-      "sourceUrl": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf",
-      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "sourceUrl": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%204.pdf",
+      "historyNote": "Limited history · 4 verified observations from the cited releases.",
       "observationLabels": {
         "2025-07": "Jul–Sep 2025 (Q1 FY2025–26)",
         "2025-10": "Oct–Dec 2025 (Q2 FY2025–26)",
-        "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)"
+        "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)",
+        "2026-04": "Apr–Jun 2026 (Q4 FY2025–26)"
       },
       "maxLagMonths": 9,
-      "reviewedAt": "2026-10-30"
+      "reviewedAt": "2026-11-20"
     },
     {
       "id": "bd-cpi",
@@ -297,7 +307,7 @@
       "category": "inflation",
       "unit": "% YoY",
       "frequency": "monthly",
-      "definition": "National headline CPI inflation, point-to-point year-over-year basis, 2021–22 base. Values are from Table 14, row b, of the October 25 weekly indicators; the twelve-month-average row is a different measure and is excluded.",
+      "definition": "National headline CPI inflation on a point-to-point year-over-year basis, 2021–22 base. The latest reading comes from Table 14, row b, of the November 15 weekly indicators.",
       "provider": "Bangladesh Bureau of Statistics via Bangladesh Bank",
       "observations": [
         {
@@ -339,6 +349,10 @@
         {
           "date": "2026-09",
           "value": 8.34
+        },
+        {
+          "date": "2026-10",
+          "value": 8.27
         }
       ],
       "sourceReferences": [
@@ -346,11 +360,16 @@
           "label": "October 25 indicators, Table 14: point-to-point CPI",
           "url": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
           "releaseDate": "2026-10-25"
+        },
+        {
+          "label": "November 15 indicators, Table 14: point-to-point CPI",
+          "url": "https://www.bb.org.bd/pub/weekly/selectedindi/15_november%202026.pdf",
+          "releaseDate": "2026-11-15"
         }
       ],
-      "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
-      "historyNote": "Limited history · 10 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/15_november%202026.pdf",
+      "historyNote": "Limited history · 11 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-20"
     },
     {
       "id": "mx-cpi",
@@ -443,27 +462,52 @@
       "category": "growth",
       "unit": "% YoY",
       "frequency": "quarterly",
-      "definition": "Real total GDP growth compared with the same quarter a year earlier, using the first- and second-quarter observations quoted in the September 2026 Monetary Policy Report. These are realized quarterly observations; the report’s forward growth projections and non-mining GDP are excluded.",
+      "definition": "Real total GDP growth compared with the same quarter a year earlier. The November 18 national accounts provide a consistent release vintage with revised first- and second-quarter readings.",
       "provider": "Central Bank of Chile",
       "observations": [
         {
+          "date": "2025-01",
+          "value": 2.9
+        },
+        {
+          "date": "2025-04",
+          "value": 3.7
+        },
+        {
+          "date": "2025-07",
+          "value": 1.7
+        },
+        {
+          "date": "2025-10",
+          "value": 1.6
+        },
+        {
           "date": "2026-01",
-          "value": -0.3
+          "value": -0.4
         },
         {
           "date": "2026-04",
-          "value": -0.2
+          "value": 0
+        },
+        {
+          "date": "2026-07",
+          "value": -1.1
         }
       ],
       "sourceReferences": [
         {
           "label": "September 2026 report: realized Q1 and Q2 GDP",
           "url": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026"
+        },
+        {
+          "label": "Q3 2026 national accounts, Table 1",
+          "url": "https://www.bcentral.cl/documents/33528/8798042/Cuentas%2BNacionales%2BTercer%2BTrimestre%2B2026.pdf/cb7add8a-7d6a-f4e3-7a11-74fe4c335a64",
+          "releaseDate": "2026-11-18"
         }
       ],
-      "sourceUrl": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.bcentral.cl/documents/33528/8798042/Cuentas%2BNacionales%2BTercer%2BTrimestre%2B2026.pdf/cb7add8a-7d6a-f4e3-7a11-74fe4c335a64",
+      "historyNote": "Limited history · 7 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-20"
     },
     {
       "id": "cl-cpi",
@@ -583,7 +627,7 @@
         },
         {
           "date": "2024-07",
-          "value": 1.0
+          "value": 1
         },
         {
           "date": "2024-10",
@@ -595,7 +639,7 @@
         },
         {
           "date": "2025-04",
-          "value": 0.0
+          "value": 0
         },
         {
           "date": "2025-07",

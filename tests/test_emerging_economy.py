@@ -86,7 +86,10 @@ class EmergingSources(unittest.TestCase):
                 self.assertTrue(row['sourceReferences'])
                 self.assertTrue(row['historyNote'])
         fiscal = next(row for row in snapshot['indicators'] if row['id'] == 'bd-gdp')
-        self.assertIn('Q3 FY2025–26', fiscal['period'])
+        year, month = map(int, fiscal['timeSeries'][-1]['date'].split('-'))
+        fiscal_start = year if month >= 7 else year - 1
+        fiscal_quarter = (month - 7) % 12 // 3 + 1
+        self.assertIn(f'Q{fiscal_quarter} FY{fiscal_start}–{(fiscal_start + 1) % 100:02d}', fiscal['period'])
         brazil = next(row for row in snapshot['indicators'] if row['id'] == 'br-unemployment')
         self.assertIn('3-month average', brazil['period'])
 

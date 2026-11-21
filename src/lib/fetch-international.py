@@ -166,7 +166,7 @@ def build_indicator(spec, raw, reviewed):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--reviewed-on',required=True)
     args=parser.parse_args();date.fromisoformat(args.reviewed_on)
-    if args.reviewed_on not in ('2026-10-31', '2026-11-05', '2026-11-13'):
+    if args.reviewed_on not in ('2026-10-31', '2026-11-05', '2026-11-13', '2026-11-20'):
         raise SystemExit('Review the ABS CPI publication cap before refreshing a new review date.')
     result=[]
     for spec in definitions(args.reviewed_on):

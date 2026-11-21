@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-13",
+  "reviewedAt": "2026-11-20",
   "indicators": [
     {
       "id": "my-gdp",
@@ -8,12 +8,12 @@
       "flag": "🇲🇾",
       "category": "growth",
       "unit": "% YoY",
-      "value": 6.0,
-      "previousValue": 5.4,
-      "change": 0.6,
-      "direction": "up",
+      "value": 5.5,
+      "previousValue": 6.0,
+      "change": -0.5,
+      "direction": "down",
       "isPositiveGood": true,
-      "period": "Q2 2026",
+      "period": "Q3 2026",
       "timeSeries": [
         {
           "date": "2022-10",
@@ -74,12 +74,16 @@
         {
           "date": "2026-04",
           "value": 6.0
+        },
+        {
+          "date": "2026-07",
+          "value": 5.5
         }
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/gdp_qtr_real",
-      "reviewedAt": "2026-11-13",
-      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-13.",
+      "reviewedAt": "2026-11-20",
+      "description": "Real GDP at constant 2015 prices, change from the same quarter a year earlier; not seasonally adjusted. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-20.",
       "apiUrl": "https://storage.dosm.gov.my/gdp/gdp_qtr_real.csv",
       "observationLabels": {
         "2022-10": "Q4 2022",
@@ -96,7 +100,8 @@
         "2025-07": "Q3 2025",
         "2025-10": "Q4 2025",
         "2026-01": "Q1 2026",
-        "2026-04": "Q2 2026"
+        "2026-04": "Q2 2026",
+        "2026-07": "Q3 2026"
       }
     },
     {
@@ -106,12 +111,12 @@
       "flag": "🇲🇾",
       "category": "inflation",
       "unit": "% YoY",
-      "value": 1.8,
-      "previousValue": 1.9,
-      "change": -0.1,
-      "direction": "down",
+      "value": 1.9,
+      "previousValue": 1.8,
+      "change": 0.1,
+      "direction": "up",
       "isPositiveGood": false,
-      "period": "Sep 2026",
+      "period": "Oct 2026",
       "timeSeries": [
         {
           "date": "2022-10",
@@ -304,12 +309,16 @@
         {
           "date": "2026-09",
           "value": 1.8
+        },
+        {
+          "date": "2026-10",
+          "value": 1.9
         }
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/cpi_headline_inflation",
-      "reviewedAt": "2026-11-13",
-      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-13.",
+      "reviewedAt": "2026-11-20",
+      "description": "National all-items CPI, percentage change from the same month a year earlier. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-20.",
       "apiUrl": "https://storage.dosm.gov.my/cpi/cpi_2d_inflation.csv"
     },
     {
@@ -521,8 +530,8 @@
       ],
       "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
       "sourceUrl": "https://open.dosm.gov.my/data-catalogue/lfs_month",
-      "reviewedAt": "2026-11-13",
-      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-13.",
+      "reviewedAt": "2026-11-20",
+      "description": "National Labour Force Survey unemployment rate, not seasonally adjusted. Population weights change from the 2010 Census to the 2020 Census from 2025, creating a potential break in the history. Source: Department of Statistics Malaysia; CC BY 4.0. Reviewed 2026-11-20.",
       "apiUrl": "https://storage.dosm.gov.my/labour/lfs_month.csv"
     },
     {
@@ -602,8 +611,8 @@
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/5932",
-      "reviewedAt": "2026-11-13",
-      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-11-13.",
+      "reviewedAt": "2026-11-20",
+      "description": "Real GDP at market prices, quarterly volume growth compared with the same quarter a year earlier; not seasonally adjusted. This is neither accumulated year-to-date nor rolling four-quarter growth. Source: IBGE / SIDRA. Reviewed 2026-11-20.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/5932/n1/all/v/6561/p/last%2016/c11255/90707",
       "observationLabels": {
         "2022-10": "Q4 2022",
@@ -788,8 +797,8 @@
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/7060",
-      "reviewedAt": "2026-11-13",
-      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-11-13.",
+      "reviewedAt": "2026-11-20",
+      "description": "IPCA all-items consumer inflation, accumulated change over the preceding 12 months, national Brazil aggregate. Source: IBGE / SIDRA. Reviewed 2026-11-20.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/7060/n1/all/v/2265/p/last%2037/c315/7169"
     },
     {
@@ -957,8 +966,8 @@
       ],
       "context": "This is a survey-based unemployment rate. Population coverage, seasonal adjustment and reference windows can differ between countries.",
       "sourceUrl": "https://sidra.ibge.gov.br/tabela/6381",
-      "reviewedAt": "2026-11-13",
-      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-11-13.",
+      "reviewedAt": "2026-11-20",
+      "description": "National Continuous PNAD unemployment rate, people aged 14+, not seasonally adjusted. Each monthly release describes the three-month moving quarter ending in that month. Source: IBGE / SIDRA. Reviewed 2026-11-20.",
       "apiUrl": "https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/last%2037",
       "observationLabels": {
         "2023-09": "Jul–Sep 2023 (3-month average)",
@@ -1298,12 +1307,12 @@
       "flag": "🇧🇩",
       "category": "growth",
       "unit": "% YoY",
-      "value": 2.22,
-      "previousValue": 3.03,
-      "change": -0.81,
-      "direction": "down",
+      "value": 4.6,
+      "previousValue": 2.22,
+      "change": 2.38,
+      "direction": "up",
       "isPositiveGood": true,
-      "period": "Jan–Mar 2026 (Q3 FY2025–26)",
+      "period": "Apr–Jun 2026 (Q4 FY2025–26)",
       "timeSeries": [
         {
           "date": "2025-07",
@@ -1316,24 +1325,34 @@
         {
           "date": "2026-01",
           "value": 2.22
+        },
+        {
+          "date": "2026-04",
+          "value": 4.6
         }
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
-      "sourceUrl": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf",
-      "reviewedAt": "2026-10-30",
-      "description": "Real GDP growth compared with the same fiscal quarter a year earlier, BBS observations reproduced by Bangladesh Bank. Fiscal years run July–June. Verified quarterly history currently ends January–March 2026; the separate FY2026 provisional annual estimate and forecasts are not used. Source: Bangladesh Bank Quarterly, Q3 FY2025–26, Executive Summary. Reviewed 2026-10-30.",
+      "sourceUrl": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%204.pdf",
+      "reviewedAt": "2026-11-20",
+      "description": "Real GDP growth compared with the same fiscal quarter a year earlier, BBS observations reproduced by Bangladesh Bank. Fiscal years run July–June. Q4 FY2025–26 is provisional. Source: Bangladesh Bank Quarterly, Q4 FY2025–26, Table I.3. Reviewed 2026-11-20.",
       "observationLabels": {
         "2025-07": "Jul–Sep 2025 (Q1 FY2025–26)",
         "2025-10": "Oct–Dec 2025 (Q2 FY2025–26)",
-        "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)"
+        "2026-01": "Jan–Mar 2026 (Q3 FY2025–26)",
+        "2026-04": "Apr–Jun 2026 (Q4 FY2025–26)"
       },
       "sourceReferences": [
         {
           "label": "Q3 FY2025–26 GDP and earlier quarterly observations",
           "url": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%203_040825.pdf"
+        },
+        {
+          "label": "Q4 FY2025–26 quarterly GDP, Table I.3",
+          "url": "https://www.bb.org.bd/pub/quaterly/bbquarterly/bangladesh%20bank%20quarterly%2C%20%20vol%20xxiii%2C%20no%204.pdf",
+          "releaseDate": "2026-11-15"
         }
       ],
-      "historyNote": "Limited history · 3 verified observations from the cited releases."
+      "historyNote": "Limited history · 4 verified observations from the cited releases."
     },
     {
       "id": "bd-cpi",
@@ -1342,12 +1361,12 @@
       "flag": "🇧🇩",
       "category": "inflation",
       "unit": "% YoY",
-      "value": 8.34,
-      "previousValue": 8.26,
-      "change": 0.08,
-      "direction": "up",
+      "value": 8.27,
+      "previousValue": 8.34,
+      "change": -0.07,
+      "direction": "down",
       "isPositiveGood": false,
-      "period": "Sep 2026",
+      "period": "Oct 2026",
       "timeSeries": [
         {
           "date": "2025-12",
@@ -1388,20 +1407,29 @@
         {
           "date": "2026-09",
           "value": 8.34
+        },
+        {
+          "date": "2026-10",
+          "value": 8.27
         }
       ],
       "context": "This annual inflation rate compares consumer prices with the same month a year earlier. A lower rate means prices are rising more slowly; it does not necessarily mean prices fell.",
-      "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
-      "reviewedAt": "2026-10-30",
-      "description": "National headline CPI inflation, point-to-point year-over-year basis, 2021–22 base. Values are from Table 14, row b, of the October 25 weekly indicators; the twelve-month-average row is a different measure and is excluded. Source: Bangladesh Bureau of Statistics via Bangladesh Bank. Reviewed 2026-10-30.",
+      "sourceUrl": "https://www.bb.org.bd/pub/weekly/selectedindi/15_november%202026.pdf",
+      "reviewedAt": "2026-11-20",
+      "description": "National headline CPI inflation on a point-to-point year-over-year basis, 2021–22 base. The latest reading comes from Table 14, row b, of the November 15 weekly indicators. Source: Bangladesh Bureau of Statistics via Bangladesh Bank. Reviewed 2026-11-20.",
       "sourceReferences": [
         {
           "label": "October 25 indicators, Table 14: point-to-point CPI",
           "url": "https://www.bb.org.bd/pub/weekly/selectedindi/25_october%202026.pdf",
           "releaseDate": "2026-10-25"
+        },
+        {
+          "label": "November 15 indicators, Table 14: point-to-point CPI",
+          "url": "https://www.bb.org.bd/pub/weekly/selectedindi/15_november%202026.pdf",
+          "releaseDate": "2026-11-15"
         }
       ],
-      "historyNote": "Limited history · 10 verified observations from the cited releases."
+      "historyNote": "Limited history · 11 verified observations from the cited releases."
     },
     {
       "id": "mx-cpi",
@@ -1503,37 +1531,67 @@
       "flag": "🇨🇱",
       "category": "growth",
       "unit": "% YoY",
-      "value": -0.2,
-      "previousValue": -0.3,
-      "change": 0.1,
-      "direction": "up",
+      "value": -1.1,
+      "previousValue": 0.0,
+      "change": -1.1,
+      "direction": "down",
       "isPositiveGood": true,
-      "period": "Q2 2026",
+      "period": "Q3 2026",
       "timeSeries": [
         {
+          "date": "2025-01",
+          "value": 2.9
+        },
+        {
+          "date": "2025-04",
+          "value": 3.7
+        },
+        {
+          "date": "2025-07",
+          "value": 1.7
+        },
+        {
+          "date": "2025-10",
+          "value": 1.6
+        },
+        {
           "date": "2026-01",
-          "value": -0.3
+          "value": -0.4
         },
         {
           "date": "2026-04",
-          "value": -0.2
+          "value": 0.0
+        },
+        {
+          "date": "2026-07",
+          "value": -1.1
         }
       ],
       "context": "Real GDP growth measures output rather than price changes. Check the displayed annual or quarterly basis before comparing countries.",
-      "sourceUrl": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026",
-      "reviewedAt": "2026-10-30",
-      "description": "Real total GDP growth compared with the same quarter a year earlier, using the first- and second-quarter observations quoted in the September 2026 Monetary Policy Report. These are realized quarterly observations; the report’s forward growth projections and non-mining GDP are excluded. Source: Central Bank of Chile. Reviewed 2026-10-30.",
+      "sourceUrl": "https://www.bcentral.cl/documents/33528/8798042/Cuentas%2BNacionales%2BTercer%2BTrimestre%2B2026.pdf/cb7add8a-7d6a-f4e3-7a11-74fe4c335a64",
+      "reviewedAt": "2026-11-20",
+      "description": "Real total GDP growth compared with the same quarter a year earlier. The November 18 national accounts provide a consistent release vintage with revised first- and second-quarter readings. Source: Central Bank of Chile. Reviewed 2026-11-20.",
       "observationLabels": {
+        "2025-01": "Q1 2025",
+        "2025-04": "Q2 2025",
+        "2025-07": "Q3 2025",
+        "2025-10": "Q4 2025",
         "2026-01": "Q1 2026",
-        "2026-04": "Q2 2026"
+        "2026-04": "Q2 2026",
+        "2026-07": "Q3 2026"
       },
       "sourceReferences": [
         {
           "label": "September 2026 report: realized Q1 and Q2 GDP",
           "url": "https://www.bcentral.cl/en/resumen-ipom/-/detalle/resumen-ipom-septiembre-2026"
+        },
+        {
+          "label": "Q3 2026 national accounts, Table 1",
+          "url": "https://www.bcentral.cl/documents/33528/8798042/Cuentas%2BNacionales%2BTercer%2BTrimestre%2B2026.pdf/cb7add8a-7d6a-f4e3-7a11-74fe4c335a64",
+          "releaseDate": "2026-11-18"
         }
       ],
-      "historyNote": "Limited history · 2 verified observations from the cited releases."
+      "historyNote": "Limited history · 7 verified observations from the cited releases."
     },
     {
       "id": "cl-cpi",
