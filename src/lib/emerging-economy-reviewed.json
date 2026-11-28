@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-20",
+  "reviewedAt": "2026-11-27",
   "indicators": [
     {
       "id": "vn-gdp",
@@ -437,6 +437,10 @@
         {
           "date": "2026-09",
           "value": 2.8
+        },
+        {
+          "date": "2026-10",
+          "value": 3.0
         }
       ],
       "sourceReferences": [
@@ -448,11 +452,16 @@
           "label": "September 2026 ENOE release",
           "url": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
           "releaseDate": "2026-10-22"
+        },
+        {
+          "label": "October 2026 ENOE release",
+          "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/iooe/IOE2026_11.pdf",
+          "releaseDate": "2026-11-26"
         }
       ],
-      "sourceUrl": "https://www.inegi.org.mx/app/saladeprensa/noticia/11283",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/iooe/IOE2026_11.pdf",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-27"
     },
     {
       "id": "cl-gdp",
@@ -572,6 +581,10 @@
         {
           "date": "2026-09",
           "value": 9.8
+        },
+        {
+          "date": "2026-10",
+          "value": 10.0
         }
       ],
       "sourceReferences": [
@@ -584,11 +597,16 @@
           "label": "Jul–Sep 2026 ENE release",
           "url": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
           "releaseDate": "2026-10-29"
+        },
+        {
+          "label": "Aug–Oct 2026 ENE national bulletin",
+          "url": "https://www.ine.gob.cl/docs/default-source/ocupacion-y-desocupacion/boletines/2026/nacional/ene-nacional-337.pdf",
+          "releaseDate": "2026-11-27"
         }
       ],
-      "sourceUrl": "https://www.ine.gob.cl/sala-de-prensa/prensa/general/noticia/2026/10/29/la-tasa-de-desocupaci%C3%B3n-nacional-fue-9-8-en-el-trimestre-julio-septiembre-de-2026",
-      "historyNote": "Limited history · 2 verified observations from the cited releases.",
-      "reviewedAt": "2026-10-30"
+      "sourceUrl": "https://www.ine.gob.cl/docs/default-source/ocupacion-y-desocupacion/boletines/2026/nacional/ene-nacional-337.pdf",
+      "historyNote": "Limited history · 3 verified observations from the cited releases.",
+      "reviewedAt": "2026-11-27"
     },
     {
       "id": "mx-gdp",
@@ -598,7 +616,7 @@
       "category": "growth",
       "unit": "% QoQ",
       "frequency": "quarterly",
-      "definition": "Real GDP, seasonally adjusted quarterly growth, not annualized, at constant 2018 prices. All observations use Graph 1 of the October 30, 2026 release vintage; Q3 2026 is an advance estimate subject to revision.",
+      "definition": "Real GDP, seasonally adjusted quarterly growth at constant 2018 prices. All observations use Graph 1 of the November 23, 2026 release.",
       "provider": "INEGI / Sistema de Cuentas Nacionales de México",
       "observations": [
         {
@@ -615,35 +633,35 @@
         },
         {
           "date": "2023-10",
-          "value": 0.2
+          "value": 0.3
         },
         {
           "date": "2024-01",
-          "value": 0.4
+          "value": 0.5
         },
         {
           "date": "2024-04",
-          "value": -0.2
+          "value": -0.1
         },
         {
           "date": "2024-07",
-          "value": 1
+          "value": 1.0
         },
         {
           "date": "2024-10",
-          "value": -0.9
+          "value": -0.7
         },
         {
           "date": "2025-01",
-          "value": 0.8
+          "value": 0.9
         },
         {
           "date": "2025-04",
-          "value": 0
+          "value": 0.0
         },
         {
           "date": "2025-07",
-          "value": -0.1
+          "value": -0.3
         },
         {
           "date": "2025-10",
@@ -651,31 +669,33 @@
         },
         {
           "date": "2026-01",
-          "value": -0.3
+          "value": -0.2
         },
         {
           "date": "2026-04",
-          "value": 1.4
+          "value": 1.6
         },
         {
           "date": "2026-07",
           "value": 0.9
         }
       ],
-      "observationLabels": {
-        "2026-07": "Q3 2026 (advance)"
-      },
-      "context": "The advance Q3 estimate shows continued expansion at a slower quarterly rate than Q2. These seasonally adjusted changes are not annualized and should not be compared directly with annual GDP growth rates. The advance estimate can be revised.",
+      "context": "Real output grew 0.9% from the second quarter, after revised growth of 1.6%. Services grew 1.2% on the same quarterly basis.",
       "sourceReferences": [
         {
           "label": "INEGI bulletin 673/26, Graph 1 and Table 1",
           "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
           "releaseDate": "2026-10-30"
+        },
+        {
+          "label": "INEGI bulletin 699/26, Graph 1 and Table 1",
+          "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibt/pib_Pconst2026_11.pdf",
+          "releaseDate": "2026-11-23"
         }
       ],
-      "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibo/pib_eo2026_10.pdf",
-      "historyNote": "15 quarterly observations from Q1 2023 to Q3 2026, transcribed from the same official release vintage. The final quarter is an advance estimate. No FRED history is spliced into this series.",
-      "reviewedAt": "2026-11-01"
+      "sourceUrl": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/pibt/pib_Pconst2026_11.pdf",
+      "historyNote": "15 quarterly observations from Q1 2023 to Q3 2026 use the November 23 release.",
+      "reviewedAt": "2026-11-27"
     }
   ],
   "unavailable": [

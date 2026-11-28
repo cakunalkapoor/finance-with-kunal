@@ -3,7 +3,7 @@
 
 Run: python3 src/lib/fetch-international.py --reviewed-on YYYY-MM-DD
 The ABS CPI release cap is deliberately reviewed separately from its observation
-month: September 2026 was not due for publication until October 28.
+month: October 2026 was released November 25.
 Writes atomically only after every configured series passes validation.
 """
 import argparse
@@ -112,7 +112,7 @@ def definitions(reviewed):
         add('jp-'+suffix,'Japan','🇯🇵','Japan '+name,cat,unit,definition+' '+JAPAN_CREDIT,source('japan',jp+f'&IndicatorCode={code}&Cycle={cycle}&IsSeasonalAdjustment={season}&TimeFrom={start}'),context)
     for suffix,name,cat,unit,query,definition,context,decimals in [
         ('gdp','Real GDP growth','growth','% QoQ','ANA_AGG/M2.GPM.20.AUS.Q?startPeriod=2022-Q3&format=csv','Real GDP, chain volume measures, seasonally adjusted quarterly percentage change; not annualized.','Quarterly real GDP measures the change in Australian output. The non-annualized basis differs from the US headline convention.',1),
-        ('cpi','Consumer inflation (CPI)','inflation','% YoY','CPI/3.10001.10.50.M?startPeriod=2023-01&endPeriod=2026-09&format=csv','All-groups monthly CPI annual percentage change, weighted average of eight capital cities, original series. September CPI was published October 28, 2026; later observation months are excluded until their releases are reviewed.','The complete monthly CPI differs in coverage from the earlier monthly indicator. Do not splice the two series to extend its history.',1),
+        ('cpi','Consumer inflation (CPI)','inflation','% YoY','CPI/3.10001.10.50.M?startPeriod=2023-01&endPeriod=' + ('2026-10' if reviewed >= '2026-11-25' else '2026-09') + '&format=csv','All-groups monthly CPI annual percentage change, weighted average of eight capital cities, original series. Later observation months are excluded until their releases are reviewed.','The complete monthly CPI differs in coverage from the earlier monthly indicator. Do not splice the two series to extend its history.',1),
         ('unemployment','Unemployment rate','employment','%','LF/M13.3.1599.20.AUS.M?startPeriod=2023-01&format=csv','Unemployment rate, persons age 15+, Australia, seasonally adjusted monthly Labour Force Survey; rounded to the published one decimal place.','Use the seasonally adjusted reading to assess labour-market direction. Small monthly changes can reflect sampling variability as well as changes in employment conditions.',1)]:
         add('au-'+suffix,'Australia','🇦🇺','Australia '+name,cat,unit,definition,source('abs',absbase+query,decimals=decimals),context)
     for suffix,name,cat,unit,series,definition,context in [
@@ -166,7 +166,7 @@ def build_indicator(spec, raw, reviewed):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--reviewed-on',required=True)
     args=parser.parse_args();date.fromisoformat(args.reviewed_on)
-    if args.reviewed_on not in ('2026-10-31', '2026-11-05', '2026-11-13', '2026-11-20'):
+    if args.reviewed_on not in ('2026-10-31', '2026-11-05', '2026-11-13', '2026-11-20', '2026-11-27'):
         raise SystemExit('Review the ABS CPI publication cap before refreshing a new review date.')
     result=[]
     for spec in definitions(args.reviewed_on):

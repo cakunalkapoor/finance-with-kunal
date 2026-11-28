@@ -3,6 +3,36 @@
 Deep reference for data sources and component internals. The quick overview is in
 [`../CLAUDE.md`](../CLAUDE.md) — read this file only when touching data or a specific component.
 
+## Week ending November 27, 2026
+
+The November 27 Vancouver snapshot refreshes all 13 equity indices, 16 ETFs,
+nine commodity futures, six currency series, 28 AI stocks and 12 comparison
+indices. The four crypto histories and Schneider Electric end November 26. The
+heatmap has quotes for 1,609 of 1,618 constituents. The Market Brief and weekly
+commentary use returns from the saved snapshot.
+
+Twelve of 13 sovereign yields end November 27. Japan’s Ministry of Finance
+series ends November 26. The paired yield curves use November 25 for the US
+and November 26 for Canada. Published 52-week yield ranges were rechecked and
+manual closes were cross-checked with Trading Economics. South Korea raised
+its policy rate to 3.25% and Indonesia to 6.00%. South Africa held at 7.25%.
+OPEC’s feed and XML archive returned HTTP 403. The last verified basket quote
+remains dated October 22.
+
+The BEA’s second estimate put Q3 US growth at 4.3% annualized. Initial jobless
+claims fell to 189K from a revised 202K. All 17 international series and six
+emerging-economy feeds were checked. Australia’s October headline CPI rose to
+4.9% from 4.3%. Mexico’s Q3 GDP grew 0.9% QoQ after a revised 1.6% in Q2. Its
+original unemployment rate reached 3.0% in October, and Chile’s reached 10.0%
+in the August–October rolling quarter.
+
+Vantage AI adds Dell’s $22.0B in quarterly AI-optimized server revenue. The
+November 19 Census BTOS cycle remains the latest published cycle.
+
+Validation passed for 151 Node tests, 29 Python tests, scoped ESLint, sovereign
+yield checks, provider-to-display reconciliation and the production static
+export. The deployment dependency gate passed with eight moderate findings.
+
 ## Week ending November 20, 2026
 
 The weekly snapshot uses Vancouver dates. Yahoo Finance returned November 20

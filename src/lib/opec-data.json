@@ -2,7 +2,7 @@
   "source": "https://www.opec.org/basket/basketDay.json",
   "supplement": null,
   "reviewedAt": "2026-10-25",
-  "refreshNote": "The official feed and daily XML archive returned HTTP 403 on November 20, 2026. The last verified basket assessment is dated October 22.",
+  "refreshNote": "The official feed and daily XML archive returned HTTP 403 on November 27, 2026. The last verified basket assessment is dated October 22.",
   "frequency": "Last available published daily quote in each month; not monthly averages",
   "timeSeries": [
     {
